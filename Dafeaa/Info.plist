@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Bahij_TheSansArabic-SemiLight.ttf</string>
+		<string>Bahij_TheSansArabic-Black.ttf</string>
+		<string>Bahij_TheSansArabic-Bold.ttf</string>
+		<string>Bahij_TheSansArabic-ExtraBold.ttf</string>
+		<string>Bahij_TheSansArabic-ExtraLight.ttf</string>
+		<string>Bahij_TheSansArabic-Light.ttf</string>
+		<string>Bahij_TheSansArabic-SemiBold.ttf</string>
+		<string>Bahij_TheSansArabic-Plain.ttf</string>
+		<string>Poppins-Black.ttf</string>
+		<string>Poppins-Bold.ttf</string>
+		<string>Poppins-ExtraBold.ttf</string>
+		<string>Poppins-ExtraLight.ttf</string>
+		<string>Poppins-Italic.ttf</string>
+		<string>Poppins-Light.ttf</string>
+		<string>Poppins-Plain.ttf</string>
+		<string>Poppins-Regular.ttf</string>
+		<string>Poppins-SemiBold.ttf</string>
+		<string>Poppins-Thin.ttf</string>
+	</array>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict/>
+	</dict>
+</dict>
+</plist>
