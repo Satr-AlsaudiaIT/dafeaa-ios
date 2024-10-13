@@ -56,7 +56,7 @@
 "confirmPhoneSubTitle" = "برجاء إدخال الرقم المرسل اليكم عبر الهاتف المحمول لتأكيد رقم الهاتف والدخول الى حسابك." ;
 "confirm" = "تأكيد";
 
-//MARK:- ResetPasswordView
+//MARK: - ResetPasswordView
 "didn’tReceiveCode?" = "لم يصلك الرمز بعد؟ ?";
 "resendCode" = " إعادة إرسال الرمز";
 "resetPasswordNavTitle" = "إعادة تعيين كلمة المرور";
@@ -64,3 +64,9 @@
 "resetPasswordSubTitle" = "برجاء إدخال كلمة المرور الجديدة مرتين لتأكيد تغيير كلمة مرور حسابكم لدينا.";
 "saveBtn" = "حفظ التعديلات";
 
+//MARK: -TaBar
+"profile"="حسابي";
+"processes"="العمليات";
+"myOrders"="طلباتي";
+"wallet"="المحفظة";
+"home"="الرئيسية";
