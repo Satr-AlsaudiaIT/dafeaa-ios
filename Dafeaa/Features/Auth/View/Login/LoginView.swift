@@ -87,6 +87,9 @@ struct LoginView: View {
                 .navigationDestination(isPresented: $viewModel._isSendCodeSuccess) {
                     OTPConfirmationView(phone: phoneNumber)
                 }
+                .navigationDestination(isPresented: $viewModel._hasUnCompletedData) {
+                    
+                }
                 if viewModel.isLoading {
                     ProgressView("Loading...".localized())
                         .foregroundColor(.white)
@@ -101,7 +104,6 @@ struct LoginView: View {
                 SignUpStep1View()
             }.navigationBarHidden(true)
                 .toastView(toast: $viewModel.toast)
-            
         }
     }
     

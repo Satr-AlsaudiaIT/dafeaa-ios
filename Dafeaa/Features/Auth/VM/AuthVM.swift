@@ -23,6 +23,7 @@ class AuthVM: ObservableObject {
     @Published private var _isCheckCodeSuccess = false
     @Published var _isVerifyCodeSuccess = false
     @Published private var _isCreatePasswordSuccess = false
+    @Published var _hasUnCompletedData = false
 
     private var _message: String = ""
     private var token = ""
@@ -42,6 +43,9 @@ class AuthVM: ObservableObject {
         set {}
     }
     
+    
+  
+    
     func validateLogin(phone: String, password: String) {
         if phone.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "Please Enter phone".localized())
@@ -53,8 +57,11 @@ class AuthVM: ObservableObject {
         }
     }
     
-    func validateRegister(name: String, email: String, phone: String, accountType: AccountTypeOption, password: String, confirmPassword: String,isFirstAgreeChecked:Bool, isSecondAgreeChecked:Bool) {
-        if name.isBlank {
+    func validateRegister(photo: UIImage?,name: String, email: String, phone: String, accountType: AccountTypeOption, password: String, confirmPassword: String, isAgreeChecked:Bool) {
+        if photo == nil {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "Please Enter User Photo".localized())
+        }
+        else if name.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "Please Enter User Name".localized())
         } else if !name.isValidName {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "Please Enter a Valid User Name".localized())
@@ -72,9 +79,7 @@ class AuthVM: ObservableObject {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "Please Enter a Valid Password".localized())
         } else if !confirmPassword.isPasswordConfirm(password: password, confirmPassword: confirmPassword) {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "Password and Confirm Password don't Match".localized())
-        } else if !isFirstAgreeChecked {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: "Please agree the Terms and conditions".localized())
-        } else if !isSecondAgreeChecked {
+        } else if !isAgreeChecked {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "Please agree the Terms and conditions".localized())
         } else {
             let registerDic: [String: Any] = ["name": name,
@@ -83,7 +88,7 @@ class AuthVM: ObservableObject {
                                               "account_type": accountType.returnedInt(),
                                               "password": password,
                                               "password_confirmation": confirmPassword]
-            registerApi(dic: registerDic)
+            registerApi(dic: registerDic,photo: photo)
             }
                                
     }
@@ -158,26 +163,45 @@ class AuthVM: ObservableObject {
         }
     }
 
-    private func registerApi(dic: [String: Any]) {
+    private func registerApi(dic: [String: Any],photo: UIImage?) {
         self._isLoading = true
-        api.signUp(dic: dic) { result in
-            switch result {
-            case .success(let response):
-                self._message = response?.message ?? ""
+
+        MultipartUploadImages.shared.uploadImage(path: "auth/register", parameterS: dic, photos: ["profile_image": photo], photosArray: nil) { status, message, error in
+            if status == 1 {
                 self._isLoading = false
                 self._isFailed = false
-                
+                self._message = message ?? ""
+                self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
+
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self._isSignUpSuccess = true
                 }
-                
-            case .failure(let error):
-                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+            } else {
+                self._message = message ?? ""
                 self._isLoading = false
                 self._isFailed = true
                 self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
             }
         }
+
+//        api.signUp(dic: dic) { result in
+//            switch result {
+//            case .success(let response):
+//                self._message = response?.message ?? ""
+//                self._isLoading = false
+//                self._isFailed = false
+//                
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//                    self._isSignUpSuccess = true
+//                }
+//                
+//            case .failure(let error):
+//                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+//                self._isLoading = false
+//                self._isFailed = true
+//                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+//            }
+//        }
     }
   
     private func verify(for dic: [String:Any]) {
@@ -191,6 +215,8 @@ class AuthVM: ObservableObject {
                 self._isFailed = false
                 self._isCheckCodeSuccess = true
                 guard let response = response else { return }
+                self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
+
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2){
                     self._isCheckCodeSuccess = true
                     self.logIn(response:response)
@@ -276,7 +302,7 @@ class AuthVM: ObservableObject {
    
     func logIn(response:LoginModel) {
         GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
-        GenericUserDefault.shared.setValue(response.data?.accountType ?? 1, Constants.shared.userType)
+        GenericUserDefault.shared.setValue(response.data?.accountType ?? 1 , Constants.shared.userType)
         GenericUserDefault.shared.setValue(response.data?.email ?? "", Constants.shared.email)
         GenericUserDefault.shared.setValue(response.data?.phone ?? "", Constants.shared.phone)
         GenericUserDefault.shared.setValue(response.data?.name ?? "", Constants.shared.userName)
@@ -284,7 +310,9 @@ class AuthVM: ObservableObject {
         
         if response.data?.uncompletedData == 1 {
             sendCode(for: ["phone":response.data?.phone ?? "","usage":"verify"])
-        } else {
+        } else if response.data?.uncompletedData == 2 {
+            self._hasUnCompletedData = true 
+        }  else {
             MOLH.reset()
         }
     }

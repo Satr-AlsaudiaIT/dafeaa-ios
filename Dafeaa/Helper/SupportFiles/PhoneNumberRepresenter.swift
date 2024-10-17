@@ -94,6 +94,41 @@ struct CustomMainTextField: View {
         .cornerRadius(5)
     }
 }
+
+import SwiftUI
+
+struct ButtonWithImageView: View {
+    var imageName: ImageResource
+    var trailingImageName: ImageResource?
+    var text: String
+    var action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            HStack {
+                Image(imageName)
+                    .frame(width: 20, height: 20)
+                
+                Text(text)
+                    .textModifier(.plain, 14, .black292D32)
+                Spacer()
+                if let trailingImageName  {
+                    Image(trailingImageName)
+                    .frame(width: 16, height: 16)
+                }
+            }
+            .frame(height: 56)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 20)
+            .background(Color(.grayF6F6F6))
+            .cornerRadius(5)
+        }
+    }
+}
+
+
+
+
 //MARK: -Notuse
 struct FlagPhoneNumberView: UIViewRepresentable {
     @Binding var phoneNumber: String
@@ -191,3 +226,6 @@ struct CustomPhoneNumberField: View {
         }
     }
 }
+
+
+

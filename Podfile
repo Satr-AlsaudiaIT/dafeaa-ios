@@ -18,7 +18,7 @@ target 'Dafeaa' do
   pod 'Alamofire'
 #  pod 'PhoneNumberKit'
 pod "FlagPhoneNumber"
-
+pod 'lottie-ios'
   target 'DafeaaTests' do
     inherit! :search_paths
     # Pods for testing

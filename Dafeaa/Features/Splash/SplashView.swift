@@ -63,20 +63,20 @@ struct SplashView: View {
     
     private func goTo(){
         let onboarding = GenericUserDefault.shared.getValue(Constants.shared.onboarding) as? Bool ?? false
-        let userName = GenericUserDefault.shared.getValue(Constants.shared.userName) as? String ?? ""
+        let token = GenericUserDefault.shared.getValue(Constants.shared.token) as? String ?? ""
         
-        print("token \(userName)\(onboarding)")
+        print("token \(token)\(onboarding)")
         if onboarding != true {
             onboardingTransition()
         }else{
-            userName == "" ? authorizationTransition() : tabBarTransition()
+            token == "" ? authorizationTransition() : tabBarTransition()
             self.window?.makeKeyAndVisible()
             
         }
     }
     
     func tabBarTransition() {
-        window?.rootViewController = UIHostingController(rootView: TabBarView() .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
+        window?.rootViewController = UIHostingController(rootView: PendingView() .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
         .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight))
         
 

@@ -22,11 +22,14 @@ struct DatePickerTextField: UIViewRepresentable {
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.addTarget(self.helper, action: #selector(self.helper.dateValueChanged), for: .valueChanged)
         datePicker.locale = Constants.shared.isAR ? Locale.init(identifier: "ar") : Locale.init(identifier: "en")
-
+        
         textField.placeholder = placeholder
+        
         textField.inputView = datePicker
         //textField.borderStyle = .roundedRect
-        textField.font = font(.custom(AppFonts.shared.name(AppFontsTypes.plain), size: 14)) as? UIFont
+        textField.font = font(.custom(AppFonts.shared.name(AppFontsTypes.plain), size: 15)) as? UIFont
+        textField.textColor = .grayB5B5B5
+        
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)

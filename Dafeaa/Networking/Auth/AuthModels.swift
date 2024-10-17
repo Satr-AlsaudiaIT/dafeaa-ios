@@ -26,7 +26,7 @@ struct StaticPagesModel: Codable {
 struct StaticPagesData: Codable {
     let privacyPolicy: String?
     let terms: String?
-    let aboutUs: String?
+    let about: String?
 
 }
 //MARK: - notificationList
@@ -76,6 +76,19 @@ struct QuestionsListData: Codable, Identifiable {
                 _isExpanded = newValue
             }
         }
+}
+
+
+// MARK: - ContactModel
+struct ContactModel:Codable {
+    let status: Bool?
+    let message: String?
+    let data: ContactData?
+}
+
+// MARK: - ContactData
+struct ContactData: Codable{
+    let contactPhone, contactEmail, whatsappNum: String?
 }
 
 // MARK: - RegisterModel

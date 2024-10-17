@@ -16,7 +16,7 @@ protocol MoreAPIProtocol {
     func notificationsList(skip : Int,Completion: @escaping (Result<NotificationsModel?, NSError>) -> Void)
     func getStatic(type: String, Completion: @escaping (Result<StaticPagesModel?, NSError>) -> Void)
     func questions(skip : Int,Completion: @escaping (Result<QuestionsListModel?, NSError>) -> Void)
-
+    func getContacts(Completion: @escaping (Result<ContactModel?, NSError>) -> Void)
 }
 
 
@@ -75,5 +75,10 @@ class MoreAPI: BaseAPI<MoreNetwork>, MoreAPIProtocol
         }
     }
    
+    func getContacts(Completion: @escaping (Result<ContactModel?, NSError>) -> Void){
+        self.fetchData(target: .contacts, responseClass: ContactModel.self) { (result) in
+            Completion(result)
+        }
+    }
     
 }

@@ -9,12 +9,9 @@
 import SwiftUI
 
 struct FAQView: View {
-    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel = MoreVM()
-    
-    @State var backTapped = false
-    @State var expandedAnswer :Int = -1
+        @State var expandedAnswer :Int = -1
     @State var loadMore = false
     
     var body: some View {
@@ -22,7 +19,7 @@ struct FAQView: View {
         ZStack(alignment: .bottom){
             VStack(spacing: 20){
                 VStack{
-                    NavigationBarView(title: "FAQ".localized()){
+                    NavigationBarView(title: "FAQNavTitle".localized()){
                         self.presentationMode.wrappedValue.dismiss()
                     }
                     
@@ -100,14 +97,20 @@ struct FAQView: View {
                     Spacer()
                 }
             }
+            if viewModel.isLoading {
+                ProgressView("Loading...".localized())
+                    .foregroundColor(.white)
+                    .progressViewStyle(WithBackgroundProgressViewStyle())
+            } else if viewModel.isFailed {
+                ProgressView()
+                    .hidden()
+            }
         }
-            .toastView(toast: $viewModel.toast)
-            .navigationBarHidden(true)
-        
+        .toastView(toast: $viewModel.toast)
+        .navigationBarHidden(true)
             .onAppear(){
 //                viewModel.questions(skip: 0){loadMore in
                     self.loadMore = loadMore
-                    
 //                }
                 AppState.shared.swipeEnabled = true
             }

@@ -30,5 +30,15 @@ class Constants {
     let notificationOnOrOff = "notificationOnOrOff"
     let userType = "userType"
     let needsVerification = "needVerification"
-
+    
+//    static var notificationOnOrOff: Bool {
+//        get {
+//            let ud = UserDefaults.standard
+//            return ud.value(forKey: "notificationOnOrOff") as? Bool ?? true
+//        }
+//        set(token) {
+//            let ud = UserDefaults.standard
+//            ud.set(token, forKey: "notificationOnOrOff")
+//        }
+//    }
 }

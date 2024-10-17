@@ -19,7 +19,7 @@ enum MoreNetwork
     case notificationList(skip:Int)
     case getStaticPages(type:String)
     case questions(skip: Int)
-
+    case contacts
 
 }
 
@@ -50,6 +50,8 @@ extension MoreNetwork: TargetType
                     return "\(type)"
         case let .questions(skip):
             return"settings/faq?skip=\(skip)"
+        case .contacts:
+            return "settings/contact"
  
 }
     }

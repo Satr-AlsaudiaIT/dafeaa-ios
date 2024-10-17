@@ -12,11 +12,12 @@ struct ProfileView: View {
     @StateObject var viewModel = AuthVM()
     let name = GenericUserDefault.shared.getValue(Constants.shared.userName) as? String ?? ""
     let phone = GenericUserDefault.shared.getValue(Constants.shared.phone) as? String ?? ""
+    let type = GenericUserDefault.shared.getValue(Constants.shared.userType) as? Int ?? 0
 
     var body: some View {
             ZStack{
                 VStack {
-                    NavigationBarView(title: "profileNavTitle".localized()){
+                    NavigationBarView(title: "myAccount".localized()){
                         self.presentationMode.wrappedValue.dismiss()
                     }
                     ScrollView(.vertical,showsIndicators: false){
@@ -32,7 +33,7 @@ struct ProfileView: View {
 
 
                                 VStack(spacing: 2){
-                                    Text("Hellow,".localized() + " \(name)")
+                                    Text("Hello,".localized() + " \(name)")
                                         .textModifier(.plain, 16, .black222222)
                                     Text("\(phone)")
                                         .textModifier(.plain, 12, .gray888888)
@@ -50,13 +51,22 @@ struct ProfileView: View {
                                     label: "Profile",
                                     image: Image(.iconProfile)
                                 )
+                                
+                                if type == 1{
+                                    NavigationLinkComponent(
+                                        destination: SavedAddressesView(),
+                                        label: "Saved Addresses",
+                                        image: Image(.iconAddress)
+                                    )
+                                }else{
+                                    NavigationLinkComponent(
+                                        destination: SubscriptionManagementView(),
+                                        label: "Subscription Management",
+                                        image: Image(.iconAddress)
+                                    )
+                                }
                                 NavigationLinkComponent(
-                                    destination: SavedAddressesView(),
-                                    label: "Saved Addresses",
-                                    image: Image(.iconAddress)
-                                )
-                                NavigationLinkComponent(
-                                    destination: AboutDafeaaView(),
+                                    destination: StaticPagesView(type: .constant(.aboutApp)),
                                     label: "About Dafeaa",
                                     image: Image(.iconAbout)
                                 )
@@ -114,7 +124,7 @@ struct NavigationLinkComponent<Destination: View>: View {
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 28, height: 28)
             
-            Text(label)
+                Text(label.localized())
                 .textModifier(.plain, 16, .black194558)
             Spacer()
             

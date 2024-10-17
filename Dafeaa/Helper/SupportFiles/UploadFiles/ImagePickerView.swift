@@ -23,6 +23,7 @@ struct ImagePickerView: UIViewControllerRepresentable {
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = sourceType
         imagePicker.delegate = context.coordinator
+        imagePicker.modalPresentationStyle = .automatic // This will respect the safe area
         checkPermissions()
         return imagePicker
     }
@@ -78,7 +79,6 @@ struct ImagePickerView: UIViewControllerRepresentable {
         }
     }
 }
-
 
 
 

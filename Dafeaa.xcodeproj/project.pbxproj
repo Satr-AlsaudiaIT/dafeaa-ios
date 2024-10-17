@@ -97,10 +97,13 @@
 		1820E2CF2CBAACB200627DF9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E2CE2CBAACB200627DF9 /* SettingsView.swift */; };
 		1820E2D12CBAACCD00627DF9 /* HelpAndSupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E2D02CBAACCD00627DF9 /* HelpAndSupportView.swift */; };
 		1820E2D32CBAACDD00627DF9 /* FAQView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E2D22CBAACDD00627DF9 /* FAQView.swift */; };
-		1820E2D52CBAACED00627DF9 /* AboutDafeaaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E2D42CBAACED00627DF9 /* AboutDafeaaView.swift */; };
+		1820E2D52CBAACED00627DF9 /* StaticPagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E2D42CBAACED00627DF9 /* StaticPagesView.swift */; };
 		1820E2D82CBBB22600627DF9 /* MoreVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E2D72CBBB22600627DF9 /* MoreVM.swift */; };
 		1820E2DC2CBBB26F00627DF9 /* MoreAppNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E2D92CBBB26F00627DF9 /* MoreAppNetwork.swift */; };
 		1820E2DD2CBBB26F00627DF9 /* MoreAppAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E2DA2CBBB26F00627DF9 /* MoreAppAPI.swift */; };
+		1820E2DF2CBBD58F00627DF9 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E2DE2CBBD58F00627DF9 /* ProfileImageView.swift */; };
+		1820E2E12CBC3A5400627DF9 /* CompleteDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E2E02CBC3A5400627DF9 /* CompleteDataView.swift */; };
+		1822200E2CBE7F540063CEE8 /* SubscriptionManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1822200D2CBE7F540063CEE8 /* SubscriptionManagementView.swift */; };
 		18277EB22CB2AF7E0020A647 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18277EB12CB2AF7E0020A647 /* LoginView.swift */; };
 		18277EB72CB2B1D00020A647 /* AuthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18277EB62CB2B1C20020A647 /* AuthVM.swift */; };
 		18277EB92CB2B3900020A647 /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = 18277EB82CB2B3900020A647 /* PhoneNumberKit */; };
@@ -118,6 +121,9 @@
 		18AF0DF52CB15CB10061F07E /* Bahij_TheSansArabic-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E67B1C2CADB75900C10AB5 /* Bahij_TheSansArabic-Black.ttf */; };
 		18AF0DF62CB15CB10061F07E /* Bahij_TheSansArabic-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E67B202CADB75900C10AB5 /* Bahij_TheSansArabic-ExtraBold.ttf */; };
 		18AF0DF72CB15CB10061F07E /* Bahij_TheSansArabic-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E67B1D2CADB75900C10AB5 /* Bahij_TheSansArabic-ExtraLight.ttf */; };
+		18B8D56E2CC02C8D00C2676C /* PendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8D56D2CC02C8D00C2676C /* PendingView.swift */; };
+		18B8D5702CC02E6200C2676C /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8D56F2CC02E6200C2676C /* LottieAnimationView.swift */; };
+		18B8D5722CC0333500C2676C /* pending.json in Resources */ = {isa = PBXBuildFile; fileRef = 18B8D5712CC0333500C2676C /* pending.json */; };
 		18EF4D8D2CB4F92F00599D03 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF4D8C2CB4F92F00599D03 /* ForgotPasswordView.swift */; };
 		18EF4D8F2CB4F98300599D03 /* OTPConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF4D8E2CB4F98300599D03 /* OTPConfirmationView.swift */; };
 		18EF4D912CB4F9C300599D03 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF4D902CB4F9C300599D03 /* ResetPasswordView.swift */; };
@@ -250,10 +256,13 @@
 		1820E2CE2CBAACB200627DF9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1820E2D02CBAACCD00627DF9 /* HelpAndSupportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpAndSupportView.swift; sourceTree = "<group>"; };
 		1820E2D22CBAACDD00627DF9 /* FAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQView.swift; sourceTree = "<group>"; };
-		1820E2D42CBAACED00627DF9 /* AboutDafeaaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutDafeaaView.swift; sourceTree = "<group>"; };
+		1820E2D42CBAACED00627DF9 /* StaticPagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticPagesView.swift; sourceTree = "<group>"; };
 		1820E2D72CBBB22600627DF9 /* MoreVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreVM.swift; sourceTree = "<group>"; };
 		1820E2D92CBBB26F00627DF9 /* MoreAppNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreAppNetwork.swift; sourceTree = "<group>"; };
 		1820E2DA2CBBB26F00627DF9 /* MoreAppAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreAppAPI.swift; sourceTree = "<group>"; };
+		1820E2DE2CBBD58F00627DF9 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		1820E2E02CBC3A5400627DF9 /* CompleteDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteDataView.swift; sourceTree = "<group>"; };
+		1822200D2CBE7F540063CEE8 /* SubscriptionManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionManagementView.swift; sourceTree = "<group>"; };
 		18277EB12CB2AF7E0020A647 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		18277EB62CB2B1C20020A647 /* AuthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVM.swift; sourceTree = "<group>"; };
 		18277EBE2CB2B9AC0020A647 /* PhoneNumberRepresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberRepresenter.swift; sourceTree = "<group>"; };
@@ -262,6 +271,9 @@
 		18277ECB2CB3A48E0020A647 /* SignUpStep2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep2View.swift; sourceTree = "<group>"; };
 		18277ECD2CB3AD140020A647 /* NavigationPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPath.swift; sourceTree = "<group>"; };
 		18AF0DEE2CB114F80061F07E /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
+		18B8D56D2CC02C8D00C2676C /* PendingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingView.swift; sourceTree = "<group>"; };
+		18B8D56F2CC02E6200C2676C /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
+		18B8D5712CC0333500C2676C /* pending.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pending.json; sourceTree = "<group>"; };
 		18EF4D8C2CB4F92F00599D03 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		18EF4D8E2CB4F98300599D03 /* OTPConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPConfirmationView.swift; sourceTree = "<group>"; };
 		18EF4D902CB4F9C300599D03 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
@@ -612,6 +624,7 @@
 		14E67AB82CAC643A00C10AB5 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				18B8D56F2CC02E6200C2676C /* LottieAnimationView.swift */,
 				18277EBE2CB2B9AC0020A647 /* PhoneNumberRepresenter.swift */,
 				14E67A822CAC643A00C10AB5 /* AutoSlider */,
 				14E67A842CAC643A00C10AB5 /* CustomSegment */,
@@ -634,6 +647,7 @@
 				14E67B272CADBA4200C10AB5 /* Localizable */,
 				14E67AEA2CADB0CF00C10AB5 /* Fonts */,
 				14E67A322CAC5CCD00C10AB5 /* Assets.xcassets */,
+				18B8D5712CC0333500C2676C /* pending.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -803,9 +817,10 @@
 		1820E2C32CBAAC1000627DF9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1822200C2CBE7F430063CEE8 /* SubscriptionManagementView */,
 				1820E2C42CBAAC2800627DF9 /* Profile */,
 				1820E2C52CBAAC3400627DF9 /* Addresses */,
-				1820E2CA2CBAAC7600627DF9 /* About */,
+				1820E2CA2CBAAC7600627DF9 /* StaticPages */,
 				1820E2CB2CBAAC8100627DF9 /* FAQ */,
 				1820E2CC2CBAAC8B00627DF9 /* HelpAndSupport */,
 				1820E2CD2CBAACA800627DF9 /* Settings */,
@@ -830,12 +845,12 @@
 			path = Addresses;
 			sourceTree = "<group>";
 		};
-		1820E2CA2CBAAC7600627DF9 /* About */ = {
+		1820E2CA2CBAAC7600627DF9 /* StaticPages */ = {
 			isa = PBXGroup;
 			children = (
-				1820E2D42CBAACED00627DF9 /* AboutDafeaaView.swift */,
+				1820E2D42CBAACED00627DF9 /* StaticPagesView.swift */,
 			);
-			path = About;
+			path = StaticPages;
 			sourceTree = "<group>";
 		};
 		1820E2CB2CBAAC8100627DF9 /* FAQ */ = {
@@ -879,6 +894,14 @@
 			path = More;
 			sourceTree = "<group>";
 		};
+		1822200C2CBE7F430063CEE8 /* SubscriptionManagementView */ = {
+			isa = PBXGroup;
+			children = (
+				1822200D2CBE7F540063CEE8 /* SubscriptionManagementView.swift */,
+			);
+			path = SubscriptionManagementView;
+			sourceTree = "<group>";
+		};
 		18277EB02CB2AF6B0020A647 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -900,6 +923,9 @@
 			isa = PBXGroup;
 			children = (
 				18277ECB2CB3A48E0020A647 /* SignUpStep2View.swift */,
+				1820E2E02CBC3A5400627DF9 /* CompleteDataView.swift */,
+				18B8D56D2CC02C8D00C2676C /* PendingView.swift */,
+				1820E2DE2CBBD58F00627DF9 /* ProfileImageView.swift */,
 			);
 			path = SignUpStep2;
 			sourceTree = "<group>";
@@ -1108,6 +1134,7 @@
 				14E67A662CAC5E3400C10AB5 /* MOLH-Info.plist in Resources */,
 				14E67B292CADBA4200C10AB5 /* Localizable.strings in Resources */,
 				14E67B122CADB73E00C10AB5 /* Poppins-ExtraBold.ttf in Resources */,
+				18B8D5722CC0333500C2676C /* pending.json in Resources */,
 				14E67B172CADB73E00C10AB5 /* Poppins-Regular.ttf in Resources */,
 				14E67B192CADB73E00C10AB5 /* Poppins-Thin.ttf in Resources */,
 				14E67B182CADB73E00C10AB5 /* Poppins-SemiBold.ttf in Resources */,
@@ -1251,6 +1278,7 @@
 				14E67AE32CAC643B00C10AB5 /* CustomModifiers.swift in Sources */,
 				14E67ABD2CAC643B00C10AB5 /* AppFonts.swift in Sources */,
 				14E67AD72CAC643B00C10AB5 /* NavigationUtil.swift in Sources */,
+				1822200E2CBE7F540063CEE8 /* SubscriptionManagementView.swift in Sources */,
 				14E67ADE2CAC643B00C10AB5 /* ValidateTF.swift in Sources */,
 				14E67A652CAC5E3400C10AB5 /* MOLH-dummy.m in Sources */,
 				14E67AD32CAC643B00C10AB5 /* NetWorkHelper.swift in Sources */,
@@ -1262,7 +1290,7 @@
 				14E67A6A2CAC5E3400C10AB5 /* MOLHFontLocalizableViews.swift in Sources */,
 				1820E2CF2CBAACB200627DF9 /* SettingsView.swift in Sources */,
 				14E67AC62CAC643B00C10AB5 /* SliderView.swift in Sources */,
-				1820E2D52CBAACED00627DF9 /* AboutDafeaaView.swift in Sources */,
+				1820E2D52CBAACED00627DF9 /* StaticPagesView.swift in Sources */,
 				14E67A6B2CAC5E3400C10AB5 /* MOLHLanguage.swift in Sources */,
 				1820E2AB2CB9066D00627DF9 /* AuthModels.swift in Sources */,
 				1820E2A72CB905F800627DF9 /* AuthAppAPI.swift in Sources */,
@@ -1285,6 +1313,7 @@
 				18EF4D912CB4F9C300599D03 /* ResetPasswordView.swift in Sources */,
 				14E67AC42CAC643B00C10AB5 /* uiview+exSwiftUI.swift in Sources */,
 				14E67AD52CAC643B00C10AB5 /* MainButtonView.swift in Sources */,
+				18B8D5702CC02E6200C2676C /* LottieAnimationView.swift in Sources */,
 				14E67AD02CAC643B00C10AB5 /* NotificationLoggerCell.swift in Sources */,
 				14E67ABF2CAC643B00C10AB5 /* CustomSegment.swift in Sources */,
 				18AF0DEF2CB114F80061F07E /* OnBoardingView.swift in Sources */,
@@ -1304,6 +1333,7 @@
 				14E67ACF2CAC643B00C10AB5 /* NetWorkLogger.swift in Sources */,
 				18277ECC2CB3A48E0020A647 /* SignUpStep2View.swift in Sources */,
 				14E67ACA2CAC643B00C10AB5 /* BaseAPI.swift in Sources */,
+				18B8D56E2CC02C8D00C2676C /* PendingView.swift in Sources */,
 				1820E2AE2CB965CE00627DF9 /* MainView.swift in Sources */,
 				14E67ADC2CAC643B00C10AB5 /* MainAppSecuredTF.swift in Sources */,
 				14E67AE72CAC643B00C10AB5 /* DocumentPickerView.swift in Sources */,
@@ -1311,6 +1341,7 @@
 				1820E2822CB904F500627DF9 /* DafeaaApp.swift in Sources */,
 				14E67AC72CAC643B00C10AB5 /* CustomSegmentView.swift in Sources */,
 				14E67AE62CAC643B00C10AB5 /* ToastMessageSwiftUIView.swift in Sources */,
+				1820E2E12CBC3A5400627DF9 /* CompleteDataView.swift in Sources */,
 				14E67AD62CAC643B00C10AB5 /* NavigationBarView.swift in Sources */,
 				1820E2BE2CBA98A600627DF9 /* ProfileView.swift in Sources */,
 				14E67ABC2CAC643B00C10AB5 /* GenaricUserDefult.swift in Sources */,
@@ -1318,6 +1349,7 @@
 				14E67AC12CAC643B00C10AB5 /* FileManger+ext.swift in Sources */,
 				1820E2D12CBAACCD00627DF9 /* HelpAndSupportView.swift in Sources */,
 				14E67AD42CAC643B00C10AB5 /* KeyboardResponsiveModifier.swift in Sources */,
+				1820E2DF2CBBD58F00627DF9 /* ProfileImageView.swift in Sources */,
 				14E67AC22CAC643B00C10AB5 /* String_Extentions.swift in Sources */,
 				18277ECE2CB3AD140020A647 /* NavigationPath.swift in Sources */,
 				14E67ADF2CAC643B00C10AB5 /* LogoView.swift in Sources */,
@@ -1501,13 +1533,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
+				DEVELOPMENT_TEAM = RS5H8CVHFZ;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Dafeaa/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "App needs to access to your camera to get a photo for you";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App needs to access to your Photo library to get a photo for you";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
@@ -1522,6 +1558,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Plantech.Dafeaa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1534,13 +1571,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
+				DEVELOPMENT_TEAM = RS5H8CVHFZ;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Dafeaa/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "App needs to access to your camera to get a photo for you";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App needs to access to your Photo library to get a photo for you";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
@@ -1555,6 +1596,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Plantech.Dafeaa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -99,6 +99,7 @@ PODS:
     - GoogleUtilities/Privacy
   - GTMSessionFetcher/Core (1.7.2)
   - IQKeyboardManagerSwift (7.0.3)
+  - lottie-ios (4.5.0)
   - nanopb (2.30906.0):
     - nanopb/decode (= 2.30906.0)
     - nanopb/encode (= 2.30906.0)
@@ -121,6 +122,7 @@ DEPENDENCIES:
   - Firebase/Messaging (~> 7.1.0)
   - FlagPhoneNumber
   - IQKeyboardManagerSwift
+  - lottie-ios
   - SDWebImageSwiftUI
   - SwiftyJSON
 
@@ -142,6 +144,7 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMSessionFetcher
     - IQKeyboardManagerSwift
+    - lottie-ios
     - nanopb
     - PromisesObjC
     - SDWebImage
@@ -165,12 +168,13 @@ SPEC CHECKSUMS:
   GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
   IQKeyboardManagerSwift: f9c5dc36cba16ddd2e51fa7d51c34a2e083029b5
+  lottie-ios: a881093fab623c467d3bce374367755c272bdd59
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   SDWebImage: 066c47b573f408f18caa467d71deace7c0f8280d
   SDWebImageSwiftUI: dcff3d05fd0579ff280221ae8856c34ac3b67f25
   SwiftyJSON: f5b1bf1cd8dd53cd25887ac0eabcfd92301c6a5a
 
-PODFILE CHECKSUM: b9b9a1bc0b264b5f2f2bd8ea05fbdcba9b5ba6b4
+PODFILE CHECKSUM: 8a5c330e5c078e69e726d630fca80fa7a30e5bfd
 
 COCOAPODS: 1.15.2

@@ -12,7 +12,10 @@ final class MoreVM : ObservableObject {
     @Published var toast: FancyToast? = nil
     @Published private var _isLoading = false
     @Published private var _isFailed = false
+    @Published private var _isLoginSuccess = false
     @Published private var _questionList : [QuestionsListData] = []
+    @Published private var _staticData :  StaticPagesData?
+    @Published private var _contactData :  ContactData?
 
     
     private var token = ""
@@ -32,9 +35,23 @@ final class MoreVM : ObservableObject {
         get { return _isFailed}
     }
     
+    var contactData: ContactData? {
+        get { return _contactData}
+    }
+    
+    var isLoginSuccess : Bool {
+        get {return _isLoginSuccess}
+        set {}
+    }
+    
     var questionList : [QuestionsListData] {
         get {return _questionList//[QuestionsListData(id: 0, question: "ما هو تطبيق دافع؟", answer: "ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟"),QuestionsListData(id: 1, question: "ما هو تطبيق دافع؟", answer: "ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟ما هو تطبيق دافع؟")]
         }
+        set {}
+    }
+    
+    var staticData : StaticPagesData? {
+        get {return _staticData}
         set {}
     }
     
@@ -73,5 +90,109 @@ final class MoreVM : ObservableObject {
         }
     }
 
-}
+    func logOut() {
+        self._isLoading = true
+        api.logOut {(result)  in
+            switch result {
+            case .success(let response):
+                self._message = response?.message ?? ""
+                self._isLoading = false
+                self._isFailed = false
+                self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
+                self._isLoginSuccess = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3){
+                    self.reset()
+                }
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+            }
+        }
+    }
+    func  deleteAccount() {
+        self._isLoading = true
+        api.deleteAccount {(result)  in
+            switch result {
+            case .success(let response):
+                self._message = response?.message ?? ""
+                self._isLoading = false
+                self._isFailed = false
+                self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
+                
+                self._isLoginSuccess = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3){
+                    self.reset()
+                }
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+            }
+        }
+    }
+    
+       
+    func  getStaticPages(type : String) {
+        self._isLoading = true
+        api.getStatic(type: type) {(result)  in
+            switch result {
+            case .success(let response):
+                self._isLoading = false
+                self._isFailed = false
+                self._staticData = response?.data
+            case .failure(let error):
+                self._isLoading = false
+                self._isFailed = true
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message )
+            }
+        }
+    }
+    
+    func  getContacts() {
+        self._isLoading = true
+        api.getContacts {(result)  in
+            switch result {
+            case .success(let response):
+                self._isLoading = false
+                self._isFailed = false
+                self._contactData = response?.data
+            case .failure(let error):
+                self._isLoading = false
+                self._isFailed = true
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message )
+            }
+        }
+    }
 
+    func activeNotification (active: Int){
+        self._isLoading = true
+        api.notifyOnOff(active: active) {(result)  in
+            switch result {
+            case .success(let response):
+                self._message = response?.message ?? ""
+                self._isLoading = false
+                self._isFailed = false
+                self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
+                
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+            }
+        }
+    }
+    
+    
+    func reset(){
+        GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
+        GenericUserDefault.shared.setValue("", Constants.shared.token)
+        MOLH.reset()
+        
+    }
+}

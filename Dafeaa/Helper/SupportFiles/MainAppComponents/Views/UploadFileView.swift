@@ -13,7 +13,7 @@ struct UploadFileView: View {
     @Binding var selectedImage: UIImage?
     @Binding var imageURL: String?
     @State var title: String?
-    @State var isShowFromEdit: Bool
+    @State var isShowFromEdit: Bool = false
     @State private var showFilePicker: Bool = false
     @State private var showFileTypeSelection: Bool = false
     @State private var pickerSourceType: UIImagePickerController.SourceType = .photoLibrary
@@ -22,57 +22,20 @@ struct UploadFileView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(Color(.mainOrange).opacity(0.1))
+                .fill(Color(.grayF6F6F6))
                 .cornerRadius(10)
                 .frame(width: width,height: height)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(style: StrokeStyle(lineWidth: 2, dash: [8]))
-                        .foregroundColor(Color(.lightGray))
-                )
+//                .overlay(
+//                    RoundedRectangle(cornerRadius: 10)
+//                        .stroke(style: StrokeStyle(lineWidth: 2, dash: [8]))
+//                        .foregroundColor(Color(.lightGray))
+//                )
                 .onTapGesture {
                     showFilePicker = true
                 }
             
             VStack(spacing: 10) {
                 if isShowFromEdit != true {
-//                    if selectedFile != URL(fileURLWithPath: "") && selectedFile != nil {
-//                        if let fileURL = selectedFile {
-//                            
-//                            if fileURL.pathExtension.lowercased() == "pdf" {
-//                                // Show PDF preview
-//                                
-//                                if let pdfData = try? Data(contentsOf: fileURL) {
-//                                    ZStack {
-//                                        PDFKitView(data: pdfData)
-//                                            .cornerRadius(10)
-//                                        VStack {
-//                                            HStack{
-//                                                Spacer()
-//                                                Button {
-//                                                    selectedFile = URL(fileURLWithPath: "")
-//                                                    selectedImage = UIImage()
-//
-//                                                } label: {
-//                                                    Image.init(uiImage: Asset.multiplyDelete.image)
-//                                                        .resizable()
-//                                                        .foregroundColor(.black)
-//                                                        .frame(width: 35,height: 35)
-//                                                        .padding(.trailing,5)
-//                                                        .padding(.top,0)
-//                                                }
-//                                            }
-//                                            Spacer()
-//                                        }
-//                                    }
-//                                    
-//                                }
-//                                else {
-//                                    Text("PDF Preview not available".localized())
-//                                }
-//                            }
-//                        }
-//                    }
                      if selectedImage != UIImage() && selectedImage != nil {
                         if let image = selectedImage {
                             ZStack {
@@ -105,17 +68,14 @@ struct UploadFileView: View {
                     }
                     else {
                         //MARK:- ToDo uplaod image
-                        Image.init("uiImage: Asset.uploadFileIcon.image")
+                        Image(.uplaodFile)
                             .resizable()
                             .frame(width: 28,height: 28)
-                        Text(title ?? "")
-                            .font(.custom(AppFonts.shared.name(AppFontsTypes.light), size: 12))
-                            .foregroundColor(Color(.gray888888))
-                        Text("Upload it in format \n PNG, JPG, JPEG".localized())
+                        Text("uploadFileHere".localized())
                             .multilineTextAlignment(.center)
-                            .font(.custom(AppFonts.shared.name(AppFontsTypes.extraLight), size: 11))
-                            .foregroundColor(Color(.lightGray))
-                            .padding(.top,-10)
+                            .font(.custom(AppFonts.shared.name(AppFontsTypes.plain), size: 15))
+                            .foregroundColor(Color(.grayB5B5B5))
+//                            .padding(.top,-10)
                     }
                     }
                 else  {

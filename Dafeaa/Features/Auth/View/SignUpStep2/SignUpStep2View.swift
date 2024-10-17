@@ -18,8 +18,9 @@ struct SignUpStep2View: View {
     @State private var isPasswordVisible: Bool = false
     @State private var confirmPassword: String = ""
     @State private var isconfirmPasswordVisible: Bool = false
-    @State private var isFirstAgreeChecked: Bool = false
-    @State private var isSecondAgreeChecked: Bool = false
+    @State private var isAgreeChecked: Bool = false
+    @State private var selectedProfileImage: UIImage?
+    @State private var selectedProfileImageURL: String? = ""
     var selectedOption: AccountTypeOption = .none
     @StateObject var viewModel = AuthVM()
     @FocusState private var focusedField: FormField?
@@ -59,6 +60,11 @@ struct SignUpStep2View: View {
                 }
                 ScrollView {
                     VStack(alignment:.leading, spacing: 8) {
+                        HStack {
+                            Spacer()
+                            ProfileImageView(selectedImage: $selectedProfileImage, imageURL: selectedProfileImageURL, isShowFromEdit: false)
+                            Spacer()
+                        }
                         CustomMainTextField(text: $name, placeHolder: "Name", image: .nameTFIcon)
                             .focused($focusedField, equals: .userName)
                         PhoneNumberField(
@@ -76,7 +82,7 @@ struct SignUpStep2View: View {
                         CustomPasswordField(password: $confirmPassword, isPasswordVisible: $isconfirmPasswordVisible)
                             .focused($focusedField, equals: .confirmPassword)
                         Spacer()
-                        TermsAndConditionsView(isFirstLineChecked: $isFirstAgreeChecked, isAgreeChecked: $isSecondAgreeChecked)
+                        TermsAndConditionsView(isAgreeChecked: $isAgreeChecked)
                     }
                     
                     Spacer()
@@ -85,7 +91,7 @@ struct SignUpStep2View: View {
                 }
                 
                 ReusableButton(buttonText: "createAccount".localized(), isEnabled: true) {
-                    viewModel.validateRegister(name: name, email: email, phone: phoneNumber, accountType: selectedOption, password: password, confirmPassword: confirmPassword,isFirstAgreeChecked: isFirstAgreeChecked,isSecondAgreeChecked:isSecondAgreeChecked)
+                    viewModel.validateRegister(photo: selectedProfileImage,name: name, email: email, phone: phoneNumber, accountType: selectedOption, password: password, confirmPassword: confirmPassword,isAgreeChecked:isAgreeChecked)
                         
                 }.navigationDestination(isPresented: $viewModel._isSignUpSuccess) {
                     OTPConfirmationView(phone: phoneNumber, isForgetPassword: false)
@@ -170,32 +176,14 @@ struct SignUpStep2View: View {
 import SwiftUI
 
 struct TermsAndConditionsView: View {
-    @Binding var isFirstLineChecked: Bool
+//    @Binding var isFirstLineChecked: Bool
     @Binding var isAgreeChecked: Bool
 
     @State private var showTermsAndConditions: Bool = false // To handle navigation
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .top, spacing: 10) {
-                // Checkbox
-                Button(action: {
-                    isFirstLineChecked.toggle()
-                }) {
-                    Image(systemName: isFirstLineChecked ? "checkmark.square.fill" : "square")
-                        .foregroundColor(isFirstLineChecked ? Color(.primary) : .gray)
-                        .font(.system(size: 24))
-                }
-                
-                // Text with attributed clickable parts
-                Text(firstAttributedString())
-                    .font(.system(size: 14))
-                    .onTapGesture {
-                        showTermsAndConditions = true // Handle navigation on click
-                    }
-               
-            }
-            .padding(.horizontal)
+            
             HStack(alignment: .top, spacing: 10) {
                 // Checkbox
                 Button(action: {
