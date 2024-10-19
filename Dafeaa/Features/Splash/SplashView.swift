@@ -76,10 +76,8 @@ struct SplashView: View {
     }
     
     func tabBarTransition() {
-        window?.rootViewController = UIHostingController(rootView: PendingView() .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
+        window?.rootViewController = UIHostingController(rootView: TabBarView() .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
         .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight))
-        
-
     }
     
     func onboardingTransition(){
@@ -90,7 +88,6 @@ struct SplashView: View {
     func authorizationTransition() {
         window?.rootViewController = UIHostingController(rootView: LoginView() .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
         .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight))
-
     }
     
     //change rootview

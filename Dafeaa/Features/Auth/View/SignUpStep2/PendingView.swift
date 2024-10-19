@@ -18,42 +18,39 @@ struct PendingView: View {
     var body: some View {
         ZStack{
             VStack {
-                NavigationBarView(title: "SuccessViewNavTitle".localized()){
+                NavigationBarView(title: "PendingViewNavTitle".localized()){
                     self.presentationMode.wrappedValue.dismiss()
                 }
                
                             
                     VStack(spacing: 0){        
                         Spacer()
-                        LottieView(animationFileName: "pending", loopMode: .loop)
+                        LottieView(animationFileName: "pending", loopMode: .playOnce)
 //
 
                             .frame(width: 144, height: 144)
                         HStack {
                             Spacer()
-                            Text("resetPasswordTitle".localized())
+                            Text("pendingViewTitle".localized())
                                 .textModifier(.plain, 19, .black222222)
                                 .frame(maxWidth: .infinity)
                                 .padding(.top,24)
                             Spacer()
                         }
                         .frame(maxWidth: .infinity)
-                        Text("resetPasswordSubTitle".localized())
+                        Text("pendingViewSubTitle".localized())
                             .frame(maxWidth: .infinity,alignment: .leading)
                             .textModifier(.plain, 15, .gray666666)
                             .padding(.top,5)
                             .multilineTextAlignment(.center)
                         Spacer()
-                        ReusableButton(buttonText: "send".localized()){
+                        ReusableButton(buttonText: "send".localized(),image: .loading, buttonColor: .gray){
                             viewModel.validateForgetPasswordPhone(phone:phoneNumber)
                         }.padding(.top,16)
                             .navigationDestination(isPresented: $isSendSuccess) {
                                 OTPConfirmationView()
                             }
-                        
-                        
                     }.padding(24)
-                
             }.navigationDestination(isPresented: $viewModel._isSendCodeSuccess) {
                 OTPConfirmationView(phone: phoneNumber,isForgetPassword: true)
             }

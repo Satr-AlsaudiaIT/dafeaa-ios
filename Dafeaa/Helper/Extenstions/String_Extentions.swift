@@ -176,6 +176,19 @@ extension String{
         }
     }
     
+    var isValidPhoneNumber: Bool {
+           // Define the regex pattern
+           let pattern = "^(009665|9665|\\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$"
+           
+           // Create a regular expression from the pattern
+           let regex = try? NSRegularExpression(pattern: pattern, options: [])
+           
+           // Check if the string matches the regex pattern
+           let range = NSRange(location: 0, length: self.utf16.count)
+           return regex?.firstMatch(in: self, options: [], range: range) != nil
+       }
+    
+    
     //validate Password
     var isValidPassword: Bool {
         if(self.count >= 8 ){

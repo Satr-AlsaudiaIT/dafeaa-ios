@@ -10,7 +10,7 @@ enum ButtonColors {
     case black
     case yellow
     case transparent
-    
+    case gray
     // Function to return the correct color from assets
     func color() -> Color {
         switch self {
@@ -20,6 +20,8 @@ enum ButtonColors {
             return Color(.primary)
         case .transparent:
             return Color.clear
+        case .gray:
+            return Color(.grayDADADA)
         }
     }
 }
@@ -30,8 +32,10 @@ import SwiftUI
 struct ReusableButton: View {
     var buttonText: String
     var isEnabled: Bool = true
-    var action: () -> Void
+    var image : UIImage?
     @State var buttonColor: ButtonColors = .black
+
+    var action: () -> Void
 
     
     var body: some View {
@@ -46,6 +50,9 @@ struct ReusableButton: View {
                 .frame(maxWidth: .infinity, minHeight: 51)
                 .background(isEnabled ? Color(buttonColor.color()) : Color(.grayDADADA))
                 .cornerRadius(32)
+            if let image = image {
+                Image(uiImage: image)
+            }
         }
         .disabled(!isEnabled)
         .shadow(color: isEnabled ? Color(.dropShadow2B2D3333).opacity(0.2) : .clear, radius: 24, x: 0, y: 10)

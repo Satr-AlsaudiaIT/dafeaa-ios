@@ -105,4 +105,27 @@
 "CommLecs" = "السجل التجاري";
 "endDate" = "تاريخ الانتهاء";
 "sendData" = "إرسال البيانات";
-"SuccessViewNavTitle" = "الطلب قيد التنفيذ";
+"PendingViewNavTitle" = "الطلب قيد التنفيذ";
+"pendingViewTitle" = "طلبكم قيد المراجعة";
+"pendingViewSubTitle" = "لقد تم إستلام طلبكم بنجاح, والان الطلب تحت المراجعه والنظر من قبل الفريق, سيتم اشعاركم حين انتهاء المراجعه لاستكمال انشاء الحساب.";
+
+//MARK: Validations
+"EnterUserPhoto" = "برجاء ادخال صورة المستخدم";
+"EnterUserName" = "برجاء ادخال اسم المستخدم";
+"EnterValidUserName" = "برجاء ادخال اسم مستخدم صالح";
+"EnterEmail" = "برجاء ادخال البريد الالكتروني";
+"EnterValidEmail" = "برجاء ادخال عنوان بريد الكتروني صالح";
+"EnterPhone" = "برجاء ادخال رقم الهاتف";
+"EnterValidPhone" = "برجاء ادخال رقم هاتف صالح";
+"EnterPassword" = "برجاء ادخال كلمة المرور";
+"EnterValidPassword" = "برجاء ادخال كلمة مرور صالحة على الاقل ٨ حروف وارقام";
+"PasswordConfirmn'tMatch" = "كلمة المرور وتاكيد كلمة المرور غير متطابقتان";
+"PleaseTermsconditions" = "برجاء الموافقة على شروط الاستخدام";
+"EnterThecode" = "برجاء ادخال الكود";
+"Enter4DigitCode" = "برجاء ادخال الكود";
+"EnterYourPassword" = "برجاء ادخال كلمة المرور الخاصة بك";
+"EnterValidPassword8Character" = "برجاء ادخال كلمة مرور صالحة على الاقل ٨ حروف وارقام";
+"EnterConfirmPassword" = "برجاء ادخال تأكيد كلمة المرور";
+"Success" = "تم بنجاح";
+"Error" = "خطأ";
+
