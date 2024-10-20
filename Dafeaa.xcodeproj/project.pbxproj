@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		06927861EEAE5585BE0E4A0B /* Pods_Dafeaa_DafeaaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04506866F8834DF97CA29158 /* Pods_Dafeaa_DafeaaUITests.framework */; };
+		14D124A22CC4E068005F0084 /* SubscribtionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D124A12CC4E068005F0084 /* SubscribtionCell.swift */; };
+		14D124A82CC56A46005F0084 /* SubscribtionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D124A72CC56A46005F0084 /* SubscribtionModel.swift */; };
 		14E67A312CAC5CCA00C10AB5 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E67A302CAC5CCA00C10AB5 /* SplashView.swift */; };
 		14E67A332CAC5CCD00C10AB5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14E67A322CAC5CCD00C10AB5 /* Assets.xcassets */; };
 		14E67A362CAC5CCD00C10AB5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14E67A352CAC5CCD00C10AB5 /* Preview Assets.xcassets */; };
@@ -152,6 +154,8 @@
 		04506866F8834DF97CA29158 /* Pods_Dafeaa_DafeaaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dafeaa_DafeaaUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BDD0028FB293E22686DB26E /* Pods_Dafeaa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dafeaa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12A71B42AE0FB38CD9AEFC62 /* Pods-DafeaaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DafeaaTests.release.xcconfig"; path = "Target Support Files/Pods-DafeaaTests/Pods-DafeaaTests.release.xcconfig"; sourceTree = "<group>"; };
+		14D124A12CC4E068005F0084 /* SubscribtionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribtionCell.swift; sourceTree = "<group>"; };
+		14D124A72CC56A46005F0084 /* SubscribtionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribtionModel.swift; sourceTree = "<group>"; };
 		14E67A2B2CAC5CCA00C10AB5 /* Dafeaa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dafeaa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14E67A302CAC5CCA00C10AB5 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		14E67A322CAC5CCD00C10AB5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -314,6 +318,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		14C79BB92CC4DF8600EF837F /* Subscribtions */ = {
+			isa = PBXGroup;
+			children = (
+				14D124A12CC4E068005F0084 /* SubscribtionCell.swift */,
+				14D124A72CC56A46005F0084 /* SubscribtionModel.swift */,
+			);
+			path = Subscribtions;
+			sourceTree = "<group>";
+		};
 		14E67A222CAC5CCA00C10AB5 = {
 			isa = PBXGroup;
 			children = (
@@ -950,6 +963,7 @@
 		18277ECA2CB3A47D0020A647 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				14C79BB92CC4DF8600EF837F /* Subscribtions */,
 				18277EB52CB2B1B40020A647 /* SignUpStep2 */,
 				18277EC62CB3A3F80020A647 /* SignUpStep1 */,
 				18277EB42CB2B1A70020A647 /* Login */,
@@ -1285,6 +1299,7 @@
 				14E67ACE2CAC643B00C10AB5 /* UploadImage.swift in Sources */,
 				14E67AC52CAC643B00C10AB5 /* ViewExtension.swift in Sources */,
 				1820E2C72CBAAC4E00627DF9 /* ProfileDetailView.swift in Sources */,
+				14D124A82CC56A46005F0084 /* SubscribtionModel.swift in Sources */,
 				18277EBF2CB2B9BA0020A647 /* PhoneNumberRepresenter.swift in Sources */,
 				1820E2C92CBAAC6600627DF9 /* SavedAddressesView.swift in Sources */,
 				14E67A6A2CAC5E3400C10AB5 /* MOLHFontLocalizableViews.swift in Sources */,
@@ -1317,6 +1332,7 @@
 				14E67AD02CAC643B00C10AB5 /* NotificationLoggerCell.swift in Sources */,
 				14E67ABF2CAC643B00C10AB5 /* CustomSegment.swift in Sources */,
 				18AF0DEF2CB114F80061F07E /* OnBoardingView.swift in Sources */,
+				14D124A22CC4E068005F0084 /* SubscribtionCell.swift in Sources */,
 				14E67ACB2CAC643B00C10AB5 /* GenericError.swift in Sources */,
 				1820E2BA2CBA985300627DF9 /* HomeView.swift in Sources */,
 				14E67ADD2CAC643B00C10AB5 /* MainAppTF.swift in Sources */,
@@ -1550,7 +1566,7 @@
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1588,7 +1604,7 @@
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

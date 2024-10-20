@@ -80,7 +80,7 @@ class AuthVM: ObservableObject {
         } else if !confirmPassword.isPasswordConfirm(password: password, confirmPassword: confirmPassword) {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "PasswordConfirmn'tMatch".localized())
         } else if !isAgreeChecked {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: PleaseTermsconditions" .localized())
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "PleaseTermsconditions" .localized())
         } else {
             let registerDic: [String: Any] = ["name": name,
                                               "email": email,
