@@ -12,20 +12,21 @@ struct NavigationBarView: View {
     @State var title: String = ""
     @State var color : Color = .black222222
     @State var backGroundColor : Color = Color(.primary)
-    @State var withoutBack: Bool = false
-    let onBack: () -> Void
+    var onBack: (() -> Void)? = nil  // Optional onBack closure
 
-    var body: some View {
-        HStack {
-            Button(action: onBack, label: {
-                //MARK: - ToDo
-                Image(!withoutBack ? "backArrow" : "")
-                    .resizable()
-                    .frame(width: 10 ,height: 17)
-                
-            })
+      var body: some View {
+          HStack {
+              if let onBack = onBack {
+                  Button(action: onBack, label: {
+                      Image("backArrow")
+                          .resizable()
+                          .frame(width: 10, height: 17)
+                  })
+              } else {
+                  Spacer()
+              }
             Spacer()
-            Text(title)
+            Text(title.localized())
                 .font(.custom(AppFonts.shared.name(AppFontsTypes.plain), size: 17))
                 .foregroundStyle(Color(color))
             Spacer()

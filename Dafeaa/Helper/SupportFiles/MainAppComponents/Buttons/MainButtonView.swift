@@ -44,7 +44,7 @@ struct ReusableButton: View {
                 action()
             }
         }) {
-            Text(buttonText)
+            Text(buttonText.localized())
                 .font(.system(size: 15, weight: .bold))
                 .textModifier(.plain, 15,.white)
                 .frame(maxWidth: .infinity, minHeight: 51)

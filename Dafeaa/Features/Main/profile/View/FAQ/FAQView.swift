@@ -19,7 +19,7 @@ struct FAQView: View {
         ZStack(alignment: .bottom){
             VStack(spacing: 20){
                 VStack{
-                    NavigationBarView(title: "FAQNavTitle".localized()){
+                    NavigationBarView(title: "FAQNavTitle"){
                         self.presentationMode.wrappedValue.dismiss()
                     }
                     

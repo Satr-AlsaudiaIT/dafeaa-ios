@@ -21,5 +21,5 @@ struct SubscribtionModelData: Codable {
     let price: Int?
     let percentage: Double?
     let forUse: String?
-    let describtion:String?
+    let description: String?
 }

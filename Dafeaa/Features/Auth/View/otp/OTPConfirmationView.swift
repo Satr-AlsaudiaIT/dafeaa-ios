@@ -27,8 +27,8 @@ struct OTPConfirmationView: View {
     var body: some View {
         ZStack{
             VStack {
-                NavigationBarView(title: "ConfirmPhoneNavTitle".localized()){
-                    self.presentationMode.wrappedValue.dismiss()
+                NavigationBarView(title: "ConfirmPhoneNavTitle"){
+                    NavigationUtil.popToRootView()
                 }
                 
                 ScrollView(.vertical,showsIndicators: false){
@@ -77,7 +77,7 @@ struct OTPConfirmationView: View {
                         
                         .padding(.top, 12)
                         
-                        ReusableButton(buttonText: "confirm".localized()) {
+                        ReusableButton(buttonText: "confirm") {
                             code = ""
                             for index in (0..<4) {
                                 code += "\(pins[index].pin)"
@@ -89,6 +89,10 @@ struct OTPConfirmationView: View {
                         .navigationDestination(isPresented: $viewModel._isVerifyCodeSuccess) {
                             ResetPasswordView(phone: phone, code: code)
                         }
+                        .navigationDestination(isPresented: $viewModel._hasUnCompletedData) {
+                            CompleteDataView(phone: phone)
+                        }
+                        
                         HStack {
                             Text("didn’tReceiveCode?".localized())
                                 .textModifier(.plain, 16, .black222222)

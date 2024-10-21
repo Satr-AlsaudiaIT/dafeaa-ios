@@ -51,7 +51,7 @@ struct LoginModel: Codable {
 
 // MARK: - LoginData
 struct LoginData:Codable {
-    let name, phone, email: String?
+    let name, phone, email, profileImage: String?
     let status, accountType, activeNotification, uncompletedData: Int?
 }
 
@@ -101,5 +101,20 @@ struct RegisterModel: Codable {
 // MARK: - RegisterDataModel
 struct RegisterDataModel: Codable {
     let email, phone: [String]?
+}
+
+
+// MARK: - CountryCityModel
+struct CountryCityModel: Codable  {
+    let status: Bool?
+    let message: String?
+    let data: [CountryCityModelData]?
+    let count: Int?
+}
+
+// MARK: - CountryCityModelData
+struct CountryCityModelData : Codable {
+    let id: Int?
+    let name: String?
 }
 

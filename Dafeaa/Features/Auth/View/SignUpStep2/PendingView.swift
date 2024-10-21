@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Lottie
 
 struct PendingView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -18,16 +19,13 @@ struct PendingView: View {
     var body: some View {
         ZStack{
             VStack {
-                NavigationBarView(title: "PendingViewNavTitle".localized()){
-                    self.presentationMode.wrappedValue.dismiss()
-                }
-               
+                NavigationBarView(title: "PendingViewNavTitle")
                             
                     VStack(spacing: 0){        
                         Spacer()
-                        LottieView(animationFileName: "pending", loopMode: .playOnce)
-//
 
+                        LottieView(animation:  .named("pending"))
+                            .playing(loopMode: .playOnce)
                             .frame(width: 144, height: 144)
                         HStack {
                             Spacer()
@@ -44,7 +42,7 @@ struct PendingView: View {
                             .padding(.top,5)
                             .multilineTextAlignment(.center)
                         Spacer()
-                        ReusableButton(buttonText: "send".localized(),image: .loading, buttonColor: .gray){
+                        ReusableButton(buttonText: "send",image: .loading, buttonColor: .gray){
                             viewModel.validateForgetPasswordPhone(phone:phoneNumber)
                         }.padding(.top,16)
                             .navigationDestination(isPresented: $isSendSuccess) {

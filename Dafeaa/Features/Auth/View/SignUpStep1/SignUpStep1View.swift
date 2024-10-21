@@ -75,7 +75,7 @@ struct SignUpStep1View: View {
             
             Spacer()
             
-            ReusableButton(buttonText: "continue".localized(), isEnabled: selectedOption != .none) {
+            ReusableButton(buttonText: "continue", isEnabled: selectedOption != .none) {
                 isShowStep2 = true
                 
             }

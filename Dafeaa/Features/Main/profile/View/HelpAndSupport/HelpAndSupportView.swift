@@ -16,7 +16,7 @@ struct HelpAndSupportView: View {
         ZStack{
             VStack(spacing: 20){
                 
-                NavigationBarView(title: "Help and Support".localized()){
+                NavigationBarView(title: "Help and Support"){
                     self.presentationMode.wrappedValue.dismiss()
                 }
                 

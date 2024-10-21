@@ -8,6 +8,7 @@
 
 //MARK: - GENERAL
 "Loading..."="تحميل...";
+"Cancel"="Cancel";
 
 //MARK: - Onboarding
 "Change Language" = "تغيير اللغة";
@@ -79,7 +80,7 @@
 
 //MARK: -Profile
 "Hello,"="أهلا بك,";
-"Profile"="الملف الشخصي";
+"profile"="الملف الشخصي";
 "Subscription Management"="إدارة الاشتراكات";
 "Saved Addresses"="العناوين المحفوظة";
 "About Dafeaa"="نبذة عن دافع";
@@ -96,6 +97,24 @@
 "languageApp"="لغة التطبيق";
 "notifications"="الاشعارات";
 "Select your preferred language"="اختر اللغة المفضلة لديك";
+"logout"="تسجيل الخروج";
+"logOutAlert"="هل أنت متأكد أنك تريد تسجيل الخروج من حسابك؟!";
+"deleteAccount"="حذف الحساب";
+"deleteAccountAlert"="هل أنت متأكد أنك تريد حذف حسابك؟!";
+"changePhone"="تغيير رقم الهاتف";
+
+//MARK: - ChangePassword
+"changePassword"="تغيير كلمة المرور";
+"currentPassword"="كلمة المرور الحالية";
+"newPassword"="كلمة المرور الجديدة";
+"confirmNewPassword"="تأكيد كلمة المرور الجديدة";
+"messageEmptyCurrentPassword"="برجاء ادخال كلمة المرور الحالية";
+"messageEmptyNewPassword"="برجاء ادخال كلمة المرور الجديدة";
+"messageValidNewPassword8character"="برجاء ادخال كلمة مرور صحيحة على الأقل ٨ أحرف";
+"messageEmptyConfirmPassword"="برجاء تأكيد كلمة المرور";
+"messageMatchPasswordConfirm"="كلمة المرور الجديدة وتأكيد كلمة المرور غير متطابقين";
+
+//MARK: - complete Info
 "uploadFileHere" = "ارفع الملف هنا";
 "CommercialInfo" = "معلومات النشاط التجاري";
 "commercialName" = "اسم النشاط التجاري";
@@ -108,16 +127,17 @@
 "PendingViewNavTitle" = "الطلب قيد التنفيذ";
 "pendingViewTitle" = "طلبكم قيد المراجعة";
 "pendingViewSubTitle" = "لقد تم إستلام طلبكم بنجاح, والان الطلب تحت المراجعه والنظر من قبل الفريق, سيتم اشعاركم حين انتهاء المراجعه لاستكمال انشاء الحساب.";
+"taxNumber" = "رقم ضريبة القيمة المضافة";
 
 //MARK: Validations
 "EnterUserPhoto" = "برجاء ادخال صورة المستخدم";
-"EnterUserName" = "برجاء ادخال اسم المستخدم";
-"EnterValidUserName" = "برجاء ادخال اسم مستخدم صالح";
-"EnterEmail" = "برجاء ادخال البريد الالكتروني";
-"EnterValidEmail" = "برجاء ادخال عنوان بريد الكتروني صالح";
-"EnterPhone" = "برجاء ادخال رقم الهاتف";
-"EnterValidPhone" = "برجاء ادخال رقم هاتف صالح";
-"EnterPassword" = "برجاء ادخال كلمة المرور";
+"enterUserName" = "برجاء ادخال اسم المستخدم";
+"enterValidUserName" = "برجاء ادخال اسم مستخدم صالح";
+"enterEmail" = "برجاء ادخال البريد الالكتروني";
+"enterValidEmail" = "برجاء ادخال عنوان بريد الكتروني صالح";
+"enterPhone" = "برجاء ادخال رقم الهاتف";
+"enterValidPhone" = "برجاء ادخال رقم هاتف صالح";
+"enterPassword" = "برجاء ادخال كلمة المرور";
 "EnterValidPassword" = "برجاء ادخال كلمة مرور صالحة على الاقل ٨ حروف وارقام";
 "PasswordConfirmn'tMatch" = "كلمة المرور وتاكيد كلمة المرور غير متطابقتان";
 "PleaseTermsconditions" = "برجاء الموافقة على شروط الاستخدام";
@@ -128,4 +148,6 @@
 "EnterConfirmPassword" = "برجاء ادخال تأكيد كلمة المرور";
 "Success" = "تم بنجاح";
 "Error" = "خطأ";
+
+
 

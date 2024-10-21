@@ -18,7 +18,7 @@ struct ForgotPasswordView: View {
     var body: some View {
         ZStack{
             VStack {
-                NavigationBarView(title: "ForgotPasswordNavTitle".localized()){
+                NavigationBarView(title: "ForgotPasswordNavTitle"){
                     self.presentationMode.wrappedValue.dismiss()
                 }
 
@@ -39,7 +39,7 @@ struct ForgotPasswordView: View {
                         PhoneNumberField(phoneNumber: $phoneNumber, selectedCountryCode: $selectedCountryCode, placeholder: "phoneNumber".localized(), image: .mobile)
                             .padding(.top,12)
                         
-                        ReusableButton(buttonText: "send".localized()){
+                        ReusableButton(buttonText: "send"){
                             viewModel.validateForgetPasswordPhone(phone:phoneNumber)
                         }.padding(.top,16)
                             .navigationDestination(isPresented: $isSendSuccess) {

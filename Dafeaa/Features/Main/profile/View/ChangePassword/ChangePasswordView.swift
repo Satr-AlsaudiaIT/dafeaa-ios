@@ -1,58 +1,46 @@
 //
-//  ResetPasswordView.swift
+//  ChangePasswordView.swift
 //  Dafeaa
 //
-//  Created by AMNY on 08/10/2024.
+//  Created by AMNY on 19/10/2024.
 //
 
 import SwiftUI
 
-struct ResetPasswordView: View {
+struct ChangePasswordView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    var phone: String = ""
-    var code: String = ""
+    @State private var currentPassword: String = ""
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
-    @StateObject var viewModel = AuthVM()
+    
+    @StateObject var viewModel = MoreVM()
     @FocusState private var focusedField: FormField?
     var body: some View {
         ZStack{
             VStack {
-                NavigationBarView(title: "resetPasswordNavTitle"){
+                NavigationBarView(title: "changePassword"){
                     self.presentationMode.wrappedValue.dismiss()
                 }
+                
                 ScrollView(.vertical,showsIndicators: false){
-                    
                     VStack(spacing: 0){
-                        Image(.resetPassword)
-                            .resizable()
-                            .frame(width: 144, height: 144)
-                        Text("resetPassword".localized())
-                            .textModifier(.plain, 19, .black222222)
-                            .frame(maxWidth: .infinity,alignment: .leading)
-                            .padding(.top,24)
+                        CustomPasswordField(password: $currentPassword, placeholder: "currentPassword")
+                            .focused($focusedField, equals: .currentPassword)
                         
-                        Text("resetPasswordSubTitle".localized())
-                            .textModifier(.plain, 15, .gray666666)
-                            .frame(maxWidth: .infinity,alignment: .leading)
-                            .padding(.top,5)
-                        
-                        CustomPasswordField(password: $password)
+                        CustomPasswordField(password: $password, placeholder: "newPassword")
                             .padding(.top,12)
                             .focused($focusedField, equals: .password)
                         
-                        CustomPasswordField(password: $confirmPassword)
+                        CustomPasswordField(password: $confirmPassword, placeholder: "confirmNewPassword")
                             .padding(.top,8)
                             .focused($focusedField, equals: .confirmPassword)
-                        
-                        ReusableButton(buttonText: "saveBtn"){
-                            viewModel.validateForgetPassword(phone: phone, code: code, password: password, confirmPassword: confirmPassword)
-                            
-                        } .padding(.top,16)
-                        
-                        Spacer()
-                    }.padding(24)
-                }
+                    }
+                    
+                }.padding(24)
+                Spacer()
+                ReusableButton(buttonText: "saveBtn"){
+                    viewModel.validateChangePassword(currentPassword: currentPassword, password: password, confirmPassword: confirmPassword)
+                }.padding(24)
             }
             
             if viewModel.isLoading {
@@ -69,6 +57,8 @@ struct ResetPasswordView: View {
     
     func showNextTextField(){
         switch focusedField {
+        case .currentPassword:
+            focusedField = .password
         case .password:
             focusedField = .confirmPassword
         default:
@@ -80,13 +70,15 @@ struct ResetPasswordView: View {
         switch focusedField {
         case .confirmPassword:
             focusedField = .password
+        case .password:
+            focusedField = .currentPassword
         default:
             focusedField = nil
         }
     }
     
     enum FormField {
-        case password,confirmPassword
+        case currentPassword, password, confirmPassword
     }
     
     func hideKeyboard()
@@ -96,5 +88,5 @@ struct ResetPasswordView: View {
 }
 
 #Preview {
-    ResetPasswordView()
+    ChangePasswordView()
 }

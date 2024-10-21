@@ -12,7 +12,6 @@ struct LoginView: View {
     
     @State private var phoneNumber: String = ""
     @State private var password: String = ""
-    @State private var isPasswordVisible: Bool = false
     @State private var isShowStep1 : Bool = false
     @State private var selectedCountryCode: String = ""
     @State private var showForgetPassword : Bool = false
@@ -47,10 +46,10 @@ struct LoginView: View {
                                 selectedCountryCode: $selectedCountryCode,
                                 image: .mobile)
                             .focused($focusedField, equals: .phone)
-                            CustomPasswordField(password: $password, isPasswordVisible: $isPasswordVisible)
+                            CustomPasswordField(password: $password)
                                 .focused($focusedField, equals: .password)
                             
-                            ReusableButton(buttonText: "login".localized()) {
+                            ReusableButton(buttonText: "login") {
                                 viewModel.validateLogin(phone: phoneNumber, password: password)
                             } .padding(.top, 4)
                             
@@ -88,7 +87,7 @@ struct LoginView: View {
                     OTPConfirmationView(phone: phoneNumber)
                 }
                 .navigationDestination(isPresented: $viewModel._hasUnCompletedData) {
-                    
+                    CompleteDataView(phone:phoneNumber)
                 }
                 if viewModel.isLoading {
                     ProgressView("Loading...".localized())

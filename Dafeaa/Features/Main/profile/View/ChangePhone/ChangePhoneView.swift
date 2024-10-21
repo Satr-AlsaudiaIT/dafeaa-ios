@@ -1,60 +1,55 @@
 //
-//  ResetPasswordView.swift
+//  ChangePhoneView.swift
 //  Dafeaa
 //
-//  Created by AMNY on 08/10/2024.
+//  Created by AMNY on 20/10/2024.
 //
 
 import SwiftUI
 
-struct ResetPasswordView: View {
+struct ChangePhoneView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    var phone: String = ""
-    var code: String = ""
     @State private var password: String = ""
-    @State private var confirmPassword: String = ""
+    @State private var phoneNumber: String = ""
+    @State private var selectedCountryCode: String = ""
+    @State private var isSendSuccess: Bool = false
     @StateObject var viewModel = AuthVM()
     @FocusState private var focusedField: FormField?
+
     var body: some View {
         ZStack{
             VStack {
-                NavigationBarView(title: "resetPasswordNavTitle"){
-                    self.presentationMode.wrappedValue.dismiss()
-                }
+                NavigationBarView(title: "ChangePhoneNavTitle"){NavigationUtil.popToRootView() }
+                            
                 ScrollView(.vertical,showsIndicators: false){
-                    
                     VStack(spacing: 0){
-                        Image(.resetPassword)
+                        Image(.forgetPassword)
                             .resizable()
                             .frame(width: 144, height: 144)
-                        Text("resetPassword".localized())
+                        Text("changePhoneTitle".localized())
                             .textModifier(.plain, 19, .black222222)
                             .frame(maxWidth: .infinity,alignment: .leading)
                             .padding(.top,24)
-                        
-                        Text("resetPasswordSubTitle".localized())
-                            .textModifier(.plain, 15, .gray666666)
+                        Text("changePhoneSubTitle".localized())
                             .frame(maxWidth: .infinity,alignment: .leading)
+                            .textModifier(.plain, 15, .gray666666)
                             .padding(.top,5)
-                        
-                        CustomPasswordField(password: $password)
+                        PhoneNumberField(phoneNumber: $phoneNumber, selectedCountryCode: $selectedCountryCode, placeholder: "phoneNumber".localized(), image: .mobile)
                             .padding(.top,12)
+                        CustomPasswordField(password: $password)
                             .focused($focusedField, equals: .password)
-                        
-                        CustomPasswordField(password: $confirmPassword)
                             .padding(.top,8)
-                            .focused($focusedField, equals: .confirmPassword)
-                        
-                        ReusableButton(buttonText: "saveBtn"){
-                            viewModel.validateForgetPassword(phone: phone, code: code, password: password, confirmPassword: confirmPassword)
-                            
-                        } .padding(.top,16)
-                        
+                        ReusableButton(buttonText: "send"){
+                            viewModel.validateChangePhone(password: password, phone: phoneNumber)
+                        }.padding(.top,16)
+                            .navigationDestination(isPresented: $viewModel._isSendCodeSuccess) {
+                                OTPConfirmationView(phone:phoneNumber)
+                            }
                         Spacer()
+                        
                     }.padding(24)
                 }
             }
-            
             if viewModel.isLoading {
                 ProgressView("Loading...".localized())
                     .foregroundColor(.white)
@@ -63,31 +58,28 @@ struct ResetPasswordView: View {
                 ProgressView()
                     .hidden()
             }
-        }.navigationBarHidden(true)
-            .toastView(toast: $viewModel.toast)
+        }
+        .navigationBarHidden(true)
+        .toastView(toast: $viewModel.toast)
+
     }
     
     func showNextTextField(){
         switch focusedField {
-        case .password:
-            focusedField = .confirmPassword
-        default:
-            focusedField = nil
-        }
+        case .phone:     focusedField = .password
+        default:         focusedField = nil  }
     }
     
     func showPerviousTextField(){
         switch focusedField {
-        case .confirmPassword:
-            focusedField = .password
-        default:
-            focusedField = nil
-        }
+        case .password:  focusedField = .phone
+        default:         focusedField = nil  }
     }
     
     enum FormField {
-        case password,confirmPassword
+        case phone, password
     }
+   
     
     func hideKeyboard()
     {
@@ -96,5 +88,5 @@ struct ResetPasswordView: View {
 }
 
 #Preview {
-    ResetPasswordView()
+    ForgotPasswordView()
 }

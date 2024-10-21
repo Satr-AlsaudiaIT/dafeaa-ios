@@ -11,7 +11,7 @@ import FlagPhoneNumber
 struct CustomPasswordField: View {
     
     @Binding var password: String
-    @Binding var isPasswordVisible: Bool
+    @State var isPasswordVisible: Bool = false
     var placeholder: String = "password"
     var body: some View {
         HStack {
@@ -62,6 +62,7 @@ struct PhoneNumberField: View {
 //            FlagPhoneNumberView(phoneNumber: $phoneNumber, selectedCountryCode: $selectedCountryCode)
             TextField(placeholder.localized(), text: $phoneNumber)
                 .textModifier(.plain, 15, .grayB5B5B5)
+                .keyboardType(.numberPad)
             Image(.phoneCountryCode).resizable()
                 .frame(width: 91, height: 48)
         }

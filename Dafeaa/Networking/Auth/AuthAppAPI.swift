@@ -15,7 +15,9 @@ protocol AuthAPIProtocol {
     func verifyCode(dic:[String:Any],Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func sendCode(dic:[String:Any],Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func forgetPassword(dic:[String:Any],Completion: @escaping (Result<LoginModel?, NSError>) -> Void)
-    
+    func getCountries(Completion: @escaping (Result<CountryCityModel?, NSError>) -> Void)
+    func getCities(countryId:Int,Completion: @escaping (Result<CountryCityModel?, NSError>) -> Void)
+    func changePhone(dic: [String:Any], Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
 }
 
 
@@ -77,4 +79,27 @@ class AuthAPI: BaseAPI<AuthNetwork>, AuthAPIProtocol
         }
         
     }
+    
+    
+    func getCountries(Completion: @escaping (Result<CountryCityModel?, NSError>) -> Void){
+        
+        self.fetchData(target: .countries, responseClass: CountryCityModel.self) { (result) in
+            Completion(result)
+        }
+        
+    }
+    
+    func getCities(countryId:Int,Completion: @escaping (Result<CountryCityModel?, NSError>) -> Void) {
+        
+        self.fetchData(target: .cities(countryId: countryId), responseClass: CountryCityModel.self) { (result) in
+            Completion(result)
+        }
+    }
+    
+    func changePhone(dic: [String:Any], Completion: @escaping (Result<GeneralModel?, NSError>) -> Void){
+        self.fetchData(target: .changePhone(dic: dic), responseClass: GeneralModel.self) { (result) in
+            Completion(result)
+        }
+    }
+    
 }

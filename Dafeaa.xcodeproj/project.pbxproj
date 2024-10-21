@@ -114,6 +114,8 @@
 		18277EC52CB3A3BE0020A647 /* AccountTypeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18277EC42CB3A3BE0020A647 /* AccountTypeOption.swift */; };
 		18277ECC2CB3A48E0020A647 /* SignUpStep2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18277ECB2CB3A48E0020A647 /* SignUpStep2View.swift */; };
 		18277ECE2CB3AD140020A647 /* NavigationPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18277ECD2CB3AD140020A647 /* NavigationPath.swift */; };
+		188FF2462CC38CF00070CC57 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FF2452CC38CF00070CC57 /* ChangePasswordView.swift */; };
+		188FF2492CC509B40070CC57 /* ChangePhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FF2482CC509B40070CC57 /* ChangePhoneView.swift */; };
 		18AF0DEF2CB114F80061F07E /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AF0DEE2CB114F80061F07E /* OnBoardingView.swift */; };
 		18AF0DF02CB15CB10061F07E /* Bahij_TheSansArabic-SemiLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E67B1E2CADB75900C10AB5 /* Bahij_TheSansArabic-SemiLight.ttf */; };
 		18AF0DF12CB15CB10061F07E /* Bahij_TheSansArabic-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E67B1B2CADB75900C10AB5 /* Bahij_TheSansArabic-SemiBold.ttf */; };
@@ -274,6 +276,8 @@
 		18277EC42CB3A3BE0020A647 /* AccountTypeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTypeOption.swift; sourceTree = "<group>"; };
 		18277ECB2CB3A48E0020A647 /* SignUpStep2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep2View.swift; sourceTree = "<group>"; };
 		18277ECD2CB3AD140020A647 /* NavigationPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPath.swift; sourceTree = "<group>"; };
+		188FF2452CC38CF00070CC57 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
+		188FF2482CC509B40070CC57 /* ChangePhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePhoneView.swift; sourceTree = "<group>"; };
 		18AF0DEE2CB114F80061F07E /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		18B8D56D2CC02C8D00C2676C /* PendingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingView.swift; sourceTree = "<group>"; };
 		18B8D56F2CC02E6200C2676C /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
@@ -830,6 +834,8 @@
 		1820E2C32CBAAC1000627DF9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				188FF2472CC509A70070CC57 /* ChangePhone */,
+				188FF2442CC38CE10070CC57 /* ChangePassword */,
 				1822200C2CBE7F430063CEE8 /* SubscriptionManagementView */,
 				1820E2C42CBAAC2800627DF9 /* Profile */,
 				1820E2C52CBAAC3400627DF9 /* Addresses */,
@@ -971,6 +977,22 @@
 				1820E2B22CBA8FEE00627DF9 /* otp */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		188FF2442CC38CE10070CC57 /* ChangePassword */ = {
+			isa = PBXGroup;
+			children = (
+				188FF2452CC38CF00070CC57 /* ChangePasswordView.swift */,
+			);
+			path = ChangePassword;
+			sourceTree = "<group>";
+		};
+		188FF2472CC509A70070CC57 /* ChangePhone */ = {
+			isa = PBXGroup;
+			children = (
+				188FF2482CC509B40070CC57 /* ChangePhoneView.swift */,
+			);
+			path = ChangePhone;
 			sourceTree = "<group>";
 		};
 		18AF0DEC2CB113980061F07E /* OnBoarding */ = {
@@ -1319,6 +1341,7 @@
 				14E67AC32CAC643B00C10AB5 /* UIColor.swift in Sources */,
 				14E67A6C2CAC5E3400C10AB5 /* MOLHSizable.swift in Sources */,
 				14E67A692CAC5E3400C10AB5 /* MOLHFont.swift in Sources */,
+				188FF2462CC38CF00070CC57 /* ChangePasswordView.swift in Sources */,
 				1820E2C22CBA98C400627DF9 /* MyOrdersView.swift in Sources */,
 				14E67ADB2CAC643B00C10AB5 /* DropDownSearchTF.swift in Sources */,
 				14E67AC82CAC643B00C10AB5 /* CalendarSheet.swift in Sources */,
@@ -1368,6 +1391,7 @@
 				1820E2DF2CBBD58F00627DF9 /* ProfileImageView.swift in Sources */,
 				14E67AC22CAC643B00C10AB5 /* String_Extentions.swift in Sources */,
 				18277ECE2CB3AD140020A647 /* NavigationPath.swift in Sources */,
+				188FF2492CC509B40070CC57 /* ChangePhoneView.swift in Sources */,
 				14E67ADF2CAC643B00C10AB5 /* LogoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

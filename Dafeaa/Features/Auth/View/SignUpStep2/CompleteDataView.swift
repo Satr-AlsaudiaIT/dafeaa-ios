@@ -9,11 +9,13 @@ import SwiftUI
 
 struct CompleteDataView: View {
     @Environment(\.presentationMode) var presentationMode
+    @State var phone: String
     @State private var isCountryDropDownOpen: Bool? = false
     @State private var isCityDropDownOpen: Bool? = false
     @State private var selectedCountryName: String = ""
-    @State private var shopName: String = ""
+    @State private var commercialName: String = ""
     @State private var area: String = ""
+    @State private var taxNumber: String = ""
     @State private var selectedCityName: String = ""
     @State private var selectedCommercialLicense: UIImage?
     @State private var selectedCommercialLicenseUrl: String?
@@ -22,7 +24,7 @@ struct CompleteDataView: View {
     @State var endDate : Date?
     var selectedOption: AccountTypeOption = .none
     @StateObject var viewModel = AuthVM()
-    //    @FocusState private var focusedField: FormField?
+    @FocusState private var focusedField: FormField?
     
     var body: some View {
         ZStack{
@@ -59,20 +61,32 @@ struct CompleteDataView: View {
                             Text("CommercialInfo".localized())
                                 .textModifier(.plain, 19, .black222222)
                             
-                            CustomMainTextField(text: $shopName, placeHolder: "commercialName".localized(), image: .shop)
-                            //                            .focused($focusedField, equals: .userName)
+                            CustomMainTextField(text: $commercialName, placeHolder: "commercialName".localized(), image: .shop)
+                                .focused($focusedField, equals: .commercialName)
                             
                             DropdownSearchTF(placeHolder:"CountryField".localized(),
                                              isOpen: $isCountryDropDownOpen,
                                              text: $selectedCountryName, title: "CountryField".localized(),
-                                             options: $testOptions,
+                                             options: $viewModel.countriesNames,
                                              submitLabel: .done,titleSize: 17,image: UIImage(resource: .location))
+                            .focused($focusedField, equals: .countryField)
+                            .onChange(of: selectedCountryName) { _, newValue in
+                                let countryId = viewModel.getCountryId(countryName: selectedCountryName)
+                                viewModel.getCities(countryId: countryId)
+                            }
                             DropdownSearchTF(placeHolder:"CityField".localized(),
                                              isOpen: $isCityDropDownOpen,
                                              text: $selectedCityName, title: "CityField".localized(),
                                              options: $testOptions,
                                              submitLabel: .done,titleSize: 17,image: UIImage(resource: .location))
+                            .focused($focusedField, equals: .cityField)
+
                             CustomMainTextField(text: $area, placeHolder: "area".localized(), image: .location)
+                                .focused($focusedField, equals: .areaField)
+
+                            CustomMainTextField(text: $taxNumber, placeHolder: "taxNumber".localized(), image: .tax)
+                                .focused($focusedField, equals: .taxField)
+
                             Text("CommLecs".localized())
                                 .textModifier(.plain, 19, .black222222)
                                 .padding(.top,8)
@@ -80,17 +94,20 @@ struct CompleteDataView: View {
                                 .frame(height: 127)
                                 .padding([.top,.bottom],7)
                             DateTF(title: "endDate".localized(), image: .calendar, currentIsMinDate: true, submitLabel: .next, placeHolder: "endDate".localized(), text: $endDateString, date: $endDate)
-//                                .padding(.leading,-10)
-                                
+                                .focused($focusedField, equals: .dateField)
+
+                            
                         }
                         Spacer()
                     }
-                    ReusableButton(buttonText: "sendData".localized(), isEnabled: true) {
+                    ReusableButton(buttonText: "sendData", isEnabled: true) {
                         
-                        
+                        viewModel.validateBusiness(phone: phone, commLecs: selectedCommercialLicense, name: commercialName, country: selectedCountryName, city: selectedCityName, area: area, taxNum: taxNumber, endDate: endDateString)
+                    }.navigationDestination(isPresented: $viewModel._isSignUpSuccess) {
+                        PendingView()
                     }
-                   
-                   
+                    
+                    
                 }
                 .padding(24)
                 if viewModel.isLoading {
@@ -112,56 +129,61 @@ struct CompleteDataView: View {
                 }
                 Spacer()
                 Button(action: {
-//                    showPerviousTextField()
+                    //                    showPerviousTextField()
                 }, label: {
                     Image(systemName: "chevron.up").foregroundColor(.blue)
                 })
                 
                 Button(action: {
-//                    showNextTextField()
+                    //                    showNextTextField()
                 }, label: {
                     Image(systemName: "chevron.down").foregroundColor(.blue)
                 })
             }
         }
-
-//        func showNextTextField(){
-//            switch focusedField {
-//            case .userName:
-//                focusedField = .email
-//            case .email:
-//                focusedField = .phone
-//            case .phone:
-//                focusedField = .password
-//            case .password:
-//                focusedField = .confirmPassword
-//            default:
-//                focusedField = nil
-//            }
-//        }
+        .onAppear{
+            viewModel.getCountries()
+        }
+    }
+        func showNextTextField(){
+            switch focusedField {
+            case .commercialName:
+                focusedField = .countryField
+            case .countryField:
+                focusedField = .cityField
+            case .cityField:
+                focusedField = .areaField
+            case .areaField:
+                focusedField = .taxField
+            case .taxField:
+                focusedField = .dateField
+            default:
+                focusedField = nil
+            }
+        }
         
-//        func showPerviousTextField(){
-//            switch focusedField {
-//            case .confirmPassword:
-//                focusedField = .password
-//            case .password:
-//                focusedField = .phone
-//            case .phone:
-//                focusedField = .email
-//            case .email:
-//                focusedField = .userName
-//            default:
-//                focusedField = nil
-//            }
-//        }
+        func showPerviousTextField(){
+            switch focusedField {
+            case .dateField:
+                focusedField = .taxField
+            case .taxField:
+                focusedField = .areaField
+            case .areaField:
+                focusedField = .cityField
+            case .countryField:
+                focusedField = .commercialName
+            default:
+                focusedField = nil
+            }
+        }
         
-//        enum FormField {
-//            case userName, email, phone, password, confirmPassword
-//        }
+        enum FormField {
+            case commercialName, countryField, cityField, areaField, taxField, dateField
+        }
         
         
     
-    }
+    
     func hideKeyboard()
     {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -169,5 +191,5 @@ struct CompleteDataView: View {
 }
 
 #Preview {
-    CompleteDataView()
+    CompleteDataView(phone: "")
 }

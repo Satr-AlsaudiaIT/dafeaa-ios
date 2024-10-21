@@ -11,13 +11,13 @@ enum MoreNetwork
 {
    
     case profile
-    case changePassword(dic:[String: Any])
-    case contactUs(dic:[String: Any])
+    case changePassword(dic: [String: Any])
+    case contactUs(dic: [String: Any])
     case logOut
     case deleteAccount
-    case notifyOnOff(active :Int)
-    case notificationList(skip:Int)
-    case getStaticPages(type:String)
+    case notifyOnOff(active: Int)
+    case notificationList(skip: Int)
+    case getStaticPages(type: String)
     case questions(skip: Int)
     case contacts
 
@@ -32,26 +32,16 @@ extension MoreNetwork: TargetType
     
     var path: String {
         switch self {
-        case .profile:
-        return "profile"
-        case .changePassword:
-            return "auth/change-password"
-        case .contactUs:
-            return "contact-us"
-        case .logOut:
-            return "auth/logout"
-        case .deleteAccount:
-            return "auth/delete-account"
-        case .notifyOnOff:
-            return "notifications/active"
-        case let .notificationList(skip):
-            return "notifications?skip=\(skip)"
-        case let .getStaticPages(type):
-                    return "\(type)"
-        case let .questions(skip):
-            return"settings/faq?skip=\(skip)"
-        case .contacts:
-            return "settings/contact"
+        case .profile:                      return "auth/profile"
+        case .changePassword:               return "auth/change-password"
+        case .contactUs:                    return "contact-us"
+        case .logOut:                       return "auth/logout"
+        case .deleteAccount:                return "auth/delete-account"
+        case .notifyOnOff:                  return "notifications/active"
+        case .notificationList(let skip):   return "notifications?skip=\(skip)"
+        case .getStaticPages(let type):     return "\(type)"
+        case .questions(let skip):          return"settings/faq?skip=\(skip)"
+        case .contacts:                     return "settings/contact"
  
 }
     }
@@ -59,14 +49,9 @@ extension MoreNetwork: TargetType
     var methods: HTTPMethod
     {
         switch self  {
-        case.changePassword, .contactUs, .logOut, .notifyOnOff:
-            return .post
-            
-        case .deleteAccount:
-            return .delete
-            
-        default:
-            return .get
+        case.changePassword, .contactUs, .logOut, .notifyOnOff:  return .post
+        case .deleteAccount:  return .delete
+        default:              return .get
         }
     }
     
@@ -74,18 +59,12 @@ extension MoreNetwork: TargetType
     {
         switch self{
 
-       
         case let .changePassword(dic):
-            let userName = GenericUserDefault.shared.getValue(Constants.shared.userName) as? String ?? "userName"
-         var dic = dic
-            dic.updateValue(userName, forKey: "user_id")
             return.requestParameters(Parameters: dic , encoding: JSONEncoding.default)
-            
-        
         case let .contactUs(dic):
             return.requestParameters(Parameters: dic , encoding: JSONEncoding.default)
         case let .notifyOnOff(active):
-                    return .requestParameters(Parameters: ["active_notification":active], encoding: JSONEncoding.default)
+            return .requestParameters(Parameters: ["active_notification":active], encoding: JSONEncoding.default)
         default:
             return .requestPlain
             

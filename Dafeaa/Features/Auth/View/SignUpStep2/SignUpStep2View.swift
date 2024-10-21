@@ -15,9 +15,7 @@ struct SignUpStep2View: View {
     @State private var name : String =  ""
     @State private var email:String = ""
     @State private var password: String = ""
-    @State private var isPasswordVisible: Bool = false
     @State private var confirmPassword: String = ""
-    @State private var isconfirmPasswordVisible: Bool = false
     @State private var isAgreeChecked: Bool = false
     @State private var selectedProfileImage: UIImage?
     @State private var selectedProfileImageURL: String? = ""
@@ -77,9 +75,9 @@ struct SignUpStep2View: View {
                             .textModifier(.plain, 12, .errorRed)
                         CustomMainTextField(text: $email, placeHolder: "Email", image: .mailTFIcon)
                             .focused($focusedField, equals: .email)
-                        CustomPasswordField(password: $password, isPasswordVisible: $isPasswordVisible)
+                        CustomPasswordField(password: $password)
                             .focused($focusedField, equals: .password)
-                        CustomPasswordField(password: $confirmPassword, isPasswordVisible: $isconfirmPasswordVisible)
+                        CustomPasswordField(password: $confirmPassword)
                             .focused($focusedField, equals: .confirmPassword)
                         Spacer()
                         TermsAndConditionsView(isAgreeChecked: $isAgreeChecked)
@@ -90,7 +88,7 @@ struct SignUpStep2View: View {
                 
                 }
                 
-                ReusableButton(buttonText: "createAccount".localized(), isEnabled: true) {
+                ReusableButton(buttonText: "createAccount", isEnabled: true) {
                     viewModel.validateRegister(photo: selectedProfileImage,name: name, email: email, phone: phoneNumber, accountType: selectedOption, password: password, confirmPassword: confirmPassword,isAgreeChecked:isAgreeChecked)
                         
                 }.navigationDestination(isPresented: $viewModel._isSignUpSuccess) {
