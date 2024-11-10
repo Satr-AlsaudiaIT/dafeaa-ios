@@ -8,7 +8,11 @@
 
 //MARK: - GENERAL
 "Loading..."="تحميل...";
-"Cancel"="Cancel";
+"Cancel"= "إلغاء";
+"Done" = "تم";
+"chooseUploadImage" =  "رفع صورة من خلال";
+"PhotoLibrary" = "معرض الصور";
+"cameraUpload" = "الكاميرا";
 
 //MARK: - Onboarding
 "Change Language" = "تغيير اللغة";
@@ -50,7 +54,7 @@
 "AgreeTo" = "اوافق على ";
 "createAccount" = "إنشاء حساب جديد ";
 "haveAccount?" = "لديك حساب بالفعل؟";
-
+"confirmPasswordPlaceholder" = "تأكيد كلمة المرور";
 //MARK: - ForgetPassword
 "ForgotPasswordNavTitle" = "نسيت كلمة المرور؟";
 "resetPasswordTitle" = "إعادة تعيين كلمة المرور";
@@ -75,6 +79,7 @@
 "myAccount"="حسابي";
 "processes"="العمليات";
 "myOrders"="طلباتي";
+"orders"="الطلبات";
 "wallet"="المحفظة";
 "home"="الرئيسية";
 
@@ -149,5 +154,81 @@
 "Success" = "تم بنجاح";
 "Error" = "خطأ";
 
+//MARK: - Orders
+"current"="الطلبات الحالية";
+"history"="الطلبات السابقة";
+"orderNo"="رقم الطلب";
+"orderRoute"="تابع الطلب";
 
+//MARK: - Home
+"SAR" = "ر.س";
+"yourBalance"="الرصيد المتاح لديك";
+"lastProcesses"="اخر العمليات";
+"lastTransactions"="اخر المعاملات";
+"addBalance"="إضافة رصيد";
+"withdrawBalance"="سحب رصيد ";
+"lastProcessAndPayment"="اخر العمليات والمدفوعات";
 
+//MARK: - NOTIFICATIONS
+"emptyNotifications"="لا توجد اشعارات لديك بعد, سيتم تنبيهك في حال وصول اي اشعار لك";
+
+//MARK: - orderDetails
+"orderDetails"="تفاصيل الطلب";
+"showOrderDetails"="عرض تفاصيل الطلب";
+"paymentInfo"="معلومات الدفع";
+"addressInfo"="عنوان الشحن";
+"problemInfo"="هل تواجهك مشكلة؟ لا تتردد واتصل بنا";
+"confirmReceivingOrder"="تأكيد استلام الطلب";
+"confirmReceiveOrder"="تأكيد تسليم الطلب";
+"paymentWay"="طريقة الدفع";
+"buyWithDafea"="الدفع عن طريق تطبيق دافع";
+"product"="المنتج:";
+"delaviryAndRecive"="الشحن والتسليم:";
+"totalBeforeTax"="الإجمالي قبل الضريبة:";
+"tax"="قيمة الضريبة المقدرة:";
+"total"="الإجمالي:";
+"reject" = "رفض";
+"accept" = "موافقة";
+"onWay" = "في الطريق";
+"statusChanges" = "تم تغيير حالة الطلبية بنجاح";
+"pendingState" ="الطلبية معلقة";
+"acceptedState" = "الطلبية مقبولة";
+"awayState" = "في الطريق";
+"rejectedState" = "الطلبية مرفوضة";
+"cancelledState" = "الطلبية ملغاة";
+"doneState" = "الطلبية مكتملة";
+"completeSuccessful" = "تم اكمال الطلب بنجاح";
+"Confirm" = "تأكيد";
+"cancelOrder" = "تأكيد الغاء الطلب";
+"cancelOrderQuestion" = "هل انت متأكد انك تريد إلغاء الطلب؟";
+"rejectOrder" = "تأكيد رفض الطلب";
+"rejectOrderQuestion" = "هل انت متأكد انك تريد رفض الطلب؟";
+
+//MARK: - addresses
+"address"="العنوان";
+"AddAddress" = "إضافة عنوان جديد +";
+"streetName" = "إسم الشارع";
+"buildingNum" = "رقم المبنى";
+"FloatNum" = "رقم الطابق";
+"Add" = "إضافة";
+"Save" = "حفظ";
+"addNewAddress" = "إضافة عنوان جديد";
+"editAddress" = "تعديل عنوان جديد";
+"areaValidation" = "برجاء ادخال حقل المنطقة";
+"streetValidation" = "برجاء إدخال حقل اسم الشارع";
+"buildingNumValidation" = "برجاء إدخال رقم المبنى";
+"floatNumValidation" = "برجاء إدخال رقم الطابق";
+"addressNumValidation" = "برجاء إدخال حقل العنوان";
+"deliveryAddress" = "عنوان الشحن";
+"select" = "تحديد";
+"edit" = "تغيير";
+
+//MARK: - Add Order cycle
+"offerDetails" = "تفاصيل العرض";
+"offers"="عروض";
+"addOffer"="أضف عرض";
+"offerContent"="مكونات العرض";
+"description"="الوصف";
+"productDetails" = "تفاصيل المنتج";
+"rs" = "ر.س";
+"orderNow"="اطلب الآن";

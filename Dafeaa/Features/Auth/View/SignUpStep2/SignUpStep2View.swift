@@ -22,115 +22,163 @@ struct SignUpStep2View: View {
     var selectedOption: AccountTypeOption = .none
     @StateObject var viewModel = AuthVM()
     @FocusState private var focusedField: FormField?
+    @State private var keyboardHeight: CGFloat = 0
 
     var body: some View {
-        ZStack{
-            VStack(alignment: .leading , spacing: 16) {
-                HStack {
-                    Button(action: {
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                        self.presentationMode.wrappedValue.dismiss()
-
-                      }
-                    }) {
-                        Image(.arrowLeft)
-                            .resizable()
-                            .frame(width: 32,height: 32)
-                            .foregroundColor(.black222222)
-                    }
-                    Spacer()
-                    
-                }
-                
-                HStack{
-                    RoundedRectangle(cornerRadius: 2).foregroundColor(Color(.primary))
-                    RoundedRectangle(cornerRadius: 2).foregroundColor(Color(.primary))
-                }.frame(maxWidth: .infinity)
-                    .frame(height: 3)
-                VStack(alignment:.leading,spacing:8){
-                    Text("addSomeData".localized())
-                        .textModifier(.plain, 19, .black222222)
-
-                    // Subtitle
-                    Text("selectAccountTypeSubtitle".localized())
-                        .textModifier(.plain, 15, .gray666666)
-                    
-                }
-                ScrollView {
-                    VStack(alignment:.leading, spacing: 8) {
-                        HStack {
-                            Spacer()
-                            ProfileImageView(selectedImage: $selectedProfileImage, imageURL: selectedProfileImageURL, isShowFromEdit: false)
-                            Spacer()
-                        }
-                        CustomMainTextField(text: $name, placeHolder: "Name", image: .nameTFIcon)
-                            .focused($focusedField, equals: .userName)
-                        PhoneNumberField(
-                            phoneNumber: $phoneNumber,
-                            selectedCountryCode: $selectedCountryCode,
-                            image: .mobile
-                        )
-                        .focused($focusedField, equals: .phone)
-                        Text("PhoneIsTheMainActor".localized())
-                            .textModifier(.plain, 12, .errorRed)
-                        CustomMainTextField(text: $email, placeHolder: "Email", image: .mailTFIcon)
-                            .focused($focusedField, equals: .email)
-                        CustomPasswordField(password: $password)
-                            .focused($focusedField, equals: .password)
-                        CustomPasswordField(password: $confirmPassword)
-                            .focused($focusedField, equals: .confirmPassword)
-                        Spacer()
-                        TermsAndConditionsView(isAgreeChecked: $isAgreeChecked)
-                    }
-                    
-                    Spacer()
-                    
-                
-                }
-                
-                ReusableButton(buttonText: "createAccount", isEnabled: true) {
-                    viewModel.validateRegister(photo: selectedProfileImage,name: name, email: email, phone: phoneNumber, accountType: selectedOption, password: password, confirmPassword: confirmPassword,isAgreeChecked:isAgreeChecked)
-                        
-                }.navigationDestination(isPresented: $viewModel._isSignUpSuccess) {
-                    OTPConfirmationView(phone: phoneNumber, isForgetPassword: false)
-                }
-                HStack {
-                    Spacer()
-                    Text("haveAccount?".localized())
-                        .textModifier(.plain, 16, .black222222)
-                    Button(action: {
-                        NavigationUtil.popToRootView()
+           ZStack{
+               VStack(alignment: .leading, spacing: 16) {
+                   HStack {
+                       Button(action: {
+                           withAnimation(.easeInOut(duration: 0.3)) {
+                               self.presentationMode.wrappedValue.dismiss()
+                           }
+                       }) {
+                           Image(.arrowRight)
+                               .resizable()
+                               .frame(width: 32, height: 32)
+                               .foregroundColor(.black222222)
+                       }
+                       Spacer()
+                   }
+                   
+                   HStack {
+                       RoundedRectangle(cornerRadius: 2).foregroundColor(Color(.primary))
+                       RoundedRectangle(cornerRadius: 2).foregroundColor(Color(.primary))
+                   }
+                   .frame(maxWidth: .infinity)
+                   .frame(height: 3)
+                   
+                   VStack(alignment:.leading,spacing:8) {
+                       Text("addSomeData".localized())
+                           .textModifier(.plain, 19, .black222222)
                        
-                    }) {
-                        Text("login".localized())
-                            .textModifier(.plain, 16, Color(.primary))
-                    }
-                    Spacer()
-                }
-                .padding(.top, 24)
-                .padding(.bottom,30)
-            }
-            .padding(24)
-            if viewModel.isLoading {
-                ProgressView("Loading...".localized())
-                    .foregroundColor(.white)
-                    .progressViewStyle(WithBackgroundProgressViewStyle())
-            } else if viewModel.isFailed {
-                ProgressView()
-                    .hidden()
-            }
-        }
-        .navigationBarHidden(true)
-        .toastView(toast: $viewModel.toast)
-    }
+                       // Subtitle
+                       Text("selectAccountTypeSubtitle".localized())
+                           .textModifier(.plain, 15, .gray666666)
+                   }
+                   
+                   ScrollViewReader { proxy in
+                       ScrollView {
+                           VStack(alignment: .leading, spacing: 8) {
+                               HStack {
+                                   Spacer()
+                                   ProfileImageView(selectedImage: $selectedProfileImage, imageURL: selectedProfileImageURL, isShowFromEdit: false)
+                                   Spacer()
+                               }
+                               .padding(.bottom,15)
+                               CustomMainTextField(text: $name, placeHolder: "Name", image: .nameTFIcon)
+                                   .focused($focusedField, equals: .userName)
+                                   .id(FormField.userName)
+                               
+                               PhoneNumberField(
+                                   phoneNumber: $phoneNumber,
+                                   selectedCountryCode: $selectedCountryCode,
+                                   image: .mobile
+                               )
+                               .focused($focusedField, equals: .phone)
+                               .id(FormField.phone)
+                               
+                               Text("PhoneIsTheMainActor".localized())
+                                   .textModifier(.plain, 12, .errorRed)
+                               
+                               CustomMainTextField(text: $email, placeHolder: "Email", image: .mailTFIcon)
+                                   .focused($focusedField, equals: .email)
+                                   .id(FormField.email)
+                               
+                               CustomPasswordField(password: $password)
+                                   .focused($focusedField, equals: .password)
+                                   .id(FormField.password)
+                               
+                               CustomPasswordField(password: $confirmPassword,placeholder: "confirmPasswordPlaceholder".localized())
+                                   .focused($focusedField, equals: .confirmPassword)
+                                   .id(FormField.confirmPassword)
+                               
+                               Spacer()
+                               TermsAndConditionsView(isAgreeChecked: $isAgreeChecked)
+                           }
+                           
+                           Spacer()
+                           
+                           ReusableButton(buttonText: "createAccount", isEnabled: true) {
+                               viewModel.validateRegister(photo: selectedProfileImage, name: name, email: email, phone: phoneNumber, accountType: selectedOption, password: password, confirmPassword: confirmPassword, isAgreeChecked: isAgreeChecked)
+                           }
+                           .navigationDestination(isPresented: $viewModel._isSignUpSuccess) {
+                               OTPConfirmationView(phone: phoneNumber, isForgetPassword: false)
+                           }
+                           
+                           HStack {
+                               Spacer()
+                               Text("haveAccount?".localized())
+                                   .textModifier(.plain, 16, .black222222)
+                               Button(action: {
+                                   NavigationUtil.popToRootView()
+                               }) {
+                                   Text("login".localized())
+                                       .textModifier(.plain, 16, Color(.primary))
+                               }
+                               Spacer()
+                           }
+                           .padding(.top, 24)
+                           .padding(.bottom, 30)
+                       }
+                       .scrollIndicators(.hidden)
+                       .onChange(of: focusedField) { newField in
+                           withAnimation {
+                               if let newField = newField {
+                                   proxy.scrollTo(newField, anchor: .center)
+                               }
+                           }
+                       }
+                   }
+                   .padding(.bottom, keyboardHeight) // Adjust the scroll view padding based on the keyboard height
+               }
+               .padding(24)
+               .onAppear(perform: subscribeToKeyboardEvents) // Listen for keyboard events
+               .onDisappear(perform: unsubscribeFromKeyboardEvents)
+               
+               if viewModel.isLoading {
+                   ProgressView("Loading...".localized())
+                       .foregroundColor(.white)
+                       .progressViewStyle(WithBackgroundProgressViewStyle())
+               } else if viewModel.isFailed {
+                   ProgressView().hidden()
+               }
+           }
+           .navigationBarHidden(true)
+           .toastView(toast: $viewModel.toast)
+       }
+       
+       // Subscribe to keyboard events
+       private func subscribeToKeyboardEvents() {
+           NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
+//               if let keyboardSize = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+////                   withAnimation {
+////                       self.keyboardHeight = keyboardSize.height - 20
+////                   }
+//               }
+           }
+           NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+               withAnimation {
+                   self.keyboardHeight = 0
+               }
+           }
+       }
+       
+       // Unsubscribe from keyboard events
+       private func unsubscribeFromKeyboardEvents() {
+           NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+           NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+       }
+
+       
     
     func showNextTextField(){
         switch focusedField {
         case .userName:
-            focusedField = .email
-        case .email:
             focusedField = .phone
         case .phone:
+            focusedField = .email
+        case .email:
             focusedField = .password
         case .password:
             focusedField = .confirmPassword
@@ -144,10 +192,10 @@ struct SignUpStep2View: View {
         case .confirmPassword:
             focusedField = .password
         case .password:
-            focusedField = .phone
-        case .phone:
             focusedField = .email
         case .email:
+            focusedField = .phone
+        case .phone:
             focusedField = .userName
         default:
             focusedField = nil

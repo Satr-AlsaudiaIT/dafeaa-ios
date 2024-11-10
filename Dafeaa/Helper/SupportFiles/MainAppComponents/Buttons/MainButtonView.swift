@@ -11,6 +11,7 @@ enum ButtonColors {
     case yellow
     case transparent
     case gray
+    
     // Function to return the correct color from assets
     func color() -> Color {
         switch self {

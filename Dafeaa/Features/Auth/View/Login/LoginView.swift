@@ -17,6 +17,8 @@ struct LoginView: View {
     @State private var showForgetPassword : Bool = false
     @StateObject var viewModel = AuthVM()
     @FocusState private var focusedField: FormField?
+    @State private var keyboardHeight: CGFloat = 0
+
     var body: some View {
         NavigationStack {
             
@@ -69,20 +71,23 @@ struct LoginView: View {
                             ForgotPasswordView()
                         }
                         Spacer()
+                     
                     }
-                        HStack {
-                            Text("haventAccount".localized())
-                                .textModifier(.plain, 16, .black222222)
-                            Button(action: {
-                                isShowStep1 = true
-                            }) {
-                                Text("openAccount".localized())
-                                    .textModifier(.plain, 16, Color(.primary))
-                            }
+                    HStack {
+                        Text("haventAccount".localized())
+                            .textModifier(.plain, 16, .black222222)
+                        Button(action: {
+                            isShowStep1 = true
+                        }) {
+                            Text("openAccount".localized())
+                                .textModifier(.plain, 16, Color(.primary))
                         }
-                        .padding(.bottom, 20)
+                    }
+                    .padding(.bottom, 20)
                     
                 }
+                .onAppear(perform: subscribeToKeyboardEvents) // Listen for keyboard events
+                .onDisappear(perform: unsubscribeFromKeyboardEvents)
                 .navigationDestination(isPresented: $viewModel._isSendCodeSuccess) {
                     OTPConfirmationView(phone: phoneNumber)
                 }
@@ -98,12 +103,37 @@ struct LoginView: View {
                         .hidden()
                 }
             }
+            .onAppear{
+                phoneNumber = ""
+                password = ""
+            }
             .edgesIgnoringSafeArea(.top )
             .navigationDestination(isPresented: $isShowStep1)  {
                 SignUpStep1View()
             }.navigationBarHidden(true)
                 .toastView(toast: $viewModel.toast)
         }
+    }
+    // Subscribe to keyboard events
+    private func subscribeToKeyboardEvents() {
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
+//               if let keyboardSize = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+////                   withAnimation {
+////                       self.keyboardHeight = keyboardSize.height - 20
+////                   }
+//               }
+        }
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+            withAnimation {
+                self.keyboardHeight = 0
+            }
+        }
+    }
+    
+    // Unsubscribe from keyboard events
+    private func unsubscribeFromKeyboardEvents() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     func showNextTextField(){

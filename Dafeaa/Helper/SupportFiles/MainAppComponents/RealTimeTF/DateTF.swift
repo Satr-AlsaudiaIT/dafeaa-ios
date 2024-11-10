@@ -49,7 +49,10 @@ struct DateTF: View {
                                 .frame(height: 48)
                                 
                         }
-                    
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(active ? Color(.primary) : Color.clear, lineWidth: 1)
+                    )
                 }
                 .animation(.default,value: 2)
                 .onAppear{

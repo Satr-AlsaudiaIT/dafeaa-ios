@@ -183,6 +183,7 @@ class AuthVM: ObservableObject {
                                  "phone"           : phone,
                                  "password"        : password,
                                  "password_confirmation": confirmPassword])
+            
         }
     }
     
@@ -369,9 +370,9 @@ class AuthVM: ObservableObject {
     func logIn(response:LoginModel, phone: String) {
         GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
         GenericUserDefault.shared.setValue(response.data?.accountType ?? 1 , Constants.shared.userType)
-        GenericUserDefault.shared.setValue(phone , Constants.shared.phone)
         GenericUserDefault.shared.setValue(response.token ?? "", Constants.shared.token)
-        
+        Constants.accountStatus = response.data?.status ?? 2
+
         if response.data?.uncompletedData == 1 {
             sendCode(for: ["phone":phone ,"usage":"verify"])
         } else if response.data?.uncompletedData == 2 {

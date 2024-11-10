@@ -20,7 +20,10 @@ enum MoreNetwork
     case getStaticPages(type: String)
     case questions(skip: Int)
     case contacts
-
+    case addresses
+    case address(id: Int, method: HTTPMethod, dic: [String: Any])
+    case createAddress(dic:[String:Any])
+    case withDraw(amount: Double)
 }
 
 extension MoreNetwork: TargetType
@@ -42,16 +45,21 @@ extension MoreNetwork: TargetType
         case .getStaticPages(let type):     return "\(type)"
         case .questions(let skip):          return"settings/faq?skip=\(skip)"
         case .contacts:                     return "settings/contact"
- 
-}
+        case .addresses:                    return "addresses"
+        case .createAddress:                return "addresses"
+        case .address(let id,_,_):          return "addresses/\(id)"
+        case .withDraw:                     return "withdraws"
+        }
     }
     
     var methods: HTTPMethod
     {
         switch self  {
-        case.changePassword, .contactUs, .logOut, .notifyOnOff:  return .post
-        case .deleteAccount:  return .delete
-        default:              return .get
+        case.changePassword, .contactUs, .logOut, .notifyOnOff,.createAddress,
+                .withDraw:                                                        return .post
+        case .address(_, let method, _):                                          return method
+        case .deleteAccount:                                                      return .delete
+        default:                                                                  return .get
         }
     }
     
@@ -65,10 +73,16 @@ extension MoreNetwork: TargetType
             return.requestParameters(Parameters: dic , encoding: JSONEncoding.default)
         case let .notifyOnOff(active):
             return .requestParameters(Parameters: ["active_notification":active], encoding: JSONEncoding.default)
+        case let .address(_, _, dic):
+            return.requestParameters(Parameters: dic , encoding: JSONEncoding.default)
+        case let .createAddress(dic):
+            return.requestParameters(Parameters: dic, encoding: JSONEncoding.default)
+        case let .withDraw(amount):
+            return.requestParameters(Parameters: ["amount":amount], encoding: JSONEncoding.default)
         default:
             return .requestPlain
             
-}
+        }
     }
     
     

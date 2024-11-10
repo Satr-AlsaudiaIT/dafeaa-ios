@@ -19,6 +19,7 @@ struct UploadFileView: View {
     @State private var pickerSourceType: UIImagePickerController.SourceType = .photoLibrary
     @State var width : CGFloat = UIScreen.main.bounds.width - 40
     @State var height: CGFloat = 127
+    
     var body: some View {
         ZStack {
             Rectangle()

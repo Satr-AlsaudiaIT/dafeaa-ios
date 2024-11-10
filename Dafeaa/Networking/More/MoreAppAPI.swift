@@ -17,6 +17,10 @@ protocol MoreAPIProtocol {
     func getStatic(type: String, Completion: @escaping (Result<StaticPagesModel?, NSError>) -> Void)
     func questions(skip : Int,Completion: @escaping (Result<QuestionsListModel?, NSError>) -> Void)
     func getContacts(Completion: @escaping (Result<ContactModel?, NSError>) -> Void)
+    func addresses(Completion: @escaping (Result<AddressesModel?, NSError>) -> Void)
+    func address(id:Int,method: HTTPMethod, dic: [String:Any], Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
+    func createAddress( dic: [String:Any], Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
+    func withDrawAmount( amount:Double, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
 }
 
 
@@ -78,6 +82,27 @@ class MoreAPI: BaseAPI<MoreNetwork>, MoreAPIProtocol
             Completion(result)
         }
     }
-    
-   
+ 
+    func addresses(Completion: @escaping (Result<AddressesModel?, NSError>) -> Void){
+        self.fetchData(target: .addresses, responseClass: AddressesModel.self) { (result) in
+            Completion(result)
+        }
+    }
+ 
+    func address(id:Int,method: HTTPMethod, dic: [String:Any], Completion: @escaping (Result<GeneralModel?, NSError>) -> Void){
+        self.fetchData(target: .address(id: id, method: method, dic: dic), responseClass: GeneralModel.self) { (result) in
+            Completion(result)
+        }
+    }
+    func createAddress( dic: [String:Any], Completion: @escaping (Result<GeneralModel?, NSError>) -> Void){
+        self.fetchData(target: .createAddress(dic: dic), responseClass: GeneralModel.self) { (result) in
+            Completion(result)
+        }
+    }
+    func withDrawAmount( amount:Double, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void){
+        self.fetchData(target: .withDraw(amount: amount), responseClass: GeneralModel.self) { (result) in
+            Completion(result)
+        }
+    }
+
 }

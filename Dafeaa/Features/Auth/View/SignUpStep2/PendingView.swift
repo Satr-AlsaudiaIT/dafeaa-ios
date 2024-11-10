@@ -12,8 +12,8 @@ struct PendingView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var phoneNumber: String = ""
     @State private var selectedCountryCode: String = ""
-    @State private var isSendSuccess: Bool = false
-    @StateObject var viewModel = AuthVM()
+    @State private var isActiveSuccess: Bool = false
+    @StateObject var viewModel = MoreVM()
 
     
     var body: some View {
@@ -42,15 +42,10 @@ struct PendingView: View {
                             .padding(.top,5)
                             .multilineTextAlignment(.center)
                         Spacer()
-                        ReusableButton(buttonText: "send",image: .loading, buttonColor: .gray){
-                            viewModel.validateForgetPasswordPhone(phone:phoneNumber)
+                        ReusableButton(buttonText: "continue",image: .loading, buttonColor: .gray){
                         }.padding(.top,16)
-                            .navigationDestination(isPresented: $isSendSuccess) {
-                                OTPConfirmationView()
-                            }
+                            
                     }.padding(24)
-            }.navigationDestination(isPresented: $viewModel._isSendCodeSuccess) {
-                OTPConfirmationView(phone: phoneNumber,isForgetPassword: true)
             }
             if viewModel.isLoading {
                 ProgressView("Loading...".localized())
@@ -63,7 +58,23 @@ struct PendingView: View {
         }
         .navigationBarHidden(true)
         .toastView(toast: $viewModel.toast)
-
+        .onAppear{viewModel.profile()}
+        .onReceive(viewModel.$_isActive){ isActive in
+             isActiveSuccess ? tabBarTransition():()}
+    }
+    
+    func tabBarTransition() {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let window = appDelegate.window {
+            window.rootViewController = UIHostingController(
+                rootView: TabBarView()
+                    .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar" : "en"))
+                    .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft : .leftToRight)
+            )
+            
+            UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil)
+            
+            window.makeKeyAndVisible()
+        }
     }
 }
 

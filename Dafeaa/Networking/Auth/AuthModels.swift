@@ -1,9 +1,6 @@
 //
-//  StaticPagesModel.swift
-//  Proffer
-//
-//  Created by AMN on 19/02/2024.
-//  Copyright © 2024 Nura. All rights reserved.
+//  AuthModel.swift
+
 //
 
 import Foundation
@@ -38,7 +35,7 @@ struct NotificationsModel: Codable {
 
 // MARK: - NotificationsData
 struct NotificationsData: Codable {
-    let orderId, actionType, iconType,visitType, id, isRead, patientId,reportId: Int?
+    let orderId, actionType, iconType,visitType, id, isRead : Int?
     let title,  createdAt, body, data, time: String?
 }
 // MARK: - LoginModel
@@ -55,8 +52,6 @@ struct LoginData:Codable {
     let status, accountType, activeNotification, uncompletedData: Int?
 }
 
-
-
 struct QuestionsListModel: Codable {
     let data: [QuestionsListData]?
     let message: String?
@@ -67,15 +62,10 @@ struct QuestionsListData: Codable, Identifiable {
     let question: String?
     let answer: String?
     var _isExpanded: Bool? // Private variable to hold the actual value
-
-        var isExpanded: Bool {
-            get {
-                return _isExpanded ?? false // Return false if _isExpanded is nil
-            }
-            set {
-                _isExpanded = newValue
-            }
-        }
+    var isExpanded: Bool {
+        get {   return _isExpanded ?? false  }
+        set {   _isExpanded = newValue }
+    }
 }
 
 
@@ -116,5 +106,20 @@ struct CountryCityModel: Codable  {
 struct CountryCityModelData : Codable {
     let id: Int?
     let name: String?
+}
+
+// MARK: - AddressesModel
+struct AddressesModel: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [AddressesData]?
+    let count: Int?
+}
+
+// MARK: - AddressesData
+struct AddressesData: Codable {
+    let id, clientID: Int?
+    let address, streetName, buildingNum: String?
+    let area, floatNum: String?
 }
 

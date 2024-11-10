@@ -23,7 +23,7 @@ struct SignUpStep1View: View {
                         self.presentationMode.wrappedValue.dismiss()
                     }
                 }) {
-                    Image(.arrowLeft)
+                    Image(.arrowRight)
                         .resizable()
                         .frame(width: 32,height: 32)
                         .foregroundColor(.black222222)

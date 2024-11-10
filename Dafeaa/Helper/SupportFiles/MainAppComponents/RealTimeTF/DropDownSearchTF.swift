@@ -87,6 +87,10 @@ struct DropdownSearchTF: View {
                     .frame(height: height)
                     .animation(.default,value: 2)
                     .cornerRadius(5)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(Color(active ? .primary : .clear ), lineWidth: 1)
+                    )
                 }
             }
             if isOpen ?? false {
@@ -120,8 +124,9 @@ struct DropdownSearchTF: View {
 //
                             }
                         }
-//                        .padding(.horizontal, 4)
-//                        .cornerRadius(8)
+                        .padding(.horizontal, 4)
+                        .cornerRadius(5)
+                      
 //                        .shadow(radius: 4)
                         
                     }
@@ -130,7 +135,10 @@ struct DropdownSearchTF: View {
                 }
                 .padding(.top, 0)
                 .cornerRadius(5)
-               
+                .overlay(
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(Color(.grayAAAAAA), lineWidth: 0.3)
+                )
             }
         }
 //        .padding([.leading,.trailing])

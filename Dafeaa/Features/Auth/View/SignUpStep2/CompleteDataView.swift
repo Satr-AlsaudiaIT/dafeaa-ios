@@ -36,7 +36,7 @@ struct CompleteDataView: View {
                             
                         }
                     }) {
-                        Image(.arrowLeft)
+                        Image(.arrowRight)
                             .resizable()
                             .frame(width: 32,height: 32)
                             .foregroundColor(.black222222)
@@ -77,7 +77,7 @@ struct CompleteDataView: View {
                             DropdownSearchTF(placeHolder:"CityField".localized(),
                                              isOpen: $isCityDropDownOpen,
                                              text: $selectedCityName, title: "CityField".localized(),
-                                             options: $testOptions,
+                                             options: $viewModel.cityNames,
                                              submitLabel: .done,titleSize: 17,image: UIImage(resource: .location))
                             .focused($focusedField, equals: .cityField)
 
@@ -110,17 +110,18 @@ struct CompleteDataView: View {
                     
                 }
                 .padding(24)
-                if viewModel.isLoading {
-                    ProgressView("Loading...".localized())
-                        .foregroundColor(.white)
-                        .progressViewStyle(WithBackgroundProgressViewStyle())
-                } else if viewModel.isFailed {
-                    ProgressView()
-                        .hidden()
-                }
+                
             }
             .navigationBarHidden(true)
             .toastView(toast: $viewModel.toast)
+            if viewModel.isLoading {
+                ProgressView("Loading...".localized())
+                    .foregroundColor(.white)
+                    .progressViewStyle(WithBackgroundProgressViewStyle())
+            } else if viewModel.isFailed {
+                ProgressView()
+                    .hidden()
+            }
         }
         .toolbar{
             ToolbarItemGroup(placement: .keyboard){

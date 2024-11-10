@@ -10,33 +10,32 @@ import UIKit
 
 final class MoreVM : ObservableObject {
     
-    @Published var toast: FancyToast?      = nil
     @Published private var _isLoading      = false
     @Published private var _isFailed       = false
     @Published private var _questionList   : [QuestionsListData] = []
     @Published private var _staticData     : StaticPagesData?
     @Published private var _contactData    : ContactData?
     @Published private var _profileData    : LoginData?
+    @Published private var _addressList    : [AddressesData] = []
     @Published var _getData                : Bool = false
     @Published var _isSuccess              = false
+    @Published var _isCreateSuccess        = false
+    @Published var _isActive               = false
+    @Published var toast: FancyToast?      = nil
+
     private var _message                   : String = ""
     private var token                      = ""
     let api                                : MoreAPIProtocol = MoreAPI()
-    
-    
-    var isLoading    : Bool { get { return _isLoading} }
-    
-    var message      : String { get { return _message} }
-    
-    var isFailed     : Bool {  get { return _isFailed} }
- 
-    var profileData  : LoginData? {   get { return _profileData} }
-    
-    var contactData  : ContactData? {  get { return _contactData}  }
-    
-    var questionList : [QuestionsListData] { get {return _questionList  }  set {}  }
-    
-    var staticData   : StaticPagesData? { get {return _staticData} set {} }
+    var hasMoreData                        = true
+    var isLoading                          : Bool { get { return _isLoading} }
+    var message                            : String { get { return _message} }
+    var isFailed                           : Bool {  get { return _isFailed} }
+    var profileData                        : LoginData? {   get { return _profileData} }
+    var contactData                        : ContactData? {  get { return _contactData}  }
+    var questionList                       : [QuestionsListData] { get {return _questionList  }  set {}  }
+    var staticData                         : StaticPagesData? { get {return _staticData} set {} }
+    var addressList                        : [AddressesData] { get {return _addressList  }  set {}  }
+
     
     func validateChangePassword(currentPassword: String, password: String, confirmPassword: String) {
         if currentPassword.isBlank {
@@ -73,6 +72,31 @@ final class MoreVM : ObservableObject {
         }
     }
 
+    func validateCreateAddress(id:Int?,area:String, streetName: String, buildingNum:String, floatNum:String,address:String ){
+        if area.isBlank {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "areaValidation".localized())
+        } else if streetName.isBlank {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "streetValidation".localized())
+        } else if buildingNum.isBlank {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "buildingNumValidation".localized())
+        } else if floatNum.isBlank {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "floatNumValidation".localized())
+        } else if address.isBlank {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "addressNumValidation".localized())
+        }else {
+            var  dic = [
+                "address"       : address,
+                "street_name"   :streetName,
+                "building_num"  :buildingNum,
+                "area"          :area,
+                "float_num"     :floatNum]
+            
+            if id != nil {
+                dic.updateValue("put", forKey: "_method")
+                self.address(id: id ?? 0, method: .post, dic: dic)
+            } else {  createAddress(dic: dic)              }
+        }
+    }
  
     //MARK: - APIs
     
@@ -86,6 +110,10 @@ final class MoreVM : ObservableObject {
                 self._isFailed = false
                 self._profileData = response?.data
                 self._getData = true
+                Constants.accountStatus = response?.data?.status ?? 2
+                Constants.phone = response?.data?.phone ?? ""
+                Constants.userName = response?.data?.name ?? ""
+                self._isActive = Constants.accountStatus == 2 ? true : false
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
@@ -259,6 +287,70 @@ final class MoreVM : ObservableObject {
         }
     }
 
+    func addressesList() {
+        _isLoading = true
+        api.addresses() { [weak self] (Result) in
+            guard let self = self else { return }
+            self._isLoading = false
+            switch Result {
+            case .success(let Result):
+                guard let data = Result?.data else { return }
+                self._addressList = data
+                
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+            }
+        }
+    }
+    
+    func address(id: Int, method: HTTPMethod,dic: [String: Any]) {
+        _isLoading = true
+        api.address(id: id, method: method, dic: dic) { [weak self] (Result) in
+            guard let self = self else { return }
+            self._isLoading = false
+            switch Result {
+            case .success(let Result):
+                self._message = Result?.message ?? ""
+                self._isLoading = false
+                self._isFailed = false
+                self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
+                if method == .delete { _addressList.removeAll { $0.id == id }}
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+                    self._isCreateSuccess = true
+                }
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+            }
+        }
+    }
+    func createAddress(dic: [String: Any]) {
+        _isLoading = true
+        api.createAddress(dic: dic){ [weak self] (Result) in
+            guard let self = self else { return }
+            self._isLoading = false
+            switch Result {
+            case .success(let Result):
+                self._message = Result?.message ?? ""
+                self._isLoading = false
+                self._isFailed = false
+                self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+                    self._isCreateSuccess = true
+                }
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+            }
+        }
+    }
     func reset(){
         GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
         GenericUserDefault.shared.setValue("", Constants.shared.token)

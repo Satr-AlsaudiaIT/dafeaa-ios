@@ -29,7 +29,7 @@ struct ProfileDetailView:  View {
                             VStack(alignment:.leading, spacing: 8) {
                                 HStack {
                                     Spacer()
-                                    ProfileImageView(selectedImage: $selectedProfileImage, imageURL: selectedProfileImageURL, isShowFromEdit: false)
+                                    ProfileImageView(selectedImage: $selectedProfileImage, imageURL: selectedProfileImageURL, isShowFromEdit: true)
                                     Spacer()
                                 }.padding(.bottom, 16)
                                 CustomMainTextField(text: $name, placeHolder: "Name", image: .nameTFIcon)

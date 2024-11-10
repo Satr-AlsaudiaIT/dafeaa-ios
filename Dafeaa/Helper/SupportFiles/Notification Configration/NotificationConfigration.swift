@@ -43,24 +43,24 @@ class NotificationConfigration: NSObject, UNUserNotificationCenterDelegate, Mess
     
     private func pushNotificationAPISetUp() {
         //MARK:- toDo push notification
-//        Messaging.messaging().token { token, error in
-//            print("token is ----> \(token ?? "")")
-//            GenericUserDefault.shared.setValue(token, Constants.shared.deviceToken)
-//            let UUIDValue = UIDevice.current.identifierForVendor!.uuidString
-//            if  GenericUserDefault.shared.getValue( Constants.shared.token) as? String ?? "" != "" {
-//                
-//                let api  = AuthAPI()
-//                api.submitToken(token: token ?? "", deviceId: UUIDValue) { (result) in
-//                    switch result {
-//                        
-//                    case .success(let result):
-//                        print(result?.message ?? "")
-//                    case .failure(let error):
-//                        print(error.localizedDescription)
-//                    }
-//                }
-//            }
-//        }
+        Messaging.messaging().token { token, error in
+            print("token is ----> \(token ?? "")")
+            GenericUserDefault.shared.setValue(token, Constants.shared.deviceToken)
+            let UUIDValue = UIDevice.current.identifierForVendor!.uuidString
+            if  GenericUserDefault.shared.getValue( Constants.shared.token) as? String ?? "" != "" {
+                
+                let api  = AuthAPI()
+                api.submitToken(token: token ?? "", deviceId: UUIDValue) { (result) in
+                    switch result {
+                        
+                    case .success(let result):
+                        print(result?.message ?? "")
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        }
     }
     
     

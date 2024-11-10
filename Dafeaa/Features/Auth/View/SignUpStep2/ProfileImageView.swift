@@ -9,6 +9,8 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
+
+
 struct ProfileImageView: View {
     @Binding var selectedImage: UIImage?
     @State var title: String?
@@ -19,79 +21,111 @@ struct ProfileImageView: View {
     @State private var showFilePicker: Bool = false
     @State private var showFileTypeSelection: Bool = false
     @State private var pickerSourceType: UIImagePickerController.SourceType = .photoLibrary
-    
+    @State private var isEdited: Bool = false
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             ZStack(alignment: .center) {
                 Circle()
-                    .fill(.grayF6F6F6)
+                    .fill(Color.gray.opacity(0.2))
                     .frame(width: height, height: height)
-                   
-                
-                if isShowFromEdit != true {
-                    if selectedImage != UIImage() && selectedImage != nil {
-                       if let image = selectedImage {
-                           ZStack {
-                               Image(uiImage: image)
-                                   .resizable()
-                                   .frame(width: height, height: height)
-                                   .scaledToFit()
-                                   .clipShape(Circle())
-                                   .cornerRadius(10)
-                           }
-                       } else {
-                           Image(.camera)
-                               .resizable()
-                               .frame(width: 28,height: 28)
-                       }
-                   }
-                } else {
-                    if let fileImage = imageURL {
-                        ZStack {
-                            WebImage(url: URL(string: fileImage))
-                                .resizable()
-                                .frame(width: height, height: height)
-                                .scaledToFit()
-                                .cornerRadius(10)
+
+                if let selectedImage = selectedImage {
+                    // If the user has selected an image, show it
+                    Image(uiImage: selectedImage)
+                        .resizable()
+                        .frame(width: height, height: height)
+                        .scaledToFill()
+                        .clipShape(Circle())
+                        .onAppear{
+                            isEdited = true
                         }
-                    }
+                    
+                } else if let imageURL = imageURL, isShowFromEdit {
+                    // If editing from a URL, show the image from the URL
+                    WebImage(url: URL(string: imageURL))
+                        .resizable()
+                        .frame(width: height, height: height)
+                        .scaledToFill()
+                        .clipShape(Circle())
+                        .onAppear{
+                            isEdited = true
+                        }
+                } else {
+                    // Show the default "edit" icon when no image is available
+                    Image(systemName: "person.fill")
+                        .resizable()
+                        .frame(width: height * 0.7, height: height * 0.7)
+                        .scaledToFit()
+                        .clipShape(Circle())
+                        .foregroundColor(.gray)
                 }
             }
             
+            // Edit icon that allows to change the image
             Circle()
                 .fill(Color.white)
                 .frame(width: editHeight, height: editHeight)
-                .overlay(alignment: .center) {
-                    Image(.camera)
-                        .renderingMode(.template)
-                        .foregroundColor(Color.primary)
-                }
+                .overlay(
+                    Image(isEdited ? .edit : .camera)
+                        .foregroundColor(.primary)
+                        .shadow(color:.grayFAFAFA,radius: 5)
+                )
                 .onTapGesture {
                     showFileTypeSelection = true
                 }
         }
         .actionSheet(isPresented: $showFileTypeSelection) {
-            ActionSheet(title: Text("Choose the file type you want to upload".localized()), buttons: [
-                .default(Text("Image".localized())) {
+            ActionSheet(title: Text("chooseUploadImage".localized()), buttons: [
+                .default(Text("PhotoLibrary".localized())) {
                     pickerSourceType = .photoLibrary
                     showFilePicker = true
                 },
-                .default(Text("Camera".localized())) {
+                .default(Text("cameraUpload".localized())) {
                     pickerSourceType = .camera
                     showFilePicker = true
                 },
                 .cancel()
             ])
         }
-        .sheet(isPresented: $showFilePicker){
-            
-                ImagePickerView(selectedImage: $selectedImage,  sourceType: pickerSourceType)
-            
+        .sheet(isPresented: $showFilePicker) {
+            ImagePickerView(selectedImage: $selectedImage, sourceType: pickerSourceType)
         }
     }
 }
 
-//#Preview {
-//    GuardProfileImageView(selectedImage: .constant(nil), isShowFromEdit: false)
+//struct ImagePickerView: UIViewControllerRepresentable {
+//    @Binding var selectedImage: UIImage?
+//    var sourceType: UIImagePickerController.SourceType
+//
+//    func makeUIViewController(context: Context) -> UIImagePickerController {
+//        let picker = UIImagePickerController()
+//        picker.sourceType = sourceType
+//        picker.delegate = context.coordinator
+//        return picker
+//    }
+//
+//    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+//
+//    func makeCoordinator() -> Coordinator {
+//        Coordinator(self)
+//    }
+//
+//    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+//        let parent: ImagePickerView
+//
+//        init(_ parent: ImagePickerView) {
+//            self.parent = parent
+//        }
+//
+//        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//            if let image = info[.originalImage] as? UIImage {
+//                parent.selectedImage = image
+//            }
+//            picker.dismiss(animated: true)
+//        }
+//
+//        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//            picker.dismiss(animated: true)
+//        }
+//    }
 //}
-

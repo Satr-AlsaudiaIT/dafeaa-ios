@@ -7,13 +7,13 @@
 //
 
 import SwiftUI
-struct CustomSegmentView:View{
+struct CustomSegmentViewUnderLine:View{
     @State var titlesArray:[String]
     @State var selectedTitleColor:Color? = Color(.mainOrange)
     @State var selectedBackGroundColor:Color? = Color(.gray888888)
     @State var fontsize:CGFloat? = 14
     @Binding var selectedSegment :Int
-
+    
     var body: some View{
         ZStack(alignment:.bottom){
             Rectangle()
@@ -36,98 +36,53 @@ struct CustomSegmentView:View{
                             .padding(.bottom,-2)
                             .frame(height: 3)
                     }
-                        .onTapGesture {
-                            selectedSegment = index
-                            }
+                    .onTapGesture {
+                        selectedSegment = index
+                    }
                 }
             }
-           
+            
         }
         .padding(1)
         .frame(height: 40)
         .frame(maxWidth: .infinity)
-
+        
     }
     
 }
-//struct CustomSegmentView:View{
-//    var body: some View{
-//        
-//        VStack {
-//            GeometryReader { geo in
-//                VStack {
-//                    Spacer()
-//                    Rectangle()
-//                        .fill(Color(Asset.lightGray.name).opacity(0.4))
-//                        .frame(width: UIScreen.main.bounds.width - 95 , height: 2)
-//                        .padding(.leading,5)
-//                        .padding(.top,29)
-//                }
-//                .frame(height: 30)
-//                HStack  {
-//                    VStack {
-//                        Button {
-//                            selectedTap = .current
-//                        } label: {
-//                            VStack(spacing: 0) {
-//                                if selectedTap == .current {
-//                                    Text("Current".localized())
-//                                        .foregroundColor(Color(Asset.secondColor.name))
-//                                        .font(.custom(AppFonts.shared.name(AppFontsTypes.extraBold), size: 14))
-//                                    Rectangle()
-//                                        .fill(Color(Asset.secondColor.name))
-//                                        .cornerRadius(3)
-//                                        .padding([.leading,.trailing],3)
-//                                        .frame(height: 5)
-//                                }
-//                                else {
-//                                    
-//                                    Text("Current".localized())
-//                                        .foregroundColor(Color(Asset.lightGray.name).opacity(0.4))
-//                                        .font(.custom(AppFonts.shared.name(AppFontsTypes.bold), size: 11))
-//                                }
-//                            }
-//                        }
-//                        
-//                    }
-//                    .frame(maxWidth: .infinity)
-//                    VStack {
-//                        Button {
-//                            selectedTap = .history
-//                            
-//                        } label: {
-//                            VStack(spacing: 0) {
-//                                if selectedTap == .history {
-//                                    Text("History".localized())
-//                                        .foregroundColor(Color(Asset.secondColor.name))
-//                                        .font(.custom(AppFonts.shared.name(AppFontsTypes.extraBold), size: 14))
-//                                    Rectangle()
-//                                        .fill(Color(Asset.secondColor.name))
-//                                        .cornerRadius(3)
-//                                        .padding([.leading,.trailing],3)
-//                                        .frame(height: 5)
-//                                }
-//                                else {
-//                                    
-//                                    Text("History".localized())
-//                                        .foregroundColor(Color(Asset.lightGray.name).opacity(0.4))
-//                                        .font(.custom(AppFonts.shared.name(AppFontsTypes.bold), size: 11))
-//                                }
-//                            }
-//                        }
-//                        
-//                    }
-//                    .frame(maxWidth: .infinity)
-//                    
-//                }
-//                
-//                .frame(height: 30)
-//                .padding(.top,8)
-//                Spacer()
-//            }
-//            .frame(height: 30)
-//            .frame(width: UIScreen.main.bounds.width - 80 )
-//            .padding([.leading,.trailing], 40)
-//        }
-//    }
-//}
+import SwiftUI
+
+struct CustomSegmentView: View {
+    @State var titlesArray: [String]
+    @State var selectedTitleColor: Color? = Color(.black222222)
+    @State var selectedBackGroundColor: Color? = Color(.primary)
+    @State var fontsize: CGFloat? = 14
+    @Binding var selectedSegment: Int
+    
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color(.black).opacity(0.1), lineWidth: 1)
+                .background(RoundedRectangle(cornerRadius: 8).fill(Color.clear))
+            
+            HStack {
+                ForEach(0..<titlesArray.count, id: \.self) { index in
+                    VStack {
+                        Text(titlesArray[index].localized())
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 40)
+                            .font(.custom(AppFonts.shared.name(AppFontsTypes.semiBold), size: fontsize ?? 14))
+                            .foregroundColor(selectedSegment == index ? selectedTitleColor : .grayAAAAAA)
+                    }
+                    .background(selectedSegment == index ? Color(.primary) : Color.clear)
+                    .cornerRadius(8)
+                    .onTapGesture {
+                        selectedSegment = index
+                    }
+                }
+            }
+        }
+        .frame(height: 45)
+        .frame(maxWidth: .infinity)
+    }
+}

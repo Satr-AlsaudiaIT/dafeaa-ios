@@ -13,6 +13,8 @@ struct CustomPasswordField: View {
     @Binding var password: String
     @State var isPasswordVisible: Bool = false
     var placeholder: String = "password"
+    @FocusState private var isFocused: Bool
+
     var body: some View {
         HStack {
             Image(.securitySafe)
@@ -23,18 +25,19 @@ struct CustomPasswordField: View {
             if isPasswordVisible {
                 TextField(placeholder.localized(), text: $password)
                     .textModifier(.plain, 15, .grayB5B5B5)
+                    .focused($isFocused)
                     
             } else {
                 SecureField(placeholder.localized(), text: $password)
                     .textModifier(.plain, 15, .grayB5B5B5)
-
+                    .focused($isFocused)
             }
             
             // Eye Icon for showing/hiding password
             Button(action: {
                 isPasswordVisible.toggle()
             }) {
-                Image(isPasswordVisible ? .eyeSlash : .eyeSlash)
+                Image(isPasswordVisible ? .eyeSlash : .eye)
                     
             }
         }
@@ -42,61 +45,88 @@ struct CustomPasswordField: View {
         .padding(.horizontal,20)
         .background(Color(.grayF6F6F6))
         .cornerRadius(5)
+        .overlay(
+            RoundedRectangle(cornerRadius: 5)
+                .stroke(isFocused ? Color(.primary) : Color.clear, lineWidth: 1)
+        )
+        .onTapGesture {
+            isFocused = true // Set focus when the field is tapped
+        }
     }
 }
 
+
 struct PhoneNumberField: View {
-    
     @Binding var phoneNumber: String
     @Binding var selectedCountryCode: String
     var placeholder: String = "phoneNumber"
     var image: UIImage
-    
+    @FocusState private var isFocused: Bool
+
     var body: some View {
         HStack {
             // Icon on the left
             Image(uiImage: image)
                 .foregroundColor(Color.yellow)
                 .frame(width: 20, height: 20)
-            // FlagPhoneNumberView wrapped as part of the reusable component
-//            FlagPhoneNumberView(phoneNumber: $phoneNumber, selectedCountryCode: $selectedCountryCode)
+            
+            // Phone number text field
             TextField(placeholder.localized(), text: $phoneNumber)
                 .textModifier(.plain, 15, .grayB5B5B5)
                 .keyboardType(.numberPad)
-            Image(.phoneCountryCode).resizable()
+                .focused($isFocused) // Track the focus state
+            
+            // Country code icon or additional UI on the right
+            Image(.phoneCountryCode)
+                .resizable()
                 .frame(width: 91, height: 48)
         }
         .frame(height: 48)
         .padding(.leading, 20)
         .background(Color(.grayF6F6F6))
         .cornerRadius(5)
-//        .shadow(radius: 1)
+        .overlay(
+            RoundedRectangle(cornerRadius: 5)
+                .stroke(isFocused ? Color(.primary) : Color.clear, lineWidth: 1)
+        )
+        .onTapGesture {
+            isFocused = true // Set focus when the field is tapped
+        }
     }
 }
 
 struct CustomMainTextField: View {
-    
     @Binding var text: String
     @State var placeHolder: String
-    @State var image : ImageResource
+    @State var image: ImageResource?
+    @FocusState private var isFocused: Bool
+    @State var keyBoardType: UIKeyboardType = .default
+
     var body: some View {
         HStack {
-            Image(image)
-                .foregroundColor(Color.yellow)
-                .frame(width: 20, height: 20)
-            
+            if let image = image {
+                Image(image)
+                    .foregroundColor(Color.yellow)
+                    .frame(width: 20, height: 20)
+            }
             TextField(placeHolder.localized(), text: $text)
-                    .textModifier(.plain, 15, .grayB5B5B5)
-            
+                .textModifier(.plain, 15, .grayB5B5B5)
+                .focused($isFocused) // Track whether the text field is focused
+                .keyboardType(keyBoardType)
         }
         .frame(height: 48)
-        .padding(.horizontal,20)
+        .padding(.horizontal, 20)
         .background(Color(.grayF6F6F6))
         .cornerRadius(5)
+        .overlay(
+            RoundedRectangle(cornerRadius: 5)
+                .stroke(isFocused ? Color(.primary) : Color.clear, lineWidth: 1)
+        )
+        .onTapGesture {
+            isFocused = true // Set the focus when the user taps on the text field
+        }
     }
 }
-
-import SwiftUI
 
 struct ButtonWithImageView: View {
     var imageName: ImageResource

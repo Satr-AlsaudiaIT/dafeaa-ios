@@ -23,7 +23,9 @@ struct NavigationBarView: View {
                           .frame(width: 10, height: 17)
                   })
               } else {
-                  Spacer()
+                  Image("")
+                      .resizable()
+                      .frame(width: 10, height: 17)
               }
             Spacer()
             Text(title.localized())

@@ -21,7 +21,7 @@ enum AppFontsTypes: String {
 struct AppFonts {
     static let shared  = AppFonts()
     func name(_ type:AppFontsTypes) -> String {
-        let fontName = Constants.shared.isAR ? "Bahij_TheSansArabic" :"Poppins" + "-" + type.rawValue
+        let fontName = ( Constants.shared.isAR ? "BahijTheSansArabic" :"Poppins") + "-" + type.rawValue
             return fontName
     }
     

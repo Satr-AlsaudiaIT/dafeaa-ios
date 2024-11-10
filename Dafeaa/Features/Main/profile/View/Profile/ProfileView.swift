@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ProfileView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -14,13 +15,19 @@ struct ProfileView: View {
     @State private var phone = ""
     let type = GenericUserDefault.shared.getValue(Constants.shared.userType) as? Int ?? 0
     @State private var showingLogOutActionSheet = false
-    @State private var showingDeleteAccountActionSheet = false
+    @State private var isActiveActionSheet = false
     @State private var showingChangePhone = false
+    @State private var activeActionSheet: ActiveSheet?
+    @State private var selectedAddressId: Int = Constants.selectedAddressId
+    @State private var selectedAddress: String = Constants.selectedAddress
 
+    enum ActiveSheet {
+           case logOut, deleteAccount
+       }
     
     var body: some View {
         ZStack{
-            VStack {
+            VStack() {
                 NavigationBarView(title: "myAccount")
                 ScrollView(.vertical,showsIndicators: false){
                     
@@ -66,13 +73,13 @@ struct ProfileView: View {
                             
                             if type == 1{
                                 NavigationLinkComponent(
-                                    destination: SavedAddressesView(),
+                                    destination: SavedAddressesView(selectedAddressId: $selectedAddressId, selectedAddress: $selectedAddress),
                                     label: "Saved Addresses",
                                     image: Image(.iconAddress)
                                 )
                             }else{
                                 NavigationLinkComponent(
-                                    destination: SubscriptionManagementView(),
+                                    destination: SubscribtionView(),
                                     label: "Subscription Management",
                                     image: Image(.iconAddress)
                                 )
@@ -97,8 +104,10 @@ struct ProfileView: View {
                                 label: "Settings",
                                 image: Image(.iconSettings)
                             )
+                            NavigationLinkComponent(destination: OrdersOffersLinksView(), label: "offers", image: Image(.iconAbout))
                             Button(action:{
-                                showingDeleteAccountActionSheet = true
+                                isActiveActionSheet = true
+                                activeActionSheet = .deleteAccount
                                 
                             }){
                                 Text("deleteAccount".localized())
@@ -107,9 +116,10 @@ struct ProfileView: View {
                             }
                         }                        }
                     
-                }.padding(24)
+                }.padding([.top,.trailing,.leading],24)
                 Button(action: {
-                    showingLogOutActionSheet = true
+                    isActiveActionSheet = true
+                    activeActionSheet = .logOut
                 }) {
                     Text("logout".localized())
                         .textModifier(.semiBold, 15, .redFA4248)
@@ -121,14 +131,38 @@ struct ProfileView: View {
             }.navigationDestination(isPresented: $showingChangePhone) {
                 ChangePhoneView()
             }
-            .actionSheet(isPresented: $showingLogOutActionSheet) {
-                ActionSheet(title: Text("logout".localized()), message: Text("logOutAlert".localized()), buttons: [
-                    .default(Text("logout".localized())) { viewModel.logOut() },
-                    .cancel(Text("Cancel".localized()))])}
-            .actionSheet(isPresented: $showingDeleteAccountActionSheet) {
-                ActionSheet(title: Text("deleteAccount".localized()), message: Text("deleteAccountAlert".localized()), buttons: [
-                    .default(Text("delete".localized())) { viewModel.deleteAccount() },
-                    .cancel(Text("Cancel".localized()))])}
+            .actionSheet(isPresented: $isActiveActionSheet) {
+                switch activeActionSheet {
+                           case .logOut:
+                               return ActionSheet(
+                                   title: Text("logout".localized()),
+                                   message: Text("logOutAlert".localized()),
+                                   buttons: [
+                                       .default(Text("logout".localized())) { viewModel.logOut() },
+                                       .cancel(Text("Cancel".localized()))
+                                   ]
+                               )
+                           case .deleteAccount:
+                               return ActionSheet(
+                                   title: Text("deleteAccount".localized()),
+                                   message: Text("deleteAccountAlert".localized()),
+                                   buttons: [
+                                       .default(Text("deleteAccount".localized())) { viewModel.deleteAccount() },
+                                       .cancel(Text("Cancel".localized()))
+                                   ]
+                               )
+                case .none:
+                    return ActionSheet(
+                        title: Text("".localized()),
+                        message: Text("".localized()),
+                        buttons: [
+                            .default(Text("".localized())) { },
+                            .cancel(Text("".localized()))
+                        ]
+                    )
+                }
+                       }
+            
             if viewModel.isLoading {
                 ProgressView("Loading...".localized())
                     .foregroundColor(.white)
