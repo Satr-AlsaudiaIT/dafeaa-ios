@@ -45,7 +45,7 @@ class OrdersAPI: BaseAPI<OrdersNetwork>, OrdersAPIProtocol
     }
     
     func createClientOrder(dic: [String:Any], Completion: @escaping (Result<GeneralModel?, NSError>) -> Void){
-        self.fetchData(target: .createDynamicLinks(dic:dic), responseClass: GeneralModel.self) { (result) in
+        self.fetchData(target: .createClientOrder(dic:dic), responseClass: GeneralModel.self) { (result) in
             Completion(result)
         }
     }

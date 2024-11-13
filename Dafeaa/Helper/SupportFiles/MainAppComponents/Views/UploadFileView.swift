@@ -62,7 +62,7 @@ struct UploadFileView: View {
                                                 .padding(.top,0)
                                         }
                                     }
-                                    Spacer()
+//                                    Spacer()
                                 }
                             }
                         }
@@ -105,7 +105,7 @@ struct UploadFileView: View {
                                             .padding(.top,0)
                                     }
                                 }
-                                Spacer()
+//                                Spacer()
                             }
 
                         }
@@ -114,7 +114,7 @@ struct UploadFileView: View {
             }
             .frame(height: 100)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+//        .frame(maxWidth: .infinity, maxHeight: .infinity)
 //        .actionSheet(isPresented: $showFileTypeSelection) {
 //            ActionSheet(title: Text("Select file type".localized()), message: Text("Choose the file type you want to upload".localized()), buttons: [
 //                .default(Text("Image".localized()), action: {
@@ -130,9 +130,55 @@ struct UploadFileView: View {
 //        }
         .sheet(isPresented: $showFilePicker) {
             ImagePickerView(selectedImage: $selectedImage, sourceType: pickerSourceType)
-                .frame(height: UIScreen.main.bounds.height)
+                //.frame(height: UIScreen.main.bounds.height)
         }
         
     }
 }
 
+import SwiftUI
+
+struct ImagePicker: UIViewControllerRepresentable {
+    @Environment(\.presentationMode) private var presentationMode
+    var sourceType: UIImagePickerController.SourceType = .photoLibrary
+    @Binding var selectedImage: UIImage
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePicker>) -> UIImagePickerController {
+
+        let imagePicker = UIImagePickerController()
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = sourceType
+        imagePicker.delegate = context.coordinator
+
+        return imagePicker
+    }
+
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: UIViewControllerRepresentableContext<ImagePicker>) {
+
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    final class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+        var parent: ImagePicker
+
+        init(_ parent: ImagePicker) {
+            self.parent = parent
+        }
+
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
+            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                parent.selectedImage = image
+            }
+
+            parent.presentationMode.wrappedValue.dismiss()
+        }
+
+    }
+}
+
+ 

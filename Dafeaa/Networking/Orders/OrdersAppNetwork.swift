@@ -28,7 +28,7 @@ extension OrdersNetwork: TargetType {
     
     var path: String {
         switch self {
-        case .orders(let skip,let status):   return"orders?skip=\(skip)&status=\(status)"
+        case .orders(let skip,let status):   return"orders?skip=\(skip)&filter[status]=\(status)"
         case .getOrder(let id):              return "orders/\(id)"
         case .changeStatus(let id, _):       return "orders/\(id)"
         case .completeOrder(let id, _):      return "orders/\(id)"
@@ -56,7 +56,7 @@ extension OrdersNetwork: TargetType {
         switch self{
         case .changeStatus( _, let  status): return .requestParameters(Parameters: ["_method": "put", "status": status], encoding: JSONEncoding.default)
         case .completeOrder( _, let  qrCode): return .requestParameters(Parameters: ["qr_code": qrCode], encoding: JSONEncoding.default)
-        case .createDynamicLinks(let dic):    return .requestParameters(Parameters: dic, encoding: JSONEncoding.default)
+        case .createDynamicLinks(let dic),.createClientOrder(let dic):    return .requestParameters(Parameters: dic, encoding: JSONEncoding.default)
             
         default:                              return .requestPlain
             

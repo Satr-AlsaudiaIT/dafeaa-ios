@@ -302,6 +302,100 @@ class MultipartUploadImageWithModel {
         }
     }
     
+    func uploadOrderWithProduct<M: Codable>(path: String, parameterS: [String: Any], products: [[String: Any]], responseClass: M.Type, completion: @escaping (Result<M?, NSError>) -> Void) {
+
+        let token = GenericUserDefault.shared.getValue(Constants.shared.token)
+        let toLanguage = MOLHLanguage.currentAppleLanguage()
+        AF.upload(multipartFormData: { (form: MultipartFormData) in
+            
+            for (key, value) in parameterS {
+                if let temp = value as? String {
+                    form.append(temp.data(using: .utf8)!, withName: key)
+                }
+                if let temp = value as? Int {
+                    form.append("\(temp)".data(using: .utf8)!, withName: key)
+                }
+                if let temp = value as? Double {
+                    form.append("\(temp)".data(using: .utf8)!, withName: key)
+                }
+                if let temp = value as? Float {
+                    form.append("\(temp)".data(using: .utf8)!, withName: key)
+                }
+            }
+            
+            // Handle 'products' array with images
+            for (index, product) in products.enumerated() {
+                for (key, value) in product {
+                    let fieldName = "products[\(index)][\(key)]"
+                    if let stringValue = value as? String {
+                        form.append(stringValue.data(using: .utf8)!, withName: fieldName)
+                    } else if let intValue = value as? Int {
+                        form.append("\(intValue)".data(using: .utf8)!, withName: fieldName)
+                    } else if let doubleValue = value as? Double {
+                        form.append("\(doubleValue)".data(using: .utf8)!, withName: fieldName)
+                    } else if let image = value as? UIImage, let imageData = image.jpegData(compressionQuality: 0.5) {
+                        // Append image data for each product
+                        let imageFieldName = "products[\(index)][image]"
+                        form.append(imageData, withName: imageFieldName, fileName: "product_\(index).jpeg", mimeType: "image/jpeg")
+                    }
+                }
+            }
+            
+
+        },
+                  to: "\(Constants.shared.baseURL)\(path)", method: .post, headers: [
+            "Authorization": "Bearer \(token ?? "")",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-Language": "\(toLanguage)",
+            "Connection": "keep-alive",
+            "x-source": "ios"
+        ])
+        .responseJSON { response in
+            print(response.response?.statusCode ?? 0)
+            print("\(Constants.shared.baseURL)\(path) \(parameterS)")
+            debugPrint(response)
+//            debugPrint(resp.response)
+
+            print("status is -----------:> \(response.response?.statusCode ?? 0)")
+            debugPrint(response)
+            guard response.error == nil else {
+                self.handleUrlError(Constants.shared.baseURL, error: response.error, completion: { Error in
+                    completion(.failure(Error))
+                    return
+                })
+                return
+            }
+            
+            self.handleUrlStatusCode(targetPath : path,responseData: response.data,code: response.response?.statusCode){ isSuccess,error  in
+                
+                guard isSuccess else {
+                    if error == "Unauthenticated." {
+                        completion(.failure(NSError(domain: Constants.shared.baseURL, code: 401, userInfo: [NSLocalizedDescriptionKey:error ?? ""])))
+                        
+                    }
+                    completion(.failure(NSError(domain: Constants.shared.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey:error ?? ""])))
+                    return
+                }
+                
+                guard let data = response.data else { return }
+                
+                self.decode(fromData: data, toObject: responseClass, completion: { object, error in
+                    guard let object = object , error == nil else {
+                        completion(.failure(error!))
+                        return
+                    }
+                    
+                    print("result is:- \(object)")
+                    
+                    completion(.success(object))
+                })
+                
+            }
+        }
+
+    }
+    
     private func buildParams(task: Task) -> (params:[String: Any], encodingType: ParameterEncoding) {
         switch task {
         case .requestPlain:

@@ -60,6 +60,26 @@ struct AddEditAddressView: View {
             }
             .padding(.all,24)
         }
+        .toolbar{
+            ToolbarItemGroup(placement: .keyboard){
+                Button("Done".localized()){
+                    hideKeyboard()
+                }
+                Spacer()
+                Button(action: {
+                       showPerviousTextField()
+                }, label: {
+                    Image(systemName: "chevron.up").foregroundColor(.blue)
+                })
+                
+                Button(action: {
+                    showNextTextField()
+                }, label: {
+                    Image(systemName: "chevron.down").foregroundColor(.blue)
+                })
+            }
+        }
+
             // MARK: - Loading Indicator
             if viewModel.isLoading {
                 ProgressView("Loading...".localized())

@@ -65,7 +65,7 @@ class HomeVM: ObservableObject {
             switch Result {
             case .success(let Result):
                 guard let data = Result?.data else { return }
-                if data.isEmpty {
+                if self._notifications.count >= Result?.count ?? 0 {
                     self.hasMoreData = false
                 } else {
                     if skip == 0 {

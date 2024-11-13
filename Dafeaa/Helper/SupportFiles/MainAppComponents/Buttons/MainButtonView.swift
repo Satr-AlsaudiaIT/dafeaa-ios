@@ -56,7 +56,7 @@ struct ReusableButton: View {
             }
         }
         .disabled(!isEnabled)
-        .shadow(color: isEnabled ? Color(.dropShadow2B2D3333).opacity(0.2) : .clear, radius: 24, x: 0, y: 10)
+        .shadow(color: isEnabled ? Color(.dropShadow2B2D3333).opacity(0.2) : .clear, radius: 5)
     }
 }
 

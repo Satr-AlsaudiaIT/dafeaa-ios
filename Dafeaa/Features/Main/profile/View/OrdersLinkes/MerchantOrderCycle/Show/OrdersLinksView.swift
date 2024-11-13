@@ -12,6 +12,9 @@ struct OrdersOffersLinksView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel = OrdersVM()
     @State var goToAddOffer = false
+    @State var goToDetails = false
+    @State var toast: FancyToast? = nil
+    @State var selectedOffer: OffersData?
 
     var body: some View {
         ZStack{
@@ -25,15 +28,21 @@ struct OrdersOffersLinksView: View {
                             VStack(spacing: 17) {
                                 VStack(spacing: 8) {
                                     ForEach(0..<viewModel.offersList.count,id: \.self){ index in
-                                        OfferComponent(offer: viewModel.offersList[index],onDelete: {viewModel.deleteOffer(id: viewModel.offersList[safe: index]?.id ?? 0)})
-                                            .onAppear {
-                                                if index == viewModel.offersList.count - 1 {
-                                                    loadMoreOrdersIfNeeded()
+                                         OfferComponent(offer: viewModel.offersList[index],onDelete: {viewModel.deleteOffer(id: viewModel.offersList[safe: index]?.id ?? 0)}, toast: $toast)
+                                                .onAppear {
+                                                    if index == viewModel.offersList.count - 1 {
+                                                        loadMoreOrdersIfNeeded()
+                                                    }
+                                                }.onTapGesture{
+                                                    selectedOffer = viewModel.offersList[safe: index]
+                                                    goToDetails = true
+                                                    
                                                 }
-                                            }
-                                    }
+                                        }
                                 }
                             }
+                            .padding(.bottom,60)
+
                         }
                         ReusableButton(buttonText: "addOffer", action: {goToAddOffer = true})
                             .navigationDestination(isPresented: $goToAddOffer, destination: {AddOfferView()})
@@ -54,13 +63,14 @@ struct OrdersOffersLinksView: View {
             }
         }.edgesIgnoringSafeArea(.bottom)
             .toastView(toast: $viewModel.toast)
+            .toastView(toast: $toast)
             .navigationBarHidden(true)
-        
+            .navigationDestination(isPresented: $goToDetails, destination: {OrderLinkDetailsView(id:selectedOffer?.id ?? 0)})
             .onAppear(){
                 viewModel.offers(skip: 0)
                 AppState.shared.swipeEnabled = true
             }
-        
+            
     }
     private func loadMoreOrdersIfNeeded() {
         if viewModel.hasMoreData && !viewModel.isLoading {
@@ -76,6 +86,7 @@ struct OrdersOffersLinksView: View {
 struct OfferComponent: View {
     @State var offer: OffersData?
     var onDelete: (() -> Void)
+    @Binding var toast: FancyToast?
     
     var body: some View {
         HStack(alignment: .center) {
@@ -91,18 +102,20 @@ struct OfferComponent: View {
             }
             Spacer()
             HStack(spacing: 2) {
-                Button(action: {copyURL()}, label: { Image(systemName: "rectangle.portrait.on.rectangle.portrait")
+                Button(action: {copyURL()},
+                       label: { Image(systemName: "rectangle.portrait.on.rectangle.portrait")
                     .foregroundColor(.black222222)})
-                if let offerID = offer?.id , let offerCode = offer?.code, let url = URL(string: "\(Constants.shared.baseURL)offers/\(offerID)/\(offerCode)"){
-                    ShareLink(item: url) { Label("", image: "share")}  }
+                if let offerID = offer?.id , let offerCode = offer?.code, let url = URL(string: "dafeaa://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)"){
+                    ShareLink(item: url) {  Image(.share).resizable().frame(width: 25,height: 20)}}
                 Button(action: {onDelete()}, label: { Image(.trash)})
             }
         }
     }
     private func copyURL() {
         if let offerID = offer?.id , let offerCode = offer?.code{
-            let urlString = "\(Constants.shared.baseURL)offers/\(offerID)/\(offerCode)"
+            let urlString = "dafeaa://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)"
             UIPasteboard.general.string = urlString
+            self.toast = FancyToast(type: .info, title: "copied successfully".localized(), message: "")
         }
     }
 

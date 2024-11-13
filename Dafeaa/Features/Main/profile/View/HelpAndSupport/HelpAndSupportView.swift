@@ -70,6 +70,7 @@ struct HelpAndSupportView: View {
         .navigationBarHidden(true)
         .onAppear(){
             AppState.shared.swipeEnabled = true
+            viewModel.getContacts()
         }
         
     }

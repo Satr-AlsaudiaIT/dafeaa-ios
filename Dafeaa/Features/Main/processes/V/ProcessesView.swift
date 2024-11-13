@@ -16,19 +16,23 @@ struct ProcessesView: View {
         ZStack {
             VStack(spacing: 0) {
                 NavigationBarView(title: "lastProcessAndPayment".localized())
-                ScrollView {
-                    VStack(spacing: 8) {
-                        ForEach(0..<viewModel.operationsList.count,id: \.self){ index in
-                            ProcessComponent(process: viewModel.operationsList[index])
-                                .onAppear {
-                                    if index == viewModel.operationsList.count - 1 {
-                                        loadMoreOrdersIfNeeded()
+                if viewModel.operationsList.isEmpty {
+                    EmptyCostumeView()
+                } else {
+                    ScrollView {
+                        VStack(spacing: 8) {
+                            ForEach(0..<viewModel.operationsList.count,id: \.self){ index in
+                                ProcessComponent(process: viewModel.operationsList[index])
+                                    .onAppear {
+                                        if index == viewModel.operationsList.count - 1 {
+                                            loadMoreOrdersIfNeeded()
+                                        }
                                     }
-                                }
+                            }
                         }
-                    }
-                    
-                }.padding(24)
+                        
+                    }.padding(24)
+                }
             }
             if viewModel.isLoading {
                 ProgressView("Loading...".localized())

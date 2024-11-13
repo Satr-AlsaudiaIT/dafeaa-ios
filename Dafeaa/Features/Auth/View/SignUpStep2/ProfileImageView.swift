@@ -9,12 +9,10 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-
-
 struct ProfileImageView: View {
     @Binding var selectedImage: UIImage?
     @State var title: String?
-    @State var imageURL: String?
+    @Binding var imageURL: String?
     @State var isShowFromEdit: Bool
     @State var height: CGFloat = 85
     @State var editHeight: CGFloat = 20

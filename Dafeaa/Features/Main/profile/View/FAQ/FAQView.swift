@@ -24,17 +24,7 @@ struct FAQView: View {
                     }
                     
                     if (viewModel.questionList.count ) == 0 {
-                        VStack{
-                            Spacer()
-                            Image("emptyState")
-                                .resizable()
-                                .frame(width:UIScreen.main.bounds.width / 2,height:UIScreen.main.bounds.width / 3.5)
-                            Text("No questions yet".localized())
-                                .textModifier(.plain, 14, .gray888888)
-                                .padding()
-                            Spacer()
-                        }
-                        
+                        EmptyCostumeView()
                         
                     } else {
                         ScrollView(.vertical,showsIndicators: false){

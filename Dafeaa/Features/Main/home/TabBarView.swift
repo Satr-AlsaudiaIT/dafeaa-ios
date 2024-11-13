@@ -24,19 +24,17 @@ struct TabBarView: View {
                 TabView(selection: $selectedTab) {
                     HomeView(selectedTab: $selectedTab)
                         .tabItem {
-                            Image(.home)
-                                .renderingMode(.template)
-                                .foregroundColor(selectedTab == .profile ? Color(.primary) : Color(.grayBDBDBD))
+                            Image(selectedTab == .home ? .homeFill:.home)
+                                
                             Text("home".localized())
                                 .textModifier(.bold,12, selectedTab == .home ? Color(.primary) : Color(.grayBDBDBD))
                         }
                         .tag(Tab.home)
                     
-                    WalletView()
+                    WalletView( selectedTab: $selectedTab)
                         .tabItem {
-                            Image(.wallet)
-                                .renderingMode(.template)
-                                .foregroundColor(selectedTab == .profile ? Color(.primary) : Color(.grayBDBDBD))
+                            Image(selectedTab == .wallet ? .walletFill:.wallet)
+                               
                             Text("wallet".localized())
                                 .textModifier(.bold,12, selectedTab == .wallet ? Color(.primary) : Color(.grayBDBDBD))
                         }
@@ -44,9 +42,8 @@ struct TabBarView: View {
                     
                     MyOrdersView()
                         .tabItem {
-                            Image(.bag)
-                                .renderingMode(.template)
-                                .foregroundColor(selectedTab == .profile ? Color(.primary) : Color(.grayBDBDBD))
+                            Image(selectedTab == .myOrders ? .bagFill : .bag)
+                                
                             Text(userType == 1 ? "myOrders".localized() : "orders".localized())
                                 .textModifier(.bold,12, selectedTab == .myOrders ? Color(.primary) : Color(.grayBDBDBD))
                         }
@@ -54,9 +51,8 @@ struct TabBarView: View {
                     
                     ProcessesView()
                         .tabItem {
-                            Image(.receipt)
-                                .renderingMode(.template)
-                                .foregroundColor(selectedTab == .profile ? Color(.primary) : Color(.grayBDBDBD))
+                            Image(selectedTab == .processes ? .receiptFill : .receipt)
+                                
                             Text("processes".localized())
                                 .textModifier(.bold,12, selectedTab == .processes ? Color(.primary) : Color(.grayBDBDBD))
                         }
@@ -64,26 +60,57 @@ struct TabBarView: View {
                     
                     ProfileView()
                         .tabItem {
-                            Image(.profile)
-                                .renderingMode(.template)
-                                .foregroundColor(selectedTab == .profile ? Color(.primary) : Color(.grayBDBDBD))
+                            Image(selectedTab == .profile ? .profileFill : .profile)
+                                
                             Text("profile".localized())
                                 .textModifier(.bold,12, selectedTab == .profile ? Color(.primary) : Color(.grayBDBDBD))
                         }
                         .tag(Tab.profile)
                 }
+                
                 .accentColor(Color(.primary))
-
+//                .specificCornerRadius(10, corners: [.topLeft,.topRight])
                 // Custom Border Overlay for Tab Bar
-                GeometryReader { geometry in
-                    Rectangle()
-                        .frame(width: geometry.size.width, height: 1) // Border height
-                        .foregroundColor(.black.opacity(0.1))
-                        .position(x: geometry.size.width / 2, y: geometry.size.height - 55) // Position border above tab items
-                }
+//                GeometryReader { geometry in
+//                    Rectangle()
+//                        .frame(width: geometry.size.width, height: 1) // Border height
+//                        .foregroundColor(.black.opacity(0.1))
+//                        .position(x: geometry.size.width / 2, y: geometry.size.height - 55) // Position border above tab items
+//                }
 //                .ignoresSafeArea()
             }
+            .cornerRadius(10)
         }
         .navigationBarHidden(true)
+    }
+}
+
+extension UITabBarController {
+    open override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        tabBar.layer.masksToBounds = true
+        tabBar.layer.cornerRadius = 16
+        // Choose with corners should be rounded
+        tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner] // top left, top right
+
+        // Uses `accessibilityIdentifier` in order to retrieve shadow view if already added
+        if let shadowView = view.subviews.first(where: { $0.accessibilityIdentifier == "TabBarShadow" }) {
+            shadowView.frame = tabBar.frame
+        } else {
+            let shadowView = UIView(frame: .zero)
+            shadowView.frame = tabBar.frame
+            shadowView.accessibilityIdentifier = "TabBarShadow"
+            shadowView.backgroundColor = UIColor.white
+            shadowView.layer.cornerRadius = tabBar.layer.cornerRadius
+            shadowView.layer.maskedCorners = tabBar.layer.maskedCorners
+            shadowView.layer.masksToBounds = false
+            shadowView.layer.shadowColor = Color.gray.cgColor
+            shadowView.layer.shadowOffset = CGSize(width: 0.0, height: -1.0)
+            shadowView.layer.shadowOpacity = 0.1
+            shadowView.layer.shadowRadius = 2
+            view.addSubview(shadowView)
+            view.bringSubviewToFront(tabBar)
+        }
     }
 }

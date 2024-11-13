@@ -26,7 +26,7 @@ struct AddWithdrawBottomSheet: View {
                 
             VStack(spacing: 16) {
                 
-                Text("إضافة رصيد للمحفظة")
+                Text(actionType == .addBalance ? "addWalletBalance".localized() : "withdrawWalletBalance".localized())
                     .textModifier(.plain, 19, .black222222)
                 
 //                Spacer(minLength: 10) // Control minimum spacing
@@ -47,8 +47,9 @@ struct AddWithdrawBottomSheet: View {
                     .textModifier(.plain, 43, .black2B2D33)
                     .frame(minHeight: 50) // Explicit height for text field
                     
-                Text("لا توجد مصاريف إضافية")
-                    .textModifier(.bold, 17, .gray919191)
+                Text(actionType == .addBalance ? "noExtraFees".localized() : "weWillContactYou".localized())
+                    .textModifier(.bold, 14, actionType == .addBalance ? .gray919191 : Color(.redD73D24))
+                    .multilineTextAlignment(.center)
                     .padding(.bottom)
 //                Spacer(minLength: 10) // Control minimum spacing
                 
@@ -56,9 +57,10 @@ struct AddWithdrawBottomSheet: View {
                     switch actionType {
                     case .addBalance:
                         actionFinished = true
+                        amountDouble = Double(amount.convertDigitsToEng) ?? 0
                         print("Balance Added successfully")
                     case .withDraw:
-                        amountDouble = Double(amount) ?? 0
+                        amountDouble = Double(amount.convertDigitsToEng) ?? 0
                         viewModel.withdrawAmount(amount: amountDouble)
                     case .none:
                         return

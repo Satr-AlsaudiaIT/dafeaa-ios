@@ -137,6 +137,8 @@
 		188FF2462CC38CF00070CC57 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FF2452CC38CF00070CC57 /* ChangePasswordView.swift */; };
 		188FF2492CC509B40070CC57 /* ChangePhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FF2482CC509B40070CC57 /* ChangePhoneView.swift */; };
 		188FF24F2CC6D49D0070CC57 /* SubscribtionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FF24E2CC6D49D0070CC57 /* SubscribtionView.swift */; };
+		189437DC2CE0CA0900CA5D96 /* OrderLinkDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189437DB2CE0CA0900CA5D96 /* OrderLinkDetailsView.swift */; };
+		189437DF2CE0F74D00CA5D96 /* AddProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189437DE2CE0F74D00CA5D96 /* AddProductView.swift */; };
 		189CD7452CDBE19E00E929DE /* PopUpComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189CD7442CDBE19E00E929DE /* PopUpComponent.swift */; };
 		189CD7492CDC83D500E929DE /* ClientLinkDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189CD7482CDC83D500E929DE /* ClientLinkDetails.swift */; };
 		18AF0DEF2CB114F80061F07E /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AF0DEE2CB114F80061F07E /* OnBoardingView.swift */; };
@@ -331,6 +333,8 @@
 		188FF2452CC38CF00070CC57 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		188FF2482CC509B40070CC57 /* ChangePhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePhoneView.swift; sourceTree = "<group>"; };
 		188FF24E2CC6D49D0070CC57 /* SubscribtionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribtionView.swift; sourceTree = "<group>"; };
+		189437DB2CE0CA0900CA5D96 /* OrderLinkDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderLinkDetailsView.swift; sourceTree = "<group>"; };
+		189437DE2CE0F74D00CA5D96 /* AddProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductView.swift; sourceTree = "<group>"; };
 		189CD7442CDBE19E00E929DE /* PopUpComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpComponent.swift; sourceTree = "<group>"; };
 		189CD7482CDC83D500E929DE /* ClientLinkDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientLinkDetails.swift; sourceTree = "<group>"; };
 		18AF0DEE2CB114F80061F07E /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
@@ -836,7 +840,6 @@
 			isa = PBXGroup;
 			children = (
 				189CD7472CDC83A400E929DE /* ViewOrderCycle */,
-				189CD7462CDC838F00E929DE /* AddOrderCycle */,
 			);
 			path = V;
 			sourceTree = "<group>";
@@ -1129,8 +1132,8 @@
 		187607B12CDF468200F4D261 /* OrdersLinkes */ = {
 			isa = PBXGroup;
 			children = (
-				187607B02CDF468200F4D261 /* OrdersLinksView.swift */,
-				187607B32CDF5DAD00F4D261 /* AddOfferView.swift */,
+				189437DD2CE0E89B00CA5D96 /* MerchantOrderCycle */,
+				189CD7462CDC838F00E929DE /* ClientOrderCycle */,
 			);
 			path = OrdersLinkes;
 			sourceTree = "<group>";
@@ -1151,14 +1154,41 @@
 			path = ChangePhone;
 			sourceTree = "<group>";
 		};
-		189CD7462CDC838F00E929DE /* AddOrderCycle */ = {
+		189437DD2CE0E89B00CA5D96 /* MerchantOrderCycle */ = {
+			isa = PBXGroup;
+			children = (
+				189437E12CE1268400CA5D96 /* Create */,
+				189437E02CE1267600CA5D96 /* Show */,
+			);
+			path = MerchantOrderCycle;
+			sourceTree = "<group>";
+		};
+		189437E02CE1267600CA5D96 /* Show */ = {
+			isa = PBXGroup;
+			children = (
+				187607B02CDF468200F4D261 /* OrdersLinksView.swift */,
+				189437DB2CE0CA0900CA5D96 /* OrderLinkDetailsView.swift */,
+			);
+			path = Show;
+			sourceTree = "<group>";
+		};
+		189437E12CE1268400CA5D96 /* Create */ = {
+			isa = PBXGroup;
+			children = (
+				187607B32CDF5DAD00F4D261 /* AddOfferView.swift */,
+				189437DE2CE0F74D00CA5D96 /* AddProductView.swift */,
+			);
+			path = Create;
+			sourceTree = "<group>";
+		};
+		189CD7462CDC838F00E929DE /* ClientOrderCycle */ = {
 			isa = PBXGroup;
 			children = (
 				187607B52CDFCA1700F4D261 /* ClientLinkCellIView.swift */,
 				189CD7482CDC83D500E929DE /* ClientLinkDetails.swift */,
 				187607B72CDFCA3A00F4D261 /* ProductDetailsPopUp.swift */,
 			);
-			path = AddOrderCycle;
+			path = ClientOrderCycle;
 			sourceTree = "<group>";
 		};
 		189CD7472CDC83A400E929DE /* ViewOrderCycle */ = {
@@ -1551,6 +1581,7 @@
 				14E67ABD2CAC643B00C10AB5 /* AppFonts.swift in Sources */,
 				14E67AD72CAC643B00C10AB5 /* NavigationUtil.swift in Sources */,
 				188FF24F2CC6D49D0070CC57 /* SubscribtionView.swift in Sources */,
+				189437DF2CE0F74D00CA5D96 /* AddProductView.swift in Sources */,
 				1822200E2CBE7F540063CEE8 /* SubscriptionManagementView.swift in Sources */,
 				14E67ADE2CAC643B00C10AB5 /* ValidateTF.swift in Sources */,
 				14E67A652CAC5E3400C10AB5 /* MOLH-dummy.m in Sources */,
@@ -1597,6 +1628,7 @@
 				14E67AD82CAC643B00C10AB5 /* PopUpViewBack.swift in Sources */,
 				14E67ACC2CAC643B00C10AB5 /* MultiUploadImage.swift in Sources */,
 				18086A762CCBF42600F5C2F8 /* HomeVM.swift in Sources */,
+				189437DC2CE0CA0900CA5D96 /* OrderLinkDetailsView.swift in Sources */,
 				18EF4D912CB4F9C300599D03 /* ResetPasswordView.swift in Sources */,
 				14E67AC42CAC643B00C10AB5 /* uiview+exSwiftUI.swift in Sources */,
 				14E67AD52CAC643B00C10AB5 /* MainButtonView.swift in Sources */,
@@ -1835,10 +1867,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/Dafeaa.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = RS5H8CVHFZ;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1874,10 +1906,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/DafeaaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = RS5H8CVHFZ;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;

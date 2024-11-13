@@ -16,7 +16,7 @@ struct ProfileDetailView:  View {
     @State private var selectedProfileImageURL: String? = ""
     @State private var showChangePassword : Bool = false
     @FocusState private var focusedField: FormField?
-    
+    @State private var isDataLoaded: Bool = false
     var body: some View {
         ZStack{
             VStack(spacing: 0){
@@ -29,7 +29,8 @@ struct ProfileDetailView:  View {
                             VStack(alignment:.leading, spacing: 8) {
                                 HStack {
                                     Spacer()
-                                    ProfileImageView(selectedImage: $selectedProfileImage, imageURL: selectedProfileImageURL, isShowFromEdit: true)
+                                        ProfileImageView(selectedImage: $selectedProfileImage, imageURL: $selectedProfileImageURL, isShowFromEdit: true)
+                                    
                                     Spacer()
                                 }.padding(.bottom, 16)
                                 CustomMainTextField(text: $name, placeHolder: "Name", image: .nameTFIcon)
@@ -62,6 +63,25 @@ struct ProfileDetailView:  View {
                     }
                 }.padding(24)
             }
+            .toolbar{
+                ToolbarItemGroup(placement: .keyboard){
+                    Button("Done".localized()){
+                        hideKeyboard()
+                    }
+                    Spacer()
+                    Button(action: {
+                           showPerviousTextField()
+                    }, label: {
+                        Image(systemName: "chevron.up").foregroundColor(.blue)
+                    })
+                    
+                    Button(action: {
+                        showNextTextField()
+                    }, label: {
+                        Image(systemName: "chevron.down").foregroundColor(.blue)
+                    })
+                }
+            }
             if viewModel.isLoading {
                 ProgressView("Loading...".localized())
                     .foregroundColor(.white)
@@ -77,8 +97,10 @@ struct ProfileDetailView:  View {
                        AppState.shared.swipeEnabled = true }
         .onReceive(viewModel.$_getData){ value in
             if value { name                    = viewModel.profileData?.name ?? ""
-                       email                   = viewModel.profileData?.email ?? ""
-                       selectedProfileImageURL = viewModel.profileData?.profileImage ?? "" } }
+                email                   = viewModel.profileData?.email ?? ""
+                selectedProfileImageURL = viewModel.profileData?.profileImage ?? ""
+                self.isDataLoaded = true
+            } }
         .onReceive(viewModel.$_isSuccess){ value in  if value { self.presentationMode.wrappedValue.dismiss()} }
         
     }

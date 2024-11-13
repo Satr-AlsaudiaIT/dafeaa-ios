@@ -42,6 +42,7 @@ struct QRCodeView: View {
 struct OrderItemView: View {
     var itemName  : String
     var price     : Double
+    var amount    : Int
     var isLast    : Bool
     
     var body: some View {
@@ -53,8 +54,13 @@ struct OrderItemView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(itemName)
                         .textModifier(.plain, 14,  .black222222)
-                    Text(String(format: "%.2f %@", price, "SAR".localized()))
-                        .textModifier(.plain, 12, .gray8B8C86)
+                    HStack {
+                        Text(String(format: "%.2f %@", price, "SAR".localized()))
+                            .textModifier(.plain, 12, .gray8B8C86)
+                        Spacer()
+                        Text("amount: ".localized() + "\(amount)" )
+                            .textModifier(.plain, 12, .gray8B8C86)
+                    }
                 }
             }
             if !isLast {
@@ -69,7 +75,8 @@ struct OrderItemView: View {
 
 struct PaymentInfoView: View {
     var breakdown: PaymentDetails?
-    
+    @State var isMerchantOfferDetails: Bool = false
+    @State var isShowDetails: Bool = false
     var body: some View {
         ZStack() {
 //            Text("paymentWay".localized())
@@ -83,16 +90,29 @@ struct PaymentInfoView: View {
             
             // Use PriceRowView for each item in breakdown
             VStack(alignment: .leading, spacing: 8) {
-                PriceRowView(title: "product".localized(), price: breakdown?.itemsPrice ?? 0)
+                if !isMerchantOfferDetails {
+                    PriceRowView(title: "product".localized(), price: breakdown?.itemsPrice ?? 0)
+                }
                 PriceRowView(title: "delaviryAndRecive".localized(), price: breakdown?.deliveryPrice ?? 0)
-                PriceRowView(title: "totalBeforeTax".localized(), price: ( (breakdown?.deliveryPrice ?? 0) + (breakdown?.itemsPrice ?? 0)))
-                PriceRowView(title: "tax".localized(), price: breakdown?.tax ?? 0)
-                
-                Divider()
-                    .foregroundColor( Color(.black).opacity(0.10))
-                // Total row
-                let totalPrice: Double = (breakdown?.deliveryPrice ?? 0.0) + (breakdown?.itemsPrice ?? 0.0)  + (breakdown?.tax ?? 0.0)
-                PriceRowView(title: "total".localized(), price: totalPrice, isTotal: true)
+                if !isMerchantOfferDetails {
+                    PriceRowView(title: "totalBeforeTax".localized(), price: ( (breakdown?.deliveryPrice ?? 0) + (breakdown?.itemsPrice ?? 0)))
+                }
+                PriceRowView(title: "tax".localized(), price: breakdown?.tax ?? 0,isTax: isShowDetails ? false : true)
+                if !isMerchantOfferDetails {
+                    Divider()
+                        .foregroundColor( Color(.black).opacity(0.10))
+                    // Total row
+                   if isShowDetails {
+                        let totalPrice: Double = (breakdown?.deliveryPrice ?? 0.0) + (breakdown?.itemsPrice ?? 0.0)  + (breakdown?.tax ?? 0.0)
+                       PriceRowView(title: "total".localized(), price: totalPrice, isTotal: true)
+
+                    }
+                    else {
+                        let taxPrice = (breakdown?.itemsPrice ?? 0.0) * (breakdown?.tax ?? 0.0)
+                        let totalPrice: Double = (breakdown?.deliveryPrice ?? 0.0) + (breakdown?.itemsPrice ?? 0.0) + taxPrice
+                        PriceRowView(title: "total".localized(), price: totalPrice, isTotal: true)
+                    }
+                }
             }
             .padding(.all,10)
                    
@@ -109,13 +129,13 @@ struct PriceRowView: View {
     var title: String
     var price: Double
     var isTotal: Bool = false
-    
+    var isTax: Bool = false
     var body: some View {
         HStack {
             Text(title)
                 .textModifier(.plain, 12, isTotal ? .black222222 : .grayAAAAAA)
             Spacer()
-            Text(String(format: "%.2f %@", price, "RS".localized()))
+            Text(String(format: "%.2f %@", price, isTax ? "%" : "RS".localized()))
                 .textModifier(.plain, 12, isTotal ? .black222222 : .grayAAAAAA)
         }
     }
@@ -127,13 +147,16 @@ struct AddressView: View {
     var phone: String
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(name)
-                .textModifier(.plain, 12, .gray979797)
-            Text("address".localized()+": \(address)")
-                .textModifier(.plain, 12, .gray979797)
-            Text("\(phone)")
-                .textModifier(.plain, 12, .gray979797)
+        HStack {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("clientName:".localized() + name)
+                    .textModifier(.plain, 12, .gray979797)
+                Text("address".localized()+": \(address)")
+                    .textModifier(.plain, 12, .gray979797)
+                Text("clientPhone:".localized() + "\(phone)")
+                    .textModifier(.plain, 12, .gray979797)
+            }
+            Spacer()
         }.padding(.horizontal,12)
         .padding(.vertical,16)
     }

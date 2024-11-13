@@ -116,23 +116,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
              if pathComponents.count >= 3, pathComponents[0] == "offers" {
                  if let offerID = Int(pathComponents[1]) {
                      Constants.clientOrderId = offerID
-//                     Constants.offerCode = offerCode // Assuming Constants has an offerCode property
                      
                      print("Offer ID: \(Constants.clientOrderId), Offer Code: (Constants.offerCode)")
-                     handelDeepLinkNav() // Navigate in the app based on this link
+                     handleDeepLinkNav(id: offerID) // Navigate in the app based on this link
+                 }
+             }else if pathComponents.count >= 3, pathComponents[1] == "offers" {
+                 if let offerID = Int(pathComponents[2]) {
+                     Constants.clientOrderId = offerID
+                     
+                     print("Offer ID: \(Constants.clientOrderId), Offer Code: (Constants.offerCode)")
+                     handleDeepLinkNav(id: offerID) // Navigate in the app based on this link
                  }
              }
          }
     }
     
-    func handelDeepLinkNav(){
-        self.window?.rootViewController = UIHostingController(rootView: ClientLinkDetails().environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
-            .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight))
-        UserDefaults.standard.set(false, forKey:  Constants.shared.resetLanguage)
-        self.window?.makeKeyAndVisible()
+    func handleDeepLinkNav(id:Int){
+        let api: OrdersAPIProtocol = OrdersAPI()
+
+        api.showDynamicLinks(id: id) { [weak self] (Result) in
+            guard let self = self else { return }
+            switch Result {
+            case .success(let response):
+                guard let data = response?.data else { return }
+                navToOffer(offerData:data)
+            case .failure(let error):
+                if error.code == 404 {
+                    return
+                }
+            }
+        }
+        
     }
     
-}
+    private func navToOffer(offerData: ShowOfferData?) {
+        guard Constants.accountStatus == 2 else { return }
+        let userType = GenericUserDefault.shared.getValue(Constants.shared.userType) as? Int ?? 0
+        
+        if let window = self.window {
+            if userType == 1 {
+                let rootView = ClientLinkDetails(offerData: offerData)
+                    .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar" : "en"))
+                    .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft : .leftToRight)
+                window.rootViewController = UIHostingController(rootView: rootView)
+            } else {
+                let rootView = OrderLinkDetailsView(offerData: offerData)
+                    .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar" : "en"))
+                    .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft : .leftToRight)
+                window.rootViewController = UIHostingController(rootView: rootView)
+            }
+            
+            UserDefaults.standard.set(false, forKey: Constants.shared.resetLanguage)
+            
+            window.makeKeyAndVisible()
+        } else {
+            print("Error: Window is not initialized.")
+        }
+    }}
 
 extension AppDelegate: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {

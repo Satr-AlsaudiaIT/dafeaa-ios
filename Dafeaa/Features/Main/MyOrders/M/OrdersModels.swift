@@ -7,13 +7,14 @@ import Foundation
 struct OrdersModel: Codable {
     let data: [OrdersData]?
     let message: String?
+    let count: Int?
 }
 
 struct OrdersData: Codable, Identifiable {
     let id                  : Int?
     let name                : String?
-    let orderNo             : Int?
-    let date,status         : String?
+    let orderStatus             : Int?
+    let date                : String?
 }
 
 struct OrderModel: Codable {
@@ -24,22 +25,28 @@ struct OrderModel: Codable {
 struct OrderData: Codable, Identifiable {
     let id                  : Int?
     let clientImage         : String?
-    let name          : String?
-    let products            : [productList]?
-    let deliveryPrice       : Double?
+    let clientName          : String?
     let orderStatus         : Int?
+    let clientPhone         : String?
+    let clientEmail         : String?
+    let qrCode              : String?
+    let name                : String?
+    let products            : [productList]?
+    let orderPrice          : Double?
+    let deliveryPrice       : Double?
     let paymentStatus       : Int?
     let address             : String?
-    let code                : String?
     let taxPrice            : Double?
     let totalPrice          : Double?
     let addressDetails      : AddressDetails?
+    
 }
 struct productList: Codable, Identifiable {
     let id                  : Int?
     let image               : String?
     let name, description   : String?
     let price               : Double?
+    let amount              : Int?
     let offerPrice          : Double?
 }
 
@@ -100,4 +107,13 @@ struct Product: Codable {
     let name, description: String?
     let price: Int?
     let offerPrice: Int?
+}
+
+
+
+// MARK: - CreateOrderPostModel
+struct CreateOrderPostModel: Codable {
+    let id: Int?
+    let message: String?
+    let name, code, description: String?
 }

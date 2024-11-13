@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct PathViewChoice: View {
-    @State var orderStatus: orderStatus = .pending
+    @State var orderStatus: orderStatusEnum = .pending
     var body: some View {
         ZStack{
             if orderStatus == .pending {
@@ -27,13 +27,14 @@ struct PathViewChoice: View {
                         VStack(alignment: .leading) {
                             Spacer()
                             HStack {
-                                Text("pendingState".localized())
-                                    .textModifier(.bold, 14, .green026C34)
+                                Text(orderStatus.title)
+                                    .textModifier(.bold, 12, .green026C34)
                                     .padding(.leading,4)
                                 Spacer()
 
                             }
                         }
+                        .padding(.top , 10)
                     }
                     
                     .frame(height: 85)
@@ -55,14 +56,16 @@ struct PathViewChoice: View {
                         Spacer()
                         HStack {
                             Spacer()
-                            Text("acceptedState".localized())
-                                .textModifier(.bold, 14, .green026C34)
+                            Text(orderStatus.title)
+                                .textModifier(.bold, 12, .green026C34)
                                 
                             Spacer()
                             Spacer()
 
                         }
                     }
+                    .padding(.top , 10)
+
                 }
                 
                 .frame(height: 85)
@@ -84,12 +87,14 @@ struct PathViewChoice: View {
                         HStack {
                             Spacer()
                             Spacer()
-                            Text("awayState".localized())
-                                .textModifier(.bold, 14, .green026C34)
+                            Text(orderStatus.title)
+                                .textModifier(.bold, 12, .green026C34)
                             Spacer()
 
                         }
                     }
+                    .padding(.top , 10)
+
                 }
                 
                 .frame(height: 85)
@@ -110,14 +115,17 @@ struct PathViewChoice: View {
                         Spacer()
                         HStack {
                             Spacer()
-                            Text("rejectedState".localized())
-                                .textModifier(.bold, 14, .redEE002B)
+                            
+                            Text(orderStatus.title)
+                                .textModifier(.bold, 12, .redEE002B)
                                 .padding(.trailing,5)
                             Spacer()
                             Spacer()
 
                         }
                     }
+                    .padding(.top , 10)
+
                 }
                 
                 .frame(height: 85)
@@ -138,14 +146,16 @@ struct PathViewChoice: View {
                         Spacer()
                         HStack {
                             Spacer()
-                            Text("cancelledState".localized())
-                                .textModifier(.bold, 14, .redEE002B)
+                            Text(orderStatus.title)
+                                .textModifier(.bold, 12, .redEE002B)
                                 .padding(.trailing,5)
                             Spacer()
                             Spacer()
 
                         }
                     }
+                    .padding(.top , 10)
+
                 }
                 
                 .frame(height: 85)
@@ -166,13 +176,15 @@ struct PathViewChoice: View {
                         Spacer()
                         HStack {
                             Spacer()
-                            Text("doneState".localized())
-                                .textModifier(.bold, 14, .green026C34)
+                            Text(orderStatus.title)
+                                .textModifier(.bold, 12, .green026C34)
                                 .padding(.trailing,3)
                             
 
                         }
                     }
+                    .padding(.top , 10)
+
                 }
                 
                 .frame(height: 85)
@@ -183,7 +195,7 @@ struct PathViewChoice: View {
     }
 }
 
-enum orderStatus: Int {
+enum orderStatusEnum: Int {
     case pending = 1
     case accepted = 2
     case away = 3
@@ -199,6 +211,16 @@ enum orderStatus: Int {
         case .rejected: return PathViewChoice()
         case .cancelled: return PathViewChoice()
         case .done: return PathViewChoice()
+        }
+    }
+    var title : String {
+        switch self {
+        case .pending: return "pendingState".localized()
+        case .accepted: return "acceptedState".localized()
+        case .away: return "awayState".localized()
+        case .rejected: return "rejectedState".localized()
+        case .cancelled: return "cancelledState".localized()
+        case .done: return "doneState".localized()
         }
     }
 }
@@ -260,6 +282,6 @@ struct ConnectorView: View {
 
 struct PathView_Previews: PreviewProvider {
     static var previews: some View {
-        PathViewChoice(orderStatus: orderStatus(rawValue: 6) ?? .pending)
+        PathViewChoice(orderStatus: orderStatusEnum(rawValue: 6) ?? .pending)
     }
 }

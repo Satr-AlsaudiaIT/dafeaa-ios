@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ClientLinkDetails: View {
     let id: Int = Constants.clientOrderId
+    @State var offerData: ShowOfferData?
     @StateObject var viewModel = OrdersVM()
-//    @State var linkDetails: LinkDetailsClient = LinkDetailsClient(id: 1, name: "Phones", code: "wwwwww", description: "this package has very good phones and very helpful ones that is very harm full", clientId: 1, deliveryPrice: 20, taxPrice: 100, products: [productList(id: 1, image: "https://media.istockphoto.com/id/621973728/photo/young-man-photographer-looking-at-camera.jpg?s=612x612&w=0&k=20&c=GmmvFsTYwcMwaWBYYzTeu6wAWoDZ-5xMJDt-qhhEUmE=", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, offerPrice: 950),productList(id: 2, image: "https://media.istockphoto.com/id/621973728/photo/young-man-photographer-looking-at-camera.jpg?s=612x612&w=0&k=20&c=GmmvFsTYwcMwaWBYYzTeu6wAWoDZ-5xMJDt-qhhEUmE=", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, offerPrice: 950),productList(id: 3, image: "https://media.istockphoto.com/id/621973728/photo/young-man-photographer-looking-at-camera.jpg?s=612x612&w=0&k=20&c=GmmvFsTYwcMwaWBYYzTeu6wAWoDZ-5xMJDt-qhhEUmE=", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1200, offerPrice: 950),])
     @State var productAmountDic: [[String:Any]] = []
     @State var amount : Int = 0
     @State var totalPrice: Double = 0
@@ -19,7 +19,7 @@ struct ClientLinkDetails: View {
     @State var address: String = Constants.selectedAddress
     @State var isNavigateToAddress: Bool = false
     @State var showingProductDetails: Bool = false
-    @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, offerPrice: 950)
+    @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000,amount: 1, offerPrice: 950)
     var linkDetails: ShowOfferData  {
         return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [])
     }
@@ -49,7 +49,7 @@ struct ClientLinkDetails: View {
                                         .onAppear {
                                             // Initialize the dictionary with product ID and initial amount
                                             let initialAmount = 1
-                                            productAmountDic.append(["product_id": product.id ?? 0, "amount": initialAmount])
+                                            productAmountDic.append(["product_id": product.id ?? 0, "amount": "\(initialAmount)"])
                                             calculateTotalPrice()
                                         }
                                         .onChange(of: amountChanged) { oldValue, newValue in
@@ -96,6 +96,14 @@ struct ClientLinkDetails: View {
                     }
                     
                 }
+                if viewModel.isLoading {
+                    ProgressView("Loading...".localized())
+                        .foregroundColor(.white)
+                        .progressViewStyle(WithBackgroundProgressViewStyle())
+                } else if viewModel.isFailed {
+                    ProgressView()
+                        .hidden()
+                }
             }
             .sheet(isPresented: $showingProductDetails, onDismiss: {
                 showingProductDetails = false
@@ -105,8 +113,12 @@ struct ClientLinkDetails: View {
                     .presentationDragIndicator(.visible)
                     .presentationDetents([.medium])
             })
+            .toastView(toast: $viewModel.toast)
+            .navigationBarHidden(true)
+        
             .onAppear{
-                viewModel.showOffer(id: id)
+                if let offerData { viewModel._offersData = offerData
+                } else { viewModel.showOffer(id: id) }
             }
         }
     }

@@ -62,7 +62,7 @@ struct SignUpStep2View: View {
                            VStack(alignment: .leading, spacing: 8) {
                                HStack {
                                    Spacer()
-                                   ProfileImageView(selectedImage: $selectedProfileImage, imageURL: selectedProfileImageURL, isShowFromEdit: false)
+                                   ProfileImageView(selectedImage: $selectedProfileImage, imageURL: $selectedProfileImageURL, isShowFromEdit: false)
                                    Spacer()
                                }
                                .padding(.bottom,15)
@@ -135,7 +135,25 @@ struct SignUpStep2View: View {
                .padding(24)
                .onAppear(perform: subscribeToKeyboardEvents) // Listen for keyboard events
                .onDisappear(perform: unsubscribeFromKeyboardEvents)
-               
+               .toolbar{
+                   ToolbarItemGroup(placement: .keyboard){
+                       Button("Done".localized()){
+                           hideKeyboard()
+                       }
+                       Spacer()
+                       Button(action: {
+                              showPerviousTextField()
+                       }, label: {
+                           Image(systemName: "chevron.up").foregroundColor(.blue)
+                       })
+                       
+                       Button(action: {
+                           showNextTextField()
+                       }, label: {
+                           Image(systemName: "chevron.down").foregroundColor(.blue)
+                       })
+                   }
+               }
                if viewModel.isLoading {
                    ProgressView("Loading...".localized())
                        .foregroundColor(.white)

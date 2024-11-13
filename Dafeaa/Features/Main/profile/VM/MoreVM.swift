@@ -87,9 +87,9 @@ final class MoreVM : ObservableObject {
             var  dic = [
                 "address"       : address,
                 "street_name"   :streetName,
-                "building_num"  :buildingNum,
+                "building_num"  :buildingNum.convertDigitsToEng,
                 "area"          :area,
-                "float_num"     :floatNum]
+                "float_num"     :floatNum.convertDigitsToEng]
             
             if id != nil {
                 dic.updateValue("put", forKey: "_method")

@@ -67,7 +67,7 @@ class AuthVM: ObservableObject {
         } else if password.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPassword".localized())
         } else {
-            login(for: ["phone": phone,
+            login(for: ["phone": phone.convertDigitsToEng,
                         "password": password])
         }
     }
@@ -131,9 +131,9 @@ class AuthVM: ObservableObject {
             let registerDic: [String: Any] = ["name": name,
                                               "city_id": getCityId(cityName: city),
                                               "area": area,
-                                              "tax_number": taxNum,
+                                              "tax_number": taxNum.convertDigitsToEng,
                                               "expired_date": endDate,
-                                              "phone" : phone
+                                              "phone" : phone.convertDigitsToEng
             ]
             businessInfo(dic: registerDic,photo: commLecs)
         }
@@ -146,7 +146,7 @@ class AuthVM: ObservableObject {
         } else if code.count != 4 {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "Enter4DigitCode".localized())
         } else {
-            let verifyDic: [String: Any] = ["phone": phone,
+            let verifyDic: [String: Any] = ["phone": phone.convertDigitsToEng,
                                             "code": code.convertDigitsToEng]
             if isForgetPassword {
                 verifyCodeForget(for: verifyDic)
@@ -163,7 +163,7 @@ class AuthVM: ObservableObject {
         }else if !phone.isNumber {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidPhone".localized())
         } else {
-            self.sendCode(for: ["phone":phone,"usage":"forget_password"])
+            self.sendCode(for: ["phone":phone.convertDigitsToEng,"usage":"forget_password"])
             //            self._isForgetSuccess = true
         }
     }
@@ -197,7 +197,7 @@ class AuthVM: ObservableObject {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidPhone".localized())
         }  else {
             changePhone(for: ["password"     : password,
-                              "phone"        : phone    ])
+                              "phone"        : phone.convertDigitsToEng    ])
         }
     }
     

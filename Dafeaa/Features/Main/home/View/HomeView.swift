@@ -72,23 +72,27 @@ struct HomeView: View {
                    
                     ZStack {
                         Color(.white)
-                        ScrollView {
-                            VStack(spacing: 17) {
-                                LastProcessNavView(title: "lastProcesses".localized(), selectedTab: $selectedTab)
-                            
-                            VStack(spacing: 8) {
-                                ForEach(0..<viewModel.processList.count,id: \.self){ index in
-                                    ProcessComponent(process: viewModel.processList[index])
-                                 }
-                               }
-                            
+                        VStack(spacing: 17) {
+                            LastProcessNavView(title: "lastProcesses".localized(), selectedTab: $selectedTab)
+                                .padding(.top,44)
+                                .padding(.horizontal,24)
+
+                        if viewModel.processList.isEmpty {
+                            EmptyCostumeView()
+                        }else {
+                            ScrollView {
+                                
+                                VStack(spacing: 8) {
+                                    ForEach(0..<viewModel.processList.count,id: \.self){ index in
+                                        ProcessComponent(process: viewModel.processList[index])
+                                    }
+                                }
+                                
+                               
                             }
-                            .padding(.top)
-                            Spacer()
-                        }
-                        .padding(.horizontal,24)
-                        .frame(height: (UIScreen.main.bounds.height * 0.45))
-                        
+                            .padding(.horizontal,24)
+                            .frame(height: (UIScreen.main.bounds.height * 0.45))
+                        }}
                     }
                     .frame(height: (UIScreen.main.bounds.height * 0.45) + 64 )
                     .cornerRadius(24)
@@ -153,7 +157,7 @@ struct HomeView: View {
     }
 }
 #Preview {
-//    HomeView()
+    HomeView(selectedTab: .constant(.home))
 }
 
 
@@ -176,6 +180,21 @@ struct LastProcessNavView: View {
                     
                 }
             }
+
+        }
+    }
+}
+
+struct EmptyCostumeView: View {
+    var message  : String = "thereIsNoData".localized()
+    var body: some View {
+        VStack{
+            Spacer()
+            Image(.empty).resizable()
+                .frame(width: 147, height:  132)
+            Text(message)
+                .textModifier(.plain, 14, .gray919191 )
+            Spacer()
 
         }
     }

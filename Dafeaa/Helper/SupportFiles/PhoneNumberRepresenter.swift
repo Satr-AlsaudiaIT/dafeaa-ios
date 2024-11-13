@@ -101,7 +101,8 @@ struct CustomMainTextField: View {
     @State var image: ImageResource?
     @FocusState private var isFocused: Bool
     @State var keyBoardType: UIKeyboardType = .default
-
+    @State var fieldType: FieldType = .none
+    
     var body: some View {
         HStack {
             if let image = image {
@@ -109,10 +110,26 @@ struct CustomMainTextField: View {
                     .foregroundColor(Color.yellow)
                     .frame(width: 20, height: 20)
             }
-            TextField(placeHolder.localized(), text: $text)
-                .textModifier(.plain, 15, .grayB5B5B5)
-                .focused($isFocused) // Track whether the text field is focused
-                .keyboardType(keyBoardType)
+            ZStack {
+                TextField(placeHolder.localized(), text: $text)
+                    .textModifier(.plain, 15, .grayB5B5B5)
+                    .focused($isFocused) // Track whether the text field is focused
+                    .keyboardType(keyBoardType)
+                    .onChange(of: text) { newValue,oldValue in
+                        if fieldType == .arabicOnly || fieldType == .englishOnly {
+                            validateInput(for: fieldType)
+                        }
+                    }
+                
+                if fieldType == .price || fieldType == .percentage {
+                    HStack {
+                        Spacer()
+                        Text(fieldType == .price ? "rs".localized() : "%")
+                            .padding(.trailing, 10)
+                    }
+                }
+                
+            }
         }
         .frame(height: 48)
         .padding(.horizontal, 20)
@@ -126,8 +143,28 @@ struct CustomMainTextField: View {
             isFocused = true // Set the focus when the user taps on the text field
         }
     }
+    private func validateInput(for fieldType: FieldType) {
+            switch fieldType {
+            case .arabicOnly:
+                // Allow only Arabic characters
+                text = text.filter { $0.isArabic }
+            case .englishOnly:
+                // Allow only English characters
+                text = text.filter { $0.isEnglish }
+            default:
+                break
+            }
+        }
 }
-
+extension Character {
+    var isArabic: Bool {
+        return self >= "\u{0600}" && self <= "\u{06FF}"
+    }
+    
+    var isEnglish: Bool {
+        return self.isASCII && self.isLetter && (self.isLowercase || self.isUppercase)
+    }
+}
 struct ButtonWithImageView: View {
     var imageName: ImageResource
     var trailingImageName: ImageResource?
@@ -260,3 +297,10 @@ struct CustomPhoneNumberField: View {
 
 
 
+enum FieldType{
+    case price
+    case percentage
+    case none
+    case arabicOnly
+    case englishOnly
+}

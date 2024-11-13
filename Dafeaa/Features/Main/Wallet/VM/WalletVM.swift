@@ -41,7 +41,7 @@ class WalletVM: ObservableObject {
             case .success(let Result):
                 guard let data = Result?.data else { return }
                 self._walletData = Result
-                if data.isEmpty {
+                if self._processList.count >= Result?.count ?? 0 {
                     self.hasMoreData = false
                 } else {
                     if skip == 0 {

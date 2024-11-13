@@ -18,10 +18,10 @@ struct ProductDetailsPopUp: View {
                         .textModifier(.bold, 17, .black010202)
                     Spacer()
                 }
-                .padding(.bottom,19)
+                .padding(.vertical,19)
                 WebImage(url: URL(string: product.image ?? ""))
                     .resizable()
-                    .frame(height: 300)
+                    .frame(height: 260)
                     .cornerRadius(10)
                     .overlay {
                         RoundedRectangle(cornerRadius: 10)

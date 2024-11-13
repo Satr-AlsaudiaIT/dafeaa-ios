@@ -11,6 +11,9 @@ struct MyOrdersView: View {
     private let userType: Int = GenericUserDefault.shared.getValue(Constants.shared.userType) as? Int ?? 0
     @StateObject var viewModel = OrdersVM()
     @State var selectedSegment = 0
+    @State var selectedOrder: OrdersData?
+    @State var navigateToClientDetails: Bool = false
+    @State var navigateToBusinessDetails: Bool = false
 
     var body: some View {
         ZStack{
@@ -27,18 +30,39 @@ struct MyOrdersView: View {
                             }
                         }
                     VStack(alignment: .leading,spacing: 24) {
-                        ScrollView(showsIndicators: false) {
-                            VStack(spacing: 8) {
-                                ForEach(0..<(viewModel.ordersList.count),id: \.self){ index in
-                                    OrderComponent(order: viewModel.ordersList[index])
-                                        .onAppear {
-                                            if index == viewModel.ordersList.count - 1 {
-                                                loadMoreOrdersIfNeeded()
+                        if viewModel.ordersList.isEmpty {
+                            EmptyCostumeView()
+                        } else {
+                            ScrollView(showsIndicators: false) {
+                                VStack(spacing: 8) {
+                                    ForEach(0..<(viewModel.ordersList.count),id: \.self){ index in
+                                        Button(action: {
+                                            selectedOrder = viewModel.ordersList[index]
+                                            if userType == 1{
+                                                navigateToClientDetails = true
                                             }
+                                            else {
+                                                navigateToBusinessDetails = true
+                                            }
+                                        }) {
+                                            OrderComponent(order: viewModel.ordersList[index])
+                                                .onAppear {
+                                                    if index == viewModel.ordersList.count - 1 {
+                                                        loadMoreOrdersIfNeeded()
+                                                    }
+                                                }
                                         }
+                                    }
                                 }
+                                
                             }
                         }
+                    }
+                    .navigationDestination(isPresented: $navigateToClientDetails) {
+                        OrderClientDetailsView(orderID: selectedOrder?.id ?? 0)
+                    }
+                    .navigationDestination(isPresented: $navigateToBusinessDetails) {
+                        OrderBusinessDetailsView(orderID: selectedOrder?.id ?? 0)
                     }
                 }.padding(24)
             }
@@ -56,6 +80,9 @@ struct MyOrdersView: View {
         .onAppear(){
             AppState.shared.swipeEnabled = true
             viewModel.orders(skip: 0, status: selectedSegment == 1 ? "history" : "current")
+        }
+        .onDisappear{
+            viewModel._ordersList.removeAll()
         }
     }
     
@@ -90,7 +117,8 @@ struct OrderComponent: View {
                         VStack(alignment: .leading, spacing: 8) {
                             Text(order?.name ?? "")
                                 .textModifier(.plain, 14, .black222222)
-                            Text((order?.status ?? "")+" - \(order?.date ?? "")")
+                            
+                            Text(orderStatusEnum(rawValue: order?.orderStatus ?? 0)?.title ?? "" + " - \(order?.date ?? "")")
                                 .textModifier(.plain, 12, .orangeFF6021)
                         }
                     }
@@ -98,26 +126,16 @@ struct OrderComponent: View {
                         Image(.barcode)
                             .resizable()
                             .frame(width: 20,height: 20)
-                        Text("orderNo".localized()+": \(order?.orderNo ?? 0)")
+                        Text("orderNo".localized()+": \(order?.id ?? 0)")
                             .textModifier(.plain, 12,  .grayAAAAAA)
                         Spacer()
-                        if userType == 1{
-                            NavigationLink(destination: OrderClientDetailsView(orderID: order?.id ?? 0)) {
+                       
                                 Image(.routing)
                                     .resizable()
                                     .frame(width: 20,height: 20)
                                 Text("orderRoute".localized())
                                     .textModifier(.plain, 12, .black222222)
-                            }
-                        } else {
-                            NavigationLink(destination: OrderBusinessDetailsView(orderID: order?.id ?? 0)) {
-                                Image(.routing)
-                                    .resizable()
-                                    .frame(width: 20,height: 20)
-                                Text("orderRoute".localized())
-                                    .textModifier(.plain, 12, .black222222)
-                            }
-                        }
+                          
                     }
                 }.padding(16)
             }

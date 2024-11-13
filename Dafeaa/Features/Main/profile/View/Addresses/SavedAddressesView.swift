@@ -27,7 +27,22 @@ struct SavedAddressesView: View {
                 // MARK: - Content
                 VStack(alignment: .center, spacing: 24) {
                     if viewModel.addressList.isEmpty {
-                        emptyAddressView
+                        EmptyCostumeView()
+
+                            
+                                ReusableButton(buttonText: "saveSelectedAddress".localized(),buttonColor: .yellow) {
+                                    Constants.selectedAddressId = selectedAddressId
+                                    Constants.selectedAddress = selectedAddress
+                                    presentationMode.wrappedValue.dismiss()
+                                }
+                            
+                            ReusableButton(buttonText: "AddAddress".localized()) {
+                                addressToEdit = nil
+                                isNavigatingToAddEdit = true
+                                
+                            }
+                        
+
                     } else {
                         addressListView
                     }
@@ -61,21 +76,7 @@ struct SavedAddressesView: View {
         
     }
     
-    // MARK: - Empty Address View
-    private var emptyAddressView: some View {
-        VStack {
-            Spacer()
-            Image(".noNotification")
-                .resizable()
-                .frame(width: 120, height: 139)
-            Text("emptyAddress".localized())
-                .textModifier(.plain, 16, .grayADADAD)
-                .lineSpacing(4)
-                .multilineTextAlignment(.center)
-            Spacer()
-        }
-        .padding(.horizontal, 24)
-    }
+ 
     
     // MARK: - Address List View
     private var addressListView: some View {
@@ -89,16 +90,16 @@ struct SavedAddressesView: View {
                 }
             }
             .scrollIndicators(.hidden)
+            .padding(.bottom,60)
             VStack {
                 
                 Spacer()
-                if isComingFromSelection {
                     ReusableButton(buttonText: "saveSelectedAddress".localized(),buttonColor: .yellow) {
                         Constants.selectedAddressId = selectedAddressId
                         Constants.selectedAddress = selectedAddress
                         presentationMode.wrappedValue.dismiss()
                     }
-                }
+                
                 ReusableButton(buttonText: "AddAddress".localized()) {
                     addressToEdit = nil
                     isNavigatingToAddEdit = true

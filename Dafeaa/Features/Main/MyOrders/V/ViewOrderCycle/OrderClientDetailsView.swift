@@ -19,7 +19,8 @@ struct OrderClientDetailsView: View {
     @State var confirmReceivingOrder: Bool = false
     @State var isCancelTapped: Bool = false
     @StateObject private var scanner = ScannerViewModel()
-    
+    @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950)
+    @State var showingProductDetails: Bool = false
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
@@ -31,9 +32,12 @@ struct OrderClientDetailsView: View {
                     ScrollView(showsIndicators: false) {
                         VStack(spacing: 24) {
                             
-                            PathViewChoice(orderStatus: orderStatus(rawValue:viewModel.orderData?.orderStatus ?? 5) ?? .pending)
-                                .padding(.horizontal,-10)
-                                .padding(.vertical,-10)
+                            if let orderStatusInt = viewModel.orderData?.orderStatus {
+                                PathViewChoice(orderStatus: orderStatusEnum(rawValue: orderStatusInt) ?? .pending)
+                                    .padding(.horizontal,-10)
+                                    .padding(.vertical,-10)
+                            }
+                            
                             //  Order Items Section
                             VStack(spacing: 8) {
                                 Text("showOrderDetails".localized())
@@ -46,8 +50,15 @@ struct OrderClientDetailsView: View {
                                         .background(RoundedRectangle(cornerRadius: 16).fill(Color.clear))
                                     VStack(spacing: 8) {
                                         ForEach(0..<(viewModel.orderData?.products?.count ?? 3),id: \.self){ index in
-                                            OrderItemView(itemName: "هاتف ايفون 15 برو ماكس", price: 2500.00, isLast: index == (viewModel.orderData?.products?.count ?? 3 ) - 1 )
-                                            
+                                            Button(action: {
+                                                showingProductDetails = true
+                                                selectedProduct = viewModel.orderData?.products?[index] ?? selectedProduct
+                                            }) {
+                                                OrderItemView(itemName:viewModel.orderData?.products?[index].name ?? "",
+                                                              price: viewModel.orderData?.products?[index].price ?? 0,
+                                                              amount: viewModel.orderData?.products?[index].amount ?? 0,
+                                                              isLast: index == (viewModel.orderData?.products?.count ?? 3 ) - 1 )
+                                            }
                                         }
                                     } .padding(.horizontal,16)
                                 }
@@ -58,16 +69,11 @@ struct OrderClientDetailsView: View {
                                     .textModifier(.plain, 15,  .black222222)
                                     .frame(maxWidth: .infinity,alignment: .leading)
                                 
-                                ZStack{
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .stroke(Color(.black).opacity(0.1), lineWidth: 1)
-                                        .background(RoundedRectangle(cornerRadius: 16).fill(Color.clear))
-                                    
-                                    VStack(spacing: 8) {
-                                        PaymentInfoView(breakdown: PaymentDetails(itemsPrice:viewModel.orderData?.totalPrice ?? 0.00 ,tax: viewModel.orderData?.taxPrice ?? 0.00, deliveryPrice: viewModel.orderData?.deliveryPrice ?? 0.00))
+                                   
+                                        PaymentInfoView(breakdown: PaymentDetails(itemsPrice:viewModel.orderData?.totalPrice ?? 0.00 ,tax: viewModel.orderData?.taxPrice ?? 0.00, deliveryPrice: viewModel.orderData?.deliveryPrice ?? 0.00),isShowDetails: true)
                                         
-                                    } .padding(.horizontal,16)
-                                }
+                                  
+                                
                             }
                             
                             
@@ -154,6 +160,14 @@ struct OrderClientDetailsView: View {
                     .hidden()
             }
         }
+        .sheet(isPresented: $showingProductDetails, onDismiss: {
+            showingProductDetails = false
+        }, content: {
+            ProductDetailsPopUp(product: $selectedProduct )
+                .presentationCornerRadius(24)
+                .presentationDragIndicator(.visible)
+                .presentationDetents([.medium])
+        })
         .toastView(toast: $viewModel.toast)
         .onChange(of: viewModel._isCompleteOrderSuccess) {_,newValue in
             confirmReceivingOrder = false

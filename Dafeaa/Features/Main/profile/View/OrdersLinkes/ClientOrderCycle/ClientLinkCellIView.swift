@@ -113,9 +113,145 @@ struct ClientLinkCellIView: View {
         .onChange(of: amount) { newAmount in
             if let index = productAmountDic.firstIndex(where: { $0["product_id"] as? Int == product.id }) {
                 amountChanged.toggle()
-                productAmountDic[index]["amount"] = newAmount
+                productAmountDic[index]["amount"] = "\(newAmount)"
             }
         }
+        //        .padding(.all,20)
+        
+    }
+    
+    
+}
+
+
+
+import SwiftUI
+import SDWebImageSwiftUI
+
+struct BusinessLinkCellIView: View {
+    var product: productList
+   
+    var body: some View {
+        ZStack {
+            HStack {
+                WebImage(url: URL(string: product.image ?? ""))
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 80, height: 80)
+                    .mask(Circle().frame(width: 80, height: 80))
+                    .overlay(
+                        Circle()
+                            .stroke( Color(.primary), lineWidth: 1)
+                    )
+                
+                VStack(alignment: .leading,spacing: 19) {
+                    HStack {
+                        Text(product.name ?? "")
+                            .textModifier(.semiBold, 15, .black010202)
+                        Spacer()
+                        if product.offerPrice != nil  {
+                            HStack {
+                                Text(String(format: "%.1f", product.price ?? 0.0,"RS".localized()))
+                                    .textModifier(.semiBold, 15, .black010202)
+                                    .padding(.trailing,5)
+                                    .strikethrough(true, color: .black)
+                                Text(String(format: "%.1f", product.offerPrice ?? 0.0,"RS".localized()))
+                                    .textModifier(.plain, 15, .black010202)
+                                    .padding(.trailing,5)
+                            }
+                        }
+                        else {
+                            Text(String(format: "%.1f", product.price ?? 0.0,"RS".localized()))
+                                .textModifier(.semiBold, 15, .black010202)
+                                .padding(.trailing,5)
+                        }
+                    }
+                    
+                    HStack {
+                        Text(product.description ?? "")
+                            .textModifier(.plain, 15, .gray616161)
+                            .lineLimit(2)
+                        Spacer()
+                   
+                    }
+                }
+            }
+            .padding(.all,10)
+        }
+        
+        .cornerRadius(15)
+        .overlay(
+            RoundedRectangle(cornerRadius: 15)
+                .stroke( Color(.primary), lineWidth: 1)
+        )
+        
+       
+        //        .padding(.all,20)
+        
+    }
+    
+    
+}
+
+
+struct BusinessCreateLinkCellView: View {
+    var product: [String: Any]
+   
+    var body: some View {
+        ZStack {
+            HStack {
+                Image(uiImage:  product["image"]  as? UIImage ?? UIImage())
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 80, height: 80)
+                    .mask(Circle().frame(width: 80, height: 80))
+                    .overlay(
+                        Circle()
+                            .stroke( Color(.primary), lineWidth: 1)
+                    )
+                
+                VStack(alignment: .leading,spacing: 19) {
+                    HStack {
+                        Text(Constants.shared.isAR ? product["name_ar"]  as? String ?? "" : product["name_en"]  as? String ?? "")
+                            .textModifier(.semiBold, 15, .black010202)
+                        Spacer()
+                        if product["offer_price"] != nil  {
+                            HStack {
+                                Text(String(format: "%.1f", product["price"] as? Double ?? 0.0,"RS".localized()))
+                                    .textModifier(.semiBold, 15, .black010202)
+                                    .padding(.trailing,5)
+                                    .strikethrough(true, color: .black)
+                                Text(String(format: "%.1f", product["offer_price"] as? Double ?? 0.0,"RS".localized()))
+                                    .textModifier(.plain, 15, .black010202)
+                                    .padding(.trailing,5)
+                            }
+                        }
+                        else {
+                            Text(String(format: "%.1f", product["price"] as? Double ?? 0.0,"RS".localized()))
+                                .textModifier(.semiBold, 15, .black010202)
+                                .padding(.trailing,5)
+                        }
+                    }
+                    
+                    HStack {
+                        Text(Constants.shared.isAR ? product["description_ar"]  as? String ?? "" : product["description_en"]  as? String ?? "")
+                            .textModifier(.plain, 15, .gray616161)
+                            .lineLimit(2)
+                        Spacer()
+                   
+                    }
+                }
+            }
+            .padding(.all,10)
+        }
+        
+        .cornerRadius(15)
+        .overlay(
+            RoundedRectangle(cornerRadius: 15)
+                .stroke( Color(.primary), lineWidth: 1)
+        )
+        
+       
         //        .padding(.all,20)
         
     }

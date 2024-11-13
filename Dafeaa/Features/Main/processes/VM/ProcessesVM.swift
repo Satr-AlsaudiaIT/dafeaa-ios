@@ -41,7 +41,7 @@ class ProcessesVM: ObservableObject {
             case .success(let Result):
                 guard let data = Result?.data else { return }
                 self._operationsData = Result
-                if data.isEmpty {
+                if self._operationsList.count >= Result?.count ?? 0 {
                     self.hasMoreData = false
                 } else {
                     if skip == 0 {

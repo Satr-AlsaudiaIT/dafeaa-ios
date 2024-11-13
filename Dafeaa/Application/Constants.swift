@@ -96,6 +96,29 @@ class Constants {
             ud.set(token, forKey: "clientOrderId")
         }
     }
+    
+//    static var offersData: ShowOfferData? {
+//        get {
+//            let ud = UserDefaults.standard
+//            if let data = ud.data(forKey: "offersData") {
+//                let decoder = JSONDecoder()
+//                return try? decoder.decode(ShowOfferData.self, from: data)
+//            }
+//            return nil
+//        }
+//        set {
+//            let ud = UserDefaults.standard
+//            if let newValue = newValue {
+//                let encoder = JSONEncoder()
+//                if let encodedData = try? encoder.encode(newValue) {
+//                    ud.set(encodedData, forKey: "offersData")
+//                }
+//            } else {
+//                ud.removeObject(forKey: "offersData")
+//            }
+//        }
+//    }
+
 //    static var notificationOnOrOff: Bool {
 //        get {
 //            let ud = UserDefaults.standard

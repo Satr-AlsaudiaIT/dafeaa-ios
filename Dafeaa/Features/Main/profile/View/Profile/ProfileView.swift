@@ -81,7 +81,7 @@ struct ProfileView: View {
                                 NavigationLinkComponent(
                                     destination: SubscribtionView(),
                                     label: "Subscription Management",
-                                    image: Image(.iconAddress)
+                                    image: Image(.subscribtion)
                                 )
                             }
                             NavigationLinkComponent(
@@ -104,7 +104,10 @@ struct ProfileView: View {
                                 label: "Settings",
                                 image: Image(.iconSettings)
                             )
-                            NavigationLinkComponent(destination: OrdersOffersLinksView(), label: "offers", image: Image(.iconAbout))
+                            if type != 1{
+                                NavigationLinkComponent(destination: OrdersOffersLinksView(), label: "offers", image: Image(.iconOffer))
+                                
+                        }
                             Button(action:{
                                 isActiveActionSheet = true
                                 activeActionSheet = .deleteAccount
@@ -180,7 +183,7 @@ struct ProfileView: View {
             .onReceive(viewModel.$_getData){ value in
                 if value {
                     name         = viewModel.profileData?.name ?? ""
-                    phone        = viewModel.profileData?.phone ?? ""
+                    phone        = viewModel.profileData?.phone?.convertDigitsToEng ?? ""
 //                    selectedProfileImageURL = viewModel.profileData?.profileImage ?? ""
                 }
             }

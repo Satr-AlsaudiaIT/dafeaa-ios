@@ -130,13 +130,13 @@ struct CompleteDataView: View {
                 }
                 Spacer()
                 Button(action: {
-                    //                    showPerviousTextField()
+                       showPerviousTextField()
                 }, label: {
                     Image(systemName: "chevron.up").foregroundColor(.blue)
                 })
                 
                 Button(action: {
-                    //                    showNextTextField()
+                    showNextTextField()
                 }, label: {
                     Image(systemName: "chevron.down").foregroundColor(.blue)
                 })

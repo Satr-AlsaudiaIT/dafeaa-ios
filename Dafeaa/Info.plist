@@ -21,7 +21,7 @@
 			<string>Plantech.Dafeaa</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>offers</string>
+				<string>dafeaa</string>
 			</array>
 		</dict>
 	</array>
@@ -29,16 +29,6 @@
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>http://93.127.186.172:8000</key>
-			<dict>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-				<false/>
-			</dict>
-		</dict>
 	</dict>
 	<key>UIAppFonts</key>
 	<array>

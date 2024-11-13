@@ -168,6 +168,10 @@
 "addBalance"="إضافة رصيد";
 "withdrawBalance"="سحب رصيد ";
 "lastProcessAndPayment"="اخر العمليات والمدفوعات";
+"withdrawWalletBalance" = "سحب رصيد من المحفظة";
+"addWalletBalance" = "إضافة رصيد الي المحفظة";
+"noExtraFees" = "لا توجد مصروفات إضافية";
+"weWillContactYou" = "*سيتم التواصل معكم خلال يومين عمل لاتمام عملية سحب المبلغ.";
 
 //MARK: - NOTIFICATIONS
 "emptyNotifications"="لا توجد اشعارات لديك بعد, سيتم تنبيهك في حال وصول اي اشعار لك";
@@ -203,6 +207,9 @@
 "cancelOrderQuestion" = "هل انت متأكد انك تريد إلغاء الطلب؟";
 "rejectOrder" = "تأكيد رفض الطلب";
 "rejectOrderQuestion" = "هل انت متأكد انك تريد رفض الطلب؟";
+"clientName:" = "اسم العميل: ";
+"clientPhone:" = "رقم العميل: ";
+"amount: " = "الكمية: ";
 
 //MARK: - addresses
 "address"="العنوان";
@@ -222,6 +229,8 @@
 "deliveryAddress" = "عنوان الشحن";
 "select" = "تحديد";
 "edit" = "تغيير";
+"saveSelectedAddress" = "حفظ العنوان";
+
 
 //MARK: - Add Order cycle
 "offerDetails" = "تفاصيل العرض";
@@ -232,3 +241,28 @@
 "productDetails" = "تفاصيل المنتج";
 "rs" = "ر.س";
 "orderNow"="اطلب الآن";
+"deleteOffer" = "حذف العرض";
+"deliveryPriceTitle" = "سعر التوصيل";
+"taxPriceTitle" = "ضريبة القيمة";
+"addProductTitle" = "اضف منتج";
+"nameAr" = "اسم المنتج عربي";
+"nameEn" = "اسم المنتج انجليزي";
+"descriptionAr" = "وصف المنتج عربي";
+"descriptionEn" = "وصف المنتج انجليزي";
+"productPrice" = "سعر المنتج";
+"offerPrice" =  "سعر العرض";
+"chooseProductImage" = "برجاء اختيار صورة المنتج";
+"enterNameAr" = "برجاء ادخال اسم المنتج عربي";
+"enterNameEn" = "برجاء ادخال اسم المنتج انجليزي";
+"enterDescriptionAr" = "برجاء ادخال وصف المنج عربي";
+"enterDescriptionEn" = "برجاء ادخال وصف المنتج انجليزي";
+"enterPrice" = "برجاء ادخال سعر المنتج";
+"addProductSuccess" = "تم اضافة المنتج بنجاح";
+"enterOfferName" = "برجاء ادخال اسم العرض";
+"enterOfferDescription" = "برجاء ادخال وصف العرض";
+"enterDeliveryPrice" = "برجاء ادخال سعر التوصيل";
+"enterTax" = "برجاء ادخال نسبة الضريبة";
+"pleaseAddProducts" = "برجاء اضافة منتجات";
+"copied successfully"="تم النسخ";
+"offerDetails"="تفاصيل العرض";
+"thereIsNoData"="لا توجد بيانات";

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WalletView: View {
     @StateObject var viewModel = WalletVM()
+    @Binding var selectedTab : TabBarView.Tab
     @State var isSheetPresented: Bool = false
     @State var amount:Double = 0.0
     @State private var balanceActionType : bottomSheetAction?
@@ -68,21 +69,26 @@ struct WalletView: View {
                     .shadow(color: Color(.black).opacity(0.06), radius: 16, x: 12, y: 12)
                     
                     //MARK: - lowerView
-                    
-                    ScrollView {
-                        VStack(spacing: 17) {
-                            
-                            VStack(spacing: 8) {
-                                ForEach(0..<viewModel.processList.count,id: \.self){ index in
-                                    ProcessComponent(process: viewModel.processList[index])
-                                        .onAppear {
-                                            if index == viewModel.processList.count - 1 {
-                                                loadMoreOrdersIfNeeded()
-                                            }
+                    VStack(spacing: 17) {
+                        LastProcessNavView(title: "lastTransactions".localized(), selectedTab: $selectedTab)
+                        if viewModel.processList.isEmpty {
+                            EmptyCostumeView()
+                        }else {
+                            ScrollView {
+                                VStack(spacing: 17) {
+                                    VStack(spacing: 8) {
+                                        ForEach(0..<viewModel.processList.count,id: \.self){ index in
+                                            ProcessComponent(process: viewModel.processList[index])
+                                                .onAppear {
+                                                    if index == viewModel.processList.count - 1 {
+                                                        loadMoreOrdersIfNeeded()
+                                                    }
+                                                }
                                         }
+                                    }
                                 }
+                                
                             }
-                            
                         }
                     }
                     
@@ -121,7 +127,7 @@ struct WalletView: View {
     }
     
 }
-//#Preview {
-//    WalletView()
-//}
+#Preview {
+    WalletView( selectedTab: .constant(.home))
+}
 
