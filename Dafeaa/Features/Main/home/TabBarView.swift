@@ -67,19 +67,10 @@ struct TabBarView: View {
                         }
                         .tag(Tab.profile)
                 }
-                
                 .accentColor(Color(.primary))
-//                .specificCornerRadius(10, corners: [.topLeft,.topRight])
-                // Custom Border Overlay for Tab Bar
-//                GeometryReader { geometry in
-//                    Rectangle()
-//                        .frame(width: geometry.size.width, height: 1) // Border height
-//                        .foregroundColor(.black.opacity(0.1))
-//                        .position(x: geometry.size.width / 2, y: geometry.size.height - 55) // Position border above tab items
-//                }
-//                .ignoresSafeArea()
+
+      
             }
-            .cornerRadius(10)
         }
         .navigationBarHidden(true)
     }
