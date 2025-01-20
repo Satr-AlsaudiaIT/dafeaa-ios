@@ -25,9 +25,9 @@ struct ProcessComponent: View {
             Spacer()
             HStack(spacing: 2) {
                 Text(process?.amount ?? "")
-                    .textModifier(.extraBold, 16,  process?.amount.first == "+" ? .green026C34 : .redD73D24)
-                Text("ر.س".localized())
-                    .textModifier(.plain, 16, process?.amount.first == "+" ? .green026C34 : .redD73D24)
+                    .textModifier(.extraBold, 16,  process?.amount?.first == "+" ? .green026C34 : .redD73D24)
+                Text("SAR" .localized())
+                    .textModifier(.plain, 16, process?.amount?.first == "+" ? .green026C34 : .redD73D24)
             }
         }
     }

@@ -74,9 +74,9 @@ struct WalletView: View {
                         if viewModel.processList.isEmpty {
                             EmptyCostumeView()
                         }else {
-                            ScrollView {
+                            ScrollView (showsIndicators: false){
                                 VStack(spacing: 17) {
-                                    VStack(spacing: 8) {
+                                    LazyVStack(spacing: 8) {
                                         ForEach(0..<viewModel.processList.count,id: \.self){ index in
                                             ProcessComponent(process: viewModel.processList[index])
                                                 .onAppear {
@@ -89,11 +89,15 @@ struct WalletView: View {
                                 }
                                 
                             }
+                            .refreshable {
+                                viewModel.wallet(skip: 0, animated: false)
+                            }
                         }
                     }
                     
                     
-                }.padding(24)
+                }.padding([.leading,.trailing,.top],24)
+                    .padding(.bottom,2)
             }
             if viewModel.isLoading {
                 ProgressView("Loading...".localized())

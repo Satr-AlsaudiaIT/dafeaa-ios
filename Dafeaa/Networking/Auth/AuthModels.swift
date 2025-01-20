@@ -123,3 +123,23 @@ struct AddressesData: Codable {
     let area, floatNum: String?
 }
 
+// MARK: - withdrawsModel
+struct withdrawsModel: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [withdrawsData]?
+    let count: Int?
+}
+// MARK: - withdrawsData
+struct withdrawsData: Codable {
+    let id, status: Int?
+    let amount: Double?
+    let statusDate: String?
+}
+
+
+struct AddToWalletModel: Codable {
+    let status: Bool?
+    let message: String?
+    let data: String?
+}

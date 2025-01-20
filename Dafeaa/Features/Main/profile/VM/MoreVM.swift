@@ -17,6 +17,9 @@ final class MoreVM : ObservableObject {
     @Published private var _contactData    : ContactData?
     @Published private var _profileData    : LoginData?
     @Published private var _addressList    : [AddressesData] = []
+    @Published private var _withdrawsData  : [withdrawsData] = []
+    @Published private var _withdrawsCount : Int = 1
+
     @Published var _getData                : Bool = false
     @Published var _isSuccess              = false
     @Published var _isCreateSuccess        = false
@@ -35,6 +38,7 @@ final class MoreVM : ObservableObject {
     var questionList                       : [QuestionsListData] { get {return _questionList  }  set {}  }
     var staticData                         : StaticPagesData? { get {return _staticData} set {} }
     var addressList                        : [AddressesData] { get {return _addressList  }  set {}  }
+    var withdrawsData                      : [withdrawsData] { get {return _withdrawsData  }  set {}  }
 
     
     func validateChangePassword(currentPassword: String, password: String, confirmPassword: String) {
@@ -357,4 +361,40 @@ final class MoreVM : ObservableObject {
         MOLH.reset()
         
     }
+    
+    
+    func  getWithDraws(skip:Int) {
+        if skip == 0 {
+            _isLoading = true; hasMoreData = true;self._withdrawsData.removeAll()
+        }
+        else if self._withdrawsData.count >= self._withdrawsCount {
+            self.hasMoreData = false
+        }
+        guard hasMoreData  else { _isLoading = false ;return;}
+        _isLoading = true
+        api.getWithdraws(skip: skip) {(result)  in
+            switch result {
+            case .success(let response):
+                self._isLoading = false
+                self._isFailed = false
+                
+                self._withdrawsCount = response?.count ?? 0
+               
+                    if skip == 0 {
+                        self._withdrawsData = response?.data ?? []
+                    } else {
+                        self._withdrawsData.append(contentsOf: response?.data ?? [])
+                    }
+                
+            case .failure(let error):
+                self._isLoading = false
+                self._isFailed = true
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message )
+            }
+        }
+    }
+
+    
+    
 }

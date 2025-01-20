@@ -14,13 +14,33 @@ struct MyOrdersView: View {
     @State var selectedOrder: OrdersData?
     @State var navigateToClientDetails: Bool = false
     @State var navigateToBusinessDetails: Bool = false
-
+    @State var showMenu: Bool = false
     var body: some View {
         ZStack{
             VStack(spacing: 0){
-                NavigationBarView(title: userType == 1 ? "myOrders".localized() : "orders".localized())
+//                NavigationBarView(title:  "orders".localized())
+                HStack {
+                    HStack {
+                        Image("")
+                            .resizable()
+                            .frame(width: 30,height: 30)
+                        Spacer()
+                        Text("orders".localized())
+                            .textModifier(.plain, 17, .black222222)
+                        Spacer()
+                        Button {
+                            showMenu = true
+                        } label: {
+                            Image(.filter)
+                                .resizable()
+                                .frame(width: 20,height: 20)
+                        }
+                    }
+                    .padding(20)
+                }
+                .background(Color(.primary))
                 VStack(spacing: 16){
-                    CustomSegmentView(titlesArray: ["current","history"], selectedSegment:$selectedSegment)
+                    CustomSegmentView(titlesArray: ["MyPurchases","MySales"], selectedSegment:$selectedSegment)
                         .onChange(of: selectedSegment) { newValue, oldValue in
                             if userType == 1{
                                 viewModel.orders(skip: 0, status: newValue == 1 ? "current":"history")
@@ -34,7 +54,7 @@ struct MyOrdersView: View {
                             EmptyCostumeView()
                         } else {
                             ScrollView(showsIndicators: false) {
-                                VStack(spacing: 8) {
+                               LazyVStack(spacing: 8) {
                                     ForEach(0..<(viewModel.ordersList.count),id: \.self){ index in
                                         Button(action: {
                                             selectedOrder = viewModel.ordersList[index]
@@ -55,6 +75,8 @@ struct MyOrdersView: View {
                                     }
                                 }
                                 
+                            }.refreshable {
+                                viewModel.orders(skip: 0, status: selectedSegment == 1 ? "history" : "current",animated: false)
                             }
                         }
                     }
@@ -65,6 +87,60 @@ struct MyOrdersView: View {
                         OrderBusinessDetailsView(orderID: selectedOrder?.id ?? 0)
                     }
                 }.padding(24)
+            }
+            .onTapGesture {
+                showMenu = false
+            }
+            if showMenu {
+                VStack {
+                    HStack {
+                        Spacer()
+                        ZStack {
+                            Color(.white)
+                            VStack {
+                                VStack(spacing: 10) {
+                                    Button {
+                                        showMenu = false
+                                    } label: {
+                                        HStack {
+                                           
+                                            Text("current".localized())
+                                                .textModifier(.plain, 14, .gray666666)
+                                                .frame(width: 100)
+                                            Image(systemName: "arrow.up")
+                                                .padding(.trailing,20)
+                                                .foregroundColor(.gray666666)
+                                        }
+                                    }
+                                    
+                                    Button {
+                                        showMenu = false
+                                    } label: {
+                                        HStack {
+                                            Text("history".localized())
+                                                .textModifier(.plain, 14, .gray666666)
+                                                .frame(width: 100)
+                                            Image(systemName: "arrow.down")
+                                                .padding(.trailing,20)
+                                                .foregroundColor(.gray666666)
+                                        }
+                                    }
+                                    
+                                    
+                                    
+                                }
+                                .padding(20)
+                            }
+                        }
+                        .cornerRadius(10)
+                        .shadow(color:.gray616161, radius: 4, x: 0, y: 3)
+                        .fixedSize()
+                        .padding(.trailing,30)
+                    }
+                    .padding(.top,49)
+                    
+                    Spacer()
+                }
             }
             if viewModel.isLoading {
                 ProgressView("Loading...".localized())

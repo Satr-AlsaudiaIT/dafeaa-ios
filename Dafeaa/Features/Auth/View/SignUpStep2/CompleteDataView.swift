@@ -25,7 +25,8 @@ struct CompleteDataView: View {
     var selectedOption: AccountTypeOption = .none
     @StateObject var viewModel = AuthVM()
     @FocusState private var focusedField: FormField?
-    
+    @State private var keyboardHeight: CGFloat = 0
+
     var body: some View {
         ZStack{
             VStack(alignment: .leading , spacing: 16) {
@@ -46,15 +47,16 @@ struct CompleteDataView: View {
                 }
                 .padding(.horizontal)
                 VStack(alignment:.leading,spacing:8){
-                    Text("أضف بيانات نشاطك التجاري".localized())
+                    Text("selectAccountInfo".localized())
                         .textModifier(.plain, 19, .black222222)
                     
                     // Subtitle
-                    Text("لإنشاء حساب جديد معنا برجاء اضافة بعض معلومات نشاطك التجاري ليتم التعرف اليكم.".localized())
+                    Text("selectAccountInfoSubtitle".localized())
                         .textModifier(.plain, 15, .gray666666)
                     
                 }
                 .padding(.horizontal)
+                ScrollViewReader { proxy in
                 ScrollView (showsIndicators: false){
                     VStack(alignment:.leading, spacing: 8) {
                         VStack(alignment:.leading,spacing:8){
@@ -84,7 +86,7 @@ struct CompleteDataView: View {
                             CustomMainTextField(text: $area, placeHolder: "area".localized(), image: .location)
                                 .focused($focusedField, equals: .areaField)
 
-                            CustomMainTextField(text: $taxNumber, placeHolder: "taxNumber".localized(), image: .tax)
+                            CustomMainTextField(text: $taxNumber, placeHolder: "taxNumber".localized(), image: .tax,keyBoardType: .numberPad)
                                 .focused($focusedField, equals: .taxField)
 
                             Text("CommLecs".localized())
@@ -109,7 +111,16 @@ struct CompleteDataView: View {
                     
                     
                 }
-                .padding(24)
+                .onChange(of: focusedField) { newField in
+                    withAnimation {
+                        if let newField = newField {
+                            proxy.scrollTo(newField, anchor: .center)
+                        }
+                    }
+                }
+            }
+            .padding(.bottom, keyboardHeight)
+                .padding([.leading,.trailing,.top],24)
                 
             }
             .navigationBarHidden(true)
@@ -122,6 +133,12 @@ struct CompleteDataView: View {
                 ProgressView()
                     .hidden()
             }
+        }
+        .onAppear {
+            subscribeToKeyboardEvents(keyboardHeight: keyboardHeight)
+        } // Listen for keyboard events
+        .onDisappear {
+            unsubscribeFromKeyboardEvents()
         }
         .toolbar{
             ToolbarItemGroup(placement: .keyboard){

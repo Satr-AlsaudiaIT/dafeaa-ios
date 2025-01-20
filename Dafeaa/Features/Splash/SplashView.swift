@@ -11,6 +11,7 @@ struct SplashView: View {
     @State private var isScaledDown = false
     @State private var isDisappearing: Bool = false
     var window: UIWindow?
+
     init(window: UIWindow?) {
            self.window = window
        }
@@ -77,22 +78,26 @@ struct SplashView: View {
     
     func tabBarTransition() {
         window?.rootViewController = UIHostingController(rootView: TabBarView() .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
-        .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight))
+        .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight)
+        )
     }
     
     func onboardingTransition(){
         window?.rootViewController = UIHostingController(rootView: OnBoardingView() .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
-        .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight))
+        .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight)
+        )
     }
     
     func authorizationTransition() {
         window?.rootViewController = UIHostingController(rootView: LoginView() .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
-        .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight))
+        .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight)
+        )
     }
     
     func pendingTransition() {
         window?.rootViewController = UIHostingController(rootView: PendingView() .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
-        .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight))
+        .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight)
+        )
     }
     
     //change rootview

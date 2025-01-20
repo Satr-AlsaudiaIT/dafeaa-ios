@@ -21,84 +21,88 @@ struct OrderBusinessDetailsView: View {
     @State var isRejectTapped: Bool = false
     @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950)
     @State var showingProductDetails: Bool = false
+    @State var totalPrice: Double = 0
     var body: some View {
         ZStack {
+            
             VStack(spacing: 0) {
                 NavigationBarView(title: "orderDetails".localized()) {
                     self.presentationMode.wrappedValue.dismiss()
                 }
                 
-                VStack(alignment: .leading, spacing: 24) {
-                    ScrollView(showsIndicators: false) {
-                        VStack(spacing: 24) {
-                            if let orderStatusInt = viewModel.orderData?.orderStatus {
-                                PathViewChoice(orderStatus: orderStatusEnum(rawValue: orderStatusInt) ?? .pending)
-                                    .padding(.horizontal,-10)
-                                    .padding(.vertical,-10)
-                            }
-                           
-                            //  Order Items Section
-                            VStack(spacing: 8) {
-                                Text("showOrderDetails".localized())
-                                    .textModifier(.plain, 15,  .black222222)
-                                    .frame(maxWidth: .infinity,alignment: .leading)
-                                
-                                ZStack{
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .stroke(Color(.black).opacity(0.1), lineWidth: 1)
-                                        .background(RoundedRectangle(cornerRadius: 16).fill(Color.clear))
-                                    VStack(spacing: 8) {
-                                        ForEach(0..<(viewModel.orderData?.products?.count ?? 3),id: \.self){ index in
-                                            Button(action: {
-                                                showingProductDetails = true
-                                                selectedProduct = viewModel.orderData?.products?[index] ?? selectedProduct
-                                            }) {
-                                                OrderItemView(itemName:viewModel.orderData?.products?[index].name ?? "" ,
-                                                              price: viewModel.orderData?.products?[index].price ?? 0,
-                                                              amount: viewModel.orderData?.products?[index].amount ?? 0,
-                                                              isLast: index == (viewModel.orderData?.products?.count ?? 3 ) - 1 )
-                                            }
-                                        }
-                                    } .padding(.horizontal,16)
+                    VStack(alignment: .leading, spacing: 24) {
+                        ScrollView(showsIndicators: false) {
+                            VStack(spacing: 24) {
+                                if let orderStatusInt = viewModel.orderData?.orderStatus {
+                                    PathViewChoice(orderStatus: .constant(orderStatusEnum(rawValue: orderStatusInt) ?? .pending))
+                                        .padding(.horizontal,-10)
+                                        .padding(.vertical,-10)
                                 }
-                            }
-                            // Payment Info Section
-                            VStack(spacing: 8) {
-                                Text("paymentInfo".localized())
-                                    .textModifier(.plain, 15,  .black222222)
-                                    .frame(maxWidth: .infinity,alignment: .leading)
-                                
-                               
+                               if viewModel.orderData?.qrCode != ""{
+                                    QRCodeView(text: viewModel.orderData?.qrCode ?? "")
+                                }
+                                //  Order Items Section
+                                VStack(spacing: 8) {
+                                    Text("showOrderDetails".localized())
+                                        .textModifier(.plain, 15,  .black222222)
+                                        .frame(maxWidth: .infinity,alignment: .leading)
                                     
-                                        PaymentInfoView(breakdown: PaymentDetails(itemsPrice:viewModel.orderData?.totalPrice ?? 0.00 ,tax: viewModel.orderData?.taxPrice ?? 0.00, deliveryPrice: viewModel.orderData?.deliveryPrice ?? 0.00),isShowDetails: true)
-                                        
-                                   
-                                
-                            }
-                            
-                            
-                            // Shipping Address Section
-                            VStack(spacing: 8) {
-                                Text("addressInfo".localized())
-                                    .textModifier(.plain, 15,  .black222222)
-                                    .frame(maxWidth: .infinity,alignment: .leading)
-                                
-                                ZStack{
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .stroke(Color(.black).opacity(0.1), lineWidth: 1)
-                                        .background(RoundedRectangle(cornerRadius: 16)
-                                            .fill(Color.clear))
-                                    
-                                    VStack(spacing: 8) {
-                                        AddressView(name: viewModel.orderData?.clientName ?? "", address: viewModel.orderData?.address ?? "", phone: viewModel.orderData?.clientPhone ?? "")
-                                        
+                                    ZStack{
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .stroke(Color(.black).opacity(0.1), lineWidth: 1)
+                                            .background(RoundedRectangle(cornerRadius: 16).fill(Color.clear))
+                                        VStack(spacing: 8) {
+                                            ForEach(0..<(viewModel.orderData?.products?.count ?? 3),id: \.self){ index in
+                                                Button(action: {
+                                                    showingProductDetails = true
+                                                    selectedProduct = viewModel.orderData?.products?[index] ?? selectedProduct
+                                                }) {
+                                                    OrderItemView(itemName:viewModel.orderData?.products?[index].name ?? "" ,
+                                                                  price: viewModel.orderData?.products?[index].price ?? 0,
+                                                                  amount: viewModel.orderData?.products?[index].amount ?? 0,
+                                                                  isLast: index == (viewModel.orderData?.products?.count ?? 3 ) - 1 )
+                                                }
+                                            }
+                                        } .padding(.horizontal,16)
                                     }
                                 }
-                            }
-                            
-                            
-                            
-                            // Customer Service Section
+                                // Payment Info Section
+                                VStack(spacing: 8) {
+                                    Text("paymentInfo".localized())
+                                        .textModifier(.plain, 15,  .black222222)
+                                        .frame(maxWidth: .infinity,alignment: .leading)
+                                    
+                                    
+                                    
+                                    PaymentInfoView(breakdown: PaymentDetails(tax: viewModel.orderData?.taxPrice ?? 0.00, deliveryPrice: viewModel.orderData?.deliveryPrice ?? 0.00),itemsPrice: $totalPrice, isShowDetails: true)
+                                    
+                                    
+                                    
+                                }
+                                
+                                
+                                // Shipping Address Section
+                                VStack(spacing: 8) {
+                                    Text("addressInfo".localized())
+                                        .textModifier(.plain, 15,  .black222222)
+                                        .frame(maxWidth: .infinity,alignment: .leading)
+                                    
+                                    ZStack{
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .stroke(Color(.black).opacity(0.1), lineWidth: 1)
+                                            .background(RoundedRectangle(cornerRadius: 16)
+                                                .fill(Color.clear))
+                                        
+                                        VStack(spacing: 8) {
+                                            AddressView(name: viewModel.orderData?.clientName ?? "", address: viewModel.orderData?.address ?? "", phone: viewModel.orderData?.clientPhone ?? "")
+                                            
+                                        }
+                                    }
+                                }
+                                
+                                
+                                
+                                // Customer Service Section
                                 Button(action: {
                                     isNavigateToContactInfo = true
                                     
@@ -108,32 +112,33 @@ struct OrderBusinessDetailsView: View {
                                         .frame(maxWidth: .infinity,alignment: .leading)
                                         .underline()
                                 }
-                            
-                            // Confirm Button
-                            // Confirm Button
-                            
-                            if viewModel.orderData?.orderStatus ?? 0 == 1 {
-                                ReusableButton(buttonText: "reject".localized(),isEnabled: true){
-                                    isRejectTapped = true
-                                    
-                                }
                                 
-                                ReusableButton(buttonText: "accept".localized(),isEnabled: true,buttonColor: .yellow){
-                                    viewModel.changeOrderStatus(id: orderID ?? 0, status: 2)
+                                // Confirm Button
+                                // Confirm Button
+                                
+                                if viewModel.orderData?.orderStatus ?? 0 == 1 {
+                                    ReusableButton(buttonText: "reject".localized(),isEnabled: true){
+                                        isRejectTapped = true
+                                        
+                                    }
+                                    
+                                    ReusableButton(buttonText: "accept".localized(),isEnabled: true,buttonColor: .yellow){
+                                        viewModel.changeOrderStatus(id: orderID ?? 0, status: 2)
+                                    }
                                 }
-                            }
-                            else if viewModel.orderData?.orderStatus ?? 0 == 2 {
-                                ReusableButton(buttonText: "Cancel".localized(),isEnabled: true){
-                                    isCancelTapped = true
-                                }
-                                ReusableButton(buttonText: "onWay".localized(),isEnabled: true,buttonColor: .yellow){
-                                    viewModel.changeOrderStatus(id: orderID ?? 0, status: 3)
+                                else if viewModel.orderData?.orderStatus ?? 0 == 2 {
+                                    ReusableButton(buttonText: "Cancel".localized(),isEnabled: true){
+                                        isCancelTapped = true
+                                    }
+                                    ReusableButton(buttonText: "onWay".localized(),isEnabled: true,buttonColor: .yellow){
+                                        viewModel.changeOrderStatus(id: orderID ?? 0, status: 3)
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                .padding(24)
+                    .padding(24)
+                
             }
             if isRejectTapped {
                 PopUpComponent(title: "rejectOrder", question: "rejectOrderQuestion",isShowing: $isRejectTapped){
@@ -162,17 +167,28 @@ struct OrderBusinessDetailsView: View {
                 .presentationDragIndicator(.visible)
                 .presentationDetents([.medium])
         })
+        .navigationDestination(isPresented: $isNavigateToContactInfo) {
+            HelpAndSupportView()
+        }
         .toastView(toast: $viewModel.toast)
         .navigationBarHidden(true)
         .onAppear() {
             AppState.shared.swipeEnabled = true
             viewModel.getOrder(id: orderID ?? 0)
         }
+        .onChange(of: viewModel.isLoading, { oldValue, newValue in
+            if !newValue {
+                totalPrice = viewModel.orderData?.totalPrice ?? 0
+            }
+        })
         .onChange(of: viewModel._isStatusChangedSuccess) { _, newValue in
             if newValue {
+                isCancelTapped = false
+                isRejectTapped = false
                 viewModel.getOrder(id: orderID ?? 0)
             }
         }
+        
     }
 }
 

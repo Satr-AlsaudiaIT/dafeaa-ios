@@ -53,7 +53,7 @@ struct OrderLinkDetailsView: View {
                                label: { Image(systemName: "rectangle.portrait.on.rectangle.portrait")
                             .foregroundColor(.black222222)})
                         .frame(width: 25,height: 20)
-                        if let offerID = viewModel.offersData?.id , let offerCode = viewModel.offersData?.code, let url = URL(string: "dafeaa://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)"){
+                        if let offerID = viewModel.offersData?.id , let offerCode = viewModel.offersData?.code, let url = URL(string: "https://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)"){
                             ShareLink(item: url) {  Image(.share).resizable().frame(width: 25,height: 20)} }
                     }
                     .padding(24)
@@ -61,11 +61,11 @@ struct OrderLinkDetailsView: View {
                     ZStack(alignment: .bottom){
                         ScrollView {
                             VStack(alignment: .leading,spacing: 19) {
-                                Text(linkDetails.name ?? "")
-                                    .textModifier(.bold, 16, .black010202)
-                                Text(linkDetails.description ?? "")
-                                    .textModifier(.plain, 15, .black222222)
-                                    .padding(.top,-10)
+                                Text("offerDetails".localized())
+                                    .textModifier(.plain, 16, .black010202)
+//                                Text(linkDetails.description ?? "")
+//                                    .textModifier(.plain, 15, .black222222)
+//                                    .padding(.top,-10)
                                 
                                 ForEach (linkDetails.products ?? []) { product in
                                     Button(action: {
@@ -76,7 +76,7 @@ struct OrderLinkDetailsView: View {
                                         
                                     }
                                 }
-                                PaymentInfoView(breakdown: PaymentDetails(itemsPrice: totalPrice, tax: linkDetails.taxPrice, deliveryPrice: linkDetails.deliveryPrice),isMerchantOfferDetails: true)
+                                PaymentInfoView(breakdown: PaymentDetails(tax: linkDetails.taxPrice, deliveryPrice: linkDetails.deliveryPrice),isMerchantOfferDetails: true, itemsPrice: $totalPrice)
                             
                             }
                             .padding(.bottom,40)
@@ -122,12 +122,21 @@ struct OrderLinkDetailsView: View {
                     if value {
                         self.presentationMode.wrappedValue.dismiss()
                 }}
+                .onChange(of: viewModel._offersData) { oldValue, newValue in
+                    if let products = viewModel._offersData?.products {
+                        totalPrice = products.reduce(0.0) { (result, product) in
+                            let productPrice = product.offerPrice ?? 0 > 0 ? product.offerPrice! : product.price ?? 0
+                            let totalProductPrice = productPrice * Double(product.amount ?? 1)
+                            return result + totalProductPrice
+                        }
+                    }
+                }
         }
     }
     // Function to calculate the total price
     private func copyURL() {
         if let offerID = viewModel.offersData?.id , let offerCode = viewModel.offersData?.code{
-            let urlString = "dafeaa://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)"
+            let urlString = "https://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)"
             UIPasteboard.general.string = urlString
             self.toast = FancyToast(type: .info, title: "copied successfully".localized(), message: "")
 

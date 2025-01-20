@@ -1,30 +1,33 @@
 //
-//  ProcessesView.swift
+//  WithdrawsView.swift
 //  Dafeaa
 //
-//  Created by AMNY on 12/10/2024.
+//  Created by AMNY on 14/11/2024.
 //
 
 import SwiftUI
 
-struct ProcessesView: View {
+struct WithdrawsView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @StateObject var viewModel = ProcessesVM()
+    @StateObject var viewModel = MoreVM()
     var body: some View {
         
         //MARK: - upperView
         ZStack {
             VStack(spacing: 0) {
-                NavigationBarView(title: "lastProcessAndPayment".localized())
-                if viewModel.operationsList.isEmpty {
+                NavigationBarView(title: "withdrawsProcess".localized()){
+                    presentationMode.wrappedValue.dismiss()
+                }
+                if viewModel.withdrawsData.isEmpty {
                     EmptyCostumeView()
                 } else {
                     ScrollView {
+                        
                         LazyVStack(spacing: 8) {
-                            ForEach(0..<viewModel.operationsList.count,id: \.self){ index in
-                                ProcessComponent(process: viewModel.operationsList[index])
+                            ForEach(0..<viewModel.withdrawsData.count,id: \.self){ index in
+                                WithdrawComponent(process: viewModel.withdrawsData[index])
                                     .onAppear {
-                                        if index == viewModel.operationsList.count - 1 {
+                                        if index == viewModel.withdrawsData.count - 1 {
                                             loadMoreOrdersIfNeeded()
                                         }
                                     }
@@ -32,9 +35,6 @@ struct ProcessesView: View {
                         }
                         
                     }.padding(24)
-                        .refreshable {
-                            viewModel.operations(skip: 0, animated: false)
-                        }
                 }
             }
             if viewModel.isLoading {
@@ -48,19 +48,19 @@ struct ProcessesView: View {
         }
         .toastView(toast: $viewModel.toast)
         .navigationBarHidden(true)
-        .onAppear(){viewModel.operations(skip: 0) }
+        .onAppear(){viewModel.getWithDraws(skip: 0)}
     }
     
     private func loadMoreOrdersIfNeeded() {
         if viewModel.hasMoreData && !viewModel.isLoading {
-            viewModel.operations(skip: viewModel.operationsList.count)
+            viewModel.getWithDraws(skip: viewModel.withdrawsData.count)
         }
     }
     
 }
-#Preview {
-    ProcessesView()
-}
 
+#Preview {
+    WithdrawsView()
+}
 
 

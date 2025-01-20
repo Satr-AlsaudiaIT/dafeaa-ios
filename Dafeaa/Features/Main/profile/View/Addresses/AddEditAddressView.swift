@@ -18,6 +18,7 @@ struct AddEditAddressView: View {
     @State var address: String = ""
     @State var editedAddress: AddressesData?
     @FocusState private var focusedField: FormField?
+    @State private var keyboardHeight: CGFloat = 0
 
     var body: some View {
         ZStack {
@@ -27,7 +28,8 @@ struct AddEditAddressView: View {
             NavigationBarView(title: isEdit ? "editAddress".localized():"addNewAddress".localized() ) {
                 presentationMode.wrappedValue.dismiss()
             }
-            ScrollView(showsIndicators: false){
+            ScrollViewReader { proxy in
+                ScrollView(showsIndicators: false){
                 VStack(spacing: 12) {
                     CustomMainTextField(text: $area, placeHolder: "area")
                         .focused($focusedField, equals: .area)
@@ -47,9 +49,18 @@ struct AddEditAddressView: View {
                     
                    
                 }
-                .padding(.all,24)
+                .padding([.leading,.trailing,.top],24)
               
             }
+                .onChange(of: focusedField) { oldField,newField in
+                    withAnimation {
+                        if let newField = newField {
+                            proxy.scrollTo(newField, anchor: .center)
+                        }
+                    }
+                }
+            }
+            .padding(.bottom, keyboardHeight)
             .onReceive(viewModel.$_isCreateSuccess) { newValue in
                if newValue { presentationMode.wrappedValue.dismiss()}
             }
@@ -58,8 +69,10 @@ struct AddEditAddressView: View {
                 viewModel.validateCreateAddress(id: editedAddress?.id, area: area, streetName: streetName, buildingNum: buildingNum, floatNum: floatNum, address: address)
                                
             }
-            .padding(.all,24)
+            .padding([.leading,.trailing,.top],24)
         }
+        .onAppear { subscribeToKeyboardEvents(keyboardHeight: keyboardHeight) }
+        .onDisappear { unsubscribeFromKeyboardEvents() }
         .toolbar{
             ToolbarItemGroup(placement: .keyboard){
                 Button("Done".localized()){

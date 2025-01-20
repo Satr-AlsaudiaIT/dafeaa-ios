@@ -58,7 +58,7 @@ struct ClientLinkDetails: View {
                                         }
                                 }
                             }
-                            PaymentInfoView(breakdown: PaymentDetails(itemsPrice: totalPrice, tax: linkDetails.taxPrice, deliveryPrice: linkDetails.deliveryPrice))
+                            PaymentInfoView(breakdown: PaymentDetails(tax: linkDetails.taxPrice, deliveryPrice: linkDetails.deliveryPrice),itemsPrice: $totalPrice)
                             
                             HStack {
                                 Text("deliveryAddress".localized())
@@ -127,14 +127,14 @@ struct ClientLinkDetails: View {
          totalPrice = productAmountDic.reduce(0) { result, dict in
              guard
                  let productId = dict["product_id"] as? Int,
-                 let amount = dict["amount"] as? Int,
+                 let amount = dict["amount"] as? String,
                  let product = linkDetails.products?.first(where: { $0.id == productId })
              else {
                  return result
              }
              
              let price = product.offerPrice ?? product.price
-             return result + (Double(price ?? 0) * Double(amount))
+             return result + (Double(price ?? 0) * (Double(amount) ?? 0))
          }
      }
 }

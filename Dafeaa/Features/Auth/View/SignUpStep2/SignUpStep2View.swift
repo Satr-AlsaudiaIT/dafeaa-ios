@@ -81,7 +81,7 @@ struct SignUpStep2View: View {
                                Text("PhoneIsTheMainActor".localized())
                                    .textModifier(.plain, 12, .errorRed)
                                
-                               CustomMainTextField(text: $email, placeHolder: "Email", image: .mailTFIcon)
+                               CustomMainTextField(text: $email, placeHolder: "Email", image: .mailTFIcon,keyBoardType: .emailAddress)
                                    .focused($focusedField, equals: .email)
                                    .id(FormField.email)
                                
@@ -122,7 +122,7 @@ struct SignUpStep2View: View {
                            .padding(.bottom, 30)
                        }
                        .scrollIndicators(.hidden)
-                       .onChange(of: focusedField) { newField in
+                       .onChange(of: focusedField) { oldField,newField in
                            withAnimation {
                                if let newField = newField {
                                    proxy.scrollTo(newField, anchor: .center)
@@ -132,9 +132,9 @@ struct SignUpStep2View: View {
                    }
                    .padding(.bottom, keyboardHeight) // Adjust the scroll view padding based on the keyboard height
                }
-               .padding(24)
-               .onAppear(perform: subscribeToKeyboardEvents) // Listen for keyboard events
-               .onDisappear(perform: unsubscribeFromKeyboardEvents)
+               .padding([.leading,.trailing,.top],24)
+               .onAppear { subscribeToKeyboardEvents(keyboardHeight: keyboardHeight) }
+               .onDisappear { unsubscribeFromKeyboardEvents() }
                .toolbar{
                    ToolbarItemGroup(placement: .keyboard){
                        Button("Done".localized()){
@@ -165,31 +165,6 @@ struct SignUpStep2View: View {
            .navigationBarHidden(true)
            .toastView(toast: $viewModel.toast)
        }
-       
-       // Subscribe to keyboard events
-       private func subscribeToKeyboardEvents() {
-           NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
-//               if let keyboardSize = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-////                   withAnimation {
-////                       self.keyboardHeight = keyboardSize.height - 20
-////                   }
-//               }
-           }
-           NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
-               withAnimation {
-                   self.keyboardHeight = 0
-               }
-           }
-       }
-       
-       // Unsubscribe from keyboard events
-       private func unsubscribeFromKeyboardEvents() {
-           NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-           NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-       }
-
-       
-    
     func showNextTextField(){
         switch focusedField {
         case .userName:

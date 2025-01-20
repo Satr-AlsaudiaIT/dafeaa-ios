@@ -61,6 +61,25 @@ struct ChangePhoneView: View {
         }
         .navigationBarHidden(true)
         .toastView(toast: $viewModel.toast)
+        .toolbar{
+            ToolbarItemGroup(placement: .keyboard){
+                Button("Done".localized()){
+                    hideKeyboard()
+                }
+                Spacer()
+                Button(action: {
+                       showPerviousTextField()
+                }, label: {
+                    Image(systemName: "chevron.up").foregroundColor(.blue)
+                })
+                
+                Button(action: {
+                    showNextTextField()
+                }, label: {
+                    Image(systemName: "chevron.down").foregroundColor(.blue)
+                })
+            }
+        }
 
     }
     

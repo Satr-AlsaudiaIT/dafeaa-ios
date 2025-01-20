@@ -37,7 +37,7 @@ struct NotificationsView: View {
                     } else {
                         ScrollView {
                             
-                            VStack(spacing: 12) {
+                            LazyVStack(spacing: 12) {
                                 ForEach(0..<viewModel.notifications.count,id: \.self){ index in
                                     notificationsComponent(model: viewModel.notifications[index])
                                         .onAppear {

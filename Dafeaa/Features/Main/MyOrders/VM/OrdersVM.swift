@@ -14,8 +14,11 @@ final class OrdersVM : ObservableObject {
     @Published private var _isLoading      = false
     @Published private var _isFailed       = false
     @Published var _ordersList     : [OrdersData] = []//[OrdersData(id: 1, name: "ww", orderNo: 1, date: "2121", status: "1")]
+    @Published var _ordersListCount     : Int = 1
     @Published private var _orderData      : OrderData? //= OrderData(id: 1, clientImage: "", clientName: "sss", products: [productList(id: 1, amount: 2, name: "sss", image: "", price: 100,offerPrice: 89,description: "eewew")], deliveryPrice: 100, orderStatus: 3, paymentStatus: 1, address: "wwww", qrCode: "qqqqq", taxPrice: 10, totalPrice: 1300, addressDetails: AddressDetails(id: 1, adress: "qqq", name: "qqq", phone: "111111"))
     @Published private var _offersList      : [OffersData] = []
+    @Published private var _offersListCount :Int = 1
+
     @Published var _offersData      : ShowOfferData?
     @Published var productsListInCreateOrder: [[String:Any]] = []
 
@@ -49,25 +52,28 @@ final class OrdersVM : ObservableObject {
     }
     //MARK: - APIs
     
-    func orders(skip: Int, status: String) {
-        if skip == 0 {_isLoading = true; hasMoreData = true ;self._ordersList.removeAll()}
+    func orders(skip: Int, status: String,animated: Bool = true) {
+        if skip == 0 {
+             _isLoading = animated ; hasMoreData = true ;
+            animated ? ( self._ordersList.removeAll()):()
+        }
+        else if self._ordersList.count >= self._ordersListCount {
+            self.hasMoreData = false
+        }
         guard hasMoreData  else { _isLoading = false ;return }
-        _isLoading = true
         api.orders(skip: skip, status: status) { [weak self] (Result) in
             guard let self = self else { return }
             self._isLoading = false
             switch Result {
             case .success(let Result):
                 guard let data = Result?.data else { return }
-                if self._ordersList.count >= Result?.count ?? 0 {
-                    self.hasMoreData = false
-                } else {
+                self._ordersListCount = Result?.count ?? 0
                     if skip == 0 {
                         self._ordersList = data
                     } else {
                         self._ordersList.append(contentsOf: data)
                     }
-                }
+                
                 
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
@@ -93,7 +99,8 @@ final class OrdersVM : ObservableObject {
                 self._isFailed = false
                 guard let data = Result?.data else {return}
                 self._orderData = data
-                
+                self._isStatusChangedSuccess = false
+
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
@@ -170,7 +177,10 @@ final class OrdersVM : ObservableObject {
     }
 //merchentOffers
     func offers(skip: Int) {
-        if skip == 0 { hasMoreData = true }
+        if skip == 0 { hasMoreData = true ; self._offersList.removeAll()}
+        if self._offersList.count >= self._offersListCount{
+            self.hasMoreData = false
+        }
         guard hasMoreData  else { _isLoading = false ;return }
         _isLoading = true
         api.offers(skip: skip) { [weak self] (Result) in
@@ -179,14 +189,13 @@ final class OrdersVM : ObservableObject {
             switch Result {
             case .success(let Result):
                 guard let data = Result?.data else { return }
-                if self._offersList.count >= Result?.count ?? 0 {
-                    self.hasMoreData = false
-                } else {
+                
+                self._offersListCount = Result?.count ?? 0
                     if skip == 0 {
                         self._offersList = data
                     } else { self._offersList.append(contentsOf: data)
                     }
-                }
+                
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false

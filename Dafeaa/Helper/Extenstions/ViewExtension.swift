@@ -17,6 +17,30 @@ extension View {
         case .none:
             return scaleEffect(CGSize(width: 1, height: 1), anchor: anchor)        }
     }
+    // Subscribe to keyboard events
+     func subscribeToKeyboardEvents(keyboardHeight: CGFloat = 0) {
+      var keyboardHeightInternal : CGFloat = keyboardHeight
+
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
+//               if let keyboardSize = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+////                   withAnimation {
+////                       self.keyboardHeight = keyboardSize.height - 20
+////                   }
+//               }
+        }
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+            withAnimation {
+                keyboardHeightInternal = 0
+            }
+        }
+    }
+    
+    // Unsubscribe from keyboard events
+     func unsubscribeFromKeyboardEvents() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
     
 }
 
@@ -78,4 +102,34 @@ class AnyGestureRecognizer: UIGestureRecognizer {
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
         state = .cancelled
     }
+}
+struct GestureWrapperView<Content: View>: View {
+    @EnvironmentObject var keyboardDismissManager: KeyboardDismissManager
+    var content: Content
+
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
+
+    var body: some View {
+        content
+            .background(
+                Color.clear
+                    .contentShape(Rectangle()) // Makes the whole view tappable
+                    .gesture(
+                        TapGesture()
+                            .onEnded {
+                                if keyboardDismissManager.shouldDismissKeyboard {
+                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                }
+                            }
+                    )
+            )
+    }
+}
+import Combine
+
+class KeyboardDismissManager: ObservableObject {
+    @Published var shouldDismissKeyboard: Bool = true // Default is true
+    var cancellables = Set<AnyCancellable>() // Store Combine subscriptions
 }

@@ -14,6 +14,8 @@ class ProcessesVM: ObservableObject {
     @Published private var _isLoading      = false
     @Published private var _isFailed       = false
     @Published private var _operationsList : [HomeModelData] = []
+    @Published private var _operationsListCount : Int = 1
+    
     @Published private var _operationsData : WalletModel?
     
     @Published var _getData                : Bool = false
@@ -30,10 +32,15 @@ class ProcessesVM: ObservableObject {
     
     //MARK: - APIs
     
-    func operations(skip: Int) {
-        if skip == 0 {_isLoading = true; hasMoreData = true }
+    func operations(skip: Int, animated: Bool = true) {
+        if skip == 0 {
+            _isLoading = animated ; hasMoreData = true ;
+            animated ? ( self._operationsList.removeAll()):()
+        }
+        else if self._operationsList.count >= self._operationsListCount{
+            self.hasMoreData = false
+        }
         guard hasMoreData  else { _isLoading = false ;return }
-        _isLoading = true
         api.operations(skip: skip) { [weak self] (Result) in
             guard let self = self else { return }
             self._isLoading = false
@@ -41,14 +48,12 @@ class ProcessesVM: ObservableObject {
             case .success(let Result):
                 guard let data = Result?.data else { return }
                 self._operationsData = Result
-                if self._operationsList.count >= Result?.count ?? 0 {
-                    self.hasMoreData = false
-                } else {
-                    if skip == 0 {
-                        self._operationsList = data
-                    } else { self._operationsList.append(contentsOf: data)
-                    }
+                self._operationsListCount = Result?.count ?? 0
+                if skip == 0 {
+                    self._operationsList = data
+                } else { self._operationsList.append(contentsOf: data)
                 }
+                
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false

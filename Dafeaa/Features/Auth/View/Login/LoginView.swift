@@ -86,6 +86,26 @@ struct LoginView: View {
                     .padding(.bottom, 20)
                     
                 }
+                .toolbar{
+                    ToolbarItemGroup(placement: .keyboard){
+                        Button("Done".localized()){
+                            hideKeyboard()
+                        }
+                        Spacer()
+                        Button(action: {
+                               showPerviousTextField()
+                        }, label: {
+                            Image(systemName: "chevron.up").foregroundColor(.blue)
+                        })
+                        
+                        Button(action: {
+                            showNextTextField()
+                        }, label: {
+                            Image(systemName: "chevron.down").foregroundColor(.blue)
+                        })
+                    }
+                }
+
                 .onAppear(perform: subscribeToKeyboardEvents) // Listen for keyboard events
                 .onDisappear(perform: unsubscribeFromKeyboardEvents)
                 .navigationDestination(isPresented: $viewModel._isSendCodeSuccess) {

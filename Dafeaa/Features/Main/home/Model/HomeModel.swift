@@ -9,18 +9,18 @@ import Foundation
 
 // MARK: - Welcome
 struct HomeModel: Codable {
-    let status: Bool
-    let message: String
-    let data: [HomeModelData]
-    let availableBalance: Int
-    let currency: String
+    let status: Bool?
+    let message: String?
+    let data: [HomeModelData]?
+    let availableBalance: Double?
+    let currency: String?
 
    
 }
 
 // MARK: - HomeModelData
 struct HomeModelData: Codable {
-    let id: Int
-    let description, amount, date: String
+    let id: Int?
+    let description, amount, date: String?
 }
 

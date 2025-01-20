@@ -26,7 +26,7 @@ struct OrdersOffersLinksView: View {
                     ZStack(alignment: .bottom){
                         ScrollView {
                             VStack(spacing: 17) {
-                                VStack(spacing: 8) {
+                                LazyVStack(spacing: 8) {
                                     ForEach(0..<viewModel.offersList.count,id: \.self){ index in
                                          OfferComponent(offer: viewModel.offersList[index],onDelete: {viewModel.deleteOffer(id: viewModel.offersList[safe: index]?.id ?? 0)}, toast: $toast)
                                                 .onAppear {
@@ -105,7 +105,7 @@ struct OfferComponent: View {
                 Button(action: {copyURL()},
                        label: { Image(systemName: "rectangle.portrait.on.rectangle.portrait")
                     .foregroundColor(.black222222)})
-                if let offerID = offer?.id , let offerCode = offer?.code, let url = URL(string: "dafeaa://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)"){
+                if let offerID = offer?.id , let offerCode = offer?.code, let url = URL(string: "https://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)"){
                     ShareLink(item: url) {  Image(.share).resizable().frame(width: 25,height: 20)}}
                 Button(action: {onDelete()}, label: { Image(.trash)})
             }
@@ -113,7 +113,7 @@ struct OfferComponent: View {
     }
     private func copyURL() {
         if let offerID = offer?.id , let offerCode = offer?.code{
-            let urlString = "dafeaa://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)"
+            let urlString = "https://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)"
             UIPasteboard.general.string = urlString
             self.toast = FancyToast(type: .info, title: "copied successfully".localized(), message: "")
         }

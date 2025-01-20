@@ -12,6 +12,7 @@ struct SubscribtionView: View {
     @State var selectedIndex: Int? = nil
     @State var selectedSubscriptionData: SubscribtionModelData? = nil
     let cellsData = mokData
+    @StateObject var viewModel = MoreVM()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -33,8 +34,8 @@ struct SubscribtionView: View {
             .padding(.horizontal)
                 Text("اختر خطة الإشتراك المناسبة لك".localized())
                     .textModifier(.plain, 19, .black222222)
-            
-            .padding(.horizontal)
+                    .padding(.top)
+                    .padding(.horizontal)
             ScrollView {
                 ForEach(0..<cellsData.count, id: \.self) { index in
                     SubscribtionCell(

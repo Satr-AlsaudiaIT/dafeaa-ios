@@ -78,6 +78,7 @@ class AuthVM: ObservableObject {
         } else if name.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterUserName".localized())
         } else if !name.isValidName {
+        } else if !name.isValidName {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidUserName".localized())
         } else if email.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterEmail".localized())
@@ -91,6 +92,8 @@ class AuthVM: ObservableObject {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPassword".localized())
         } else if !password.isValidPassword {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "EnterValidPassword".localized())
+        } else if confirmPassword.isBlank{
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "EnterConfirmPassword".localized())
         } else if !confirmPassword.isPasswordConfirm(password: password, confirmPassword: confirmPassword) {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "PasswordConfirmn'tMatch".localized())
         } else if !isAgreeChecked {

@@ -13,7 +13,7 @@ enum AccountTypeOption {
     case individual
     case none
     
-    func returnedInt() -> (Int){
+    func returnedInt() -> (Int) {
         switch self {
         case .individual : 1
         case .companyOrMerchant : 2
@@ -73,26 +73,26 @@ struct AccountOptionView: View {
     }
     
     var body: some View {
-        HStack(spacing: 16) {
+        HStack(spacing: 0) {
             
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 0) {
                 Text(titleText.localized())
                     .textModifier(.plain, 18, .black222222)
-                    .lineLimit(1)
                 Text(descriptionText.localized())
                     .textModifier(.plain, 12, Color(.black010202).opacity(0.8))
-                    .lineLimit(3)
                     .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity,maxHeight: 70,alignment: .leading)
             }
             
-            Spacer()
+            Spacer(minLength: 10)
             
             Image(uiImage: iconImage)
                 .resizable()
                 .frame(width: 80, height: 80)
                 .grayscale(isGrayOut ? 1.0 : 0.0)
             
-        }.padding(24).frame(height: 112)
+            
+        }.padding(24)//.frame(height: 112)
         .background(backgroundColor)
         .cornerRadius(10)
         .overlay(

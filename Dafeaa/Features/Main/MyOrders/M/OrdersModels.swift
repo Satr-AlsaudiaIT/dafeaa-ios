@@ -41,7 +41,7 @@ struct OrderData: Codable, Identifiable {
     let addressDetails      : AddressDetails?
     
 }
-struct productList: Codable, Identifiable {
+struct productList: Codable, Identifiable,Equatable {
     let id                  : Int?
     let image               : String?
     let name, description   : String?
@@ -51,7 +51,7 @@ struct productList: Codable, Identifiable {
 }
 
 struct PaymentDetails: Codable {
-    let itemsPrice, tax     : Double?
+    let tax     : Double?
     let deliveryPrice       : Double?
 }
 struct AddressDetails: Codable {
@@ -92,7 +92,7 @@ struct ShowOfferModel: Codable {
 }
 
 // MARK: - ShowOfferData
-struct ShowOfferData: Codable {
+struct ShowOfferData: Codable, Equatable {
     let id                                  : Int?
     let name, code, description             : String?
     let clientId                            : Int?

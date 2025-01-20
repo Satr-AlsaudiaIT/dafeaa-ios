@@ -16,10 +16,12 @@ class HomeVM: ObservableObject {
     @Published private var _processList    : [HomeModelData] = []
     @Published private var _homeData       : HomeModel?
     @Published private var _notifications  : [NotificationsData] = []
+    @Published private var _notificationsCount  : Int = 1
+
     @Published var _getData                : Bool = false
     @Published var _isSuccess              = false
     @Published var _isWithdrawSuccess      = false
-
+    @Published var _addToWalletURL         : String = ""
     private var _message                   : String = ""
     private var token                      = ""
     let api                                : HomeAPIProtocol = HomeAPI()
@@ -28,6 +30,7 @@ class HomeVM: ObservableObject {
     var hasMoreData                        = true
     var isLoading    : Bool                { get { return _isLoading  }      }
     var message      : String              { get { return _message    }      }
+    var addToWalletURL : String            { get { return _addToWalletURL}   }
     var isFailed     : Bool                { get { return _isFailed   }      }
     var processList  : [HomeModelData]     { get { return _processList} set{}}
     var homeData     : HomeModel?          { get { return _homeData   } set{}}
@@ -58,6 +61,9 @@ class HomeVM: ObservableObject {
     
     func notificationsList(skip: Int) {
         if skip == 0 {_isLoading = true; hasMoreData = true }
+        else if self._notifications.count >= self._notifications.count {
+            self.hasMoreData = false
+        }
         guard hasMoreData  else { _isLoading = false ;return }
         api2.notificationsList(skip: skip) { [weak self] (Result) in
             guard let self = self else { return }
@@ -65,14 +71,14 @@ class HomeVM: ObservableObject {
             switch Result {
             case .success(let Result):
                 guard let data = Result?.data else { return }
-                if self._notifications.count >= Result?.count ?? 0 {
-                    self.hasMoreData = false
-                } else {
+                
+                self._notificationsCount = Result?.count ?? 0
+                
                     if skip == 0 {
                         self._notifications = data
                     } else { self._notifications.append(contentsOf: data)
                     }
-                }
+                
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
@@ -100,7 +106,24 @@ class HomeVM: ObservableObject {
             }
         }
     }
-
+    
+    func addAmount(amount: Double) {
+        api2.addAmountToWallet(amount: amount) { [weak self] (Result) in
+            guard let self = self else { return }
+            self._isLoading = false
+            switch Result {
+            case .success(let Result):
+                guard let data = Result else { return }
+                
+                
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+            }
+        }
+    }
 }
 
     

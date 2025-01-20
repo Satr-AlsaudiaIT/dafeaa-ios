@@ -20,14 +20,15 @@ struct HomeView: View {
         ZStack {
             //MARK: - upperView
             VStack {
-                ZStack {
+                ZStack(alignment: .top) {
                     LinearGradient(
                         gradient: Gradient(colors: [.white, Color(.primary)]),
                         startPoint: .top,
                         endPoint: .bottom
                     )
+                    .frame(height: UIScreen.main.bounds.height * 0.4)
                     .edgesIgnoringSafeArea(.top)
-                    VStack {
+                    VStack(spacing: 8) {
                         HStack {
                             Image(.splashLogoWithoutName)
                                 .resizable()
@@ -47,41 +48,42 @@ struct HomeView: View {
                         
                         VStack {
                             HStack(spacing: 5) {
-                                Text("\(viewModel.homeData?.availableBalance ?? 0)")
+                                Text(String(format: "%.1f",viewModel.homeData?.availableBalance ?? 0.0))
                                     .textModifier(.extraBold, 36, .black030319)
                                 Text("SAR".localized())
                                     .textModifier(.extraBold, 36, .black030319)
                             }
                             
                         }
-                        .padding(.top,35)
+                        .padding(.top,20)
                         Text("yourBalance".localized())
                             .textModifier(.extraBold, 16, .black222222)
-                        Spacer()
                     }
                     
                 }
-                .frame(width: UIScreen.main.bounds.width,height: UIScreen.main.bounds.height * 0.4)
                 Spacer()
             }
             
             //MARK: - lowerView
             VStack {
-                Spacer()
-                ZStack {
+                Rectangle()
+                    .fill(.clear)
+                    .frame(height: UIScreen.main.bounds.height * 0.4 - 39)
+                ZStack(alignment: .top) {
                    
                     ZStack {
                         Color(.white)
+                       
                         VStack(spacing: 17) {
+                            Rectangle().fill(.white)
+                                .frame(height: 32)
                             LastProcessNavView(title: "lastProcesses".localized(), selectedTab: $selectedTab)
-                                .padding(.top,44)
                                 .padding(.horizontal,24)
 
                         if viewModel.processList.isEmpty {
                             EmptyCostumeView()
                         }else {
-                            ScrollView {
-                                
+                            ScrollView (showsIndicators: false){
                                 VStack(spacing: 8) {
                                     ForEach(0..<viewModel.processList.count,id: \.self){ index in
                                         ProcessComponent(process: viewModel.processList[index])
@@ -91,10 +93,8 @@ struct HomeView: View {
                                
                             }
                             .padding(.horizontal,24)
-                            .frame(height: (UIScreen.main.bounds.height * 0.45))
                         }}
                     }
-                    .frame(height: (UIScreen.main.bounds.height * 0.45) + 64 )
                     .cornerRadius(24)
                     .padding(.bottom,-24)
                     
@@ -137,18 +137,16 @@ struct HomeView: View {
                     
                         
                         
-                        Spacer()
-                    }
+                    }.padding(.top,-39)
                 }
-                .frame(height: (UIScreen.main.bounds.height * 0.45) + 120)
-            }
-            
+            }.edgesIgnoringSafeArea(.top)
         }
         .toastView(toast: $viewModel.toast)
         .onAppear{viewModel.home()}
-        .sheet(isPresented: $isSheetPresented, onDismiss: {
-            isSheetPresented = false
-        }, content: {
+        .refreshable {
+            viewModel.home()
+        }
+        .sheet(isPresented: $isSheetPresented, content: {
             AddWithdrawBottomSheet(actionType: $balanceActionType, amountDouble: $amount, isSheetPresented: $isSheetPresented)
                 .presentationDetents([.fraction(0.6)]) // Use fraction to make height consistent
                 .presentationCornerRadius(24)

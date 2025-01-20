@@ -11,16 +11,6 @@
 			<string>Plantech.Dafeaa</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>https://dafeaa-backend.deplanagency.com/api/</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>Plantech.Dafeaa</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
 				<string>dafeaa</string>
 			</array>
 		</dict>

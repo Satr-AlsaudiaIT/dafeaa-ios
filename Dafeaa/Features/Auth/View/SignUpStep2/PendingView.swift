@@ -12,7 +12,6 @@ struct PendingView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var phoneNumber: String = ""
     @State private var selectedCountryCode: String = ""
-    @State private var isActiveSuccess: Bool = false
     @StateObject var viewModel = MoreVM()
 
     
@@ -42,7 +41,8 @@ struct PendingView: View {
                             .padding(.top,5)
                             .multilineTextAlignment(.center)
                         Spacer()
-                        ReusableButton(buttonText: "continue",image: .loading, buttonColor: .gray){
+                        ReusableButton(buttonText: "checkAgain",isEnabled: true, image: .loading, buttonColor: .black){
+                            viewModel.profile()
                         }.padding(.top,16)
                             
                     }.padding(24)
@@ -60,7 +60,7 @@ struct PendingView: View {
         .toastView(toast: $viewModel.toast)
         .onAppear{viewModel.profile()}
         .onReceive(viewModel.$_isActive){ isActive in
-             isActiveSuccess ? tabBarTransition():()}
+            isActive ? tabBarTransition(): ()}
     }
     
     func tabBarTransition() {

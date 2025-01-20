@@ -45,6 +45,7 @@ struct SavedAddressesView: View {
 
                     } else {
                         addressListView
+                        
                     }
                 }
                 .padding(24)
@@ -90,7 +91,7 @@ struct SavedAddressesView: View {
                 }
             }
             .scrollIndicators(.hidden)
-            .padding(.bottom,60)
+            .padding(.bottom,120)
             VStack {
                 
                 Spacer()

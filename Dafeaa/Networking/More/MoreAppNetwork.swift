@@ -24,6 +24,8 @@ enum MoreNetwork
     case address(id: Int, method: HTTPMethod, dic: [String: Any])
     case createAddress(dic:[String:Any])
     case withDraw(amount: Double)
+    case getWithdraws(skip:Int)
+    case addAmountToWallet(amount: Double)
 }
 
 extension MoreNetwork: TargetType
@@ -49,6 +51,8 @@ extension MoreNetwork: TargetType
         case .createAddress:                return "addresses"
         case .address(let id,_,_):          return "addresses/\(id)"
         case .withDraw:                     return "withdraws"
+        case .getWithdraws(let skip):       return "withdraws?skip=\(skip)&take=10"
+        case .addAmountToWallet:            return "payments/submit"
         }
     }
     
@@ -56,7 +60,7 @@ extension MoreNetwork: TargetType
     {
         switch self  {
         case.changePassword, .contactUs, .logOut, .notifyOnOff,.createAddress,
-                .withDraw:                                                        return .post
+                .withDraw, .addAmountToWallet:                                    return .post
         case .address(_, let method, _):                                          return method
         case .deleteAccount:                                                      return .delete
         default:                                                                  return .get
@@ -78,6 +82,8 @@ extension MoreNetwork: TargetType
         case let .createAddress(dic):
             return.requestParameters(Parameters: dic, encoding: JSONEncoding.default)
         case let .withDraw(amount):
+            return.requestParameters(Parameters: ["amount":amount], encoding: JSONEncoding.default)
+        case let .addAmountToWallet(amount):
             return.requestParameters(Parameters: ["amount":amount], encoding: JSONEncoding.default)
         default:
             return .requestPlain

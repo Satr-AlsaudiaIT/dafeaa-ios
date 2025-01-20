@@ -45,8 +45,8 @@ extension OrdersNetwork: TargetType {
     
     var methods: HTTPMethod {
         switch self  {
-        case .changeStatus,
-                .createClientOrder, .createDynamicLinks:             return .post
+        case .changeStatus,.createClientOrder,
+             .createDynamicLinks,.completeOrder:  return .post
         case .deleteDynamicLinks :              return .delete
         default:                                return .get
         }

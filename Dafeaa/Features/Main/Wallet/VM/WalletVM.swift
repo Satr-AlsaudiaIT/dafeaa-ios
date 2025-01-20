@@ -14,6 +14,8 @@ class WalletVM: ObservableObject {
     @Published private var _isLoading      = false
     @Published private var _isFailed       = false
     @Published private var _processList    : [HomeModelData] = []
+    @Published private var _processListCount    : Int = 1
+    
     @Published private var _walletData       : WalletModel?
     
     @Published var _getData                : Bool = false
@@ -30,8 +32,14 @@ class WalletVM: ObservableObject {
     
     //MARK: - APIs
     
-    func wallet(skip: Int) {
-        if skip == 0 { hasMoreData = true }
+    func wallet(skip: Int, animated: Bool = true) {
+        if skip == 0 {
+            _isLoading = animated ; hasMoreData = true ;
+            animated ? ( self._processList.removeAll()):()
+        }
+        if self._processList.count >= self._processListCount {
+            self.hasMoreData = false
+        }
         guard hasMoreData  else { _isLoading = false ;return }
         _isLoading = true
         api.wallet(skip: skip) { [weak self] (Result) in
@@ -40,15 +48,14 @@ class WalletVM: ObservableObject {
             switch Result {
             case .success(let Result):
                 guard let data = Result?.data else { return }
+                self._processListCount = Result?.count ?? 0
                 self._walletData = Result
-                if self._processList.count >= Result?.count ?? 0 {
-                    self.hasMoreData = false
-                } else {
-                    if skip == 0 {
-                        self._processList = data
-                    } else { self._processList.append(contentsOf: data)
-                    }
+                
+                if skip == 0 {
+                    self._processList = data
+                } else { self._processList.append(contentsOf: data)
                 }
+                
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false

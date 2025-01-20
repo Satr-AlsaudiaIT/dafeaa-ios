@@ -48,7 +48,7 @@ struct FAQView: View {
                                                         .textModifier(.plain, 14, .black292D32)
                                                         .frame(height:23)
                                                     Spacer()
-                                                    Image(systemName:  self.expandedAnswer == viewModel.questionList[index].id ?? -1 ? "chevron.down" : "chevron.up")
+                                                    Image(systemName:  self.expandedAnswer == viewModel.questionList[index].id ?? -1 ?  "chevron.up" : "chevron.down" )
                                                         .frame(width: 5,height: 10)
                                                         .foregroundColor(.grayB5B5B5)
                                                 }.frame(maxWidth: .infinity)
@@ -99,9 +99,9 @@ struct FAQView: View {
         .toastView(toast: $viewModel.toast)
         .navigationBarHidden(true)
             .onAppear(){
-//                viewModel.questions(skip: 0){loadMore in
+                viewModel.questions(skip: 0){loadMore in
                     self.loadMore = loadMore
-//                }
+                }
                 AppState.shared.swipeEnabled = true
             }
         

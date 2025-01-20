@@ -19,7 +19,7 @@ struct SubscribtionCell: View {
                         let val = subscribtionData.percentage ?? 0.0 == 0 ? Double(subscribtionData.price ?? 0) : (subscribtionData.percentage ?? 0.0)
                         let mark = subscribtionData.percentage ?? 0.0 == 0 ? "" : "%"
                         Text("\(val)" + "\(mark)")
-                            .textModifier(.extraBold, 28, .black222222)
+                            .textModifier(.bold, 28, .black222222)
                         Text(subscribtionData.forUse ?? "")
                             .textModifier(.plain, 15, .black222222)
                         Spacer()

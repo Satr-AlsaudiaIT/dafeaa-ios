@@ -16,9 +16,11 @@ import FirebaseCore
 class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
 
     var window: UIWindow?
-    
+//    var keyboardDismissManager = KeyboardDismissManager()
+//    private var tapGesture: AnyGestureRecognizer?
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        //        FirebaseApp.configure()
+                FirebaseApp.configure()
         
         setUpDidFinishLaunch()
         
@@ -40,17 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
         IQKeyboardManager.shared.enable = true
         languageConfiguration()
         self.reset()
-        let tapGesture = AnyGestureRecognizer(target: window, action:#selector(UIView.endEditing))
-        tapGesture.requiresExclusiveTouchType = false
-        tapGesture.cancelsTouchesInView = false
-        tapGesture.delegate = self //I don't use window as delegate to minimize possible side effects
-        window?.addGestureRecognizer(tapGesture)
-        for family: String in UIFont.familyNames {
-            print(family)
-            for names: String in UIFont.fontNames(forFamilyName: family) {
-                print("== \(names)")
-            }
-        }
+
     }
     
     func languageConfiguration() {
@@ -71,39 +63,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
         //
         if resetLanguage == false {
             window.rootViewController = UIHostingController(rootView: SplashView(window: window) .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
-                .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight))
+                .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight)
+                )
         } else if token != ""  {
             if status == 2{
                 window.rootViewController = UIHostingController(rootView: TabBarView() .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
-                    .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight))
+                    .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight)
+                    )
                 UserDefaults.standard.set(false, forKey:  Constants.shared.resetLanguage)
                 
             }else {
                 window.rootViewController = UIHostingController(rootView: PendingView() .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
-                    .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight))
+                    .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight)
+                    )
                 UserDefaults.standard.set(false, forKey:  Constants.shared.resetLanguage)
             }
         } else {
             window.rootViewController = UIHostingController(rootView: LoginView() .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
-                .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight))
+                .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight)
+                )
             UserDefaults.standard.set(false, forKey:  Constants.shared.resetLanguage)
          }
         window.makeKeyAndVisible()
-        
+//        observeKeyboardDismissManager()
+
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
-        deepLink(url: url)
-        return  true
-    }
+//    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+//        deepLink(url: url)
+//        return  true
+//    }
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity,
                      restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        let string = userActivity.webpageURL!.relativeString
-        if let url = URL(string: string){
-            deepLink(url: url)
-        }
-        return true
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+               let incomingURL = userActivity.webpageURL else {
+             return false
+         }
+
+         // Parse the URL and handle it
+         deepLink(url: incomingURL)
+         return true
     }
     
     func deepLink(url: URL) {
@@ -174,15 +174,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
         }
     }}
 
-extension AppDelegate: UIGestureRecognizerDelegate {
+/*extension AppDelegate: UIGestureRecognizerDelegate {
+    private func observeKeyboardDismissManager() {
+         keyboardDismissManager.$shouldDismissKeyboard
+             .sink { [weak self] shouldDismiss in
+                 guard let self = self, let window = self.window else { return }
+                 if shouldDismiss {
+                     self.addGesture(to: window)
+                 } else {
+                     self.removeGesture(from: window)
+                 }
+             }
+             .store(in: &keyboardDismissManager.cancellables)
+     }
+
+     private func addGesture(to window: UIWindow) {
+         if tapGesture == nil {
+             let gesture = AnyGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+             gesture.requiresExclusiveTouchType = false
+             gesture.cancelsTouchesInView = false
+             gesture.delegate = self
+             window.addGestureRecognizer(gesture)
+             tapGesture = gesture
+         }
+     }
+
+     private func removeGesture(from window: UIWindow) {
+         if let gesture = tapGesture {
+             window.removeGestureRecognizer(gesture)
+             tapGesture = nil
+         }
+     }
+
+     @objc private func dismissKeyboard() {
+         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+     }
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
 }
-
+*/
 
 struct DafeaaApp: App {
-    
+    @StateObject private var keyboardDismissManager = KeyboardDismissManager() // Create a shared instance
+
     var body: some Scene {
         var window: UIWindow?
 

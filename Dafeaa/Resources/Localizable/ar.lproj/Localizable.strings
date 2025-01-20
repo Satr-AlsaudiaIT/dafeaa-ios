@@ -45,6 +45,8 @@
 "individualDesc"="سجل في دافع كفرد واحصل على مميزات الافراد في الدفع الالكتروني.";
 
 //MARK: - step2
+"selectAccountInfo"="أضف بيانات نشاطك التجاري";
+"selectAccountInfoSubtitle"="لإنشاء حساب جديد معنا برجاء اضافة بعض معلومات نشاطك التجاري ليتم التعرف اليكم.";
 "addSomeData"="أضف بياناتك لإنشاء حساب جديد";
 "PhoneIsTheMainActor" = "*رقم هاتفك هو الكود التعريفي للدفع عبر المواقع";
 "Name" = "الاسم";
@@ -107,6 +109,9 @@
 "deleteAccount"="حذف الحساب";
 "deleteAccountAlert"="هل أنت متأكد أنك تريد حذف حسابك؟!";
 "changePhone"="تغيير رقم الهاتف";
+"changePhoneTitle" = "تغيير رقم الهاتف";
+"changePhoneSubTitle" = "برجاء أدخال رقم الهاتف الجديد وكلمة المرور وانتظار كود تفعيل لتأكيد الرقم الجديد";
+"ChangePhoneNavTitle" = "تغيير رقم الهاتف";
 
 //MARK: - ChangePassword
 "changePassword"="تغيير كلمة المرور";
@@ -133,7 +138,7 @@
 "pendingViewTitle" = "طلبكم قيد المراجعة";
 "pendingViewSubTitle" = "لقد تم إستلام طلبكم بنجاح, والان الطلب تحت المراجعه والنظر من قبل الفريق, سيتم اشعاركم حين انتهاء المراجعه لاستكمال انشاء الحساب.";
 "taxNumber" = "رقم ضريبة القيمة المضافة";
-
+"checkAgain" = "جرب مرة ثانية";
 //MARK: Validations
 "EnterUserPhoto" = "برجاء ادخال صورة المستخدم";
 "enterUserName" = "برجاء ادخال اسم المستخدم";
@@ -144,6 +149,7 @@
 "enterValidPhone" = "برجاء ادخال رقم هاتف صالح";
 "enterPassword" = "برجاء ادخال كلمة المرور";
 "EnterValidPassword" = "برجاء ادخال كلمة مرور صالحة على الاقل ٨ حروف وارقام";
+"EnterConfirmPassword" = "برجاء ادخال تأكيد كلمة المرور";
 "PasswordConfirmn'tMatch" = "كلمة المرور وتاكيد كلمة المرور غير متطابقتان";
 "PleaseTermsconditions" = "برجاء الموافقة على شروط الاستخدام";
 "EnterThecode" = "برجاء ادخال الكود";
@@ -161,7 +167,7 @@
 "orderRoute"="تابع الطلب";
 
 //MARK: - Home
-"SAR" = "ر.س";
+"SAR" = "ر.س ";
 "yourBalance"="الرصيد المتاح لديك";
 "lastProcesses"="اخر العمليات";
 "lastTransactions"="اخر المعاملات";
@@ -266,3 +272,10 @@
 "copied successfully"="تم النسخ";
 "offerDetails"="تفاصيل العرض";
 "thereIsNoData"="لا توجد بيانات";
+
+//MARK: - Withdraws
+"withdrawsProcess" = "عمليات سحب الرصيد";
+"withdrawProcess" = "عملية سحب";
+"done" = "مكتملة";
+"progress" = "قيد التنفيذ";
+"pending"  = "معلقة";

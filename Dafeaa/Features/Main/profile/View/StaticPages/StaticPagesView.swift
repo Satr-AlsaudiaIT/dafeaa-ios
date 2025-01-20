@@ -89,7 +89,7 @@ enum StaticPages{
 
 struct HTMLTextView: UIViewRepresentable {
     var htmlText: String
-    
+    var font : UIFont = UIFont(name: AppFonts.shared.name(.bold), size: 14) ?? .systemFont(ofSize: 14)
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
         textView.isEditable = false
@@ -97,10 +97,16 @@ struct HTMLTextView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UITextView, context: Context) {
-        if let attributedString = htmlText.attributedStringFromHTML {
-            uiView.attributedText = attributedString
-        }
-    }
+         if let attributedString = htmlText.attributedStringFromHTML {
+             // Apply the custom font
+             let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
+             mutableAttributedString.addAttributes(
+                 [.font: font],
+                 range: NSRange(location: 0, length: mutableAttributedString.length)
+             )
+             uiView.attributedText = mutableAttributedString
+         }
+     }
 }
 
 extension String {

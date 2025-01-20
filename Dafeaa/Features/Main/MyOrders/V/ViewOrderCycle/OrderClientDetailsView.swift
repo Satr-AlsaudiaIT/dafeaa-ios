@@ -21,6 +21,8 @@ struct OrderClientDetailsView: View {
     @StateObject private var scanner = ScannerViewModel()
     @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950)
     @State var showingProductDetails: Bool = false
+    @State var totalPrice: Double = 0
+
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
@@ -33,7 +35,7 @@ struct OrderClientDetailsView: View {
                         VStack(spacing: 24) {
                             
                             if let orderStatusInt = viewModel.orderData?.orderStatus {
-                                PathViewChoice(orderStatus: orderStatusEnum(rawValue: orderStatusInt) ?? .pending)
+                                PathViewChoice(orderStatus: .constant( orderStatusEnum(rawValue: orderStatusInt) ?? .pending))
                                     .padding(.horizontal,-10)
                                     .padding(.vertical,-10)
                             }
@@ -70,7 +72,7 @@ struct OrderClientDetailsView: View {
                                     .frame(maxWidth: .infinity,alignment: .leading)
                                 
                                    
-                                        PaymentInfoView(breakdown: PaymentDetails(itemsPrice:viewModel.orderData?.totalPrice ?? 0.00 ,tax: viewModel.orderData?.taxPrice ?? 0.00, deliveryPrice: viewModel.orderData?.deliveryPrice ?? 0.00),isShowDetails: true)
+                                PaymentInfoView(breakdown: PaymentDetails(tax: viewModel.orderData?.taxPrice ?? 0.00, deliveryPrice: viewModel.orderData?.deliveryPrice ?? 0.00),itemsPrice: $totalPrice, isShowDetails: true)
                                         
                                   
                                 
@@ -174,6 +176,7 @@ struct OrderClientDetailsView: View {
             viewModel.getOrder(id: orderID ?? 0)
         }
         .onChange(of: viewModel._isStatusChangedSuccess) {_,newValue in
+            isCancelTapped = false
             viewModel.getOrder(id: orderID ?? 0)
         }
         .navigationBarHidden(true)
@@ -181,6 +184,12 @@ struct OrderClientDetailsView: View {
             AppState.shared.swipeEnabled = true
             viewModel.getOrder(id: orderID ?? 0)
         }
+        .onChange(of: viewModel.isLoading, { oldValue, newValue in
+            if !newValue {
+                
+                totalPrice = viewModel.orderData?.totalPrice ?? 0
+            }
+        })
     }
 }
 

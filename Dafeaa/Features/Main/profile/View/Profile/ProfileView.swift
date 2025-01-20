@@ -84,10 +84,18 @@ struct ProfileView: View {
                                     image: Image(.subscribtion)
                                 )
                             }
+                            if type != 1{
+                                NavigationLinkComponent(destination: OrdersOffersLinksView(), label: "offers", image: Image(.iconOffer))
+                         }
                             NavigationLinkComponent(
                                 destination: StaticPagesView(type: .constant(.aboutApp)),
                                 label: "About Dafeaa",
                                 image: Image(.iconAbout)
+                            )
+                            NavigationLinkComponent(
+                                destination: WithdrawsView(),
+                                label: "withdrawsProcess",
+                                image: Image(.withdrawBalance)
                             )
                             NavigationLinkComponent(
                                 destination: FAQView(),
@@ -104,10 +112,8 @@ struct ProfileView: View {
                                 label: "Settings",
                                 image: Image(.iconSettings)
                             )
-                            if type != 1{
-                                NavigationLinkComponent(destination: OrdersOffersLinksView(), label: "offers", image: Image(.iconOffer))
-                                
-                        }
+                           
+                          
                             Button(action:{
                                 isActiveActionSheet = true
                                 activeActionSheet = .deleteAccount

@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct PathViewChoice: View {
-    @State var orderStatus: orderStatusEnum = .pending
+    @Binding var orderStatus: orderStatusEnum 
     var body: some View {
         ZStack{
             if orderStatus == .pending {
@@ -205,12 +205,12 @@ enum orderStatusEnum: Int {
     
     var pathview: PathViewChoice {
         switch self {
-        case .pending: return PathViewChoice()
-        case .accepted: return PathViewChoice()
-        case .away: return PathViewChoice()
-        case .rejected: return PathViewChoice()
-        case .cancelled: return PathViewChoice()
-        case .done: return PathViewChoice()
+        case .pending: return PathViewChoice(orderStatus: .constant(.pending))
+        case .accepted: return PathViewChoice(orderStatus: .constant(.accepted))
+        case .away: return PathViewChoice(orderStatus: .constant(.away))
+        case .rejected: return PathViewChoice(orderStatus: .constant(.rejected))
+        case .cancelled: return PathViewChoice(orderStatus: .constant(.cancelled))
+        case .done: return PathViewChoice(orderStatus: .constant(.done))
         }
     }
     var title : String {
@@ -282,6 +282,6 @@ struct ConnectorView: View {
 
 struct PathView_Previews: PreviewProvider {
     static var previews: some View {
-        PathViewChoice(orderStatus: orderStatusEnum(rawValue: 6) ?? .pending)
+        PathViewChoice(orderStatus: .constant( orderStatusEnum(rawValue: 6) ?? .pending))
     }
 }

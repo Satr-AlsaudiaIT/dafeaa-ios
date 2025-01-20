@@ -82,6 +82,7 @@
 		14E67B192CADB73E00C10AB5 /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E67B0D2CADB73E00C10AB5 /* Poppins-Thin.ttf */; };
 		14E67B282CADBA4200C10AB5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 14E67B242CADBA4200C10AB5 /* Localizable.strings */; };
 		14E67B292CADBA4200C10AB5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 14E67B262CADBA4200C10AB5 /* Localizable.strings */; };
+		18009B812D3D005E00F0D752 /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18009B802D3D005E00F0D752 /* PopupView.swift */; };
 		18086A632CCB7F4800F5C2F8 /* OrdersVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18086A622CCB7F4800F5C2F8 /* OrdersVM.swift */; };
 		18086A672CCB81F000F5C2F8 /* OrdersAppNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18086A642CCB81F000F5C2F8 /* OrdersAppNetwork.swift */; };
 		18086A682CCB81F000F5C2F8 /* OrdersAppAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18086A652CCB81F000F5C2F8 /* OrdersAppAPI.swift */; };
@@ -117,7 +118,6 @@
 		1820E2DD2CBBB26F00627DF9 /* MoreAppAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E2DA2CBBB26F00627DF9 /* MoreAppAPI.swift */; };
 		1820E2DF2CBBD58F00627DF9 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E2DE2CBBD58F00627DF9 /* ProfileImageView.swift */; };
 		1820E2E12CBC3A5400627DF9 /* CompleteDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E2E02CBC3A5400627DF9 /* CompleteDataView.swift */; };
-		1822200E2CBE7F540063CEE8 /* SubscriptionManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1822200D2CBE7F540063CEE8 /* SubscriptionManagementView.swift */; };
 		18277EB22CB2AF7E0020A647 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18277EB12CB2AF7E0020A647 /* LoginView.swift */; };
 		18277EB72CB2B1D00020A647 /* AuthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18277EB62CB2B1C20020A647 /* AuthVM.swift */; };
 		18277EB92CB2B3900020A647 /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = 18277EB82CB2B3900020A647 /* PhoneNumberKit */; };
@@ -126,6 +126,7 @@
 		18277EC52CB3A3BE0020A647 /* AccountTypeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18277EC42CB3A3BE0020A647 /* AccountTypeOption.swift */; };
 		18277ECC2CB3A48E0020A647 /* SignUpStep2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18277ECB2CB3A48E0020A647 /* SignUpStep2View.swift */; };
 		18277ECE2CB3AD140020A647 /* NavigationPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18277ECD2CB3AD140020A647 /* NavigationPath.swift */; };
+		1827CE662D2E85E000780F9B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1827CE652D2E85E000780F9B /* GoogleService-Info.plist */; };
 		1835ECF42CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1835ECF32CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift */; };
 		1835ECF72CCF9B81007EEAC1 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1835ECF62CCF9B81007EEAC1 /* NotificationsView.swift */; };
 		187607B22CDF468200F4D261 /* OrdersLinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187607B02CDF468200F4D261 /* OrdersLinksView.swift */; };
@@ -155,6 +156,8 @@
 		18B8D5722CC0333500C2676C /* pending.json in Resources */ = {isa = PBXBuildFile; fileRef = 18B8D5712CC0333500C2676C /* pending.json */; };
 		18D3655B2CD27CF000D50A34 /* AddEditAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D3655A2CD27CF000D50A34 /* AddEditAddressView.swift */; };
 		18D3655D2CD81E8300D50A34 /* PathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D3655C2CD81E8300D50A34 /* PathView.swift */; };
+		18D428602CE676F70059CAF4 /* WithdrawsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4285F2CE676F70059CAF4 /* WithdrawsView.swift */; };
+		18D428622CE679F30059CAF4 /* WithdrawComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D428612CE679F30059CAF4 /* WithdrawComponent.swift */; };
 		18EF4D8D2CB4F92F00599D03 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF4D8C2CB4F92F00599D03 /* ForgotPasswordView.swift */; };
 		18EF4D8F2CB4F98300599D03 /* OTPConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF4D8E2CB4F98300599D03 /* OTPConfirmationView.swift */; };
 		18EF4D912CB4F9C300599D03 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF4D902CB4F9C300599D03 /* ResetPasswordView.swift */; };
@@ -277,6 +280,7 @@
 		14E67B222CADB75900C10AB5 /* Bahij_TheSansArabic-Plain.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bahij_TheSansArabic-Plain.ttf"; sourceTree = "<group>"; };
 		14E67B232CADBA4200C10AB5 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		14E67B252CADBA4200C10AB5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		18009B802D3D005E00F0D752 /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		18086A622CCB7F4800F5C2F8 /* OrdersVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersVM.swift; sourceTree = "<group>"; };
 		18086A642CCB81F000F5C2F8 /* OrdersAppNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersAppNetwork.swift; sourceTree = "<group>"; };
 		18086A652CCB81F000F5C2F8 /* OrdersAppAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersAppAPI.swift; sourceTree = "<group>"; };
@@ -312,7 +316,6 @@
 		1820E2DA2CBBB26F00627DF9 /* MoreAppAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreAppAPI.swift; sourceTree = "<group>"; };
 		1820E2DE2CBBD58F00627DF9 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		1820E2E02CBC3A5400627DF9 /* CompleteDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteDataView.swift; sourceTree = "<group>"; };
-		1822200D2CBE7F540063CEE8 /* SubscriptionManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionManagementView.swift; sourceTree = "<group>"; };
 		18277EB12CB2AF7E0020A647 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		18277EB62CB2B1C20020A647 /* AuthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVM.swift; sourceTree = "<group>"; };
 		18277EBE2CB2B9AC0020A647 /* PhoneNumberRepresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberRepresenter.swift; sourceTree = "<group>"; };
@@ -320,6 +323,7 @@
 		18277EC42CB3A3BE0020A647 /* AccountTypeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTypeOption.swift; sourceTree = "<group>"; };
 		18277ECB2CB3A48E0020A647 /* SignUpStep2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep2View.swift; sourceTree = "<group>"; };
 		18277ECD2CB3AD140020A647 /* NavigationPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPath.swift; sourceTree = "<group>"; };
+		1827CE652D2E85E000780F9B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1835ECF32CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWithdrawButtomSheet.swift; sourceTree = "<group>"; };
 		1835ECF62CCF9B81007EEAC1 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		187607B02CDF468200F4D261 /* OrdersLinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersLinksView.swift; sourceTree = "<group>"; };
@@ -343,6 +347,8 @@
 		18B8D5712CC0333500C2676C /* pending.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pending.json; sourceTree = "<group>"; };
 		18D3655A2CD27CF000D50A34 /* AddEditAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditAddressView.swift; sourceTree = "<group>"; };
 		18D3655C2CD81E8300D50A34 /* PathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathView.swift; sourceTree = "<group>"; };
+		18D4285F2CE676F70059CAF4 /* WithdrawsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawsView.swift; sourceTree = "<group>"; };
+		18D428612CE679F30059CAF4 /* WithdrawComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawComponent.swift; sourceTree = "<group>"; };
 		18EF4D8C2CB4F92F00599D03 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		18EF4D8E2CB4F98300599D03 /* OTPConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPConfirmationView.swift; sourceTree = "<group>"; };
 		18EF4D902CB4F9C300599D03 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
@@ -427,6 +433,7 @@
 				187607BF2CE0072D00F4D261 /* DafeaaRelease.entitlements */,
 				18277ECD2CB3AD140020A647 /* NavigationPath.swift */,
 				14E67A6F2CAC60D200C10AB5 /* Info.plist */,
+				1827CE652D2E85E000780F9B /* GoogleService-Info.plist */,
 				1820E2842CB9050000627DF9 /* Application */,
 				14E67A582CAC5E0E00C10AB5 /* Helper */,
 				14E67AE92CADB0C300C10AB5 /* Resources */,
@@ -975,9 +982,9 @@
 			isa = PBXGroup;
 			children = (
 				14C79BB92CC4DF8600EF837F /* Subscribtions */,
+				18D4285E2CE676960059CAF4 /* WithdrawView */,
 				188FF2472CC509A70070CC57 /* ChangePhone */,
 				188FF2442CC38CE10070CC57 /* ChangePassword */,
-				1822200C2CBE7F430063CEE8 /* SubscriptionManagementView */,
 				1820E2C42CBAAC2800627DF9 /* Profile */,
 				1820E2C52CBAAC3400627DF9 /* Addresses */,
 				1820E2CA2CBAAC7600627DF9 /* StaticPages */,
@@ -1056,14 +1063,6 @@
 			path = More;
 			sourceTree = "<group>";
 		};
-		1822200C2CBE7F430063CEE8 /* SubscriptionManagementView */ = {
-			isa = PBXGroup;
-			children = (
-				1822200D2CBE7F540063CEE8 /* SubscriptionManagementView.swift */,
-			);
-			path = SubscriptionManagementView;
-			sourceTree = "<group>";
-		};
 		18277EB02CB2AF6B0020A647 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -1134,6 +1133,7 @@
 			children = (
 				189437DD2CE0E89B00CA5D96 /* MerchantOrderCycle */,
 				189CD7462CDC838F00E929DE /* ClientOrderCycle */,
+				18009B802D3D005E00F0D752 /* PopupView.swift */,
 			);
 			path = OrdersLinkes;
 			sourceTree = "<group>";
@@ -1219,6 +1219,15 @@
 				14E67A302CAC5CCA00C10AB5 /* SplashView.swift */,
 			);
 			path = Splash;
+			sourceTree = "<group>";
+		};
+		18D4285E2CE676960059CAF4 /* WithdrawView */ = {
+			isa = PBXGroup;
+			children = (
+				18D428612CE679F30059CAF4 /* WithdrawComponent.swift */,
+				18D4285F2CE676F70059CAF4 /* WithdrawsView.swift */,
+			);
+			path = WithdrawView;
 			sourceTree = "<group>";
 		};
 		18F54E7D2CCD1C0300462383 /* VM */ = {
@@ -1420,6 +1429,7 @@
 				18AF0DF12CB15CB10061F07E /* Bahij_TheSansArabic-SemiBold.ttf in Resources */,
 				18AF0DF22CB15CB10061F07E /* Bahij_TheSansArabic-Light.ttf in Resources */,
 				18AF0DF32CB15CB10061F07E /* Bahij_TheSansArabic-Plain.ttf in Resources */,
+				1827CE662D2E85E000780F9B /* GoogleService-Info.plist in Resources */,
 				18AF0DF42CB15CB10061F07E /* Bahij_TheSansArabic-Bold.ttf in Resources */,
 				18AF0DF52CB15CB10061F07E /* Bahij_TheSansArabic-Black.ttf in Resources */,
 				18AF0DF62CB15CB10061F07E /* Bahij_TheSansArabic-ExtraBold.ttf in Resources */,
@@ -1573,6 +1583,7 @@
 				18D3655D2CD81E8300D50A34 /* PathView.swift in Sources */,
 				1820E2D32CBAACDD00627DF9 /* FAQView.swift in Sources */,
 				18F54E8A2CCD1C0300462383 /* WalletVM.swift in Sources */,
+				18009B812D3D005E00F0D752 /* PopupView.swift in Sources */,
 				14E67AE82CAC643B00C10AB5 /* ImagePickerView.swift in Sources */,
 				14E67AC92CAC643B00C10AB5 /* DatePickerTextField.swift in Sources */,
 				14E67ADA2CAC643B00C10AB5 /* DateTF.swift in Sources */,
@@ -1582,7 +1593,6 @@
 				14E67AD72CAC643B00C10AB5 /* NavigationUtil.swift in Sources */,
 				188FF24F2CC6D49D0070CC57 /* SubscribtionView.swift in Sources */,
 				189437DF2CE0F74D00CA5D96 /* AddProductView.swift in Sources */,
-				1822200E2CBE7F540063CEE8 /* SubscriptionManagementView.swift in Sources */,
 				14E67ADE2CAC643B00C10AB5 /* ValidateTF.swift in Sources */,
 				14E67A652CAC5E3400C10AB5 /* MOLH-dummy.m in Sources */,
 				14E67AD32CAC643B00C10AB5 /* NetWorkHelper.swift in Sources */,
@@ -1636,6 +1646,7 @@
 				14E67AD02CAC643B00C10AB5 /* NotificationLoggerCell.swift in Sources */,
 				14E67ABF2CAC643B00C10AB5 /* CustomSegment.swift in Sources */,
 				18AF0DEF2CB114F80061F07E /* OnBoardingView.swift in Sources */,
+				18D428622CE679F30059CAF4 /* WithdrawComponent.swift in Sources */,
 				14D124A22CC4E068005F0084 /* SubscribtionCell.swift in Sources */,
 				14E67ACB2CAC643B00C10AB5 /* GenericError.swift in Sources */,
 				187607BC2CDFE10200F4D261 /* urlExtension.swift in Sources */,
@@ -1681,6 +1692,7 @@
 				14E67AC22CAC643B00C10AB5 /* String_Extentions.swift in Sources */,
 				18277ECE2CB3AD140020A647 /* NavigationPath.swift in Sources */,
 				188FF2492CC509B40070CC57 /* ChangePhoneView.swift in Sources */,
+				18D428602CE676F70059CAF4 /* WithdrawsView.swift in Sources */,
 				18086A822CCC246800F5C2F8 /* HomeAppAPI.swift in Sources */,
 				14E67ADF2CAC643B00C10AB5 /* LogoView.swift in Sources */,
 				180DDD012CDA91540002F6F1 /* ScanQRCodeView.swift in Sources */,
@@ -1868,14 +1880,15 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/Dafeaa.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
-				DEVELOPMENT_TEAM = RS5H8CVHFZ;
+				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Dafeaa/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "App needs to access to your camera to get a photo for you";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "App needs to access to your Photo library to get a photo for you";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App needs to access to your Photo library to get a photo for you";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1889,7 +1902,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Plantech.Dafeaa;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Dafeaa.Plantech;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1907,14 +1920,15 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/DafeaaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
-				DEVELOPMENT_TEAM = RS5H8CVHFZ;
+				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Dafeaa/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "App needs to access to your camera to get a photo for you";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "App needs to access to your Photo library to get a photo for you";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App needs to access to your Photo library to get a photo for you";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1928,7 +1942,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Plantech.Dafeaa;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Dafeaa.Plantech;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

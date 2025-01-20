@@ -76,6 +76,7 @@ struct OrderItemView: View {
 struct PaymentInfoView: View {
     var breakdown: PaymentDetails?
     @State var isMerchantOfferDetails: Bool = false
+    @Binding var itemsPrice: Double
     @State var isShowDetails: Bool = false
     var body: some View {
         ZStack() {
@@ -90,33 +91,36 @@ struct PaymentInfoView: View {
             
             // Use PriceRowView for each item in breakdown
             VStack(alignment: .leading, spacing: 8) {
-                if !isMerchantOfferDetails {
-                    PriceRowView(title: "product".localized(), price: breakdown?.itemsPrice ?? 0)
-                }
+//                if !isMerchantOfferDetails {
+                    PriceRowView(title: "product".localized(), price: itemsPrice)
+//                }
                 PriceRowView(title: "delaviryAndRecive".localized(), price: breakdown?.deliveryPrice ?? 0)
-                if !isMerchantOfferDetails {
-                    PriceRowView(title: "totalBeforeTax".localized(), price: ( (breakdown?.deliveryPrice ?? 0) + (breakdown?.itemsPrice ?? 0)))
-                }
+//                if !isMerchantOfferDetails {
+                    PriceRowView(title: "totalBeforeTax".localized(), price: ( (breakdown?.deliveryPrice ?? 0) + (itemsPrice)))
+//                }
                 PriceRowView(title: "tax".localized(), price: breakdown?.tax ?? 0,isTax: isShowDetails ? false : true)
-                if !isMerchantOfferDetails {
+//                if !isMerchantOfferDetails {
                     Divider()
                         .foregroundColor( Color(.black).opacity(0.10))
                     // Total row
                    if isShowDetails {
-                        let totalPrice: Double = (breakdown?.deliveryPrice ?? 0.0) + (breakdown?.itemsPrice ?? 0.0)  + (breakdown?.tax ?? 0.0)
+                       let totalPrice: Double = (breakdown?.deliveryPrice ?? 0.0) + (itemsPrice)  + (breakdown?.tax ?? 0.0)
                        PriceRowView(title: "total".localized(), price: totalPrice, isTotal: true)
 
                     }
                     else {
-                        let taxPrice = (breakdown?.itemsPrice ?? 0.0) * (breakdown?.tax ?? 0.0)
-                        let totalPrice: Double = (breakdown?.deliveryPrice ?? 0.0) + (breakdown?.itemsPrice ?? 0.0) + taxPrice
+                        let taxPrice = (itemsPrice) * (breakdown?.tax ?? 0.0) / 100
+                        let totalPrice: Double = (breakdown?.deliveryPrice ?? 0.0) + (itemsPrice) + taxPrice
                         PriceRowView(title: "total".localized(), price: totalPrice, isTotal: true)
                     }
-                }
+//                }
             }
             .padding(.all,10)
                    
         }
+        .onChange(of: itemsPrice, { oldValue, newValue in
+            print(itemsPrice,"itemPriccccc")
+        })
         .overlay {
             RoundedRectangle(cornerRadius: 15)
                     .stroke(Color(.grayAAAAAA), lineWidth: 0.4)
