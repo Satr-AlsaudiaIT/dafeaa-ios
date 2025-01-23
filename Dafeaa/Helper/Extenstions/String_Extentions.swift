@@ -178,7 +178,7 @@ extension String{
     
     var isValidPhoneNumber: Bool {
            // Define the regex pattern
-           let pattern = "^(009665|9665|\\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$"
+           let pattern = "^(009665|9665|\\+9665|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$"
            
            // Create a regular expression from the pattern
            let regex = try? NSRegularExpression(pattern: pattern, options: [])

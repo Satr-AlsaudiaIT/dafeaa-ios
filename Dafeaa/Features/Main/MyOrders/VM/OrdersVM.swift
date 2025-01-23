@@ -16,7 +16,7 @@ final class OrdersVM : ObservableObject {
     @Published var _ordersList     : [OrdersData] = []//[OrdersData(id: 1, name: "ww", orderNo: 1, date: "2121", status: "1")]
     @Published var _ordersListCount     : Int = 1
     @Published private var _orderData      : OrderData? //= OrderData(id: 1, clientImage: "", clientName: "sss", products: [productList(id: 1, amount: 2, name: "sss", image: "", price: 100,offerPrice: 89,description: "eewew")], deliveryPrice: 100, orderStatus: 3, paymentStatus: 1, address: "wwww", qrCode: "qqqqq", taxPrice: 10, totalPrice: 1300, addressDetails: AddressDetails(id: 1, adress: "qqq", name: "qqq", phone: "111111"))
-    @Published private var _offersList      : [OffersData] = []
+    @Published var _offersList      : [OffersData] = []
     @Published private var _offersListCount :Int = 1
 
     @Published var _offersData      : ShowOfferData?

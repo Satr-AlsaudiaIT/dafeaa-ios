@@ -15,7 +15,9 @@ struct OrdersOffersLinksView: View {
     @State var goToDetails = false
     @State var toast: FancyToast? = nil
     @State var selectedOffer: OffersData?
-
+    var offerList: [OffersData] {
+        return viewModel._offersList
+    }
     var body: some View {
         ZStack{
             VStack(spacing: 20){
@@ -24,25 +26,25 @@ struct OrdersOffersLinksView: View {
                         self.presentationMode.wrappedValue.dismiss()
                     }
                     ZStack(alignment: .bottom){
+                        
                         ScrollView {
                             VStack(spacing: 17) {
-                                LazyVStack(spacing: 8) {
-                                    ForEach(0..<viewModel.offersList.count,id: \.self){ index in
-                                         OfferComponent(offer: viewModel.offersList[index],onDelete: {viewModel.deleteOffer(id: viewModel.offersList[safe: index]?.id ?? 0)}, toast: $toast)
+//                                LazyVStack(spacing: 8) {
+                                    ForEach(0..<offerList.count,id: \.self){ index in
+                                         OfferComponent(offer: offerList[index],onDelete: {viewModel.deleteOffer(id: offerList[safe: index]?.id ?? 0)}, toast: $toast)
                                                 .onAppear {
-                                                    if index == viewModel.offersList.count - 1 {
+                                                    if index == offerList.count - 1 {
                                                         loadMoreOrdersIfNeeded()
                                                     }
                                                 }.onTapGesture{
-                                                    selectedOffer = viewModel.offersList[safe: index]
+                                                    selectedOffer = offerList[safe: index]
                                                     goToDetails = true
                                                     
                                                 }
                                         }
-                                }
+//                                }
                             }
                             .padding(.bottom,60)
-
                         }
                         ReusableButton(buttonText: "addOffer", action: {goToAddOffer = true})
                             .navigationDestination(isPresented: $goToAddOffer, destination: {AddOfferView()})
@@ -61,20 +63,23 @@ struct OrdersOffersLinksView: View {
                 ProgressView()
                     .hidden()
             }
-        }.edgesIgnoringSafeArea(.bottom)
-            .toastView(toast: $viewModel.toast)
-            .toastView(toast: $toast)
-            .navigationBarHidden(true)
-            .navigationDestination(isPresented: $goToDetails, destination: {OrderLinkDetailsView(id:selectedOffer?.id ?? 0)})
-            .onAppear(){
+        }
+        .edgesIgnoringSafeArea(.bottom)
+        .toastView(toast: $viewModel.toast)
+        .toastView(toast: $toast)
+        .navigationBarHidden(true)
+        .navigationDestination(isPresented: $goToDetails, destination: {OrderLinkDetailsView(id:selectedOffer?.id ?? 0)})
+        .onAppear(){
                 viewModel.offers(skip: 0)
                 AppState.shared.swipeEnabled = true
             }
-            
+        .onDisappear{
+            viewModel._offersList.removeAll()
+        }
     }
     private func loadMoreOrdersIfNeeded() {
         if viewModel.hasMoreData && !viewModel.isLoading {
-            viewModel.offers(skip: viewModel.offersList.count)
+            viewModel.offers(skip: offerList.count)
         }
     }
 }
@@ -99,21 +104,26 @@ struct OfferComponent: View {
                     .textModifier(.plain, 15, .black1E1E1E)
                 Text(offer?.description ?? "")
                     .textModifier(.bold, 14, .gray616161)
+                    .lineLimit(2)
             }
             Spacer()
             HStack(spacing: 2) {
                 Button(action: {copyURL()},
                        label: { Image(systemName: "rectangle.portrait.on.rectangle.portrait")
                     .foregroundColor(.black222222)})
-                if let offerID = offer?.id , let offerCode = offer?.code, let url = URL(string: "https://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)"){
+                let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
+                
+                if let offerID = offer?.id , let offerCode = offer?.code, let url = URL(string: "https://dafeaa-backend.deplanagency.com/offers/\(offerID)/\(offerCode)/\(userId)"){
                     ShareLink(item: url) {  Image(.share).resizable().frame(width: 25,height: 20)}}
                 Button(action: {onDelete()}, label: { Image(.trash)})
             }
         }
     }
     private func copyURL() {
+        let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
+
         if let offerID = offer?.id , let offerCode = offer?.code{
-            let urlString = "https://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)"
+            let urlString = "https://dafeaa-backend.deplanagency.com/offers/\(offerID)/\(offerCode)/\(userId)"
             UIPasteboard.general.string = urlString
             self.toast = FancyToast(type: .info, title: "copied successfully".localized(), message: "")
         }

@@ -13,18 +13,21 @@ struct FancyToastView: View {
     var title: String
     var message: String
     var onCancelTapped: (() -> Void)
+    
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
-                
                 
                 VStack(alignment: .leading) {
                     Text(title)
                         .font(.custom(AppFonts.shared.name(AppFontsTypes.semiBold), size: 16))
                         .foregroundColor(.white)
+                    
                     Text(message)
                         .font(.custom(AppFonts.shared.name(AppFontsTypes.plain), size: 13))
                         .foregroundColor(.white)
+                        .lineLimit(nil)
+                        .multilineTextAlignment(.leading) 
                 }
                 
                 Spacer(minLength: 10)
@@ -38,23 +41,22 @@ struct FancyToastView: View {
                 
             }
             .padding()
-
         }
         .background(Color.black)
         .overlay(
             Rectangle()
                 .fill(type.themeColor)
                 .frame(width: 6)
-                .clipped()
-            , alignment: .leading
+                .clipped(),
+            alignment: .leading
         )
         .frame(minWidth: 0, maxWidth: .infinity)
         .cornerRadius(8)
         .shadow(color: Color.white.opacity(0.25), radius: 4, x: 0, y: 1)
         .padding(.horizontal, 16)
-        
     }
 }
+
 
 enum FancyToastStyle {
     case error

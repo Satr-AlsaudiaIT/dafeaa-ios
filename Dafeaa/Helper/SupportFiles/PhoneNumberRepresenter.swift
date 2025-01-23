@@ -112,7 +112,7 @@ struct CustomMainTextField: View {
             }
             ZStack {
                 TextField(placeHolder.localized(), text: $text)
-                    .textModifier(.plain, 15, .grayB5B5B5)
+                    .textModifier(.plain, (fieldType == .price || fieldType == .percentage) ? 12 : 15, .grayB5B5B5)
                     .focused($isFocused) // Track whether the text field is focused
                     .keyboardType(keyBoardType)
                     .onChange(of: text) { newValue,oldValue in
@@ -125,6 +125,7 @@ struct CustomMainTextField: View {
                     HStack {
                         Spacer()
                         Text(fieldType == .price ? "rs".localized() : "%")
+                            .textModifier(.plain,  13, .black)
                             .padding(.trailing, 10)
                     }
                 }

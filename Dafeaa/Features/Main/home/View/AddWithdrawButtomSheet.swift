@@ -105,7 +105,7 @@ struct AddWithdrawBottomSheet: View {
                         // Authentication Successful
                         print("Authentication Successful")
                         amountDouble = Double(amount.convertDigitsToEng) ?? 0
-                        viewModel.withdrawAmount(amount: amountDouble)
+                        viewModel.validateWithdrawAmount(amount: amountDouble)
                     } else {
                         // Authentication Failed
                         if let error = authenticationError as NSError? {
@@ -120,7 +120,7 @@ struct AddWithdrawBottomSheet: View {
                 print("Authentication not available: \(error.localizedDescription)")
             }
             amountDouble = Double(amount.convertDigitsToEng) ?? 0
-            viewModel.withdrawAmount(amount: amountDouble)
+            viewModel.validateWithdrawAmount(amount: amountDouble)
         }
     }
 

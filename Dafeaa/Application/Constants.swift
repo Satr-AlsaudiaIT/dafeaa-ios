@@ -30,6 +30,7 @@ class Constants {
     let needsVerification = "needVerification"
     let selectedAddressId = "selectedAddressId"
     let selectedAddress = "selectedAddress"
+    let userId = "userId"
 
 
     static var accountStatus: Int {

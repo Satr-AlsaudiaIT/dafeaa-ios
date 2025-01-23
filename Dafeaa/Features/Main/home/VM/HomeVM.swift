@@ -35,6 +35,7 @@ class HomeVM: ObservableObject {
     var processList  : [HomeModelData]     { get { return _processList} set{}}
     var homeData     : HomeModel?          { get { return _homeData   } set{}}
     var notifications: [NotificationsData] { get { return _notifications} set{}}
+    var walletAmount : Double = 0
     //MARK: - APIs
     
     func home() {
@@ -49,7 +50,7 @@ class HomeVM: ObservableObject {
                 guard let data = Result?.data else {return}
                 self._homeData = Result
                 self._processList = data
-
+                self.walletAmount = self._homeData?.availableBalance ?? 0
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
@@ -87,6 +88,15 @@ class HomeVM: ObservableObject {
             }
         }
     }
+    func validateWithdrawAmount(amount: Double) {
+        if walletAmount > amount {
+            withdrawAmount(amount: amount)
+        }
+        else {
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "notValidBalance".localized())
+        }
+    }
+    
     func withdrawAmount(amount: Double) {
         api2.withDrawAmount(amount: amount) { [weak self] (Result) in
             guard let self = self else { return }

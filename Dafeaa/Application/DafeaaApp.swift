@@ -112,26 +112,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
         if let urlComponents = URLComponents(string: strURL) {
             let pathComponents = urlComponents.path.split(separator: "/")
             
-            // Check if the URL structure matches `/offers/{offerID}/{offerCode}`
+            // Check if the URL structure matches `/offers/{offerID}/{offerCode}/{userId}`
              if pathComponents.count >= 3, pathComponents[0] == "offers" {
                  if let offerID = Int(pathComponents[1]) {
                      Constants.clientOrderId = offerID
                      
                      print("Offer ID: \(Constants.clientOrderId), Offer Code: (Constants.offerCode)")
-                     handleDeepLinkNav(id: offerID) // Navigate in the app based on this link
+                     handleDeepLinkNav(id: offerID,offerUserId: Int(pathComponents[3]) ?? 0) // Navigate in the app based on this link
                  }
              }else if pathComponents.count >= 3, pathComponents[1] == "offers" {
                  if let offerID = Int(pathComponents[2]) {
                      Constants.clientOrderId = offerID
                      
                      print("Offer ID: \(Constants.clientOrderId), Offer Code: (Constants.offerCode)")
-                     handleDeepLinkNav(id: offerID) // Navigate in the app based on this link
+                     handleDeepLinkNav(id: offerID,offerUserId: Int(pathComponents[4]) ?? 0) // Navigate in the app based on this link
                  }
              }
          }
     }
     
-    func handleDeepLinkNav(id:Int){
+    func handleDeepLinkNav(id:Int, offerUserId: Int){
         let api: OrdersAPIProtocol = OrdersAPI()
 
         api.showDynamicLinks(id: id) { [weak self] (Result) in
@@ -139,7 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
             switch Result {
             case .success(let response):
                 guard let data = response?.data else { return }
-                navToOffer(offerData:data)
+                navToOffer(offerData:data, offerUserId:offerUserId )
             case .failure(let error):
                 if error.code == 404 {
                     return
@@ -149,12 +149,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
         
     }
     
-    private func navToOffer(offerData: ShowOfferData?) {
+    private func navToOffer(offerData: ShowOfferData?,offerUserId: Int) {
         guard Constants.accountStatus == 2 else { return }
-        let userType = GenericUserDefault.shared.getValue(Constants.shared.userType) as? Int ?? 0
-        
+//        let userType = GenericUserDefault.shared.getValue(Constants.shared.userType) as? Int ?? 0
+        let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
         if let window = self.window {
-            if userType == 1 {
+            if userId == offerUserId {
                 let rootView = ClientLinkDetails(offerData: offerData)
                     .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar" : "en"))
                     .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft : .leftToRight)

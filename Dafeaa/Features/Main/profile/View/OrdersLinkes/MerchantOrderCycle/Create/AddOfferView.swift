@@ -55,7 +55,7 @@ struct AddOfferView: View {
                                 }) {
                                     HStack {
                                         Spacer()
-                                        Text("+ " + "اضف منتج".localized())
+                                        Text("+ " + "addProductTitle".localized())
                                             .textModifier(.plain, 18, .grayAAAAAA)
                                         Spacer()
                                     }

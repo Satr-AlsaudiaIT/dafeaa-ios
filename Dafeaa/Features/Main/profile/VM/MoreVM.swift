@@ -18,6 +18,8 @@ final class MoreVM : ObservableObject {
     @Published private var _profileData    : LoginData?
     @Published private var _addressList    : [AddressesData] = []
     @Published private var _withdrawsData  : [withdrawsData] = []
+    @Published private var _subscriptionPlans  : [SubscriptionModelData] = []
+
     @Published private var _withdrawsCount : Int = 1
 
     @Published var _getData                : Bool = false
@@ -39,7 +41,7 @@ final class MoreVM : ObservableObject {
     var staticData                         : StaticPagesData? { get {return _staticData} set {} }
     var addressList                        : [AddressesData] { get {return _addressList  }  set {}  }
     var withdrawsData                      : [withdrawsData] { get {return _withdrawsData  }  set {}  }
-
+    var subscriptionPlans                  : [SubscriptionModelData] { get {return _subscriptionPlans  }  set {}  }
     
     func validateChangePassword(currentPassword: String, password: String, confirmPassword: String) {
         if currentPassword.isBlank {
@@ -117,7 +119,10 @@ final class MoreVM : ObservableObject {
                 Constants.accountStatus = response?.data?.status ?? 2
                 Constants.phone = response?.data?.phone ?? ""
                 Constants.userName = response?.data?.name ?? ""
+                GenericUserDefault.shared.setValue(response?.data?.id ?? 0, Constants.shared.userId)
+
                 self._isActive = Constants.accountStatus == 2 ? true : false
+
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
@@ -164,10 +169,9 @@ final class MoreVM : ObservableObject {
                 self._message = response?.message ?? ""
                 self._isLoading = false
                 self._isFailed = false
-                self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3){
+
                     self.reset()
-                }
+                
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
@@ -394,7 +398,25 @@ final class MoreVM : ObservableObject {
             }
         }
     }
+    
+    func getSubscriptionPlans(){
+        self._isLoading = true
+        api.getSubscriptionPlans {(result)  in
+            switch result {
+            case .success(let response):
+                self._isLoading = false
+                self._isFailed = false
+                self._subscriptionPlans = response?.data ?? []
+    
+            case .failure(let error):
+                self._isLoading = false
+                self._isFailed = true
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message )
+            }
+        }
 
+    }
     
     
 }

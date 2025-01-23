@@ -23,24 +23,61 @@ struct OrderModel: Codable {
 }
 
 struct OrderData: Codable, Identifiable {
-    let id                  : Int?
-    let clientImage         : String?
-    let clientName          : String?
-    let orderStatus         : Int?
-    let clientPhone         : String?
-    let clientEmail         : String?
-    let qrCode              : String?
-    let name                : String?
-    let products            : [productList]?
-    let orderPrice          : Double?
-    let deliveryPrice       : Double?
-    let paymentStatus       : Int?
-    let address             : String?
-    let taxPrice            : Double?
-    let totalPrice          : Double?
-    let addressDetails      : AddressDetails?
-    
+    let id: Int?
+    let clientImage: String?
+    let clientName: String?
+    let orderStatus: Int?
+    let clientPhone: String?
+    let clientEmail: String?
+    let qrCode: String?
+    let name: String?
+    let products: [productList]?
+    let orderPrice: Double?
+    let deliveryPrice: Double?
+    let paymentStatus: Int?
+    let address: String?
+    let taxPrice: Double?
+    let totalPrice: Double?
+    let addressDetails: AddressDetails?
+
+    // Custom initializer with default nil values
+    init(
+        id: Int? = nil,
+        clientImage: String? = nil,
+        clientName: String? = nil,
+        orderStatus: Int? = nil,
+        clientPhone: String? = nil,
+        clientEmail: String? = nil,
+        qrCode: String? = nil,
+        name: String? = nil,
+        products: [productList]? = nil,
+        orderPrice: Double? = nil,
+        deliveryPrice: Double? = nil,
+        paymentStatus: Int? = nil,
+        address: String? = nil,
+        taxPrice: Double? = nil,
+        totalPrice: Double? = nil,
+        addressDetails: AddressDetails? = nil
+    ) {
+        self.id = id
+        self.clientImage = clientImage
+        self.clientName = clientName
+        self.orderStatus = orderStatus
+        self.clientPhone = clientPhone
+        self.clientEmail = clientEmail
+        self.qrCode = qrCode
+        self.name = name
+        self.products = products
+        self.orderPrice = orderPrice
+        self.deliveryPrice = deliveryPrice
+        self.paymentStatus = paymentStatus
+        self.address = address
+        self.taxPrice = taxPrice
+        self.totalPrice = totalPrice
+        self.addressDetails = addressDetails
+    }
 }
+
 struct productList: Codable, Identifiable,Equatable {
     let id                  : Int?
     let image               : String?

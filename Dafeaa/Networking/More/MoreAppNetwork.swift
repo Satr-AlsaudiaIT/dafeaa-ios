@@ -26,6 +26,7 @@ enum MoreNetwork
     case withDraw(amount: Double)
     case getWithdraws(skip:Int)
     case addAmountToWallet(amount: Double)
+    case getSubScriptionPlans
 }
 
 extension MoreNetwork: TargetType
@@ -53,6 +54,7 @@ extension MoreNetwork: TargetType
         case .withDraw:                     return "withdraws"
         case .getWithdraws(let skip):       return "withdraws?skip=\(skip)&take=10"
         case .addAmountToWallet:            return "payments/submit"
+        case .getSubScriptionPlans:          return "subscription-plans"
         }
     }
     

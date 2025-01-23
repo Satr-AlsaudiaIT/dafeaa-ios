@@ -178,6 +178,7 @@
 "addWalletBalance" = "إضافة رصيد الي المحفظة";
 "noExtraFees" = "لا توجد مصروفات إضافية";
 "weWillContactYou" = "*سيتم التواصل معكم خلال يومين عمل لاتمام عملية سحب المبلغ.";
+"notValidBalance" = "رصيدك غير كافي, برجاء إدخال مبلغ ضمن الرصيد المتاح";
 
 //MARK: - NOTIFICATIONS
 "emptyNotifications"="لا توجد اشعارات لديك بعد, سيتم تنبيهك في حال وصول اي اشعار لك";
@@ -246,6 +247,8 @@
 "description"="الوصف";
 "productDetails" = "تفاصيل المنتج";
 "rs" = "ر.س";
+"month" = "الشهر";
+"productUnit" = "منتج";
 "orderNow"="اطلب الآن";
 "deleteOffer" = "حذف العرض";
 "deliveryPriceTitle" = "سعر التوصيل";

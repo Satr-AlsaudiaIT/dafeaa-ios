@@ -23,6 +23,7 @@ protocol MoreAPIProtocol {
     func withDrawAmount( amount:Double, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func getWithdraws(skip:Int,Completion: @escaping (Result<withdrawsModel?, NSError>) -> Void)
     func addAmountToWallet( amount:Double, Completion: @escaping (Result<AddToWalletModel?, NSError>) -> Void)
+    func getSubscriptionPlans(Completion: @escaping (Result<SubscriptionModel?, NSError>) -> Void)
 
 }
 
@@ -115,6 +116,12 @@ class MoreAPI: BaseAPI<MoreNetwork>, MoreAPIProtocol
     
     func addAmountToWallet( amount:Double, Completion: @escaping (Result<AddToWalletModel?, NSError>) -> Void){
         self.fetchData(target: .addAmountToWallet(amount: amount), responseClass: AddToWalletModel.self) { (result) in
+            Completion(result)
+        }
+    }
+    
+    func getSubscriptionPlans(Completion: @escaping (Result<SubscriptionModel?, NSError>) -> Void) {
+        self.fetchData(target: .getSubScriptionPlans, responseClass: SubscriptionModel.self) { (result) in
             Completion(result)
         }
     }

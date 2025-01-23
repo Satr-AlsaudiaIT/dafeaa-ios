@@ -53,7 +53,8 @@ struct OrderLinkDetailsView: View {
                                label: { Image(systemName: "rectangle.portrait.on.rectangle.portrait")
                             .foregroundColor(.black222222)})
                         .frame(width: 25,height: 20)
-                        if let offerID = viewModel.offersData?.id , let offerCode = viewModel.offersData?.code, let url = URL(string: "https://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)"){
+                        let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
+                        if let offerID = viewModel.offersData?.id , let offerCode = viewModel.offersData?.code, let url = URL(string: "https://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)/\(userId)"){
                             ShareLink(item: url) {  Image(.share).resizable().frame(width: 25,height: 20)} }
                     }
                     .padding(24)
@@ -135,8 +136,10 @@ struct OrderLinkDetailsView: View {
     }
     // Function to calculate the total price
     private func copyURL() {
+        let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
+
         if let offerID = viewModel.offersData?.id , let offerCode = viewModel.offersData?.code{
-            let urlString = "https://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)"
+            let urlString = "https://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)/\(userId)"
             UIPasteboard.general.string = urlString
             self.toast = FancyToast(type: .info, title: "copied successfully".localized(), message: "")
 

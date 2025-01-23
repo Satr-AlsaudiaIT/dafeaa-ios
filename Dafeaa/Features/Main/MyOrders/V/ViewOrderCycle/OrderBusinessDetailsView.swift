@@ -22,6 +22,10 @@ struct OrderBusinessDetailsView: View {
     @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950)
     @State var showingProductDetails: Bool = false
     @State var totalPrice: Double = 0
+    @State var itemsPrice: Double = 0
+    var orderData: OrderData {
+        return viewModel.orderData ?? OrderData()
+    }
     var body: some View {
         ZStack {
             
@@ -33,12 +37,12 @@ struct OrderBusinessDetailsView: View {
                     VStack(alignment: .leading, spacing: 24) {
                         ScrollView(showsIndicators: false) {
                             VStack(spacing: 24) {
-                                if let orderStatusInt = viewModel.orderData?.orderStatus {
+                                if let orderStatusInt = orderData.orderStatus {
                                     PathViewChoice(orderStatus: .constant(orderStatusEnum(rawValue: orderStatusInt) ?? .pending))
                                         .padding(.horizontal,-10)
                                         .padding(.vertical,-10)
                                 }
-                               if viewModel.orderData?.qrCode != ""{
+                               if orderData.qrCode != ""{
                                     QRCodeView(text: viewModel.orderData?.qrCode ?? "")
                                 }
                                 //  Order Items Section
@@ -52,15 +56,15 @@ struct OrderBusinessDetailsView: View {
                                             .stroke(Color(.black).opacity(0.1), lineWidth: 1)
                                             .background(RoundedRectangle(cornerRadius: 16).fill(Color.clear))
                                         VStack(spacing: 8) {
-                                            ForEach(0..<(viewModel.orderData?.products?.count ?? 3),id: \.self){ index in
+                                            ForEach(0..<(orderData.products?.count ?? 0),id: \.self){ index in
                                                 Button(action: {
                                                     showingProductDetails = true
-                                                    selectedProduct = viewModel.orderData?.products?[index] ?? selectedProduct
+                                                    selectedProduct = orderData.products?[index] ?? selectedProduct
                                                 }) {
-                                                    OrderItemView(itemName:viewModel.orderData?.products?[index].name ?? "" ,
-                                                                  price: viewModel.orderData?.products?[index].price ?? 0,
-                                                                  amount: viewModel.orderData?.products?[index].amount ?? 0,
-                                                                  isLast: index == (viewModel.orderData?.products?.count ?? 3 ) - 1 )
+                                                    OrderItemView(itemName: orderData.products?[index].name ?? "" ,
+                                                                  price: orderData.products?[index].price ?? 0,
+                                                                  amount: orderData.products?[index].amount ?? 0,
+                                                                  isLast: index == (orderData.products?.count ?? 3 ) - 1 )
                                                 }
                                             }
                                         } .padding(.horizontal,16)
@@ -74,7 +78,7 @@ struct OrderBusinessDetailsView: View {
                                     
                                     
                                     
-                                    PaymentInfoView(breakdown: PaymentDetails(tax: viewModel.orderData?.taxPrice ?? 0.00, deliveryPrice: viewModel.orderData?.deliveryPrice ?? 0.00),itemsPrice: $totalPrice, isShowDetails: true)
+                                    PaymentInfoView(breakdown: PaymentDetails(tax: orderData.taxPrice ?? 0.00, deliveryPrice: orderData.deliveryPrice ?? 0.00),itemsPrice: $itemsPrice, isShowDetails: true)
                                     
                                     
                                     
@@ -94,7 +98,7 @@ struct OrderBusinessDetailsView: View {
                                                 .fill(Color.clear))
                                         
                                         VStack(spacing: 8) {
-                                            AddressView(name: viewModel.orderData?.clientName ?? "", address: viewModel.orderData?.address ?? "", phone: viewModel.orderData?.clientPhone ?? "")
+                                            AddressView(name: orderData.clientName ?? "", address: orderData.address ?? "", phone: orderData.clientPhone ?? "")
                                             
                                         }
                                     }
@@ -116,7 +120,7 @@ struct OrderBusinessDetailsView: View {
                                 // Confirm Button
                                 // Confirm Button
                                 
-                                if viewModel.orderData?.orderStatus ?? 0 == 1 {
+                                if orderData.orderStatus ?? 0 == 1 {
                                     ReusableButton(buttonText: "reject".localized(),isEnabled: true){
                                         isRejectTapped = true
                                         
@@ -126,7 +130,7 @@ struct OrderBusinessDetailsView: View {
                                         viewModel.changeOrderStatus(id: orderID ?? 0, status: 2)
                                     }
                                 }
-                                else if viewModel.orderData?.orderStatus ?? 0 == 2 {
+                                else if orderData.orderStatus ?? 0 == 2 {
                                     ReusableButton(buttonText: "Cancel".localized(),isEnabled: true){
                                         isCancelTapped = true
                                     }
@@ -178,7 +182,12 @@ struct OrderBusinessDetailsView: View {
         }
         .onChange(of: viewModel.isLoading, { oldValue, newValue in
             if !newValue {
-                totalPrice = viewModel.orderData?.totalPrice ?? 0
+                totalPrice = orderData.totalPrice ?? 0
+                itemsPrice = orderData.products?.reduce(0.0) { total, product in
+                          let price = product.offerPrice ?? product.price ?? 0.0
+                          let quantity = Double(product.amount ?? 0)
+                          return total + (price * quantity)
+                      } ?? 0.0
             }
         })
         .onChange(of: viewModel._isStatusChangedSuccess) { _, newValue in

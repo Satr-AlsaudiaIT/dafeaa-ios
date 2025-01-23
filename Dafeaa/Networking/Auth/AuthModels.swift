@@ -49,6 +49,7 @@ struct LoginModel: Codable {
 // MARK: - LoginData
 struct LoginData:Codable {
     let name, phone, email, profileImage: String?
+    let id: Int?
     let status, accountType, activeNotification, uncompletedData: Int?
 }
 

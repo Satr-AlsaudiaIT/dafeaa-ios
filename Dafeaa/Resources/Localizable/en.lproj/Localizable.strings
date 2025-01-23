@@ -177,6 +177,7 @@
 "addWalletBalance" = "Add Balance to Wallet";
 "noExtraFees" = "No additional fees";
 "weWillContactYou" = "*We will contact you within two working days to complete the withdrawal process.";
+"notValidBalance" = "Insufficient balance. Please enter an amount within your available balance.";
 
 //MARK: - NOTIFICATIONS
 "emptyNotifications"="You don't have any notifications yet. You will be alerted when you receive any notifications.";
@@ -244,6 +245,8 @@
 "description"="Description";
 "productDetails" = "Product Details";
 "rs" = " SAR";
+"month" = "Month";
+"productUnit" = "product";
 "orderNow"="Order Now";
 "deleteOffer" = "Delete Offer";
 "deliveryPriceTitle" = "Delivery Price";

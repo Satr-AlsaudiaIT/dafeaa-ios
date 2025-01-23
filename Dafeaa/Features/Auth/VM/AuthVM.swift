@@ -64,6 +64,8 @@ class AuthVM: ObservableObject {
     func validateLogin(phone: String, password: String) {
         if phone.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPhone".localized())
+        } else if !phone.isValidPhoneNumber {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidPhone".localized())
         } else if password.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPassword".localized())
         } else {
@@ -375,12 +377,15 @@ class AuthVM: ObservableObject {
         GenericUserDefault.shared.setValue(response.data?.accountType ?? 1 , Constants.shared.userType)
         GenericUserDefault.shared.setValue(response.token ?? "", Constants.shared.token)
         Constants.accountStatus = response.data?.status ?? 2
-
+        GenericUserDefault.shared.setValue(response.data?.id ?? 0, Constants.shared.userId)
+        
         if response.data?.uncompletedData == 1 {
             sendCode(for: ["phone":phone ,"usage":"verify"])
-        } else if response.data?.uncompletedData == 2 {
-            self._hasUnCompletedData = true
-        }  else {
+        }
+//        else if response.data?.uncompletedData == 2 {
+//            self._hasUnCompletedData = true
+//        }
+        else {
             MOLH.reset()
         }
     }

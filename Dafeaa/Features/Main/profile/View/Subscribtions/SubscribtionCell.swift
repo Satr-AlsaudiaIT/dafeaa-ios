@@ -7,26 +7,29 @@
 
 import SwiftUI
 
-struct SubscribtionCell: View {
+struct SubscriptionCell: View {
     var isSelected: Bool
-    var subscribtionData: SubscribtionModelData
+    var subscriptionData: SubscriptionModelData
     
     var body: some View {
         VStack {
             HStack {
                 VStack(alignment: .leading) {
                     HStack {
-                        let val = subscribtionData.percentage ?? 0.0 == 0 ? Double(subscribtionData.price ?? 0) : (subscribtionData.percentage ?? 0.0)
-                        let mark = subscribtionData.percentage ?? 0.0 == 0 ? "" : "%"
-                        Text("\(val)" + "\(mark)")
+                        let val = subscriptionData.price ?? 0
+                        Text(String(format: "%.2f %@", val, ""))
                             .textModifier(.bold, 28, .black222222)
-                        Text(subscribtionData.forUse ?? "")
+                        Text("rs".localized() + "/ " + "month".localized())
                             .textModifier(.plain, 15, .black222222)
                         Spacer()
                     }
                     .padding(.bottom,10)
                     HStack {
-                        Text(subscribtionData.description ?? "")
+                        let text = subscriptionData.text ?? ""
+                        let minProduct = "(\(subscriptionData.minProduct ?? 0)"
+                        let maxProduct = "\(subscriptionData.maxProduct ?? 0)"
+                        let minMaxText = minProduct + " - " + maxProduct + " " + "productUnit".localized() + ")"
+                        Text(text + " " + minMaxText )
                             .textModifier(.plain, 15, .black222222)
                     }
                 }
@@ -47,9 +50,9 @@ struct SubscribtionCell: View {
     }
 }
 
-#Preview {
-    SubscribtionCell(isSelected: false, subscribtionData: SubscribtionModelData(id: 1, price: 199, percentage: 0, forUse: "ر.س/شهري", description: "مشاريع متوسطة (100-500 منتج)"))
-}
+//#Preview {
+//    SubscribtionCell(isSelected: false, subscriptionData: SubscriptionModelData(id: 1, price: 199, percentage: 0, forUse: "ر.س/شهري", description: "مشاريع متوسطة (100-500 منتج)"))
+//}
 
 
 

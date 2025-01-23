@@ -9,17 +9,20 @@ import SwiftUI
 
 
 // MARK: - Welcome
-struct SubscribtionModel: Codable {
-    let status: Bool
-    let message: String
-    let data: [SubscribtionModelData]
+struct SubscriptionModel: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [SubscriptionModelData]?
+    let count: Int?
 }
 
 // MARK: - SubscribtionModelData
-struct SubscribtionModelData: Codable,Equatable {
+struct SubscriptionModelData: Codable,Equatable {
     let id: Int
-    let price: Int?
-    let percentage: Double?
-    let forUse: String?
-    let description: String?
+    let price: Double?
+    let text: String?
+    let minProduct, maxProduct: Int?
 }
+
+
+
