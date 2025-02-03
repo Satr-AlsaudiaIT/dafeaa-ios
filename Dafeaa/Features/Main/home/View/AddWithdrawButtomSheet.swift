@@ -21,7 +21,8 @@ struct AddWithdrawBottomSheet: View {
     @StateObject var viewModel = HomeVM()
     @State var actionFinished: Bool = false
     @State var isUnlocked = false
-
+    @Binding var navigateToWebView : Bool
+    @Binding var paymentURL : String
     var body: some View {
         ZStack {
             Color.clear // Transparent background for detecting taps outside
@@ -58,8 +59,9 @@ struct AddWithdrawBottomSheet: View {
                 ReusableButton(buttonText: actionType == .addBalance ? "addBalance".localized() : "withdrawBalance".localized(), isEnabled: true) {
                     switch actionType {
                     case .addBalance:
-                        actionFinished = true
+//                        actionFinished = true
                         amountDouble = Double(amount.convertDigitsToEng) ?? 0
+                        viewModel.addAmount(amount: amountDouble)
                         
                     case .withDraw:
                         authenticate()
@@ -78,10 +80,24 @@ struct AddWithdrawBottomSheet: View {
             .background(Color.white) // Specify background color to avoid transparent view issues
             .cornerRadius(24)
             .frame(height: UIScreen.main.bounds.height * 0.6) // Explicit frame height
-            
-            
+            if viewModel.isLoading {
+                ProgressView("Loading...".localized())
+                    .foregroundColor(.white)
+                    .progressViewStyle(WithBackgroundProgressViewStyle())
+            }
+            else {
+                ProgressView().hidden()
+            }
         }
         .toastView(toast: $viewModel.toast)
+        .onChange(of: viewModel.paymentURL) { _, newValue in
+            isSheetPresented = false
+            paymentURL = viewModel.paymentURL
+            navigateToWebView = true
+        }
+//        .navigationDestination(isPresented: $navigateToWebView) {
+//            PaymentWebView(url: viewModel.paymentURL)
+//        }
         //        .onTapGesture {
         //            hideKeyboard() // Ensures keyboard is dismissed on any tap outside the TextField
         //        }

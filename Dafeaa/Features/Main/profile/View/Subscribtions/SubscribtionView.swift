@@ -13,25 +13,16 @@ struct SubscribtionView: View {
     @State var selectedSubscriptionData: SubscriptionModelData? = nil
     @StateObject var viewModel = MoreVM()
     @State var isLoading = false
+    @State var showConfirmationPopUpView: Bool = false
     var subscriptionPlans: [SubscriptionModelData] { viewModel.subscriptionPlans }
+    @State var  subPlanId : Int = (GenericUserDefault.shared.getValue(Constants.shared.subPlanId) as? Int ?? 0)
     var body: some View {
         ZStack {
  
-            if isLoading {
-                VStack {
-                    Spacer()
-                    ProgressView("Loading...".localized())
-                        .foregroundColor(.white)
-                        .progressViewStyle(WithBackgroundProgressViewStyle())
-                    Spacer()
-                }
-            }
-            else{
-                ProgressView().hidden()
                 if subscriptionPlans.isEmpty {
                     VStack {
                         Spacer()
-                        Text("No subscription found".localized())
+                        Text("no_subscription_found_message".localized())
                             .font(.headline)
                             .foregroundColor(.black)
                         Spacer()
@@ -55,7 +46,7 @@ struct SubscribtionView: View {
                             
                         }
                         .padding(.horizontal)
-                        Text("اختر خطة الإشتراك المناسبة لك".localized())
+                        Text("choose_plane_title".localized())
                             .textModifier(.plain, 19, .black222222)
                             .padding(.top)
                             .padding(.horizontal)
@@ -77,38 +68,46 @@ struct SubscribtionView: View {
                                             selectedSubscriptionData = subscriptionPlan
                                         }
                                     }
+                                    .onAppear{
+                                        if subscriptionPlan.id == subPlanId {
+                                            selectedIndex = index
+                                            selectedSubscriptionData = subscriptionPlan
+                                        }
+                                    }
                                     
                                 }
                                 
                             }
                             VStack(spacing: 12) {
-                                Text("جميع خطط الاشتراك في دافع تتضمن خصائص هائلة مخصصة لاحتياجاتك اليومية".localized())
+                                Text("subscription_plans_features_title".localized())
                                     .textModifier(.plain, 15, .gray666666)
                                 HStack {
                                     Image(.greenCheckMark)
-                                    Text("لوحة تحكم كامله لنشاطك التجاري")
+                                    Text("dashboard_title".localized())
                                         .textModifier(.plain, 15, .black010202)
                                     Spacer()
                                 }
                                 HStack {
                                     Image(.greenCheckMark)
-                                    Text("قائمة بكل عمليات البيع والشراء")
+                                    Text("transactions_list_title".localized())
                                         .textModifier(.plain, 15, .black010202)
                                     Spacer()
                                 }
                                 HStack {
                                     Image(.greenCheckMark)
-                                    Text("تقارير المكاسب والربح")
+                                    Text("profit_reports_title".localized())
                                         .textModifier(.plain, 15, .black010202)
                                     Spacer()
                                 }
-                                if selectedIndex == nil  {
-                                    ReusableButton(buttonText: "ابدأ الان", isEnabled: false, buttonColor: .gray) {
+                                if selectedIndex == nil || selectedSubscriptionData?.id == subPlanId {
+                                    ReusableButton(buttonText: "start_now_button", isEnabled: false, buttonColor: .gray) {
                                     }
                                     .padding(.top)
                                 }
                                 else {
-                                    ReusableButton(buttonText: "ابدأ الان", isEnabled: true, buttonColor: .yellow) {
+                                    
+                                    ReusableButton(buttonText: "start_now_button", isEnabled: true, buttonColor: .yellow) {
+                                        showConfirmationPopUpView = true
                                     }
                                     .padding(.top)
                                 }
@@ -119,6 +118,69 @@ struct SubscribtionView: View {
                         .padding()
                     }
                 }
+            
+            if showConfirmationPopUpView {
+                ZStack {
+                    Color.black.opacity(0.2)
+                    VStack {
+                        Spacer()
+                       
+                            ZStack {
+                                Color(.white)
+                                VStack (spacing: 20){
+                                    HStack {
+                                        Text("subscription_popup_title".localized())
+                                            .textModifier(.plain, 16, .gray666666)
+                                        Spacer()
+                                    }
+                                    .padding(.top)
+                                    Text("subscription_popup_body".localized())
+                                        .textModifier(.plain, 14, .gray666666)
+                                        .multilineTextAlignment(.leading)
+                                        .lineLimit(nil)
+                                    HStack {
+                                        Spacer()
+                                        Button {
+                                            showConfirmationPopUpView = false
+                                        } label: {
+                                            Text ("Cancel".localized())
+                                                .textModifier(.plain, 14, .gray666666)
+                                        }
+                                        .padding(.trailing, 20)
+                                        Button {
+                                            viewModel.selectSubscriptionPlan(id: selectedSubscriptionData?.id  ?? 0)
+                                        } label: {
+                                            Text ("subscription_confirmation_button".localized())
+                                                .textModifier(.plain, 14, .green026C34)
+                                        }
+                                    }
+                                }
+                                .padding(20)
+                            }
+                            .frame(width: UIScreen.main.bounds.width - 40)
+                            .cornerRadius(15)
+                            .fixedSize()
+                            
+                        
+                        Spacer()
+                    }
+                }
+                .edgesIgnoringSafeArea(.all)
+                .onTapGesture {
+                    showConfirmationPopUpView = false
+                }
+            }
+            if isLoading {
+                VStack {
+                    Spacer()
+                    ProgressView("Loading...".localized())
+                        .foregroundColor(.white)
+                        .progressViewStyle(WithBackgroundProgressViewStyle())
+                    Spacer()
+                }
+            }
+            else {
+                ProgressView().hidden()
             }
         }
         .onChange(of: viewModel.isLoading, { _, newValue in
@@ -131,6 +193,13 @@ struct SubscribtionView: View {
         }
         .onAppear{
             viewModel.getSubscriptionPlans()
+        }
+        .toastView(toast: $viewModel.toast)
+        .onChange(of: viewModel._subSuccess) { oldValue, newValue in
+            if newValue {
+                showConfirmationPopUpView = false
+                viewModel._subSuccess = false
+            }
         }
     }
 }

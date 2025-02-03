@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct MyOrdersView: View {
-    private let userType: Int = GenericUserDefault.shared.getValue(Constants.shared.userType) as? Int ?? 0
     @StateObject var viewModel = OrdersVM()
     @State var selectedSegment = 0
     @State var selectedOrder: OrdersData?
     @State var navigateToClientDetails: Bool = false
     @State var navigateToBusinessDetails: Bool = false
     @State var showMenu: Bool = false
+    @State var selectedFilterStatus: String = "current"
     var body: some View {
         ZStack{
             VStack(spacing: 0){
@@ -40,14 +40,24 @@ struct MyOrdersView: View {
                 }
                 .background(Color(.primary))
                 VStack(spacing: 16){
-                    CustomSegmentView(titlesArray: ["MyPurchases","MySales"], selectedSegment:$selectedSegment)
-                        .onChange(of: selectedSegment) { newValue, oldValue in
-                            if userType == 1{
-                                viewModel.orders(skip: 0, status: newValue == 1 ? "current":"history")
+                    CustomSegmentView(titlesArray: ["MyPurchases".localized(),
+                                                    "MySales".localized()], selectedSegment:$selectedSegment)
+                        .onChange(of: selectedSegment) { _, newValue in
+                            
+                            selectedFilterStatus = "current"
+                            
+                            if newValue == 0 {
+                                viewModel.orders(skip: 0, status: selectedFilterStatus, type: "client")
                             }
                             else {
-                                viewModel.orders(skip: 0, status: newValue == 1 ? "current":"history")
+                                viewModel.orders(skip: 0, status: selectedFilterStatus, type: "merchant")
                             }
+//                            if userType == 1{
+//                                viewModel.orders(skip: 0, status: newValue == 1 ? "current":"history")
+//                            }
+//                            else {
+//                                viewModel.orders(skip: 0, status: newValue == 1 ? "current":"history")
+//                            }
                         }
                     VStack(alignment: .leading,spacing: 24) {
                         if viewModel.ordersList.isEmpty {
@@ -58,7 +68,7 @@ struct MyOrdersView: View {
                                     ForEach(0..<(viewModel.ordersList.count),id: \.self){ index in
                                         Button(action: {
                                             selectedOrder = viewModel.ordersList[index]
-                                            if userType == 1{
+                                            if selectedSegment == 0{
                                                 navigateToClientDetails = true
                                             }
                                             else {
@@ -76,7 +86,7 @@ struct MyOrdersView: View {
                                 }
                                 
                             }.refreshable {
-                                viewModel.orders(skip: 0, status: selectedSegment == 1 ? "history" : "current",animated: false)
+                                viewModel.orders(skip: 0, status: selectedFilterStatus, type: selectedSegment == 0 ? "client" : "merchant" , animated: false)
                             }
                         }
                     }
@@ -101,27 +111,35 @@ struct MyOrdersView: View {
                                 VStack(spacing: 10) {
                                     Button {
                                         showMenu = false
+                                        selectedFilterStatus = "current"
+                                        viewModel.orders(skip: 0, status: "current" ,type: selectedSegment == 0 ? "client" : "merchant" )
                                     } label: {
                                         HStack {
                                            
                                             Text("current".localized())
                                                 .textModifier(.plain, 14, .gray666666)
                                                 .frame(width: 100)
+                                                .multilineTextAlignment(.leading)
+                                            Spacer()
                                             Image(systemName: "arrow.up")
-                                                .padding(.trailing,20)
+                                                .padding(.trailing,0)
                                                 .foregroundColor(.gray666666)
                                         }
                                     }
                                     
                                     Button {
                                         showMenu = false
+                                        selectedFilterStatus = "history"
+                                        viewModel.orders(skip: 0, status: "history" ,type: selectedSegment == 0 ? "client" : "merchant" )
                                     } label: {
                                         HStack {
                                             Text("history".localized())
                                                 .textModifier(.plain, 14, .gray666666)
                                                 .frame(width: 100)
+                                                .multilineTextAlignment(.leading)
+                                            Spacer()
                                             Image(systemName: "arrow.down")
-                                                .padding(.trailing,20)
+                                                .padding(.trailing,0)
                                                 .foregroundColor(.gray666666)
                                         }
                                     }
@@ -155,7 +173,7 @@ struct MyOrdersView: View {
         .navigationBarHidden(true)
         .onAppear(){
             AppState.shared.swipeEnabled = true
-            viewModel.orders(skip: 0, status: selectedSegment == 1 ? "history" : "current")
+            viewModel.orders(skip: 0, status: selectedFilterStatus ,type: selectedSegment == 0 ? "client" : "merchant" )
         }
         .onDisappear{
             viewModel._ordersList.removeAll()
@@ -164,7 +182,7 @@ struct MyOrdersView: View {
     
     private func loadMoreOrdersIfNeeded() {
         if viewModel.hasMoreData && !viewModel.isLoading {
-            viewModel.orders(skip: viewModel.ordersList.count, status: selectedSegment == 1 ? "history" : "current")
+            viewModel.orders(skip: viewModel.ordersList.count, status: selectedFilterStatus  , type: selectedSegment == 0 ? "client" : "merchant")
         }
     }
 }
@@ -176,7 +194,6 @@ struct MyOrdersView: View {
 
 struct OrderComponent: View {
     @State var order: OrdersData?
-    private let userType: Int = GenericUserDefault.shared.getValue(Constants.shared.userType) as? Int ?? 0
 
     var body: some View {
         ZStack{

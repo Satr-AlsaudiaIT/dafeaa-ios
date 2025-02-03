@@ -137,7 +137,7 @@ class AuthVM: ObservableObject {
                                               "city_id": getCityId(cityName: city),
                                               "area": area,
                                               "tax_number": taxNum.convertDigitsToEng,
-                                              "expired_date": endDate,
+                                              "expired_date": endDate.convertDigitsToEng,
                                               "phone" : phone.convertDigitsToEng
             ]
             businessInfo(dic: registerDic,photo: commLecs)
@@ -266,7 +266,7 @@ class AuthVM: ObservableObject {
                 self._isFailed = false
                 self._isCheckCodeSuccess = true
                 guard let response = response else { return }
-                self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
+//                self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
                 if let phone = dic["phone"] as? String {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2){
                         self._isCheckCodeSuccess = true
@@ -310,7 +310,7 @@ class AuthVM: ObservableObject {
                 self._message = response?.message ?? ""
                 self._isLoading = false
                 self._isFailed = false
-                self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
+//                self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2){
                     self._isVerifyCodeSuccess = true

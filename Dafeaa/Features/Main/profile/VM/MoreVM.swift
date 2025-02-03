@@ -26,6 +26,8 @@ final class MoreVM : ObservableObject {
     @Published var _isSuccess              = false
     @Published var _isCreateSuccess        = false
     @Published var _isActive               = false
+    @Published var _subSuccess             = false
+
     @Published var toast: FancyToast?      = nil
 
     private var _message                   : String = ""
@@ -120,7 +122,7 @@ final class MoreVM : ObservableObject {
                 Constants.phone = response?.data?.phone ?? ""
                 Constants.userName = response?.data?.name ?? ""
                 GenericUserDefault.shared.setValue(response?.data?.id ?? 0, Constants.shared.userId)
-
+                GenericUserDefault.shared.setValue(response?.data?.businessInformationStatus, Constants.shared.businessInformationStatus)
                 self._isActive = Constants.accountStatus == 2 ? true : false
 
             case .failure(let error):
@@ -415,8 +417,28 @@ final class MoreVM : ObservableObject {
                 self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message )
             }
         }
-
     }
     
+    
+    func selectSubscriptionPlan(id: Int){
+        self._isLoading = true
+        api.selectSubscriptionPlan(id: id) {(result)  in
+            switch result {
+            case .success(let response):
+                self._isLoading = false
+                self._isFailed = false
+                self._subSuccess = true
+                GenericUserDefault.shared.setValue(id, Constants.shared.subPlanId)
+
+                self.toast = FancyToast(type: .success, title: "Success".localized(), message: "sub_plan_success_message".localized())
+            case .failure(let error):
+                self._isLoading = false
+                self._isFailed = true
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message )
+            }
+        }
+    }
+
     
 }

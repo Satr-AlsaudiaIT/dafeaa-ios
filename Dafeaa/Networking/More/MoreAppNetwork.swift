@@ -27,6 +27,7 @@ enum MoreNetwork
     case getWithdraws(skip:Int)
     case addAmountToWallet(amount: Double)
     case getSubScriptionPlans
+    case selectSubscriptionPlan(id: Int)
 }
 
 extension MoreNetwork: TargetType
@@ -54,7 +55,8 @@ extension MoreNetwork: TargetType
         case .withDraw:                     return "withdraws"
         case .getWithdraws(let skip):       return "withdraws?skip=\(skip)&take=10"
         case .addAmountToWallet:            return "payments/submit"
-        case .getSubScriptionPlans:          return "subscription-plans"
+        case .getSubScriptionPlans:         return "subscription-plans"
+        case .selectSubscriptionPlan(let id):       return "plans/submit/\(id)"
         }
     }
     
@@ -62,7 +64,7 @@ extension MoreNetwork: TargetType
     {
         switch self  {
         case.changePassword, .contactUs, .logOut, .notifyOnOff,.createAddress,
-                .withDraw, .addAmountToWallet:                                    return .post
+                .withDraw, .addAmountToWallet, .selectSubscriptionPlan:           return .post
         case .address(_, let method, _):                                          return method
         case .deleteAccount:                                                      return .delete
         default:                                                                  return .get

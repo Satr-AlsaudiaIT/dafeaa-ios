@@ -112,6 +112,11 @@
 "changePhoneTitle" = "Change Phone Number";
 "changePhoneSubTitle" = "Please enter your new phone number and password, and wait for the activation code to confirm the new number";
 "ChangePhoneNavTitle" = "Change Phone Number";
+"merchants_service_title" = "This service is only for merchants";
+"merchants_service_title" = "Service for Merchants";
+"merchants_service_body" = "This service is specifically for merchants. To obtain it, you must complete the merchant's required information.";
+"add_data_button" = "Add data";
+
 //MARK: - ChangePassword
 "changePassword"="Change Password";
 "currentPassword"="Current Password";
@@ -160,10 +165,12 @@
 "Error" = "Error";
 
 //MARK: - Orders
-"current"="Current Orders";
+"current"=" Current Orders";
 "history"="Order History";
 "orderNo"="Order Number";
 "orderRoute"="Track Order";
+"MyPurchases" = "My Purchases";
+"MySales" = "My Sales";
 
 //MARK: - Home
 "SAR" = " SAR";
@@ -280,3 +287,18 @@
 "done" = "Completed";
 "progress" = "In Progress";
 "pending"  = "Pending";
+
+//MARK: - subscription
+"subscription_plans_features_title_en" = "All Dafeaa subscription plans include amazing features tailored to your daily needs";
+"dashboard_title_en" = "A complete dashboard for your business";
+"transactions_list_title_en" = "A list of all sales and purchase transactions";
+"profit_reports_title_en" = "Profit and earnings reports";
+"start_now_button_en" = "Start now";
+"no_subscription_found_message_en" = "No subscription found";
+"choose_plane_title" = "Choose the subscription plan that suits you";
+"subscription_popup_title" = "Subscription Confirmation";
+"subscription_popup_body" = "Are you sure you want to subscribe to this package?";
+"subscription_confirmation_button" = "Confirm";
+"sub_plan_success_message" = "You have successfully subscribed to this plan";
+"payment" = "payment";
+

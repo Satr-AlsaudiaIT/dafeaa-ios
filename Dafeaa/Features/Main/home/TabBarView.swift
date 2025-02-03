@@ -13,7 +13,7 @@ struct TabBarView: View {
     
     @State private var selectedTab: Tab = .home
     private let userType: Int = GenericUserDefault.shared.getValue(Constants.shared.userType) as? Int ?? 0
-
+    
     enum Tab {
         case home, wallet, myOrders, processes, profile
     }

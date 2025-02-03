@@ -8,7 +8,7 @@ import Foundation
 import Alamofire
 
 enum OrdersNetwork {
-    case orders(skip: Int, status: String)
+    case orders(skip: Int, status: String, type: String)
     case getOrder(id: Int)
     case changeStatus(id:Int,status:Int)
     case completeOrder(id:Int,qrCode:String)
@@ -28,7 +28,7 @@ extension OrdersNetwork: TargetType {
     
     var path: String {
         switch self {
-        case .orders(let skip,let status):   return"orders?skip=\(skip)&filter[status]=\(status)"
+        case .orders(let skip,let status, let type):   return"orders/\(type)?skip=\(skip)&filter[status]=\(status)"
         case .getOrder(let id):              return "orders/\(id)"
         case .changeStatus(let id, _):       return "orders/\(id)"
         case .completeOrder(let id, _):      return "orders/\(id)"

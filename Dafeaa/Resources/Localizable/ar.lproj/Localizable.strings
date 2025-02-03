@@ -112,7 +112,9 @@
 "changePhoneTitle" = "تغيير رقم الهاتف";
 "changePhoneSubTitle" = "برجاء أدخال رقم الهاتف الجديد وكلمة المرور وانتظار كود تفعيل لتأكيد الرقم الجديد";
 "ChangePhoneNavTitle" = "تغيير رقم الهاتف";
-
+"merchants_service_title" = "خدمة خاصة بالتجار";
+"merchants_service_body" = "هذة الخدمة خاصة بالتجار للحصول عليها عليك استكمال البيانات الخاصة بالتاجر";
+"add_data_button" = "أضف البيانات";
 //MARK: - ChangePassword
 "changePassword"="تغيير كلمة المرور";
 "currentPassword"="كلمة المرور الحالية";
@@ -165,6 +167,8 @@
 "history"="الطلبات السابقة";
 "orderNo"="رقم الطلب";
 "orderRoute"="تابع الطلب";
+"MyPurchases" = "مشترياتي";
+"MySales" = "مبيعاتي";
 
 //MARK: - Home
 "SAR" = "ر.س ";
@@ -282,3 +286,19 @@
 "done" = "مكتملة";
 "progress" = "قيد التنفيذ";
 "pending"  = "معلقة";
+
+
+//MARK: - subscription
+"choose_plane_title" = "اختر خطة الإشتراك المناسبة لك";
+"subscription_plans_features_title" = "جميع خطط الاشتراك في دافع تتضمن خصائص هائلة مخصصة لاحتياجاتك اليومية";
+"dashboard_title" = "لوحة تحكم كامله لنشاطك التجاري";
+"transactions_list_title" = "قائمة بكل عمليات البيع والشراء";
+"profit_reports_title" = "تقارير المكاسب والربح";
+"start_now_button" = "ابدأ الان";
+"no_subscription_found_message" = "لا يوجد خطط اشتراك";
+
+"subscription_popup_title" = "تأكيد الإشتراك";
+"subscription_popup_body" = "هل أنت متأكد أنك تريد الإشتراك في هذة الباقة؟";
+"subscription_confirmation_button" = "تأكيد";
+"sub_plan_success_message" = "تم الاشتراك في هذة الخطة بنجاح";
+"payment" = "الدفع";

@@ -11,7 +11,7 @@ class Constants {
 
     
     var isAR: Bool { return (MOLHLanguage.currentAppleLanguage() == "ar") }
-    let baseURL =  "https://dafeaa-backend.deplanagency.com/api/"  // develop instance
+    let baseURL =  "https://dafeaa-backend.deplanagency.com/api/v2/"  // develop instance
 //    let baseURL =   "" // live
     let developerMode = false
     let resetLanguage = "resetLanguage"
@@ -31,6 +31,8 @@ class Constants {
     let selectedAddressId = "selectedAddressId"
     let selectedAddress = "selectedAddress"
     let userId = "userId"
+    let businessInformationStatus = "businessInformationStatus"
+    let subPlanId = "subPlanId"
 
 
     static var accountStatus: Int {

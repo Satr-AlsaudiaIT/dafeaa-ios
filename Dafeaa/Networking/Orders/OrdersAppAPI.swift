@@ -7,7 +7,7 @@
 
 import Foundation
 protocol OrdersAPIProtocol {
-    func orders(skip : Int, status: String, Completion: @escaping (Result<OrdersModel?, NSError>) -> Void)
+    func orders(skip : Int, status: String,type:String, Completion: @escaping (Result<OrdersModel?, NSError>) -> Void)
     func getOrder(id : Int, Completion: @escaping (Result<OrderModel?, NSError>) -> Void)
     func changeOrderStatus(id : Int,status: Int, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func completeOrder(id : Int,qrCode: String, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
@@ -21,8 +21,8 @@ protocol OrdersAPIProtocol {
 
 class OrdersAPI: BaseAPI<OrdersNetwork>, OrdersAPIProtocol
 {
-    func orders(skip : Int, status: String, Completion: @escaping (Result<OrdersModel?, NSError>) -> Void){
-        self.fetchData(target: .orders(skip :skip, status: status), responseClass: OrdersModel.self) { (result) in
+    func orders(skip : Int, status: String, type:String, Completion: @escaping (Result<OrdersModel?, NSError>) -> Void){
+        self.fetchData(target: .orders(skip :skip, status: status,type: type), responseClass: OrdersModel.self) { (result) in
             Completion(result)
         }
     }

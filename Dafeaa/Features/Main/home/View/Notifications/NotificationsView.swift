@@ -37,7 +37,7 @@ struct NotificationsView: View {
                     } else {
                         ScrollView {
                             
-                            LazyVStack(spacing: 12) {
+                            LazyVStack(spacing: 0) {
                                 ForEach(0..<viewModel.notifications.count,id: \.self){ index in
                                     notificationsComponent(model: viewModel.notifications[index])
                                         .onAppear {
@@ -51,7 +51,7 @@ struct NotificationsView: View {
                         }
                    }
                     
-                }.padding(24)
+                }.padding(.bottom,24)
             }
             if viewModel.isLoading {
                 ProgressView("Loading...".localized())
@@ -65,7 +65,7 @@ struct NotificationsView: View {
         .toastView(toast: $viewModel.toast)
         .navigationBarHidden(true)
         .onAppear(){
-            viewModel.notificationsList(skip: 0)
+//            viewModel.notificationsList(skip: 0)
         }
     }
     
@@ -85,19 +85,25 @@ struct notificationsComponent: View {
     @State var model: NotificationsData?
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack(alignment: .center) {
-                Text(model?.title ?? "")
-                    .textModifier(.plain, 14, .gray565656)
-                Spacer()
-                Text(model?.createdAt ?? "")
-                    .textModifier(.plain, 14, .gray858585)
+        ZStack {
+            Color( model?.isRead  == 1 ?  Color(.primaryF9CE29).opacity(0.1) : .clear)
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(alignment: .center) {
+                    Text(model?.title ?? "")
+                        .textModifier(.plain, 14, .gray565656)
+                    Spacer()
+                    Text(model?.createdAt ?? "")
+                        .textModifier(.plain, 14, .gray858585)
+                }
+                .padding(.top,20)
+                Text(model?.body ?? "")
+                    .textModifier(.plain, 14,  .gray919191).lineSpacing(4)
+                Divider()
+                    .foregroundColor( Color(.black).opacity(0.10))
+                    .padding(.top,4)
             }
-            Text(model?.body ?? "")
-                .textModifier(.plain, 14,  .gray919191).lineSpacing(4)
-            Divider()
-                .foregroundColor( Color(.black).opacity(0.10))
-                .padding(.top,4)
+            .padding(.horizontal,20)
+            
         }
     }
 }

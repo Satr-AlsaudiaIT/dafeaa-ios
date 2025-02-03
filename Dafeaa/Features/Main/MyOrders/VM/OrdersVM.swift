@@ -52,7 +52,7 @@ final class OrdersVM : ObservableObject {
     }
     //MARK: - APIs
     
-    func orders(skip: Int, status: String,animated: Bool = true) {
+    func orders(skip: Int, status: String,type:String,animated: Bool = true) {
         if skip == 0 {
              _isLoading = animated ; hasMoreData = true ;
             animated ? ( self._ordersList.removeAll()):()
@@ -61,7 +61,7 @@ final class OrdersVM : ObservableObject {
             self.hasMoreData = false
         }
         guard hasMoreData  else { _isLoading = false ;return }
-        api.orders(skip: skip, status: status) { [weak self] (Result) in
+        api.orders(skip: skip, status: status,type: type) { [weak self] (Result) in
             guard let self = self else { return }
             self._isLoading = false
             switch Result {

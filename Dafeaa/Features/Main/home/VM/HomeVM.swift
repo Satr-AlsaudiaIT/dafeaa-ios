@@ -15,13 +15,18 @@ class HomeVM: ObservableObject {
     @Published private var _isFailed       = false
     @Published private var _processList    : [HomeModelData] = []
     @Published private var _homeData       : HomeModel?
-    @Published private var _notifications  : [NotificationsData] = []
+    @Published private var _notifications  : [NotificationsData] = [NotificationsData(orderId: 1, actionType: 1, iconType: 1, visitType: 1, id: 1, isRead: 1, title: "hjww", createdAt: "12-01-2024", body: "dfghjkljhgfdghjklkjhgfdghjk dfghjkljhgfdghjk", data: "dfghjkl", time: "03:04"),
+                                                                    NotificationsData(orderId: 1, actionType: 1, iconType: 1, visitType: 1, id: 1, isRead: 1, title: "hjww", createdAt: "12-01-2024", body: "dfghjkljhgfdghjklkjhgfdghjk dfghjkljhgfdghjk", data: "dfghjkl", time: "03:04"),
+                                                                    NotificationsData(orderId: 1, actionType: 1, iconType: 1, visitType: 1, id: 1, isRead: 1, title: "hjww", createdAt: "12-01-2024", body: "dfghjkljhgfdghjklkjhgfdghjk dfghjkljhgfdghjk", data: "dfghjkl", time: "03:04"),
+                                                                    NotificationsData(orderId: 1, actionType: 1, iconType: 1, visitType: 1, id: 1, isRead: 0, title: "hjww", createdAt: "12-01-2024", body: "dfghjkljhgfdghjklkjhgfdghjk dfghjkljhgfdghjk", data: "dfghjkl", time: "03:04"),
+                                                                    NotificationsData(orderId: 1, actionType: 1, iconType: 1, visitType: 1, id: 1, isRead: 0, title: "hjww", createdAt: "12-01-2024", body: "dfghjkljhgfdghjklkjhgfdghjk dfghjkljhgfdghjk", data: "dfghjkl", time: "03:04")]
     @Published private var _notificationsCount  : Int = 1
 
     @Published var _getData                : Bool = false
     @Published var _isSuccess              = false
     @Published var _isWithdrawSuccess      = false
     @Published var _addToWalletURL         : String = ""
+    @Published var paymentURL              : String = ""
     private var _message                   : String = ""
     private var token                      = ""
     let api                                : HomeAPIProtocol = HomeAPI()
@@ -74,11 +79,11 @@ class HomeVM: ObservableObject {
                 guard let data = Result?.data else { return }
                 
                 self._notificationsCount = Result?.count ?? 0
-                
                     if skip == 0 {
-                        self._notifications = data
-                    } else { self._notifications.append(contentsOf: data)
-                    }
+                        self._notifications =   data
+                    } else {
+                        self._notifications.append(contentsOf: data)
+                }
                 
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
@@ -118,13 +123,14 @@ class HomeVM: ObservableObject {
     }
     
     func addAmount(amount: Double) {
+        self._isLoading = true
         api2.addAmountToWallet(amount: amount) { [weak self] (Result) in
             guard let self = self else { return }
             self._isLoading = false
             switch Result {
             case .success(let Result):
                 guard let data = Result else { return }
-                
+                paymentURL = data.data ?? ""
                 
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"

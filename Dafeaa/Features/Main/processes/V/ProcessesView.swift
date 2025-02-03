@@ -48,7 +48,8 @@ struct ProcessesView: View {
         }
         .toastView(toast: $viewModel.toast)
         .navigationBarHidden(true)
-        .onAppear(){viewModel.operations(skip: 0) }
+        .onAppear(){
+            viewModel.operations(skip: 0) }
     }
     
     private func loadMoreOrdersIfNeeded() {

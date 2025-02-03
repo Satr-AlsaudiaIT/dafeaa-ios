@@ -129,7 +129,7 @@ struct LoginView: View {
             }
             .edgesIgnoringSafeArea(.top )
             .navigationDestination(isPresented: $isShowStep1)  {
-                SignUpStep1View()
+                SignUpStep2View()
             }.navigationBarHidden(true)
                 .toastView(toast: $viewModel.toast)
         }

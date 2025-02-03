@@ -20,7 +20,12 @@ struct ProfileView: View {
     @State private var activeActionSheet: ActiveSheet?
     @State private var selectedAddressId: Int = Constants.selectedAddressId
     @State private var selectedAddress: String = Constants.selectedAddress
-
+    @State private var showCompleteDataPopup: Bool = false
+    @State private var navigateToPendingView: Bool = false
+    @State private var navigateToOffers: Bool = false
+    @State private var navigateToCompleteProfileView: Bool = false
+    @State private var businessInfo: BusinessInfo = .noFilesUploaded
+    @State private var navigateToSubscriptionView = false
     enum ActiveSheet {
            case logOut, deleteAccount
        }
@@ -71,22 +76,70 @@ struct ProfileView: View {
                                 image: Image(.iconProfile)
                             )
                             
-                            if type == 1{
                                 NavigationLinkComponent(
                                     destination: SavedAddressesView(selectedAddressId: $selectedAddressId, selectedAddress: $selectedAddress),
                                     label: "Saved Addresses",
                                     image: Image(.iconAddress)
                                 )
-                            }else{
-                                NavigationLinkComponent(
-                                    destination: SubscribtionView(),
-                                    label: "Subscription Management",
-                                    image: Image(.subscribtion)
-                                )
+                            
+                            
+                            HStack(spacing:12) {
+                                Image(.subscribtion)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 28, height: 28)
+                                
+                                Text("Subscription Management".localized())
+                                    .textModifier(.plain, 16, .black194558)
+                                Spacer()
+                                
+                                Image(.iconArrowNav)
+                                    .frame(width: 32, height: 32)
+                                    .foregroundColor(Color(.black194558))
                             }
-                            if type != 1{
-                                NavigationLinkComponent(destination: OrdersOffersLinksView(), label: "offers", image: Image(.iconOffer))
-                         }
+                            .frame(height: 32)
+                            .onTapGesture {
+                                if businessInfo.rawValue == 0 {
+                                    showCompleteDataPopup = true
+                                }
+                                else if businessInfo.rawValue == 1 {
+                                    navigateToPendingView = true
+                                }
+                                else {
+                                    navigateToSubscriptionView = true
+                                }
+                            }
+                            HStack(spacing:12) {
+                                Image(.iconOffer)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 28, height: 28)
+                                
+                                Text("offers".localized())
+                                    .textModifier(.plain, 16, .black194558)
+                                Spacer()
+                                
+                                Image(.iconArrowNav)
+                                    .frame(width: 32, height: 32)
+                                    .foregroundColor(Color(.black194558))
+                            }
+                            .frame(height: 32)
+                            .onTapGesture {
+                                if businessInfo.rawValue == 0 {
+                                    showCompleteDataPopup = true
+                                }
+                                else if businessInfo.rawValue == 1 {
+                                    navigateToPendingView = true
+                                }
+                                else {
+                                    navigateToOffers = true
+                                }
+                            }
+//                            NavigationLinkComponent(
+//                                destination: OrdersOffersLinksView(),
+//                                label: "offers",
+//                                image: Image(.iconOffer))
+//                         
                             NavigationLinkComponent(
                                 destination: StaticPagesView(type: .constant(.aboutApp)),
                                 label: "About Dafeaa",
@@ -171,7 +224,70 @@ struct ProfileView: View {
                     )
                 }
                        }
-            
+            .navigationDestination(isPresented: $navigateToCompleteProfileView, destination: {
+                CompleteDataView(phone:phone)
+            })
+            .navigationDestination(isPresented: $navigateToPendingView) {
+                PendingView()
+            }
+            .navigationDestination(isPresented: $navigateToOffers, destination: {
+                OrdersOffersLinksView()
+            })
+            .navigationDestination(isPresented: $navigateToSubscriptionView) {
+                SubscribtionView()
+            }
+            if showCompleteDataPopup {
+                ZStack {
+                    Color.black.opacity(0.2)
+                    VStack {
+                        Spacer()
+                       
+                            ZStack {
+                                Color(.white)
+                                VStack (spacing: 20){
+                                    HStack {
+                                        Text("merchants_service_title".localized())
+                                            .textModifier(.plain, 16, .gray666666)
+                                        Spacer()
+                                    }
+                                    .padding(.top)
+                                    Text("merchants_service_body".localized())
+                                        .textModifier(.plain, 14, .gray666666)
+                                        .multilineTextAlignment(.leading)
+                                        .lineLimit(nil)
+                                    HStack {
+                                        Spacer()
+                                        Button {
+                                            showCompleteDataPopup = false
+                                        } label: {
+                                            Text ("Cancel".localized())
+                                                .textModifier(.plain, 14, .gray666666)
+                                        }
+                                        .padding(.trailing, 20)
+                                        Button {
+                                            navigateToCompleteProfileView = true
+                                            showCompleteDataPopup = false
+                                        } label: {
+                                            Text ("add_data_button".localized())
+                                                .textModifier(.plain, 14, .primaryF9CE29)
+                                        }
+                                    }
+                                }
+                                .padding(20)
+                            }
+                            .frame(width: UIScreen.main.bounds.width - 40)
+                            .cornerRadius(15)
+                            .fixedSize()
+                            
+                        
+                        Spacer()
+                    }
+                }
+                .edgesIgnoringSafeArea(.all)
+                .onTapGesture {
+                    showCompleteDataPopup = false
+                }
+            }
             if viewModel.isLoading {
                 ProgressView("Loading...".localized())
                     .foregroundColor(.white)
@@ -190,7 +306,10 @@ struct ProfileView: View {
                 if value {
                     name         = viewModel.profileData?.name ?? ""
                     phone        = viewModel.profileData?.phone?.convertDigitsToEng ?? ""
+                    
+                    businessInfo = BusinessInfo(rawValue: viewModel.profileData?.businessInformationStatus ?? 0) ?? .noFilesUploaded
 //                    selectedProfileImageURL = viewModel.profileData?.profileImage ?? ""
+                    
                 }
             }
     }
@@ -238,3 +357,9 @@ struct NavigationLinkComponent<Destination: View>: View {
 //        .destructive(Text("Cancel".localized())){return}
 //    ])
 //}
+
+enum BusinessInfo: Int {
+    case noFilesUploaded = 0
+    case pending = 1
+    case accepted = 2
+}
