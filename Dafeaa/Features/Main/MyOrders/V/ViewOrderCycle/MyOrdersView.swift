@@ -18,7 +18,7 @@ struct MyOrdersView: View {
     var body: some View {
         ZStack{
             VStack(spacing: 0){
-//                NavigationBarView(title:  "orders".localized())
+                //                NavigationBarView(title:  "orders".localized())
                 HStack {
                     HStack {
                         Image("")
@@ -42,29 +42,47 @@ struct MyOrdersView: View {
                 VStack(spacing: 16){
                     CustomSegmentView(titlesArray: ["MyPurchases".localized(),
                                                     "MySales".localized()], selectedSegment:$selectedSegment)
-                        .onChange(of: selectedSegment) { _, newValue in
-                            
-                            selectedFilterStatus = "current"
-                            
-                            if newValue == 0 {
-                                viewModel.orders(skip: 0, status: selectedFilterStatus, type: "client")
-                            }
-                            else {
-                                viewModel.orders(skip: 0, status: selectedFilterStatus, type: "merchant")
-                            }
-//                            if userType == 1{
-//                                viewModel.orders(skip: 0, status: newValue == 1 ? "current":"history")
-//                            }
-//                            else {
-//                                viewModel.orders(skip: 0, status: newValue == 1 ? "current":"history")
-//                            }
+                    .onChange(of: selectedSegment) { _, newValue in
+                        
+                        selectedFilterStatus = "current"
+                        
+                        if newValue == 0 {
+                            viewModel.orders(skip: 0, status: selectedFilterStatus, type: "client")
                         }
+                        else {
+                            viewModel.orders(skip: 0, status: selectedFilterStatus, type: "merchant")
+                        }
+                        //                            if userType == 1{
+                        //                                viewModel.orders(skip: 0, status: newValue == 1 ? "current":"history")
+                        //                            }
+                        //                            else {
+                        //                                viewModel.orders(skip: 0, status: newValue == 1 ? "current":"history")
+                        //                            }
+                    }
+                    VStack {
+                        if selectedSegment == 0 {
+                            HStack {
+                                Text("↑" + "Pending_Purchases_Balance".localized() + "1200")
+                                    .textModifier(.plain, 14, .gray666666)
+                                Spacer()
+                            }
+                        }
+                        else if selectedSegment == 1 {
+                            HStack {
+                                Text("↓" + "Pending_Sales_Balance".localized() + "1200")
+                                    .textModifier(.plain, 14, .gray666666)
+                                Spacer()
+                            }
+                        }
+                    }
                     VStack(alignment: .leading,spacing: 24) {
+                        
+                        
                         if viewModel.ordersList.isEmpty {
                             EmptyCostumeView()
                         } else {
                             ScrollView(showsIndicators: false) {
-                               LazyVStack(spacing: 8) {
+                                LazyVStack(spacing: 8) {
                                     ForEach(0..<(viewModel.ordersList.count),id: \.self){ index in
                                         Button(action: {
                                             selectedOrder = viewModel.ordersList[index]
@@ -115,7 +133,7 @@ struct MyOrdersView: View {
                                         viewModel.orders(skip: 0, status: "current" ,type: selectedSegment == 0 ? "client" : "merchant" )
                                     } label: {
                                         HStack {
-                                           
+                                            
                                             Text("current".localized())
                                                 .textModifier(.plain, 14, .gray666666)
                                                 .frame(width: 100)
@@ -194,43 +212,43 @@ struct MyOrdersView: View {
 
 struct OrderComponent: View {
     @State var order: OrdersData?
-
+    
     var body: some View {
         ZStack{
-                RoundedRectangle(cornerRadius: 16)
-                    .stroke(Color(.black).opacity(0.1), lineWidth: 1)
-                    .background(RoundedRectangle(cornerRadius: 16).fill(Color.clear))
-                
-                VStack(alignment: .leading,spacing:12) {
-                    HStack(alignment: .center){
-                        Image(.process)
-                            .resizable()
-                            .frame(width: 65,height: 65)
-                            .clipShape(.circle)
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text(order?.name ?? "")
-                                .textModifier(.plain, 14, .black222222)
-                            
-                            Text(orderStatusEnum(rawValue: order?.orderStatus ?? 0)?.title ?? "" + " - \(order?.date ?? "")")
-                                .textModifier(.plain, 12, .orangeFF6021)
-                        }
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color(.black).opacity(0.1), lineWidth: 1)
+                .background(RoundedRectangle(cornerRadius: 16).fill(Color.clear))
+            
+            VStack(alignment: .leading,spacing:12) {
+                HStack(alignment: .center){
+                    Image(.process)
+                        .resizable()
+                        .frame(width: 65,height: 65)
+                        .clipShape(.circle)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(order?.name ?? "")
+                            .textModifier(.plain, 14, .black222222)
+                        
+                        Text(orderStatusEnum(rawValue: order?.orderStatus ?? 0)?.title ?? "" + " - \(order?.date ?? "")")
+                            .textModifier(.plain, 12, .orangeFF6021)
                     }
-                    HStack(spacing: 2) {
-                        Image(.barcode)
-                            .resizable()
-                            .frame(width: 20,height: 20)
-                        Text("orderNo".localized()+": \(order?.id ?? 0)")
-                            .textModifier(.plain, 12,  .grayAAAAAA)
-                        Spacer()
-                       
-                                Image(.routing)
-                                    .resizable()
-                                    .frame(width: 20,height: 20)
-                                Text("orderRoute".localized())
-                                    .textModifier(.plain, 12, .black222222)
-                          
-                    }
-                }.padding(16)
-            }
+                }
+                HStack(spacing: 2) {
+                    Image(.barcode)
+                        .resizable()
+                        .frame(width: 20,height: 20)
+                    Text("orderNo".localized()+": \(order?.id ?? 0)")
+                        .textModifier(.plain, 12,  .grayAAAAAA)
+                    Spacer()
+                    
+                    Image(.routing)
+                        .resizable()
+                        .frame(width: 20,height: 20)
+                    Text("orderRoute".localized())
+                        .textModifier(.plain, 12, .black222222)
+                    
+                }
+            }.padding(16)
+        }
     }
 }

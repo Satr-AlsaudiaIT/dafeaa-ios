@@ -49,15 +49,15 @@ struct TabBarView: View {
                         }
                         .tag(Tab.myOrders)
                     
-                    ProcessesView()
-                        .tabItem {
-                            Image(selectedTab == .processes ? .receiptFill : .receipt)
-                                
-                            Text("processes".localized())
-                                .textModifier(.bold,12, selectedTab == .processes ? Color(.primary) : Color(.grayBDBDBD))
-                        }
-                        .tag(Tab.processes)
-                    
+//                    ProcessesView()
+//                        .tabItem {
+//                            Image(selectedTab == .processes ? .receiptFill : .receipt)
+//                                
+//                            Text("processes".localized())
+//                                .textModifier(.bold,12, selectedTab == .processes ? Color(.primary) : Color(.grayBDBDBD))
+//                        }
+//                        .tag(Tab.processes)
+//                    
                     ProfileView()
                         .tabItem {
                             Image(selectedTab == .profile ? .profileFill : .profile)

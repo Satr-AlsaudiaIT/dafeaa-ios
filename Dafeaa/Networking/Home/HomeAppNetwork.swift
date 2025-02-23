@@ -22,7 +22,7 @@ extension HomeNetwork: TargetType {
     var path: String {
         switch self {
         case .home                          :return "home"
-        case .wallet(let skip)              :return "wallet/transaction?skip=\(skip)"
+        case .wallet(let skip)              :return "wallet?skip=\(skip)"
         case .operations(let skip)          :return "wallet/operation?skip=\(skip)" }
     }
     

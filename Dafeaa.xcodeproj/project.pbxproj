@@ -126,9 +126,10 @@
 		18277EC52CB3A3BE0020A647 /* AccountTypeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18277EC42CB3A3BE0020A647 /* AccountTypeOption.swift */; };
 		18277ECC2CB3A48E0020A647 /* SignUpStep2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18277ECB2CB3A48E0020A647 /* SignUpStep2View.swift */; };
 		18277ECE2CB3AD140020A647 /* NavigationPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18277ECD2CB3AD140020A647 /* NavigationPath.swift */; };
-		1827CE662D2E85E000780F9B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1827CE652D2E85E000780F9B /* GoogleService-Info.plist */; };
+		183443552D6B9509001E5EAE /* ProfileList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183443542D6B9509001E5EAE /* ProfileList.swift */; };
 		1835ECF42CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1835ECF32CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift */; };
 		1835ECF72CCF9B81007EEAC1 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1835ECF62CCF9B81007EEAC1 /* NotificationsView.swift */; };
+		184869672D57F09F0054BC26 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 184869662D57F09F0054BC26 /* GoogleService-Info.plist */; };
 		187607B22CDF468200F4D261 /* OrdersLinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187607B02CDF468200F4D261 /* OrdersLinksView.swift */; };
 		187607B42CDF5DAD00F4D261 /* AddOfferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187607B32CDF5DAD00F4D261 /* AddOfferView.swift */; };
 		187607B62CDFCA1700F4D261 /* ClientLinkCellIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187607B52CDFCA1700F4D261 /* ClientLinkCellIView.swift */; };
@@ -323,9 +324,10 @@
 		18277EC42CB3A3BE0020A647 /* AccountTypeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTypeOption.swift; sourceTree = "<group>"; };
 		18277ECB2CB3A48E0020A647 /* SignUpStep2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep2View.swift; sourceTree = "<group>"; };
 		18277ECD2CB3AD140020A647 /* NavigationPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPath.swift; sourceTree = "<group>"; };
-		1827CE652D2E85E000780F9B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		183443542D6B9509001E5EAE /* ProfileList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileList.swift; sourceTree = "<group>"; };
 		1835ECF32CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWithdrawButtomSheet.swift; sourceTree = "<group>"; };
 		1835ECF62CCF9B81007EEAC1 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
+		184869662D57F09F0054BC26 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		187607B02CDF468200F4D261 /* OrdersLinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersLinksView.swift; sourceTree = "<group>"; };
 		187607B32CDF5DAD00F4D261 /* AddOfferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOfferView.swift; sourceTree = "<group>"; };
 		187607B52CDFCA1700F4D261 /* ClientLinkCellIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientLinkCellIView.swift; sourceTree = "<group>"; };
@@ -433,7 +435,7 @@
 				187607BF2CE0072D00F4D261 /* DafeaaRelease.entitlements */,
 				18277ECD2CB3AD140020A647 /* NavigationPath.swift */,
 				14E67A6F2CAC60D200C10AB5 /* Info.plist */,
-				1827CE652D2E85E000780F9B /* GoogleService-Info.plist */,
+				184869662D57F09F0054BC26 /* GoogleService-Info.plist */,
 				1820E2842CB9050000627DF9 /* Application */,
 				14E67A582CAC5E0E00C10AB5 /* Helper */,
 				14E67AE92CADB0C300C10AB5 /* Resources */,
@@ -1002,6 +1004,7 @@
 			children = (
 				1820E2C62CBAAC4E00627DF9 /* ProfileDetailView.swift */,
 				1820E2BD2CBA98A600627DF9 /* ProfileView.swift */,
+				183443542D6B9509001E5EAE /* ProfileList.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1429,7 +1432,6 @@
 				18AF0DF12CB15CB10061F07E /* Bahij_TheSansArabic-SemiBold.ttf in Resources */,
 				18AF0DF22CB15CB10061F07E /* Bahij_TheSansArabic-Light.ttf in Resources */,
 				18AF0DF32CB15CB10061F07E /* Bahij_TheSansArabic-Plain.ttf in Resources */,
-				1827CE662D2E85E000780F9B /* GoogleService-Info.plist in Resources */,
 				18AF0DF42CB15CB10061F07E /* Bahij_TheSansArabic-Bold.ttf in Resources */,
 				18AF0DF52CB15CB10061F07E /* Bahij_TheSansArabic-Black.ttf in Resources */,
 				18AF0DF62CB15CB10061F07E /* Bahij_TheSansArabic-ExtraBold.ttf in Resources */,
@@ -1444,6 +1446,7 @@
 				14E67B172CADB73E00C10AB5 /* Poppins-Regular.ttf in Resources */,
 				14E67B192CADB73E00C10AB5 /* Poppins-Thin.ttf in Resources */,
 				14E67B182CADB73E00C10AB5 /* Poppins-SemiBold.ttf in Resources */,
+				184869672D57F09F0054BC26 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1579,6 +1582,7 @@
 				18D3655B2CD27CF000D50A34 /* AddEditAddressView.swift in Sources */,
 				14E67A312CAC5CCA00C10AB5 /* SplashView.swift in Sources */,
 				189CD7492CDC83D500E929DE /* ClientLinkDetails.swift in Sources */,
+				183443552D6B9509001E5EAE /* ProfileList.swift in Sources */,
 				14E67AE52CAC643B00C10AB5 /* SearchBarView.swift in Sources */,
 				18D3655D2CD81E8300D50A34 /* PathView.swift in Sources */,
 				1820E2D32CBAACDD00627DF9 /* FAQView.swift in Sources */,
@@ -1880,7 +1884,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/Dafeaa.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
@@ -1920,7 +1924,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/DafeaaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;

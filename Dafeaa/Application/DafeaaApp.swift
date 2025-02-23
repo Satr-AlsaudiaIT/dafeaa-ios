@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
     }
     
     func reset() {
-        //        NotificationConfigration.shared.firebaseConfigration()
+        NotificationConfigration.shared.firebaseConfigration()
         //        checkAppAvailability()
         let window = UIWindow()
         self.window = window

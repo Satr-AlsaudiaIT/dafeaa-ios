@@ -18,8 +18,6 @@ struct ProfileView: View {
     @State private var isActiveActionSheet = false
     @State private var showingChangePhone = false
     @State private var activeActionSheet: ActiveSheet?
-    @State private var selectedAddressId: Int = Constants.selectedAddressId
-    @State private var selectedAddress: String = Constants.selectedAddress
     @State private var showCompleteDataPopup: Bool = false
     @State private var navigateToPendingView: Bool = false
     @State private var navigateToOffers: Bool = false
@@ -71,16 +69,11 @@ struct ProfileView: View {
                         
                         VStack(spacing: 16) {
                             NavigationLinkComponent(
-                                destination: ProfileDetailView(),
+                                destination: ProfileList(),
                                 label: "profile",
                                 image: Image(.iconProfile)
                             )
                             
-                                NavigationLinkComponent(
-                                    destination: SavedAddressesView(selectedAddressId: $selectedAddressId, selectedAddress: $selectedAddress),
-                                    label: "Saved Addresses",
-                                    image: Image(.iconAddress)
-                                )
                             
                             
                             HStack(spacing:12) {
@@ -139,7 +132,7 @@ struct ProfileView: View {
 //                                destination: OrdersOffersLinksView(),
 //                                label: "offers",
 //                                image: Image(.iconOffer))
-//                         
+//
                             NavigationLinkComponent(
                                 destination: StaticPagesView(type: .constant(.aboutApp)),
                                 label: "About Dafeaa",

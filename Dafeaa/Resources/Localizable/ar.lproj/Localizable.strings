@@ -183,6 +183,8 @@
 "noExtraFees" = "لا توجد مصروفات إضافية";
 "weWillContactYou" = "*سيتم التواصل معكم خلال يومين عمل لاتمام عملية سحب المبلغ.";
 "notValidBalance" = "رصيدك غير كافي, برجاء إدخال مبلغ ضمن الرصيد المتاح";
+"Pending_Purchases_Balance" = "رصيد المشتريات المعلق";
+"Pending_Sales_Balance" = "رصيد المبيعات المعلق";
 
 //MARK: - NOTIFICATIONS
 "emptyNotifications"="لا توجد اشعارات لديك بعد, سيتم تنبيهك في حال وصول اي اشعار لك";
@@ -234,6 +236,13 @@
 "addNewAddress" = "إضافة عنوان جديد";
 "editAddress" = "تعديل العنوان";
 "areaValidation" = "برجاء ادخال حقل المنطقة";
+"cityValidation" = "برجاء اختيار حقل المدينة";
+"neighborhoodName" = "اسم الحي";
+"neighborhoodValidation" = "برجاء إدخال حقل اسم الحي";
+"confirm_location" = "تأكيد الموقع";
+"unable_fetch_address" = "غير قادر على جلب العنوان";
+"pick_location" = "اختر الموقع";
+"confirm_my_location" = "تأكيد موقعي";
 "streetValidation" = "برجاء إدخال حقل اسم الشارع";
 "buildingNumValidation" = "برجاء إدخال رقم المبنى";
 "floatNumValidation" = "برجاء إدخال رقم الطابق";
@@ -302,3 +311,5 @@
 "subscription_confirmation_button" = "تأكيد";
 "sub_plan_success_message" = "تم الاشتراك في هذة الخطة بنجاح";
 "payment" = "الدفع";
+
+

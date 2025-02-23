@@ -185,6 +185,8 @@
 "noExtraFees" = "No additional fees";
 "weWillContactYou" = "*We will contact you within two working days to complete the withdrawal process.";
 "notValidBalance" = "Insufficient balance. Please enter an amount within your available balance.";
+"Pending_Purchases_Balance" = "Pending Purchases Balance";
+"Pending_Sales_Balance" = "Pending Sales Balance";
 
 //MARK: - NOTIFICATIONS
 "emptyNotifications"="You don't have any notifications yet. You will be alerted when you receive any notifications.";
@@ -235,6 +237,13 @@
 "addNewAddress" = "Add a New Address";
 "editAddress" = "Edit Address";
 "areaValidation" = "Please enter the area field";
+"cityValidation" = "Please enter the city field";
+"neighborhoodName" =  "Neighborhood Name";
+"neighborhoodValidation" = "Please enter the Neighborhood field";
+"confirm_location" = "Confirm location";
+"unable_fetch_address"="unable to fetch address";
+"confirm_my_location"="Confirm my location";
+"pick_location" = "Pick location";
 "streetValidation" = "Please enter the street name field";
 "buildingNumValidation" = "Please enter the building number";
 "floatNumValidation" = "Please enter the floor number";

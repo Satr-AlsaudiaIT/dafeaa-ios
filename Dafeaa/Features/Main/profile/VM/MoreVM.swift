@@ -21,7 +21,12 @@ final class MoreVM : ObservableObject {
     @Published private var _subscriptionPlans  : [SubscriptionModelData] = []
 
     @Published private var _withdrawsCount : Int = 1
-
+    @Published private var _areas: [CountryCityModelData] = []
+    @Published private var _areaNames: [String] = []
+    
+    @Published private var _cities: [CountryCityModelData] = []
+    @Published private var _citiesNames: [String] = []
+    
     @Published var _getData                : Bool = false
     @Published var _isSuccess              = false
     @Published var _isCreateSuccess        = false
@@ -29,7 +34,7 @@ final class MoreVM : ObservableObject {
     @Published var _subSuccess             = false
 
     @Published var toast: FancyToast?      = nil
-
+    let apiAuth: AuthAPIProtocol = AuthAPI()
     private var _message                   : String = ""
     private var token                      = ""
     let api                                : MoreAPIProtocol = MoreAPI()
@@ -45,6 +50,32 @@ final class MoreVM : ObservableObject {
     var withdrawsData                      : [withdrawsData] { get {return _withdrawsData  }  set {}  }
     var subscriptionPlans                  : [SubscriptionModelData] { get {return _subscriptionPlans  }  set {}  }
     
+    var areas : [CountryCityModelData] {
+        get {
+            return  self._areas
+        }
+        set{}
+    }
+    
+    var cities : [CountryCityModelData] {
+        get {
+            return  self._cities
+        }
+        set{}
+    }
+    
+    var areaNames: [String] {
+        get {
+            return  self._areas.map {$0.name ?? ""}
+        }
+        set{}
+    }
+    var cityNames: [String] {
+        get {
+            return  self._cities.map {$0.name ?? ""}
+        }
+        set{}
+    }
     func validateChangePassword(currentPassword: String, password: String, confirmPassword: String) {
         if currentPassword.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "messageEmptyCurrentPassword".localized())
@@ -80,25 +111,32 @@ final class MoreVM : ObservableObject {
         }
     }
 
-    func validateCreateAddress(id:Int?,area:String, streetName: String, buildingNum:String, floatNum:String,address:String ){
-        if area.isBlank {
+    func validateCreateAddress(id:Int?,areaId:Int, cityId: Int,streetName: String, neighborhoodName:String, address:String ,lat: Double? = nil, lng: Double? = nil){
+        if areaId == 0 {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "areaValidation".localized())
-        } else if streetName.isBlank {
+        }
+        else if cityId == 0 {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "cityValidation".localized())
+        }
+        else if streetName.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "streetValidation".localized())
-        } else if buildingNum.isBlank {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: "buildingNumValidation".localized())
-        } else if floatNum.isBlank {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: "floatNumValidation".localized())
+        }else if neighborhoodName.isBlank {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "neighborhoodValidation".localized())
         } else if address.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "addressNumValidation".localized())
         }else {
-            var  dic = [
+            var  dic : [String: Any] = [
                 "address"       : address,
                 "street_name"   :streetName,
-                "building_num"  :buildingNum.convertDigitsToEng,
-                "area"          :area,
-                "float_num"     :floatNum.convertDigitsToEng]
-            
+                "district_name"  :neighborhoodName,
+                "area_id"          :areaId,
+                "city_id"       :cityId
+//                "float_num"     :floatNum.convertDigitsToEng
+            ]
+            if  lat != nil && lng != nil {
+                dic.updateValue(lat ?? 0.0, forKey: "lat")
+                dic.updateValue(lng ?? 0.0, forKey: "lng")
+            }
             if id != nil {
                 dic.updateValue("put", forKey: "_method")
                 self.address(id: id ?? 0, method: .post, dic: dic)
@@ -439,6 +477,61 @@ final class MoreVM : ObservableObject {
             }
         }
     }
-
+    
+    
+    func getAreas() {
+        self._isLoading = true
+        apiAuth.getCountries() { result in
+            switch result {
+            case .success(let response):
+                self._isLoading = false
+                self._isFailed = false
+                self._areas = response?.data ?? []
+                self._areaNames = self._areas.map {$0.name ?? ""}
+                
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+            }
+        }
+    }
+    func getAreaId(areaName:String) -> Int {
+        if let selectedArea = self._areas.first(where: { $0.name == areaName }){
+            return selectedArea.id ?? 0
+        }
+        else {
+            return 0
+        }
+    }
+    
+    
+    func getCityId(cityName:String) -> Int {
+        if let selectedCity = self._cities.first(where: { $0.name == cityName }){
+            return selectedCity.id ?? 0
+        }
+        else {
+            return 0
+        }
+    }
+    func getCities(countryId:Int) {
+        self._isLoading = true
+        apiAuth.getCities(countryId: countryId) { result in
+            switch result {
+            case .success(let response):
+                self._isLoading = false
+                self._isFailed = false
+                self._cities = response?.data ?? []
+                self._citiesNames = self._cities.map {$0.name ?? ""}
+                
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+            }
+        }
+    }
     
 }

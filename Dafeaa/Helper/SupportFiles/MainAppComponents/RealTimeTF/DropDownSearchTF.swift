@@ -67,7 +67,7 @@ struct DropdownSearchTF: View {
 //                            .cornerRadius(5)
 //                            .padding(.leading,10)
                             .font(.custom(AppFonts.shared.name(AppFontsTypes.plain), size: 14))
-                            .foregroundColor(.black292D32)
+                            .foregroundColor(.grayB5B5B5)
                             .submitLabel(submitLabel)
                             .textInputAutocapitalization(.never)
                             .autocorrectionDisabled()

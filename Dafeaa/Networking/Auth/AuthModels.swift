@@ -120,10 +120,14 @@ struct AddressesModel: Codable {
 }
 
 // MARK: - AddressesData
+// MARK: - AddressesData
 struct AddressesData: Codable {
     let id, clientID: Int?
-    let address, streetName, buildingNum: String?
-    let area, floatNum: String?
+    let address, streetName, countryName,cityName: String?
+    let areaId: Int?
+    let cityId,countryId: Int?
+    let districtName: String?
+    let lat, lng: Double?
 }
 
 // MARK: - withdrawsModel

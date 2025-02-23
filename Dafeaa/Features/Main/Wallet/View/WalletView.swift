@@ -75,7 +75,7 @@ struct WalletView: View {
                         
                         //MARK: - lowerView
                         VStack(spacing: 17) {
-                            LastProcessNavView(title: "lastTransactions".localized(), selectedTab: $selectedTab)
+//                            LastProcessNavView(title: "lastTransactions".localized(), selectedTab: $selectedTab)
                             if viewModel.processList.isEmpty {
                                 EmptyCostumeView()
                             }else {

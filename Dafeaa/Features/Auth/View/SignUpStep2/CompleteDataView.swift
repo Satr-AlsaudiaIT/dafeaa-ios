@@ -13,10 +13,11 @@ struct CompleteDataView: View {
     @State private var isCountryDropDownOpen: Bool? = false
     @State private var isCityDropDownOpen: Bool? = false
     @State private var selectedCountryName: String = ""
+    @State private var selectedCityName: String = ""
+
     @State private var commercialName: String = ""
     @State private var area: String = ""
     @State private var taxNumber: String = ""
-    @State private var selectedCityName: String = ""
     @State private var selectedCommercialLicense: UIImage?
     @State private var selectedCommercialLicenseUrl: String?
     @State private var testOptions: [String] = ["ssss","aaaa"]

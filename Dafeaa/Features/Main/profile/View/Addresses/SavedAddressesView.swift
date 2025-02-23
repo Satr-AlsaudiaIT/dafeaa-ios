@@ -122,7 +122,7 @@ struct SavedAddressesView: View {
                 Button(action: {
                     withAnimation {
                         selectedAddressId = address.id ?? 0
-                        selectedAddress   = "address".localized() + ": \(address.area ?? "")" + ", " + "\(address.address ?? "")" + ", " + "\(address.streetName ?? ""),\(address.buildingNum ?? ""), \(address.floatNum ?? "")"
+                        selectedAddress   = "address".localized() + ": \(address.countryName ?? "")," + " \(address.cityName ?? "")" + ", " + " \(address.address ?? "")" + ", " + " \(address.districtName ?? "")"
                         
                     }
                 }) {
@@ -138,7 +138,7 @@ struct SavedAddressesView: View {
                                 .textModifier(.bold, 14, .black1E1E1E)
                             Text("PhoneNum:".localized() + Constants.phone )
                                 .textModifier(.bold, 12, .gray979797)
-                            let address = "address".localized() + ": \(address.area ?? "")" + ", " + "\(address.address ?? "")" + ", " + "\(address.streetName ?? ""),\(address.buildingNum ?? ""), \(address.floatNum ?? "")"
+                            let address = "address".localized() + ": \(address.address ?? "")" //": \(address.countryName ?? "")," + " \(address.cityName ?? "")" + ", " + " \(address.address ?? "")" + ", " + " \(address.districtName ?? "")"
                             Text(address)
                                 .textModifier(.plain, 12, .gray979797)
                                 .multilineTextAlignment(.leading)
