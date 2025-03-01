@@ -185,7 +185,10 @@
 "notValidBalance" = "رصيدك غير كافي, برجاء إدخال مبلغ ضمن الرصيد المتاح";
 "Pending_Purchases_Balance" = "رصيد المشتريات المعلق";
 "Pending_Sales_Balance" = "رصيد المبيعات المعلق";
-
+"search_offer" = "البحث عن عرض";
+"search_by_number" = "البحث بواسطة رقم العرض";
+"search_by_QR_code" = "البحث عن طريق رمز الاستجابة السريعة";
+"search" = "البحث";
 //MARK: - NOTIFICATIONS
 "emptyNotifications"="لا توجد اشعارات لديك بعد, سيتم تنبيهك في حال وصول اي اشعار لك";
 

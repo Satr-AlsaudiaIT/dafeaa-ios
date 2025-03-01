@@ -21,17 +21,18 @@ class HomeVM: ObservableObject {
                                                                     NotificationsData(orderId: 1, actionType: 1, iconType: 1, visitType: 1, id: 1, isRead: 0, title: "hjww", createdAt: "12-01-2024", body: "dfghjkljhgfdghjklkjhgfdghjk dfghjkljhgfdghjk", data: "dfghjkl", time: "03:04"),
                                                                     NotificationsData(orderId: 1, actionType: 1, iconType: 1, visitType: 1, id: 1, isRead: 0, title: "hjww", createdAt: "12-01-2024", body: "dfghjkljhgfdghjklkjhgfdghjk dfghjkljhgfdghjk", data: "dfghjkl", time: "03:04")]
     @Published private var _notificationsCount  : Int = 1
-
+    @Published private var _offerData     : ShowOfferData?
     @Published var _getData                : Bool = false
     @Published var _isSuccess              = false
     @Published var _isWithdrawSuccess      = false
     @Published var _addToWalletURL         : String = ""
     @Published var paymentURL              : String = ""
+    @Published var showOfferSuccess       : Bool = false
     private var _message                   : String = ""
     private var token                      = ""
     let api                                : HomeAPIProtocol = HomeAPI()
     let api2                               : MoreAPIProtocol = MoreAPI()
-
+    
     var hasMoreData                        = true
     var isLoading    : Bool                { get { return _isLoading  }      }
     var message      : String              { get { return _message    }      }
@@ -40,6 +41,8 @@ class HomeVM: ObservableObject {
     var processList  : [HomeModelData]     { get { return _processList} set{}}
     var homeData     : HomeModel?          { get { return _homeData   } set{}}
     var notifications: [NotificationsData] { get { return _notifications} set{}}
+    var offerData     : ShowOfferData?     { get { return _offerData} set{}}
+
     var walletAmount : Double = 0
     //MARK: - APIs
     
@@ -140,6 +143,30 @@ class HomeVM: ObservableObject {
             }
         }
     }
+    func handleFindOfferByNum(id:Int){
+        if id == 0 {
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "offer_num_validation".localized())
+        }
+        else {
+            _isLoading = true
+            let api: OrdersAPIProtocol = OrdersAPI()
+            api.showDynamicLinks(id: id) { [weak self] (Result) in
+                guard let self = self else { return }
+                _isLoading = false
+                switch Result {
+                case .success(let response):
+                    guard let data = response?.data else { return }
+                    self._offerData = data
+                    self.showOfferSuccess = true
+                case .failure(_):
+                        self.toast = FancyToast(type: .error, title: "Error".localized(), message: "order_not_found".localized())
+                    
+                }
+            }
+        }
+    }
+
+    
 }
 
     

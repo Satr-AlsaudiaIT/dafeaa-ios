@@ -17,6 +17,15 @@ struct HomeView: View {
     @State var amount:Double = 0.0
     @State private var balanceActionType : bottomSheetAction?
     @State private var isViewAppeared: Bool = false
+    @State private var isGoingToOfferScreen: Bool = false
+    @State private var isPresentBuySheet: Bool = false
+    let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
+    @State var showClientOfferDetails: Bool = false
+    @State var showOfferDetails: Bool = false
+    @State var offerData: ShowOfferData? = nil
+    
+    @StateObject var profileViewModel = MoreVM()
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -79,23 +88,82 @@ struct HomeView: View {
                             VStack(spacing: 17) {
                                 Rectangle().fill(.white)
                                     .frame(height: 32)
-                                LastProcessNavView(title: "lastProcesses".localized(), selectedTab: $selectedTab)
-                                    .padding(.horizontal,24)
-                                
-                                if viewModel.processList.isEmpty {
-                                    EmptyCostumeView()
-                                }else {
-                                    ScrollView (showsIndicators: false){
-                                        VStack(spacing: 8) {
-                                            ForEach(0..<viewModel.processList.count,id: \.self){ index in
-                                                ProcessComponent(process: viewModel.processList[index])
-                                            }
+                                Button {
+                                    isPresentBuySheet = true
+                                } label: {
+                                    ZStack {
+                                        HStack {
+                                            Text("buy_product".localized())
+                                                .textModifier(.extraBold, 16, .black222222)
+                                            Spacer()
+                                            Image(.buyProduct)
+                                                .resizable()
+                                                .frame(width: 28.05, height: 28)
                                         }
-                                        
-                                        
+                                        .padding()
                                     }
-                                    .padding(.horizontal,24)
-                                }}
+                                    .frame(width: UIScreen.main.bounds.width - 40)
+                                    .fixedSize()
+                                    .overlay(
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .stroke(LinearGradient(colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)], startPoint: .top, endPoint: .bottom), lineWidth: 1)
+                                        }
+                                    )
+                                    .background(
+                                          RoundedRectangle(cornerRadius: 10)
+                                              .fill(Color.white)
+                                              .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
+                                      )
+                                }
+
+                                
+                                Button {
+                                    isGoingToOfferScreen = true
+                                } label: {
+                                    ZStack {
+                                        HStack {
+                                            Text("sell_product".localized())
+                                                .textModifier(.extraBold, 16, .black222222)
+                                            Spacer()
+                                            Image(.sellProduct)
+                                                .resizable()
+                                                .frame(width: 28.05, height: 28)
+                                        }
+                                        .padding()
+                                    }
+                                    .frame(width: UIScreen.main.bounds.width - 40)
+                                    .fixedSize()
+                                    .overlay(
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .stroke(LinearGradient(colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)], startPoint: .top, endPoint: .bottom), lineWidth: 1)
+                                        }
+                                    )
+                                    .background(
+                                          RoundedRectangle(cornerRadius: 10)
+                                              .fill(Color.white)
+                                              .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
+                                      )
+                                }
+                                
+                                Spacer()
+//                                LastProcessNavView(title: "lastProcesses".localized(), selectedTab: $selectedTab)
+//                                    .padding(.horizontal,24)
+//
+//                                if viewModel.processList.isEmpty {
+//                                    EmptyCostumeView()
+//                                }else {
+//                                    ScrollView (showsIndicators: false){
+//                                        VStack(spacing: 8) {
+//                                            ForEach(0..<viewModel.processList.count,id: \.self){ index in
+//                                                ProcessComponent(process: viewModel.processList[index])
+//                                            }
+//                                        }
+//                                    }
+//                                    .padding(.horizontal,24)
+//                                }
+                            }
                         }
                         .cornerRadius(24)
                         .padding(.bottom,-24)
@@ -150,21 +218,38 @@ struct HomeView: View {
             .onChange(of: isViewAppeared, { _, newValue in
                 if newValue {
                     viewModel.home()
+                    if userId == 0 {
+                        profileViewModel.profile()
+                    }
                 }
             })
             .onDisappear{
-                isViewAppeared = false 
+                isViewAppeared = false
             }
             .refreshable {
                 viewModel.home()
             }
+            .navigationDestination(isPresented: $showOfferDetails, destination: {
+                OrderLinkDetailsView(offerData: offerData)
+            })
+            .navigationDestination(isPresented: $showClientOfferDetails, destination: {
+                ClientLinkDetails(offerData: offerData)
+            })
+            .sheet(isPresented: $isPresentBuySheet, content: {
+                BuyProductBottomSheet(isShowClientLinkDetails: $showClientOfferDetails, isShowOrderLinkDetails: $showOfferDetails, offerData: $offerData,isSheetPresented: $isPresentBuySheet)
+                    .presentationDetents([.fraction(0.6)]) // Use fraction to make height consistent
+                    .presentationCornerRadius(24)
+                    .presentationDragIndicator(.visible)
+            })
             .sheet(isPresented: $isSheetPresented, content: {
                 AddWithdrawBottomSheet(actionType: $balanceActionType, amountDouble: $amount, isSheetPresented: $isSheetPresented,navigateToWebView: $navigateToWebView,paymentURL: $paymentURL)
                     .presentationDetents([.fraction(0.6)]) // Use fraction to make height consistent
                     .presentationCornerRadius(24)
                     .presentationDragIndicator(.visible)
             })
-           
+            .navigationDestination(isPresented: $isGoingToOfferScreen, destination: {
+                OrdersOffersLinksView()
+            })
             .navigationDestination(isPresented: $navigateToWebView) {
                 PaymentWebViewContainer(url: paymentURL)
             }

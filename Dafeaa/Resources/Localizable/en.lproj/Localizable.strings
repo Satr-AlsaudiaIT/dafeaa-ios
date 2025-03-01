@@ -1,4 +1,4 @@
-/* 
+/*
  Localizable.strings
  //
  //English
@@ -187,6 +187,10 @@
 "notValidBalance" = "Insufficient balance. Please enter an amount within your available balance.";
 "Pending_Purchases_Balance" = "Pending Purchases Balance";
 "Pending_Sales_Balance" = "Pending Sales Balance";
+"search_offer" = "Search Offer";
+"search_by_number" = "Search by Offer Number";
+"search_by_QR_code" = "Search by QR Code";
+"search" = "Search";
 
 //MARK: - NOTIFICATIONS
 "emptyNotifications"="You don't have any notifications yet. You will be alerted when you receive any notifications.";
