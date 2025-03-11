@@ -47,7 +47,7 @@ struct LoginModel: Codable {
 }
 
 // MARK: - LoginData
-struct LoginData:Codable {
+struct LoginData:Codable, Equatable {
     let name, phone, email, profileImage: String?
     let id: Int?
     let status, accountType, activeNotification, uncompletedData: Int?
@@ -127,7 +127,7 @@ struct AddressesData: Codable {
     let areaId: Int?
     let cityId,countryId: Int?
     let districtName: String?
-    let lat, lng: Double?
+    let lat, lng: String?
 }
 
 // MARK: - withdrawsModel

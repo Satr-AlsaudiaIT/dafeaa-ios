@@ -19,7 +19,8 @@ struct PendingView: View {
         ZStack{
             VStack {
                 NavigationBarView(title: "PendingViewNavTitle"){
-                    self.presentationMode.wrappedValue.dismiss()
+                    NavigationUtil.popToRootView()
+//                    self.presentationMode.wrappedValue.dismiss()
                 }
                     VStack(spacing: 0){
                         Spacer()
@@ -59,7 +60,7 @@ struct PendingView: View {
         }
         .navigationBarHidden(true)
         .toastView(toast: $viewModel.toast)
-//        .onAppear{viewModel.profile()}
+        .onAppear{viewModel.profile()}
 //        .onReceive(viewModel.$_isActive){ isActive in
 //            isActive ? tabBarTransition(): ()}
     }

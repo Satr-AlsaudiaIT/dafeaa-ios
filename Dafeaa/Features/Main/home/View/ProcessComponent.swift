@@ -26,9 +26,15 @@ struct ProcessComponent: View {
             HStack(spacing: 2) {
                 Text(process?.amount ?? "")
                     .textModifier(.extraBold, 16,  process?.amount?.first == "+" ? .green026C34 : .redD73D24)
-                Text("SAR" .localized())
-                    .textModifier(.plain, 16, process?.amount?.first == "+" ? .green026C34 : .redD73D24)
+                Image(.riyal)
+                     .resizable()
+                     .aspectRatio(contentMode: .fit)
+                     .foregroundColor(.gray8B8C86)
+                     .frame(width: 20)
+                     .padding(.trailing, 10)
             }
+            .environment(\.layoutDirection, .rightToLeft)
+            
         }
     }
 }

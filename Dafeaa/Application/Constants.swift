@@ -89,14 +89,14 @@ class Constants {
         }
     }
     
-    static var clientOrderId: Int {
+    static var clientOrderCode: String {
         get {
             let ud = UserDefaults.standard
-            return ud.value(forKey: "clientOrderId") as? Int ?? 0
+            return ud.value(forKey: "clientOrderCode") as? String ?? ""
         }
         set(token) {
             let ud = UserDefaults.standard
-            ud.set(token, forKey: "clientOrderId")
+            ud.set(token, forKey: "clientOrderCode")
         }
     }
     

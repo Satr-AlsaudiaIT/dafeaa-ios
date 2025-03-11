@@ -17,10 +17,18 @@ struct SubscriptionCell: View {
                 VStack(alignment: .leading) {
                     HStack {
                         let val = subscriptionData.price ?? 0
-                        Text(String(format: "%.2f %@", val, ""))
-                            .textModifier(.bold, 28, .black222222)
-                        Text("rs".localized() + "/ " + "month".localized())
-                            .textModifier(.plain, 15, .black222222)
+                        HStack(spacing: 5) {
+                            Text(String(format: "%.2f", val))
+                                .textModifier(.bold, 28, .black222222)
+                            Image(.riyal)
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(.gray8B8C86)
+                                .frame(width: 20)
+                                .padding(.trailing, 10)
+                            Text("/ " + "month".localized())
+                                .textModifier(.plain, 15, .black222222)
+                        }
+                        .environment(\.layoutDirection, .rightToLeft)
                         Spacer()
                     }
                     .padding(.bottom,10)

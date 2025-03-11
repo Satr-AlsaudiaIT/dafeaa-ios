@@ -118,13 +118,16 @@ final class MoreVM : ObservableObject {
         else if cityId == 0 {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "cityValidation".localized())
         }
-        else if streetName.isBlank {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: "streetValidation".localized())
-        }else if neighborhoodName.isBlank {
+//        else if streetName.isBlank {
+//            toast = FancyToast(type: .error, title: "Error".localized(), message: "streetValidation".localized())
+//        }
+        else if neighborhoodName.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "neighborhoodValidation".localized())
-        } else if address.isBlank {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: "addressNumValidation".localized())
-        }else {
+        }
+//        else if address.isBlank {
+//            toast = FancyToast(type: .error, title: "Error".localized(), message: "addressNumValidation".localized())
+//        }
+        else {
             var  dic : [String: Any] = [
                 "address"       : address,
                 "street_name"   :streetName,

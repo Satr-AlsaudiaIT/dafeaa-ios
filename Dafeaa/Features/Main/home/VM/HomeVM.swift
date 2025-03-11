@@ -43,22 +43,18 @@ class HomeVM: ObservableObject {
     var notifications: [NotificationsData] { get { return _notifications} set{}}
     var offerData     : ShowOfferData?     { get { return _offerData} set{}}
 
-    var walletAmount : Double = 0
+    @Published var walletAmount : Double = 0
     //MARK: - APIs
     
     func home() {
         self._isLoading = true
-        api.home() { [weak self] (Result) in
-            guard let self = self else {return}
+        api.wallet(skip: 0) { [weak self] (Result) in
+            guard let self = self else { return }
+            self._isLoading = false
             switch Result {
-                
             case .success(let Result):
-                self._isLoading = false
-                self._isFailed = false
-                guard let data = Result?.data else {return}
-                self._homeData = Result
-                self._processList = data
-                self.walletAmount = self._homeData?.availableBalance ?? 0
+                self.walletAmount = Double(Result?.availableBalance ?? 0)
+    
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
@@ -66,6 +62,25 @@ class HomeVM: ObservableObject {
                 self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
             }
         }
+
+//        api.home() { [weak self] (Result) in
+//            guard let self = self else {return}
+//            switch Result {
+//                
+//            case .success(let Result):
+//                self._isLoading = false
+//                self._isFailed = false
+//                guard let data = Result?.data else {return}
+//                self._homeData = Result
+//                self._processList = data
+//                self.walletAmount = self._homeData?.availableBalance ?? 0
+//            case .failure(let error):
+//                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+//                self._isLoading = false
+//                self._isFailed = true
+//                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+//            }
+//        }
     }
     
     func notificationsList(skip: Int) {
@@ -143,14 +158,14 @@ class HomeVM: ObservableObject {
             }
         }
     }
-    func handleFindOfferByNum(id:Int){
-        if id == 0 {
+    func handleFindOfferByNum(code:String){
+        if code == "" {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message: "offer_num_validation".localized())
         }
         else {
             _isLoading = true
             let api: OrdersAPIProtocol = OrdersAPI()
-            api.showDynamicLinks(id: id) { [weak self] (Result) in
+            api.showDynamicLinks(code: code) { [weak self] (Result) in
                 guard let self = self else { return }
                 _isLoading = false
                 switch Result {

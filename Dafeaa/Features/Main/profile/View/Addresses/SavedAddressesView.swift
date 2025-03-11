@@ -28,8 +28,6 @@ struct SavedAddressesView: View {
                 VStack(alignment: .center, spacing: 24) {
                     if viewModel.addressList.isEmpty {
                         EmptyCostumeView()
-
-                            
                                 ReusableButton(buttonText: "saveSelectedAddress".localized(),buttonColor: .yellow) {
                                     Constants.selectedAddressId = selectedAddressId
                                     Constants.selectedAddress = selectedAddress

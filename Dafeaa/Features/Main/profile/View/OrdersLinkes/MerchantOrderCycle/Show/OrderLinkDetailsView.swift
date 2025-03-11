@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OrderLinkDetailsView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    var id: Int = 0
+    var code: String = ""
     @State var offerData: ShowOfferData?
     @StateObject var viewModel = OrdersVM()
     @State var totalPrice: Double = 0
@@ -18,12 +18,16 @@ struct OrderLinkDetailsView: View {
     @State var address: String = Constants.selectedAddress
     @State var isNavigateToAddress: Bool = false
     @State var showingProductDetails: Bool = false
-    @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950)
+    @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 1, remainingQuantity: 1)
     var linkDetails: ShowOfferData  {
-        return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [])
+        return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [], status: 0)
     }
+    @State var status: Int = 0
     @State var toast: FancyToast? = nil
-
+    var offerDataView: ShowOfferData {
+        return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [], status: 0)
+    }
+    
     var body: some View {
         NavigationStack{
             ZStack {
@@ -85,8 +89,22 @@ struct OrderLinkDetailsView: View {
                                 SavedAddressesView(selectedAddressId: $addressId, selectedAddress: $address,isComingFromSelection: true)
                             }
                         }
-                        ReusableButton(buttonText: "deleteOffer"){
-                            viewModel.deleteOffer(id: viewModel.offersData?.id ?? 0)
+                        VStack (spacing: 20) {
+                            
+                            if status == 1 {
+                                    ReusableButton(buttonText: "stopOffer",buttonColor: .yellow){
+                                        viewModel.stopActivateOffer(code: viewModel.offersData?.code ?? "", status: 2)
+                                    }
+                                }
+                                else {
+                                    ReusableButton(buttonText: "activateOffer",buttonColor: .yellow){
+                                        viewModel.stopActivateOffer(code: viewModel.offersData?.code ?? "", status: 1)
+                                    }
+                                }
+                            
+                            ReusableButton(buttonText: "deleteOffer"){
+                                viewModel.deleteOffer(id: viewModel.offersData?.id ?? 0)
+                            }
                         }
                     }
                     .padding(24)
@@ -103,21 +121,28 @@ struct OrderLinkDetailsView: View {
                 }
                 
             }
+            .onChange(of: viewModel.activeStopSuccess, { _, _ in
+                status = status == 1 ? 2 : 1
+            })
             .sheet(isPresented: $showingProductDetails, onDismiss: {
                 showingProductDetails = false
             }, content: {
                 ProductDetailsPopUp(product: $selectedProduct )
                     .presentationCornerRadius(24)
                     .presentationDragIndicator(.visible)
-                    .presentationDetents([.medium])
+                    .presentationDetents([.fraction(0.7)])
             }).edgesIgnoringSafeArea(.bottom)
                 .toastView(toast: $viewModel.toast)
                 .toastView(toast: $toast)
 
                 .navigationBarHidden(true)
                 .onAppear{
-                    if let offerData { viewModel._offersData = offerData
-                    } else { viewModel.showOffer(id: id) }
+                    if let offerData {
+                        status = offerData.status ?? 0
+                        viewModel._offersData = offerData
+                    } else {
+                        viewModel.showOffer(code: code)
+                    }
                 }
                 .onReceive(viewModel.$_isSuccess){value in
                     if value {
@@ -130,7 +155,9 @@ struct OrderLinkDetailsView: View {
                             let totalProductPrice = productPrice * Double(product.amount ?? 1)
                             return result + totalProductPrice
                         }
+                        
                     }
+                    status = viewModel._offersData?.status ?? 0
                 }
         }
     }

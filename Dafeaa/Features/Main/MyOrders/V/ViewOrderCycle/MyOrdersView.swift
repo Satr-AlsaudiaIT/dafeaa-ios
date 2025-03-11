@@ -39,6 +39,41 @@ struct MyOrdersView: View {
                     .padding(20)
                 }
                 .background(Color(.primary))
+                HStack {
+                    HStack {
+                        Spacer()
+                        VStack {
+                            if selectedSegment == 0 {
+                                Text("Pending_Purchases_Balance".localized())
+                                    .textModifier(.semiBold, 12, .black222222)
+                            }
+                            else {
+                                Text("Pending_Sales_Balance".localized())
+                                    .textModifier(.semiBold, 12, .black222222)
+                            }
+                            HStack(spacing: 5) {
+                                Text(String(format: "%.1f", viewModel.outStandingBalance))
+                                    .textModifier(.extraBold, 16, .black222222)
+                                Image(.riyal)
+                                    .resizable()
+                                     .aspectRatio(contentMode: .fit)
+                                     .foregroundColor(.gray8B8C86)
+                                     .frame(width: 15)
+                                     .padding(.trailing, 10)
+                            }
+                            .environment(\.layoutDirection, .rightToLeft)
+
+                        }
+                        Spacer()
+                    }
+                    .padding()
+                }
+                .overlay{
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(.grayE7E7E7, lineWidth: 1)
+                }
+                .padding()
+               
                 VStack(spacing: 16){
                     CustomSegmentView(titlesArray: ["MyPurchases".localized(),
                                                     "MySales".localized()], selectedSegment:$selectedSegment)
@@ -59,22 +94,7 @@ struct MyOrdersView: View {
                         //                                viewModel.orders(skip: 0, status: newValue == 1 ? "current":"history")
                         //                            }
                     }
-                    VStack {
-                        if selectedSegment == 0 {
-                            HStack {
-                                Text("↑" + "Pending_Purchases_Balance".localized() + "1200")
-                                    .textModifier(.plain, 14, .gray666666)
-                                Spacer()
-                            }
-                        }
-                        else if selectedSegment == 1 {
-                            HStack {
-                                Text("↓" + "Pending_Sales_Balance".localized() + "1200")
-                                    .textModifier(.plain, 14, .gray666666)
-                                Spacer()
-                            }
-                        }
-                    }
+                   
                     VStack(alignment: .leading,spacing: 24) {
                         
                         
@@ -114,7 +134,9 @@ struct MyOrdersView: View {
                     .navigationDestination(isPresented: $navigateToBusinessDetails) {
                         OrderBusinessDetailsView(orderID: selectedOrder?.id ?? 0)
                     }
-                }.padding(24)
+                }
+                .padding([.horizontal,.bottom],20)
+                
             }
             .onTapGesture {
                 showMenu = false
@@ -190,6 +212,7 @@ struct MyOrdersView: View {
         .toastView(toast: $viewModel.toast)
         .navigationBarHidden(true)
         .onAppear(){
+            showMenu = false
             AppState.shared.swipeEnabled = true
             viewModel.orders(skip: 0, status: selectedFilterStatus ,type: selectedSegment == 0 ? "client" : "merchant" )
         }

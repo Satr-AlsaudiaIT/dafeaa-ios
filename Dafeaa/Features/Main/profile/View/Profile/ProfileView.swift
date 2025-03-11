@@ -76,58 +76,33 @@ struct ProfileView: View {
                             
                             
                             
-                            HStack(spacing:12) {
-                                Image(.subscribtion)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 28, height: 28)
-                                
-                                Text("Subscription Management".localized())
-                                    .textModifier(.plain, 16, .black194558)
-                                Spacer()
-                                
-                                Image(.iconArrowNav)
-                                    .frame(width: 32, height: 32)
-                                    .foregroundColor(Color(.black194558))
-                            }
-                            .frame(height: 32)
-                            .onTapGesture {
-                                if businessInfo.rawValue == 0 {
-                                    showCompleteDataPopup = true
-                                }
-                                else if businessInfo.rawValue == 1 {
-                                    navigateToPendingView = true
-                                }
-                                else {
-                                    navigateToSubscriptionView = true
-                                }
-                            }
-                            HStack(spacing:12) {
-                                Image(.iconOffer)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 28, height: 28)
-                                
-                                Text("offers".localized())
-                                    .textModifier(.plain, 16, .black194558)
-                                Spacer()
-                                
-                                Image(.iconArrowNav)
-                                    .frame(width: 32, height: 32)
-                                    .foregroundColor(Color(.black194558))
-                            }
-                            .frame(height: 32)
-                            .onTapGesture {
-                                if businessInfo.rawValue == 0 {
-                                    showCompleteDataPopup = true
-                                }
-                                else if businessInfo.rawValue == 1 {
-                                    navigateToPendingView = true
-                                }
-                                else {
-                                    navigateToOffers = true
-                                }
-                            }
+//                            HStack(spacing:12) {
+//                                Image(.subscribtion)
+//                                    .resizable()
+//                                    .aspectRatio(contentMode: .fill)
+//                                    .frame(width: 28, height: 28)
+//                                
+//                                Text("Subscription Management".localized())
+//                                    .textModifier(.plain, 16, .black194558)
+//                                Spacer()
+//                                
+//                                Image(.iconArrowNav)
+//                                    .frame(width: 32, height: 32)
+//                                    .foregroundColor(Color(.black194558))
+//                            }
+//                            .frame(height: 32)
+//                            .onTapGesture {
+//                                if businessInfo.rawValue == 0 {
+//                                    showCompleteDataPopup = true
+//                                }
+//                                else if businessInfo.rawValue == 1 {
+//                                    navigateToPendingView = true
+//                                }
+//                                else {
+//                                    navigateToSubscriptionView = true
+//                                }
+//                            }
+                           
 //                            NavigationLinkComponent(
 //                                destination: OrdersOffersLinksView(),
 //                                label: "offers",
@@ -143,6 +118,26 @@ struct ProfileView: View {
                                 label: "withdrawsProcess",
                                 image: Image(.withdrawBalance)
                             )
+                            
+                            HStack(spacing:12) {
+                                Image(.inviteFriend)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 28, height: 28)
+                                
+                                Text("invite_friend".localized())
+                                    .textModifier(.plain, 16, .black194558)
+                                Spacer()
+                                
+                                Image(.iconArrowNav)
+                                    .frame(width: 32, height: 32)
+                                    .foregroundColor(Color(.black194558))
+                            }
+                            .frame(height: 32)
+                            .onTapGesture {
+                             
+                            }
+                            
                             NavigationLinkComponent(
                                 destination: FAQView(),
                                 label: "FAQ",
@@ -228,58 +223,6 @@ struct ProfileView: View {
             })
             .navigationDestination(isPresented: $navigateToSubscriptionView) {
                 SubscribtionView()
-            }
-            if showCompleteDataPopup {
-                ZStack {
-                    Color.black.opacity(0.2)
-                    VStack {
-                        Spacer()
-                       
-                            ZStack {
-                                Color(.white)
-                                VStack (spacing: 20){
-                                    HStack {
-                                        Text("merchants_service_title".localized())
-                                            .textModifier(.plain, 16, .gray666666)
-                                        Spacer()
-                                    }
-                                    .padding(.top)
-                                    Text("merchants_service_body".localized())
-                                        .textModifier(.plain, 14, .gray666666)
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(nil)
-                                    HStack {
-                                        Spacer()
-                                        Button {
-                                            showCompleteDataPopup = false
-                                        } label: {
-                                            Text ("Cancel".localized())
-                                                .textModifier(.plain, 14, .gray666666)
-                                        }
-                                        .padding(.trailing, 20)
-                                        Button {
-                                            navigateToCompleteProfileView = true
-                                            showCompleteDataPopup = false
-                                        } label: {
-                                            Text ("add_data_button".localized())
-                                                .textModifier(.plain, 14, .primaryF9CE29)
-                                        }
-                                    }
-                                }
-                                .padding(20)
-                            }
-                            .frame(width: UIScreen.main.bounds.width - 40)
-                            .cornerRadius(15)
-                            .fixedSize()
-                            
-                        
-                        Spacer()
-                    }
-                }
-                .edgesIgnoringSafeArea(.all)
-                .onTapGesture {
-                    showCompleteDataPopup = false
-                }
             }
             if viewModel.isLoading {
                 ProgressView("Loading...".localized())

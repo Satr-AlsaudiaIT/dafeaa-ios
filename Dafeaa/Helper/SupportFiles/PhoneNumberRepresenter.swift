@@ -124,8 +124,26 @@ struct CustomMainTextField: View {
                 if fieldType == .price || fieldType == .percentage {
                     HStack {
                         Spacer()
-                        Text(fieldType == .price ? "rs".localized() : "%")
-                            .textModifier(.plain,  13, .black)
+                        if fieldType == .price {
+                           Image(.riyal)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(.gray8B8C86)
+                                .frame(width: 15)
+                                .padding(.trailing, 10)
+                        }
+                        else {
+                            Text("%")
+                                .textModifier(.plain,  13, .gray616161)
+                                .padding(.trailing, 10)
+                        }
+                    }
+                }
+                if fieldType == .optional {
+                    HStack {
+                        Spacer()
+                        Text("optional".localized())
+                            .textModifier(.plain,  13, .gray616161)
                             .padding(.trailing, 10)
                     }
                 }
@@ -304,4 +322,5 @@ enum FieldType{
     case none
     case arabicOnly
     case englishOnly
+    case optional
 }

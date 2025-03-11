@@ -88,9 +88,13 @@ struct FAQView: View {
                 }
             }
             if viewModel.isLoading {
-                ProgressView("Loading...".localized())
-                    .foregroundColor(.white)
-                    .progressViewStyle(WithBackgroundProgressViewStyle())
+                VStack {
+                    Spacer()
+                    ProgressView("Loading...".localized())
+                        .foregroundColor(.white)
+                        .progressViewStyle(WithBackgroundProgressViewStyle())
+                    Spacer()
+                }
             } else if viewModel.isFailed {
                 ProgressView()
                     .hidden()

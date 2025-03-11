@@ -35,7 +35,7 @@ struct ReusableButton: View {
     var isEnabled: Bool = true
     var image : UIImage?
     @State var buttonColor: ButtonColors = .black
-
+    var cornerRadius: CGFloat = 32
     var action: () -> Void
 
     
@@ -50,7 +50,7 @@ struct ReusableButton: View {
                 .textModifier(.plain, 15,.white)
                 .frame(maxWidth: .infinity, minHeight: 51)
                 .background(isEnabled ? Color(buttonColor.color()) : Color(.grayDADADA))
-                .cornerRadius(32)
+                .cornerRadius(cornerRadius)
             if let image = image {
                 Image(uiImage: image)
             }

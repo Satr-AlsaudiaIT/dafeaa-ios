@@ -139,6 +139,12 @@ struct DropdownSearchTF: View {
                     RoundedRectangle(cornerRadius: 5)
                         .stroke(Color(.grayAAAAAA), lineWidth: 0.3)
                 )
+                .onDisappear{
+                    if selection == "" {
+                        text = ""
+                        searchTerm = ""
+                    }
+                }
             }
         }
 //        .padding([.leading,.trailing])
@@ -152,6 +158,7 @@ struct DropdownSearchTF: View {
                 searchTerm = text
             }
         }
+        
 //        .padding(.bottom,8)
     }
     func hideKeyboard() {

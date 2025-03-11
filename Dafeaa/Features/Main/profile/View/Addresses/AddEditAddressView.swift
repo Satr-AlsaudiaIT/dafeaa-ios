@@ -76,10 +76,10 @@ struct AddEditAddressView: View {
                     CustomMainTextField(text: $neighborhoodName, placeHolder: "neighborhoodName")
                         .focused($focusedField, equals: .neighborhoodName)
                         .id(FormField.neighborhoodName)
-                    CustomMainTextField(text: $streetName, placeHolder: "streetName")
+                    CustomMainTextField(text: $streetName, placeHolder: "streetName",fieldType:.optional)
                         .focused($focusedField, equals: .streetName)
                         .id(FormField.streetName)
-                    CustomMainTextField(text: $address, placeHolder: "address")
+                    CustomMainTextField(text: $address, placeHolder: "address",fieldType:.optional)
                         .focused($focusedField, equals: .address)
                         .id(FormField.address)
                     HStack {
@@ -181,8 +181,8 @@ struct AddEditAddressView: View {
             streetName = editedAddress.streetName ?? ""
             neighborhoodName = editedAddress.districtName ?? ""
             address = editedAddress.address ?? ""
-            latitude = editedAddress.lat ?? 0
-            longitude = editedAddress.lng ?? 0
+            latitude = Double(editedAddress.lat ?? "0" ) ?? 0
+            longitude = Double(editedAddress.lng ?? "0") ?? 0
 
             // Reverse geocode the coordinates to get the address
             let location = CLLocation(latitude: latitude, longitude: longitude)

@@ -115,6 +115,8 @@
 "merchants_service_title" = "خدمة خاصة بالتجار";
 "merchants_service_body" = "هذة الخدمة خاصة بالتجار للحصول عليها عليك استكمال البيانات الخاصة بالتاجر";
 "add_data_button" = "أضف البيانات";
+"invite_friend" = "دعوة صديق";
+
 //MARK: - ChangePassword
 "changePassword"="تغيير كلمة المرور";
 "currentPassword"="كلمة المرور الحالية";
@@ -161,6 +163,13 @@
 "EnterConfirmPassword" = "برجاء ادخال تأكيد كلمة المرور";
 "Success" = "تم بنجاح";
 "Error" = "خطأ";
+"EnterCommercialName" = "برجاء إدخال الإسم التجاري";
+"EnterCountry" = "برجاء اختيار الدولة";
+"EnterCity" = "برجاء اختيار المدينة";
+"EnterArea" = "برجاء إدخال المنطقة";
+"EnterTax" = "برجاء إدخال الضريبة";
+"EnterCommercialLicens" = "برجاء رفع الرخصة الضريبية";
+"EnterEndDate" = "برجاء إدخال تاريخ الانتهاء للرخصة الضريبية";
 
 //MARK: - Orders
 "current"="الطلبات الحالية";
@@ -186,9 +195,16 @@
 "Pending_Purchases_Balance" = "رصيد المشتريات المعلق";
 "Pending_Sales_Balance" = "رصيد المبيعات المعلق";
 "search_offer" = "البحث عن عرض";
-"search_by_number" = "البحث بواسطة رقم العرض";
+"search_by_number" = "البحث بواسطة كود العرض";
 "search_by_QR_code" = "البحث عن طريق رمز الاستجابة السريعة";
 "search" = "البحث";
+"buy_product" = "شراء منتج";
+"buy_product_details" = "يمكن شراء منتجا بسهولة";
+"buy_product_btn" = "شراء الأن" ;
+"sell_product" = "بيع منتج";
+"sell_product_details" = "يمكنك بيع منتجا بسهولة";
+"sell_product_btn" = "بيع الأن" ;
+"exceedQuantity" = "الكمية المتبقية هي فقط";
 //MARK: - NOTIFICATIONS
 "emptyNotifications"="لا توجد اشعارات لديك بعد, سيتم تنبيهك في حال وصول اي اشعار لك";
 
@@ -254,7 +270,7 @@
 "select" = "تحديد";
 "edit" = "تغيير";
 "saveSelectedAddress" = "حفظ العنوان";
-
+"optional" = "(اختياري)";
 //MARK: - Add Order cycle
 "offerDetails" = "تفاصيل العرض";
 "offers"="عروض";
@@ -267,6 +283,8 @@
 "productUnit" = "منتج";
 "orderNow"="اطلب الآن";
 "deleteOffer" = "حذف العرض";
+"stopOffer" = "إيقاف العرض";
+"activateOffer" = "تفعيل العرض";
 "deliveryPriceTitle" = "سعر التوصيل";
 "taxPriceTitle" = "ضريبة القيمة";
 "addProductTitle" = "اضف منتج";
@@ -274,6 +292,7 @@
 "nameEn" = "اسم المنتج انجليزي";
 "descriptionAr" = "وصف المنتج عربي";
 "descriptionEn" = "وصف المنتج انجليزي";
+"quantity" = "الكمية المتاحة";
 "productPrice" = "سعر المنتج";
 "offerPrice" =  "سعر العرض";
 "chooseProductImage" = "برجاء اختيار صورة المنتج";
@@ -281,6 +300,7 @@
 "enterNameEn" = "برجاء ادخال اسم المنتج انجليزي";
 "enterDescriptionAr" = "برجاء ادخال وصف المنج عربي";
 "enterDescriptionEn" = "برجاء ادخال وصف المنتج انجليزي";
+"enterQuantity" = "برجاء ادخال الكمية المتاحة من المنتج";
 "enterPrice" = "برجاء ادخال سعر المنتج";
 "addProductSuccess" = "تم اضافة المنتج بنجاح";
 "enterOfferName" = "برجاء ادخال اسم العرض";
@@ -291,7 +311,7 @@
 "copied successfully"="تم النسخ";
 "offerDetails"="تفاصيل العرض";
 "thereIsNoData"="لا توجد بيانات";
-
+"code" = "كود";
 //MARK: - Withdraws
 "withdrawsProcess" = "عمليات سحب الرصيد";
 "withdrawProcess" = "عملية سحب";
@@ -314,5 +334,6 @@
 "subscription_confirmation_button" = "تأكيد";
 "sub_plan_success_message" = "تم الاشتراك في هذة الخطة بنجاح";
 "payment" = "الدفع";
-
+"stop_message" = "تم ايقاف تفعيل العرض بنجاح";
+"active_message" = "تم تفعيل العرض بنجاح";
 

@@ -17,14 +17,20 @@ struct HomeView: View {
     @State var amount:Double = 0.0
     @State private var balanceActionType : bottomSheetAction?
     @State private var isViewAppeared: Bool = false
-    @State private var isGoingToOfferScreen: Bool = false
+    //    @State private var isGoingToOfferScreen: Bool = false
     @State private var isPresentBuySheet: Bool = false
     let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
+    let businessInformationStatus = GenericUserDefault.shared.getValue(Constants.shared.businessInformationStatus) as? Int ?? nil
+
     @State var showClientOfferDetails: Bool = false
     @State var showOfferDetails: Bool = false
     @State var offerData: ShowOfferData? = nil
-    
+    @State private var businessInfo: BusinessInfo = .noFilesUploaded
+    @State private var showCompleteDataPopup: Bool = false
+    @State private var navigateToPendingView: Bool = false
+    @State private var navigateToOffers: Bool = false
     @StateObject var profileViewModel = MoreVM()
+    @State private var navigateToCompleteProfileView: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -59,12 +65,16 @@ struct HomeView: View {
                             
                             VStack {
                                 HStack(spacing: 5) {
-                                    Text(String(format: "%.1f",viewModel.homeData?.availableBalance ?? 0.0))
+                                    Text(String(format: "%.1f",viewModel.walletAmount))
                                         .textModifier(.extraBold, 36, .black030319)
-                                    Text("SAR".localized())
-                                        .textModifier(.extraBold, 36, .black030319)
+                                    Image(.riyal)
+                                         .resizable()
+                                         .aspectRatio(contentMode: .fit)
+                                         .foregroundColor(.black010202)
+                                         .frame(width: 30)
+                                         .padding(.trailing, 10)
                                 }
-                                
+                                .environment(\.layoutDirection, .rightToLeft)
                             }
                             .padding(.top,20)
                             Text("yourBalance".localized())
@@ -88,81 +98,121 @@ struct HomeView: View {
                             VStack(spacing: 17) {
                                 Rectangle().fill(.white)
                                     .frame(height: 32)
-                                Button {
-                                    isPresentBuySheet = true
-                                } label: {
+                                HStack {
+                                    
                                     ZStack {
-                                        HStack {
-                                            Text("buy_product".localized())
-                                                .textModifier(.extraBold, 16, .black222222)
-                                            Spacer()
-                                            Image(.buyProduct)
-                                                .resizable()
-                                                .frame(width: 28.05, height: 28)
+                                        VStack(alignment: .leading, spacing: 15) {
+                                            HStack {
+                                                Text("buy_product".localized())
+                                                    .textModifier(.semiBold, 16, .gray8B8C86)
+                                                    .padding([.top],10)
+                                                Spacer()
+                                            }
+                                            Text("buy_product_details".localized())
+                                                .textModifier(.plain, 14, .gray8B8C86)
+                                            
+                                            
+                                            ReusableButton(buttonText: "buy_product_btn",buttonColor: .yellow,cornerRadius: 10) {
+                                                isPresentBuySheet = true
+                                            }
+                                            
+                                            
+                                            
                                         }
+                                        .frame(width: (UIScreen.main.bounds.width / 2) - 50)
                                         .padding()
+                                        
                                     }
-                                    .frame(width: UIScreen.main.bounds.width - 40)
+                                    
                                     .fixedSize()
                                     .overlay(
                                         ZStack {
+                                            VStack {
+                                                Image(.buyProduct)
+                                                    .resizable()
+                                                    .frame(width: 28.05, height: 28)
+                                                Spacer()
+                                            }
+                                            .padding(.top,-10)
                                             RoundedRectangle(cornerRadius: 10)
                                                 .stroke(LinearGradient(colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)], startPoint: .top, endPoint: .bottom), lineWidth: 1)
                                         }
                                     )
                                     .background(
-                                          RoundedRectangle(cornerRadius: 10)
-                                              .fill(Color.white)
-                                              .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
-                                      )
-                                }
-
-                                
-                                Button {
-                                    isGoingToOfferScreen = true
-                                } label: {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(Color.white)
+                                            .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
+                                    )
+                                    
+                                    
+                                    
+                                    
                                     ZStack {
-                                        HStack {
-                                            Text("sell_product".localized())
-                                                .textModifier(.extraBold, 16, .black222222)
-                                            Spacer()
-                                            Image(.sellProduct)
-                                                .resizable()
-                                                .frame(width: 28.05, height: 28)
+                                        VStack(alignment: .leading, spacing: 15) {
+                                            HStack {
+                                                Text("sell_product".localized())
+                                                    .textModifier(.semiBold, 16, .gray8B8C86)
+                                                    .padding([.top],10)
+                                                
+                                                Spacer()
+                                            }
+                                            Text("sell_product_details".localized())
+                                                .textModifier(.plain, 14, .gray8B8C86)
+                                            
+                                            
+                                            ReusableButton(buttonText: "sell_product_btn",buttonColor: .yellow,cornerRadius: 10) {
+                                                
+                                                if businessInfo.rawValue == 0 {
+                                                    showCompleteDataPopup = true
+                                                }
+                                                else if businessInfo.rawValue == 1 {
+                                                    navigateToPendingView = true
+                                                }
+                                                else {
+                                                    navigateToOffers = true
+                                                }
+                                            }
                                         }
+                                        .frame(width: (UIScreen.main.bounds.width / 2) - 50)
                                         .padding()
                                     }
-                                    .frame(width: UIScreen.main.bounds.width - 40)
                                     .fixedSize()
                                     .overlay(
                                         ZStack {
+                                            VStack {
+                                                Image(.sellProduct)
+                                                    .resizable()
+                                                    .frame(width: 28.05, height: 28)
+                                                Spacer()
+                                            }
+                                            .padding(.top,-10)
                                             RoundedRectangle(cornerRadius: 10)
                                                 .stroke(LinearGradient(colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)], startPoint: .top, endPoint: .bottom), lineWidth: 1)
                                         }
                                     )
                                     .background(
-                                          RoundedRectangle(cornerRadius: 10)
-                                              .fill(Color.white)
-                                              .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
-                                      )
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(Color.white)
+                                            .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
+                                    )
+                                    
                                 }
-                                
                                 Spacer()
-//                                LastProcessNavView(title: "lastProcesses".localized(), selectedTab: $selectedTab)
-//                                    .padding(.horizontal,24)
-//
-//                                if viewModel.processList.isEmpty {
-//                                    EmptyCostumeView()
-//                                }else {
-//                                    ScrollView (showsIndicators: false){
-//                                        VStack(spacing: 8) {
-//                                            ForEach(0..<viewModel.processList.count,id: \.self){ index in
-//                                                ProcessComponent(process: viewModel.processList[index])
-//                                            }
-//                                        }
-//                                    }
-//                                    .padding(.horizontal,24)
-//                                }
+                                //                                LastProcessNavView(title: "lastProcesses".localized(), selectedTab: $selectedTab)
+                                //                                    .padding(.horizontal,24)
+                                //
+                                //                                if viewModel.processList.isEmpty {
+                                //                                    EmptyCostumeView()
+                                //                                }else {
+                                //                                    ScrollView (showsIndicators: false){
+                                //                                        VStack(spacing: 8) {
+                                //                                            ForEach(0..<viewModel.processList.count,id: \.self){ index in
+                                //                                                ProcessComponent(process: viewModel.processList[index])
+                                //                                            }
+                                //                                        }
+                                //                                    }
+                                //                                    .padding(.horizontal,24)
+                                //                                }
                             }
                         }
                         .cornerRadius(24)
@@ -210,18 +260,81 @@ struct HomeView: View {
                         }.padding(.top,-39)
                     }
                 }.edgesIgnoringSafeArea(.top)
+                
+                if showCompleteDataPopup {
+                    ZStack {
+                        Color.black.opacity(0.2)
+                        VStack {
+                            Spacer()
+                           
+                                ZStack {
+                                    Color(.white)
+                                    VStack (spacing: 20){
+                                        HStack {
+                                            Text("merchants_service_title".localized())
+                                                .textModifier(.plain, 16, .gray666666)
+                                            Spacer()
+                                        }
+                                        .padding(.top)
+                                        Text("merchants_service_body".localized())
+                                            .textModifier(.plain, 14, .gray666666)
+                                            .multilineTextAlignment(.leading)
+                                            .lineLimit(nil)
+                                        HStack {
+                                            Spacer()
+                                            Button {
+                                                showCompleteDataPopup = false
+                                            } label: {
+                                                Text ("Cancel".localized())
+                                                    .textModifier(.plain, 14, .gray666666)
+                                            }
+                                            .padding(.trailing, 20)
+                                            Button {
+                                                navigateToCompleteProfileView = true
+                                                showCompleteDataPopup = false
+                                            } label: {
+                                                Text ("add_data_button".localized())
+                                                    .textModifier(.plain, 14, .primaryF9CE29)
+                                            }
+                                        }
+                                    }
+                                    .padding(20)
+                                }
+                                .frame(width: UIScreen.main.bounds.width - 40)
+                                .cornerRadius(15)
+                                .fixedSize()
+                                
+                            
+                            Spacer()
+                        }
+                    }
+                    .edgesIgnoringSafeArea(.all)
+                    .onTapGesture {
+                        showCompleteDataPopup = false
+                    }
+                }
+
             }
+            
             .toastView(toast: $viewModel.toast)
             .onAppear{
                 isViewAppeared = true
+                businessInfo = BusinessInfo(rawValue: self.businessInformationStatus ?? 0) ?? .noFilesUploaded
             }
             .onChange(of: isViewAppeared, { _, newValue in
                 if newValue {
                     viewModel.home()
-                    if userId == 0 {
+                    if userId == 0 || businessInformationStatus == nil || businessInformationStatus == 3 {
                         profileViewModel.profile()
                     }
                 }
+            })
+            .navigationDestination(isPresented: $navigateToCompleteProfileView, destination: {
+                CompleteDataView(phone:Constants.phone)
+            })
+            
+            .onChange(of: profileViewModel.profileData, { oldValue, newValue in
+                businessInfo = BusinessInfo(rawValue: profileViewModel.profileData?.businessInformationStatus ?? 0) ?? .noFilesUploaded
             })
             .onDisappear{
                 isViewAppeared = false
@@ -229,6 +342,12 @@ struct HomeView: View {
             .refreshable {
                 viewModel.home()
             }
+            .navigationDestination(isPresented: $navigateToPendingView) {
+                PendingView()
+            }
+            .navigationDestination(isPresented: $navigateToOffers, destination: {
+                OrdersOffersLinksView()
+            })
             .navigationDestination(isPresented: $showOfferDetails, destination: {
                 OrderLinkDetailsView(offerData: offerData)
             })
@@ -247,9 +366,9 @@ struct HomeView: View {
                     .presentationCornerRadius(24)
                     .presentationDragIndicator(.visible)
             })
-            .navigationDestination(isPresented: $isGoingToOfferScreen, destination: {
-                OrdersOffersLinksView()
-            })
+//            .navigationDestination(isPresented: $isGoingToOfferScreen, destination: {
+//                OrdersOffersLinksView()
+//            })
             .navigationDestination(isPresented: $navigateToWebView) {
                 PaymentWebViewContainer(url: paymentURL)
             }
@@ -280,7 +399,7 @@ struct LastProcessNavView: View {
                     
                 }
             }
-
+            
         }
     }
 }
@@ -295,7 +414,7 @@ struct EmptyCostumeView: View {
             Text(message)
                 .textModifier(.plain, 14, .gray919191 )
             Spacer()
-
+            
         }
     }
 }

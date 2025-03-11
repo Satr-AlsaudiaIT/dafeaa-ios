@@ -19,7 +19,7 @@ struct OrderBusinessDetailsView: View {
     @State var isNavigateToContactInfo: Bool = false
     @State var isCancelTapped: Bool = false
     @State var isRejectTapped: Bool = false
-    @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950)
+    @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 1, remainingQuantity: 0)
     @State var showingProductDetails: Bool = false
     @State var totalPrice: Double = 0
     @State var itemsPrice: Double = 0

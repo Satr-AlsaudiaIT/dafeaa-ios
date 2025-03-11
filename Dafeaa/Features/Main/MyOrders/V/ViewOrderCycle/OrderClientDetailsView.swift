@@ -19,7 +19,7 @@ struct OrderClientDetailsView: View {
     @State var confirmReceivingOrder: Bool = false
     @State var isCancelTapped: Bool = false
     @StateObject private var scanner = ScannerViewModel()
-    @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950)
+    @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 1, remainingQuantity: 0)
     @State var showingProductDetails: Bool = false
     @State var totalPrice: Double = 0
 
@@ -184,6 +184,7 @@ struct OrderClientDetailsView: View {
             AppState.shared.swipeEnabled = true
             viewModel.getOrder(id: orderID ?? 0)
         }
+       
         .onChange(of: viewModel.isLoading, { oldValue, newValue in
             if !newValue {
                 

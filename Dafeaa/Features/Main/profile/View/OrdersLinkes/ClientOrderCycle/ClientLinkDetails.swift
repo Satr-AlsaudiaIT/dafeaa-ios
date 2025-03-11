@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ClientLinkDetails: View {
-    let id: Int = Constants.clientOrderId
+    let code: String = Constants.clientOrderCode
     @State var offerData: ShowOfferData?
     @StateObject var viewModel = OrdersVM()
     @State var productAmountDic: [[String:Any]] = []
@@ -19,12 +19,11 @@ struct ClientLinkDetails: View {
     @State var address: String = Constants.selectedAddress
     @State var isNavigateToAddress: Bool = false
     @State var showingProductDetails: Bool = false
-    @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000,amount: 1, offerPrice: 950)
+    @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000,amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 0, remainingQuantity: 1)
     var linkDetails: ShowOfferData  {
-        return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [])
+        return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [], status: 0)
     }
     var body: some View {
-        NavigationStack{
             ZStack {
                 
                     VStack(alignment: .leading) {
@@ -86,7 +85,7 @@ struct ClientLinkDetails: View {
                                 )
                                 
                             }
-                            ReusableButton(buttonText: "orderNow"){ viewModel.validations(dynamic_link_id: id, address_id: addressId, products: productAmountDic)}
+                            ReusableButton(buttonText: "orderNow",isEnabled: viewModel.offersData?.status == 1 ? true : false){ viewModel.validations(dynamic_link_id: viewModel.offersData?.id ?? 0, address_id: addressId, products: productAmountDic)}
                             Spacer()
                         }
                         .padding(.all,24)
@@ -118,9 +117,9 @@ struct ClientLinkDetails: View {
         
             .onAppear{
                 if let offerData { viewModel._offersData = offerData
-                } else { viewModel.showOffer(id: id) }
+                } else { viewModel.showOffer(code: code) }
             }
-        }
+        
     }
     // Function to calculate the total price
      private func calculateTotalPrice() {

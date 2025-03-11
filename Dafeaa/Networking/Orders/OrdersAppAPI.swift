@@ -13,10 +13,10 @@ protocol OrdersAPIProtocol {
     func completeOrder(id : Int,qrCode: String, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func createClientOrder(dic: [String:Any], Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func offers(skip: Int, Completion: @escaping (Result<OffersModel?, NSError>) -> Void)
-    func showDynamicLinks(id: Int, Completion: @escaping (Result<ShowOfferModel?, NSError>) -> Void)
+    func showDynamicLinks(code: String, Completion: @escaping (Result<ShowOfferModel?, NSError>) -> Void)
     func deleteDynamicLinks(id: Int, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func createDynamicLinks(dic: [String:Any], Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
-    
+    func activateStopLink(code: String,status:Int, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
 }
 
 class OrdersAPI: BaseAPI<OrdersNetwork>, OrdersAPIProtocol
@@ -58,14 +58,20 @@ class OrdersAPI: BaseAPI<OrdersNetwork>, OrdersAPIProtocol
          }
      }
     
-    func showDynamicLinks(id: Int, Completion: @escaping (Result<ShowOfferModel?, NSError>) -> Void){
-        self.fetchData(target: .showDynamicLinks(id: id), responseClass: ShowOfferModel.self) { (result) in
+    func showDynamicLinks(code: String, Completion: @escaping (Result<ShowOfferModel?, NSError>) -> Void){
+        self.fetchData(target: .showDynamicLinks(code: code), responseClass: ShowOfferModel.self) { (result) in
             Completion(result)
         }
     }
     
     func deleteDynamicLinks(id: Int, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void){
         self.fetchData(target: .deleteDynamicLinks(id: id), responseClass: GeneralModel.self) { (result) in
+            Completion(result)
+        }
+    }
+    
+    func activateStopLink(code: String,status:Int, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void){
+        self.fetchData(target: .activateStopLink(code: code, status: status), responseClass: GeneralModel.self) { (result) in
             Completion(result)
         }
     }

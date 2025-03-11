@@ -68,7 +68,7 @@ struct OrdersOffersLinksView: View {
         .toastView(toast: $viewModel.toast)
         .toastView(toast: $toast)
         .navigationBarHidden(true)
-        .navigationDestination(isPresented: $goToDetails, destination: {OrderLinkDetailsView(id:selectedOffer?.id ?? 0)})
+        .navigationDestination(isPresented: $goToDetails, destination: {OrderLinkDetailsView(code:selectedOffer?.code ?? "")})
         .onAppear(){
                 viewModel.offers(skip: 0)
                 AppState.shared.swipeEnabled = true
@@ -152,10 +152,10 @@ struct OfferComponent: View {
     }
     
     private func shareQRCode() {
-        guard let offerID = offer?.id else { return }
+        guard let offerCode = offer?.code else { return }
         
         // Generate QR Code
-        let qrCodeImage = generateQRCode(from: "\(offerID)")
+        let qrCodeImage = generateQRCode(from: offerCode)
         
         // Convert UIImage to SwiftUI Image
         if let qrCodeImage = qrCodeImage {

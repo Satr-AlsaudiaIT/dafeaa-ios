@@ -18,40 +18,19 @@ struct FancyToastView: View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
                 
-                VStack(alignment: .leading) {
-                    Text(title)
-                        .font(.custom(AppFonts.shared.name(AppFontsTypes.semiBold), size: 16))
-                        .foregroundColor(.white)
-                    
+                VStack(alignment: .center) {
                     Text(message)
                         .font(.custom(AppFonts.shared.name(AppFontsTypes.plain), size: 13))
                         .foregroundColor(.white)
                         .lineLimit(nil)
                         .multilineTextAlignment(.leading) 
                 }
-                
-                Spacer(minLength: 10)
-                
-                Button {
-                    onCancelTapped()
-                } label: {
-                    Image(systemName: "xmark")
-                        .foregroundColor(Color.black)
-                }
-                
             }
-            .padding()
+            .padding(10)
         }
-        .background(Color.black)
-        .overlay(
-            Rectangle()
-                .fill(type.themeColor)
-                .frame(width: 6)
-                .clipped(),
-            alignment: .leading
-        )
-        .frame(minWidth: 0, maxWidth: .infinity)
+        .background(Color.black010202)
         .cornerRadius(8)
+        .frame(minWidth: 0, maxWidth: .infinity)
         .shadow(color: Color.white.opacity(0.25), radius: 4, x: 0, y: 1)
         .padding(.horizontal, 16)
     }
@@ -68,7 +47,7 @@ enum FancyToastStyle {
 extension FancyToastStyle {
     var themeColor: Color {
         switch self {
-        case .error: return Color.red
+        case .error: return Color.black010202
         case .warning: return Color.orange
         case .info: return Color.blue
         case .success: return Color.green

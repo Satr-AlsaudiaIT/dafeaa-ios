@@ -13,6 +13,7 @@ struct ClientLinkCellIView: View {
         @Binding var productAmountDic: [[String: Any]]  // Pass in productAmountDic as a binding
         @State private var amount: Int  // Local state for amount
         @Binding var amountChanged: Bool
+        @State private var showAmountError: Bool = false
     init(product: productList, productAmountDic: Binding<[[String: Any]]>,amountChanged: Binding<Bool>) {
             self.product = product
             _productAmountDic = productAmountDic
@@ -32,26 +33,62 @@ struct ClientLinkCellIView: View {
                             .stroke( Color(.primary), lineWidth: 1)
                     )
                 
-                VStack(alignment: .leading,spacing: 19) {
+                VStack(alignment: .leading,spacing: 10) {
                     HStack {
                         Text(product.name ?? "")
                             .textModifier(.semiBold, 15, .black010202)
                         Spacer()
                         if product.offerPrice != nil  {
                             HStack {
-                                Text(String(format: "%.1f", product.price ?? 0.0,"RS".localized()))
-                                    .textModifier(.semiBold, 15, .black010202)
-                                    .padding(.trailing,5)
-                                    .strikethrough(true, color: .black)
-                                Text(String(format: "%.1f", product.offerPrice ?? 0.0,"RS".localized()))
-                                    .textModifier(.plain, 15, .black010202)
-                                    .padding(.trailing,5)
+                                HStack(spacing: 5){
+                                    Text(String(format: "%.1f", product.price ?? 0.0))
+                                        .textModifier(.semiBold, 13, .black010202)
+                                        .padding(.trailing,5)
+                                        .strikethrough(true, color: .black)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.8)
+                                    Image(.riyal)
+                                         .resizable()
+                                         .aspectRatio(contentMode: .fit)
+                                         .foregroundColor(.gray8B8C86)
+                                         .frame(width: 20)
+                                         .padding(.trailing, 10)
+                                }
+                                .environment(\.layoutDirection, .rightToLeft)
+
+                                HStack(spacing: 5){
+                                    Text(String(format: "%.1f", product.offerPrice ?? 0.0))
+                                        .textModifier(.plain, 13, .black010202)
+                                        .padding(.trailing,5)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.8)
+                                    Image(.riyal)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .foregroundColor(.gray8B8C86)
+                                        .frame(width: 20)
+                                        .padding(.trailing, 10)
+                                }
+                                .environment(\.layoutDirection, .rightToLeft)
+
                             }
                         }
                         else {
-                            Text(String(format: "%.1f", product.price ?? 0.0,"RS".localized()))
-                                .textModifier(.semiBold, 15, .black010202)
-                                .padding(.trailing,5)
+                            HStack(spacing: 5){
+                                Text(String(format: "%.1f", product.price ?? 0.0))
+                                    .textModifier(.semiBold, 13, .black010202)
+                                    .padding(.trailing,5)
+                                    .strikethrough(true, color: .black)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.8)
+                                Image(.riyal)
+                                     .resizable()
+                                     .aspectRatio(contentMode: .fit)
+                                     .foregroundColor(.gray8B8C86)
+                                     .frame(width: 20)
+                                     .padding(.trailing, 10)
+                            }
+                            .environment(\.layoutDirection, .rightToLeft)
                         }
                     }
                     
@@ -62,7 +99,11 @@ struct ClientLinkCellIView: View {
                         Spacer()
                         HStack {
                             Button(action: {
-                                amount += 1
+                                if (amount + 1) <= product.remainingQuantity ?? 0 {
+                                    amount += 1
+                                } else {
+                                    showAmountError = true
+                                }
                             }) {
                                 Image(systemName: "plus")
                                     .foregroundStyle(Color(.black222222))
@@ -79,12 +120,12 @@ struct ClientLinkCellIView: View {
                                 .textModifier(.plain, 15, .black010202)
                             Button(action: {
                                 amount -= 1
+                                showAmountError = false
                             }) {
                                 ZStack {
-                                    
                                     Image(systemName: "minus")
                                         .foregroundStyle(Color(.black222222))
-                                        .font(.system(size: 14, weight: .medium))
+                                        .font(.system(size: 13, weight: .medium))
                                         .padding(.all,5)
                                 }
                             }
@@ -99,6 +140,21 @@ struct ClientLinkCellIView: View {
                         }
                         .padding(.leading,5)
                     }
+                    if showAmountError {
+                        Text("exceedQuantity".localized() + " " + "\(product.remainingQuantity ?? 0)")
+                            .textModifier(.semiBold, 10, .redD73D24)
+
+                            .onAppear{
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                    showAmountError = false
+                                }
+                            }
+                    }
+                    else {
+                        Text("")
+                            .textModifier(.semiBold, 10, .redD73D24)
+                    }
+
                 }
             }
             .padding(.all,10)
@@ -150,20 +206,53 @@ struct BusinessLinkCellIView: View {
                             .textModifier(.semiBold, 15, .black010202)
                         Spacer()
                         if product.offerPrice != nil  {
-                            HStack {
-                                Text(String(format: "%.1f", product.price ?? 0.0,"RS".localized()))
-                                    .textModifier(.semiBold, 15, .black010202)
+                            HStack(spacing: 5){
+                                Text(String(format: "%.1f", product.price ?? 0.0))
+                                    .textModifier(.semiBold, 13, .black010202)
                                     .padding(.trailing,5)
                                     .strikethrough(true, color: .black)
-                                Text(String(format: "%.1f", product.offerPrice ?? 0.0,"RS".localized()))
-                                    .textModifier(.plain, 15, .black010202)
-                                    .padding(.trailing,5)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.8)
+                                Image(.riyal)
+                                     .resizable()
+                                     .aspectRatio(contentMode: .fit)
+                                     .foregroundColor(.gray8B8C86)
+                                     .frame(width: 20)
+                                     .padding(.trailing, 10)
                             }
+                            .environment(\.layoutDirection, .rightToLeft)
+
+                            HStack(spacing: 5){
+                                Text(String(format: "%.1f", product.offerPrice ?? 0.0))
+                                    .textModifier(.plain, 13, .black010202)
+                                    .padding(.trailing,5)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.8)
+                                Image(.riyal)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(.gray8B8C86)
+                                    .frame(width: 20)
+                                    .padding(.trailing, 10)
+                            }
+                            .environment(\.layoutDirection, .rightToLeft)
                         }
                         else {
-                            Text(String(format: "%.1f", product.price ?? 0.0,"RS".localized()))
-                                .textModifier(.semiBold, 15, .black010202)
-                                .padding(.trailing,5)
+                            HStack(spacing: 5){
+                                Text(String(format: "%.1f", product.price ?? 0.0))
+                                    .textModifier(.semiBold, 13, .black010202)
+                                    .padding(.trailing,5)
+                                    .strikethrough(true, color: .black)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.8)
+                                Image(.riyal)
+                                     .resizable()
+                                     .aspectRatio(contentMode: .fit)
+                                     .foregroundColor(.gray8B8C86)
+                                     .frame(width: 20)
+                                     .padding(.trailing, 10)
+                            }
+                            .environment(\.layoutDirection, .rightToLeft)
                         }
                     }
                     
@@ -217,19 +306,54 @@ struct BusinessCreateLinkCellView: View {
                         Spacer()
                         if product["offer_price"] != nil  {
                             HStack {
-                                Text(String(format: "%.1f", product["price"] as? Double ?? 0.0,"RS".localized()))
-                                    .textModifier(.semiBold, 15, .black010202)
-                                    .padding(.trailing,5)
-                                    .strikethrough(true, color: .black)
-                                Text(String(format: "%.1f", product["offer_price"] as? Double ?? 0.0,"RS".localized()))
-                                    .textModifier(.plain, 15, .black010202)
-                                    .padding(.trailing,5)
+                                HStack(spacing: 5){
+                                    Text(String(format: "%.1f", product["price"] as? Double ?? 0.0))
+                                        .textModifier(.semiBold, 13, .black010202)
+                                        .padding(.trailing,5)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.8)
+                                        .strikethrough(true, color: .black)
+                                    Image(.riyal)
+                                         .resizable()
+                                         .aspectRatio(contentMode: .fit)
+                                         .foregroundColor(.gray8B8C86)
+                                         .frame(width: 20)
+                                         .padding(.trailing, 10)
+                                }
+                                .environment(\.layoutDirection, .rightToLeft)
+                              
+                                HStack(spacing: 5){
+                                     Text(String(format: "%.1f", product["offer_price"] as? Double ?? 0.0))
+                                         .textModifier(.plain, 13, .black010202)
+                                         .padding(.trailing,5)
+                                         .lineLimit(1)
+                                         .minimumScaleFactor(0.8)
+                                    Image(.riyal)
+                                         .resizable()
+                                         .aspectRatio(contentMode: .fit)
+                                         .foregroundColor(.gray8B8C86)
+                                         .frame(width: 20)
+                                         .padding(.trailing, 10)
+                                }
+                                .environment(\.layoutDirection, .rightToLeft)
                             }
                         }
                         else {
-                            Text(String(format: "%.1f", product["price"] as? Double ?? 0.0,"RS".localized()))
-                                .textModifier(.semiBold, 15, .black010202)
-                                .padding(.trailing,5)
+                            HStack(spacing: 5){
+                                Text(String(format: "%.1f", product["price"] as? Double ?? 0.0))
+                                    .textModifier(.semiBold, 13, .black010202)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.8)
+                                    .padding(.trailing,5)
+                                Image(.riyal)
+                                     .resizable()
+                                     .aspectRatio(contentMode: .fit)
+                                     .foregroundColor(.gray8B8C86)
+                                     .frame(width: 20)
+                                     .padding(.trailing, 10)
+                            }
+                            .environment(\.layoutDirection, .rightToLeft)
+                           
                         }
                     }
                     

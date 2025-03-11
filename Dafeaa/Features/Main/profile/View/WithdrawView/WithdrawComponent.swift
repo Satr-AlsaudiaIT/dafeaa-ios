@@ -35,11 +35,16 @@ struct WithdrawComponent: View {
                     
                 }
                 HStack(spacing: 2) {
-                    Text(String(format: "%.0f", process?.amount ?? 0))
+                    Text(String(format: "%.1f", process?.amount ?? 0))
                         .textModifier(.bold, 14, withdrawsStatusEnum(rawValue: process?.status ?? 0)?.color ?? .gray919191)
-                    Text("SAR".localized())
-                        .textModifier(.bold, 14, withdrawsStatusEnum(rawValue: process?.status ?? 0)?.color ?? .gray919191)
+                    Image(.riyal)
+                         .resizable()
+                         .aspectRatio(contentMode: .fit)
+                         .foregroundColor(.gray8B8C86)
+                         .frame(width: 20)
+                         .padding(.trailing, 10)
                 }
+                .environment(\.layoutDirection, .rightToLeft)
 
             }
             .padding(.all, 16)

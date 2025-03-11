@@ -16,6 +16,8 @@ struct AddProductView: View {
     @State var nameEn: String = ""
     @State var descriptionAr: String = ""
     @State var descriptionEn: String = ""
+    @State var quantity: String = ""
+
     @State var price: String = ""
     @State var offerPrice: String = ""
     @Binding var productsAdding: [[String:Any]]
@@ -44,6 +46,9 @@ struct AddProductView: View {
                         CustomMainTextField(text: $descriptionEn, placeHolder: "descriptionEn", fieldType: .englishOnly)
                             .focused($focusedField, equals: .descriptionEn)
                             .id(FormField.descriptionEn)
+                        CustomMainTextField(text: $quantity, placeHolder: "quantity", fieldType: .none)
+                            .focused($focusedField, equals: .quantity)
+                            .id(FormField.quantity)
                         HStack(spacing: 20) {
                             CustomMainTextField(text: $price, placeHolder: "productPrice",keyBoardType: .numberPad,fieldType: .price)
                                 .focused($focusedField, equals: .price)
@@ -54,7 +59,7 @@ struct AddProductView: View {
                         }
                         Spacer()
                         ReusableButton(buttonText: "addProductTitle") {
-                            if let product = viewModel.validateAddOrder(image: selectedImage, nameAr: nameAr, nameEn: nameEn, descriptionAr: descriptionAr, descriptionEn: descriptionEn, price: price, offerPrice: offerPrice) {
+                            if let product = viewModel.validateAddOrder(image: selectedImage, nameAr: nameAr, nameEn: nameEn, descriptionAr: descriptionAr, descriptionEn: descriptionEn,quantity: quantity, price: price, offerPrice: offerPrice) {
                                 productsAdding.append(product)  // Update the binding array
                                 self.presentationMode.wrappedValue.dismiss()
                             }
@@ -118,9 +123,12 @@ struct AddProductView: View {
         case .nameEn:
             focusedField = .descriptionAr
         case .descriptionEn:
+            focusedField = .quantity
+        case .quantity:
             focusedField = .price
         case .price:
             focusedField = .offerPrice
+            
         default:
             focusedField = nil
         }
@@ -131,6 +139,8 @@ struct AddProductView: View {
         case .offerPrice:
             focusedField = .price
         case .price:
+            focusedField = .quantity
+        case .quantity:
             focusedField = .descriptionEn
         case .descriptionEn:
             focusedField = .descriptionAr
@@ -144,7 +154,7 @@ struct AddProductView: View {
     }
     
     enum FormField {
-        case nameAr, nameEn, descriptionAr, descriptionEn, price, offerPrice
+        case nameAr, nameEn, descriptionAr, descriptionEn,quantity, price, offerPrice
     }
 }
 

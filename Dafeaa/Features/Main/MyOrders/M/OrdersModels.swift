@@ -8,6 +8,7 @@ struct OrdersModel: Codable {
     let data: [OrdersData]?
     let message: String?
     let count: Int?
+    let outstandingBalance: Double?
 }
 
 struct OrdersData: Codable, Identifiable {
@@ -85,6 +86,9 @@ struct productList: Codable, Identifiable,Equatable {
     let price               : Double?
     let amount              : Int?
     let offerPrice          : Double?
+    let totalQuantity       : Int?
+    let paiedQuantity       : Int?
+    let remainingQuantity   : Int?
 }
 
 struct PaymentDetails: Codable {
@@ -135,6 +139,9 @@ struct ShowOfferData: Codable, Equatable {
     let clientId                            : Int?
     let deliveryPrice, taxPrice             : Double?
     let products                            : [productList]?
+    var status                              : Int?
+    
+    
 }
 
 // MARK: - Product

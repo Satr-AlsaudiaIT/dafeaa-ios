@@ -39,11 +39,16 @@ struct AddWithdrawBottomSheet: View {
                         .resizable()
                         .frame(width: 24, height: 24)
                     
-                    Text("SAR")
-                        .textModifier(.bold, 22, .gray919191)
+                    Image(.riyal)
+                         .resizable()
+                         .renderingMode(.template)
+                         .foregroundColor(.gray8B8C86)
+                         .aspectRatio(contentMode: .fit)
+                         .frame(width: 20)
+                         .padding(.trailing, 10)
                 }
                 .padding(.horizontal)
-                
+                .environment(\.layoutDirection, .rightToLeft)
                 TextField("0", text: $amount)
                     .keyboardType(.numberPad)
                     .multilineTextAlignment(.center)
@@ -176,7 +181,7 @@ struct BuyProductBottomSheet: View {
                 }
                 .padding(.horizontal)
                 Spacer()
-                TextField("0", text: $number)
+                TextField("code".localized(), text: $number)
                     .keyboardType(.numberPad)
                     .multilineTextAlignment(.center)
                     .textModifier(.plain, 43, .black2B2D33)
@@ -188,10 +193,11 @@ struct BuyProductBottomSheet: View {
                     Text("search_by_QR_code".localized())
                         .textModifier(.bold, 16, .primaryF9CE29)
                         .underline()
+                        .padding(.bottom)
                 }
                
                 ReusableButton(buttonText: "search", isEnabled: true) {
-                    viewModel.handleFindOfferByNum(id: Int(number) ?? 0)
+                    viewModel.handleFindOfferByNum(code: number)
                 }
             }
             .padding()
@@ -222,10 +228,10 @@ struct BuyProductBottomSheet: View {
         .sheet(isPresented: $isShowingScanner) {
             QRCodeScannerViewHome { code in
                 isShowingScanner = false // Dismiss the scanner
-                if let offerId = Int(code) {
+                 let offerCode = String(code) 
                     number = code // Set the scanned offer number
-                    viewModel.handleFindOfferByNum(id: offerId) // Handle the offer search
-                }
+                    viewModel.handleFindOfferByNum(code: offerCode) // Handle the offer search
+                
             }
         }
     }

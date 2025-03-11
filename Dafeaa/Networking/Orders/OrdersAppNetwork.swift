@@ -15,9 +15,10 @@ enum OrdersNetwork {
     case createClientOrder(dic: [String:Any])
     //merchantOffers
     case dynamicLinks(skip: Int)
-    case showDynamicLinks(id: Int)
+    case showDynamicLinks(code: String)
     case deleteDynamicLinks(id: Int)
     case createDynamicLinks(dic: [String:Any])
+    case activateStopLink(code: String,status: Int)
 }
 
 extension OrdersNetwork: TargetType {
@@ -36,9 +37,13 @@ extension OrdersNetwork: TargetType {
             
         //merchantOffers
         case .dynamicLinks(skip: let skip):  return "links?skip=\(skip)"
-        case .showDynamicLinks(id: let id),.deleteDynamicLinks(id: let id):
+        case .showDynamicLinks(code: let code):
+            return "links/\(code)"
+        case .deleteDynamicLinks(id: let id):
             return "links/\(id)"
         case .createDynamicLinks :           return "links"
+        case .activateStopLink(code: let code,_):
+            return "links/\(code)"
             
         }
     }
@@ -46,7 +51,7 @@ extension OrdersNetwork: TargetType {
     var methods: HTTPMethod {
         switch self  {
         case .changeStatus,.createClientOrder,
-             .createDynamicLinks,.completeOrder:  return .post
+                .createDynamicLinks,.completeOrder,.activateStopLink:  return .post
         case .deleteDynamicLinks :              return .delete
         default:                                return .get
         }
@@ -57,6 +62,8 @@ extension OrdersNetwork: TargetType {
         case .changeStatus( _, let  status): return .requestParameters(Parameters: ["_method": "put", "status": status], encoding: JSONEncoding.default)
         case .completeOrder( _, let  qrCode): return .requestParameters(Parameters: ["qr_code": qrCode], encoding: JSONEncoding.default)
         case .createDynamicLinks(let dic),.createClientOrder(let dic):    return .requestParameters(Parameters: dic, encoding: JSONEncoding.default)
+        case .activateStopLink(_,let status):
+            return .requestParameters(Parameters: ["_method": "put","status": status], encoding: JSONEncoding.default)
             
         default:                              return .requestPlain
             

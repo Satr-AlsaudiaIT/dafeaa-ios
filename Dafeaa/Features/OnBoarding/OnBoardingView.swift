@@ -61,12 +61,11 @@ struct OnBoardingView: View {
                                         HStack(spacing: 8) {
                                             ForEach(0..<onboardingData.count, id: \.self) { dotIndex in
                                                 Circle()
-                                                    .fill(dotIndex == currentIndex ? Color(.primary) : Color(.grayE7E7E7))
+                                                    .fill(dotIndex == 2 - currentIndex ? Color(.primary) : Color(.grayE7E7E7))
                                                     .frame(width: 12, height: 12)
                                             }
                                         }
                                         .padding(.top, 7)
-                                        
                                         
                                         VStack(spacing: 10){
                                             Text(onboardingData[index].1)

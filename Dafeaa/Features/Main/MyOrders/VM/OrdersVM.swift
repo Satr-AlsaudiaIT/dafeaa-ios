@@ -9,12 +9,14 @@ import Foundation
 import UIKit
 
 final class OrdersVM : ObservableObject {
-    
+    @Published var activeStopSuccess: Bool = false
     @Published var toast: FancyToast?      = nil
     @Published private var _isLoading      = false
     @Published private var _isFailed       = false
     @Published var _ordersList     : [OrdersData] = []//[OrdersData(id: 1, name: "ww", orderNo: 1, date: "2121", status: "1")]
     @Published var _ordersListCount     : Int = 1
+    @Published var outStandingBalance     : Double = 0
+
     @Published private var _orderData      : OrderData? //= OrderData(id: 1, clientImage: "", clientName: "sss", products: [productList(id: 1, amount: 2, name: "sss", image: "", price: 100,offerPrice: 89,description: "eewew")], deliveryPrice: 100, orderStatus: 3, paymentStatus: 1, address: "wwww", qrCode: "qqqqq", taxPrice: 10, totalPrice: 1300, addressDetails: AddressDetails(id: 1, adress: "qqq", name: "qqq", phone: "111111"))
     @Published var _offersList      : [OffersData] = []
     @Published private var _offersListCount :Int = 1
@@ -52,7 +54,7 @@ final class OrdersVM : ObservableObject {
     }
     //MARK: - APIs
     
-    func orders(skip: Int, status: String,type:String,animated: Bool = true) {
+    func orders(skip: Int, status: String,type:String, animated: Bool = true) {
         if skip == 0 {
              _isLoading = animated ; hasMoreData = true ;
             animated ? ( self._ordersList.removeAll()):()
@@ -68,6 +70,7 @@ final class OrdersVM : ObservableObject {
             case .success(let Result):
                 guard let data = Result?.data else { return }
                 self._ordersListCount = Result?.count ?? 0
+                self.outStandingBalance = Result?.outstandingBalance ?? 0
                     if skip == 0 {
                         self._ordersList = data
                     } else {
@@ -228,9 +231,34 @@ final class OrdersVM : ObservableObject {
             }
         }
     }
-    func showOffer(id:Int) {
+    
+    func stopActivateOffer(code: String,status:Int) {
         _isLoading = true
-        api.showDynamicLinks(id: id) { [weak self] (Result) in
+        api.activateStopLink(code: code, status: status) { [weak self] (Result) in
+            guard let self = self else { return }
+            self._isLoading = false
+            switch Result {
+            case .success(let response):
+                self._message = response?.message ?? ""
+                self._isLoading = false
+                self._isFailed = false
+                self.toast = FancyToast(type: .success, title: "Success".localized(), message: status == 1 ? "active_message".localized() : "stop_message".localized())
+                
+                self.activeStopSuccess.toggle()
+                self.offersData?.status = status
+                case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+            }
+        }
+    }
+
+    
+    func showOffer(code:String) {
+        _isLoading = true
+        api.showDynamicLinks(code: code) { [weak self] (Result) in
             guard let self = self else { return }
             self._isLoading = false
             switch Result {
@@ -250,7 +278,7 @@ final class OrdersVM : ObservableObject {
     
     
     //MARK: - Create Link Requests
-    func validateAddOrder(image: UIImage?, nameAr: String, nameEn: String, descriptionAr: String, descriptionEn: String, price: String, offerPrice: String) -> [String: Any]? {
+    func validateAddOrder(image: UIImage?, nameAr: String, nameEn: String, descriptionAr: String, descriptionEn: String, quantity:String, price: String, offerPrice: String) -> [String: Any]? {
         if image == nil {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message: "chooseProductImage".localized())
             return nil
@@ -266,7 +294,11 @@ final class OrdersVM : ObservableObject {
         } else if descriptionEn.isBlank {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message: "enterDescriptionEn".localized())
             return nil
-        } else if price.isBlank {
+        } else if quantity.isBlank {
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "enterQuantity".localized())
+            return nil
+        }
+        else if price.isBlank {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPrice".localized())
             return nil
         } else {
@@ -276,7 +308,8 @@ final class OrdersVM : ObservableObject {
                 "name_ar": nameAr,
                 "description_en": descriptionEn,
                 "description_ar": descriptionAr,
-                "price": Double(price.convertDigitsToEng) ?? 0
+                "price": Double(price.convertDigitsToEng) ?? 0,
+                "quantity": Int(quantity.convertDigitsToEng) ?? 0
             ]
             if !offerPrice.isBlank {
                 product["offer_price"] = Double(offerPrice.convertDigitsToEng) ?? 0

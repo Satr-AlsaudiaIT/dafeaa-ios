@@ -55,8 +55,18 @@ struct OrderItemView: View {
                     Text(itemName)
                         .textModifier(.plain, 14,  .black222222)
                     HStack {
-                        Text(String(format: "%.2f %@", price, "SAR".localized()))
-                            .textModifier(.plain, 12, .gray8B8C86)
+                        
+                        HStack(spacing: 5) {
+                            Text(String(format: "%.2f %@", price))
+                                .textModifier(.plain, 12, .gray8B8C86)
+                            Image(.riyal)
+                                 .resizable()
+                                 .aspectRatio(contentMode: .fit)
+                                 .foregroundColor(.gray8B8C86)
+                                 .frame(width: 20)
+                                 .padding(.trailing, 10)
+                        }
+                        .environment(\.layoutDirection, .rightToLeft)
                         Spacer()
                         Text("amount: ".localized() + "\(amount)" )
                             .textModifier(.plain, 12, .gray8B8C86)
@@ -139,8 +149,27 @@ struct PriceRowView: View {
             Text(title)
                 .textModifier(.plain, 12, isTotal ? .black222222 : .grayAAAAAA)
             Spacer()
-            Text(String(format: "%.2f %@", price, isTax ? "%" : "RS".localized()))
-                .textModifier(.plain, 12, isTotal ? .black222222 : .grayAAAAAA)
+            if isTax {
+                Text(String(format: "%.2f %@", price,  "%"))
+                    .textModifier(.plain, 12, isTotal ? .black222222 : .grayAAAAAA)
+                    .padding(.trailing, Constants.shared.isAR ? 35 : 0)
+            }
+            else {
+                HStack(spacing: 5) {
+                    Text(String(format: "%.2f", price))
+                        .textModifier(.plain, 12, isTotal ? .black222222 : .grayAAAAAA)
+                        .padding(.leading,10)
+                    Image(.riyal)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(.gray8B8C86)
+                        .frame(width: 20)
+                        .padding(.trailing, 10)
+                }
+                .environment(\.layoutDirection, .rightToLeft)
+
+            }
+        
         }
     }
 }

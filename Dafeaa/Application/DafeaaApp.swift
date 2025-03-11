@@ -114,27 +114,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
             
             // Check if the URL structure matches `/offers/{offerID}/{offerCode}/{userId}`
              if pathComponents.count >= 3, pathComponents[0] == "offers" {
-                 if let offerID = Int(pathComponents[1]) {
-                     Constants.clientOrderId = offerID
+                 let offerCode = String(pathComponents[2])
+                         Constants.clientOrderCode = offerCode
                      
-                     print("Offer ID: \(Constants.clientOrderId), Offer Code: (Constants.offerCode)")
-                     handleDeepLinkNav(id: offerID,offerUserId: Int(pathComponents[3]) ?? 0) // Navigate in the app based on this link
-                 }
-             }else if pathComponents.count >= 3, pathComponents[1] == "offers" {
-                 if let offerID = Int(pathComponents[2]) {
-                     Constants.clientOrderId = offerID
-                     
-                     print("Offer ID: \(Constants.clientOrderId), Offer Code: (Constants.offerCode)")
-                     handleDeepLinkNav(id: offerID,offerUserId: Int(pathComponents[4]) ?? 0) // Navigate in the app based on this link
-                 }
+                     print("Offer ID: \(Constants.clientOrderCode), Offer Code: (Constants.offerCode)")
+                     handleDeepLinkNav(code: offerCode,offerUserId: Int(pathComponents[3]) ?? 0) // Navigate in the app based on this link
+                 
+             }
+            else if pathComponents.count >= 3, pathComponents[1] == "offers" {
+                let offerCode = String(pathComponents[3])
+                    Constants.clientOrderCode = offerCode
+                    
+                
+                     print("Offer ID: \(Constants.clientOrderCode), Offer Code: (Constants.offerCode)")
+                handleDeepLinkNav(code: offerCode,offerUserId: Int(pathComponents[4]) ?? 0) // Navigate in the app based on this link
+                 
              }
          }
     }
     
-    func handleDeepLinkNav(id:Int, offerUserId: Int){
+    func handleDeepLinkNav(code:String, offerUserId: Int){
         let api: OrdersAPIProtocol = OrdersAPI()
 
-        api.showDynamicLinks(id: id) { [weak self] (Result) in
+        api.showDynamicLinks(code: code) { [weak self] (Result) in
             guard let self = self else { return }
             switch Result {
             case .success(let response):

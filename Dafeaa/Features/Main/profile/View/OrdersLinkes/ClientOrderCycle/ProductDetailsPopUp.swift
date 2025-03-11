@@ -8,7 +8,9 @@
 import SwiftUI
 import SDWebImageSwiftUI
 struct ProductDetailsPopUp: View {
-    @Binding var product:productList 
+    @Binding var product:productList
+    @StateObject var viewModel = OrdersVM()
+
     var body: some View {
         ZStack {
             VStack(alignment: .leading) {
@@ -34,11 +36,33 @@ struct ProductDetailsPopUp: View {
                     Spacer()
                     if product.offerPrice != 0 {
                         HStack {
-                            Text("\(product.price ?? 0)" + "rs".localized())
-                                .textModifier(.plain, 14, .black010202)
-                                .strikethrough(true, color: .black010202)
-                            Text("\(product.offerPrice ?? 0)" + "rs".localized())
-                                .textModifier(.plain, 14, .black010202)
+                            HStack(spacing: 5){
+                                Text(String(format: "%.1f", product.price ?? 0))
+                                    .textModifier(.plain, 14, .black010202)
+                                    .strikethrough(true, color: .black010202)
+                              
+                                Image(.riyal)
+                                     .resizable()
+                                     .aspectRatio(contentMode: .fit)
+                                     .foregroundColor(.gray8B8C86)
+                                     .frame(width: 20)
+                                     .padding(.trailing, 10)
+                            }
+                            .environment(\.layoutDirection, .rightToLeft)
+                           
+                            HStack(spacing: 5){
+                                Text(String(format: "%.1f", product.offerPrice ?? 0))
+                                    .textModifier(.plain, 14, .black010202)
+                              
+                                Image(.riyal)
+                                     .resizable()
+                                     .aspectRatio(contentMode: .fit)
+                                     .foregroundColor(.gray8B8C86)
+                                     .frame(width: 20)
+                                     .padding(.trailing, 10)
+                            }
+                            .environment(\.layoutDirection, .rightToLeft)
+                           
                         }
                     }
                 }

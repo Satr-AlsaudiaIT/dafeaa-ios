@@ -29,8 +29,18 @@ struct WalletView: View {
                         VStack (spacing: 8){
                             Text("yourBalance".localized())
                                 .textModifier(.extraBold, 16, .black222222)
-                            Text("\(viewModel.walletData?.availableBalance ?? 0) "+"SAR".localized())
-                                .textModifier(.extraBold, 36, .black030319)
+                            
+                            HStack(spacing: 5) {
+                                Text(String(format: "%.1f",viewModel.walletData?.availableBalance ?? 0))
+                                    .textModifier(.extraBold, 36, .black030319)
+                                Image(.riyal)
+                                     .resizable()
+                                     .aspectRatio(contentMode: .fit)
+                                     .foregroundColor(.black010202)
+                                     .frame(width: 30)
+                                     .padding(.trailing, 10)
+                            }
+                            .environment(\.layoutDirection, .rightToLeft)
                         }
                         
                         //MARK: - Wallet View

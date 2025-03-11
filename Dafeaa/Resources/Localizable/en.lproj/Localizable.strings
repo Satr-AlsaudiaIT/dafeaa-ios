@@ -116,6 +116,7 @@
 "merchants_service_title" = "Service for Merchants";
 "merchants_service_body" = "This service is specifically for merchants. To obtain it, you must complete the merchant's required information.";
 "add_data_button" = "Add data";
+"invite_friend" = "Invite a Friend";
 
 //MARK: - ChangePassword
 "changePassword"="Change Password";
@@ -163,6 +164,14 @@
 "EnterConfirmPassword" = "Please confirm the password";
 "Success" = "Success";
 "Error" = "Error";
+"EnterCommercialName" = "Please enter the commercial name";
+"EnterCountry" = "Please select the country";
+"EnterCity" = "Please select the city";
+"EnterArea" = "Please enter the area";
+"EnterTax" = "Please enter the tax";
+"EnterCommercialLicens" = "Please upload the commercial license";
+"EnterEndDate" = "Please enter the expiration date of the commercial license";
+"optional" = "(Optional)";
 
 //MARK: - Orders
 "current"=" Current Orders";
@@ -188,10 +197,16 @@
 "Pending_Purchases_Balance" = "Pending Purchases Balance";
 "Pending_Sales_Balance" = "Pending Sales Balance";
 "search_offer" = "Search Offer";
-"search_by_number" = "Search by Offer Number";
+"search_by_number" = "Search by Offer Code";
 "search_by_QR_code" = "Search by QR Code";
 "search" = "Search";
-
+"buy_product" = "Buy Product";
+"buy_product_details" = "You can easily buy a product";
+"buy_product_btn" = "Buy Now";
+"sell_product" = "Sell Product";
+"sell_product_details" = "You can easily sell a product";
+"sell_product_btn" = "Sell Now";
+"exceedQuantity" = "The remaining quantity is only";
 //MARK: - NOTIFICATIONS
 "emptyNotifications"="You don't have any notifications yet. You will be alerted when you receive any notifications.";
 
@@ -269,6 +284,8 @@
 "productUnit" = "product";
 "orderNow"="Order Now";
 "deleteOffer" = "Delete Offer";
+"stopOffer" = "Deactivate Offer";
+"activateOffer" = "Activate Offer";
 "deliveryPriceTitle" = "Delivery Price";
 "taxPriceTitle" = "Tax Price";
 "addProductTitle" = "Add Product";
@@ -276,6 +293,7 @@
 "nameEn" = "Product Name (English)";
 "descriptionAr" = "Product Description (Arabic)";
 "descriptionEn" = "Product Description (English)";
+"quantity" = "Available Quantity";
 "productPrice" = "Product Price";
 "offerPrice" =  "Offer Price";
 "chooseProductImage" = "Please choose a product image";
@@ -283,6 +301,7 @@
 "enterNameEn" = "Please enter the product name in English";
 "enterDescriptionAr" = "Please enter the product description in Arabic";
 "enterDescriptionEn" = "Please enter the product description in English";
+"enterQuantity" = "Please enter the product available quantity";
 "enterPrice" = "Please enter the product price";
 "addProductSuccess" = "Product successfully added";
 "enterOfferName" = "Please enter the offer name";
@@ -293,6 +312,7 @@
 "copied successfully"="Copied successfully";
 "offerDetails"="Offer Details";
 "thereIsNoData"="No data available";
+"code" = "Code";
 
 //MARK: - Withdraws
 "withdrawsProcess" = "Withdrawal Transactions";
@@ -314,4 +334,5 @@
 "subscription_confirmation_button" = "Confirm";
 "sub_plan_success_message" = "You have successfully subscribed to this plan";
 "payment" = "payment";
-
+"stop_message" = "Offer is Deactivated successfully";
+"active_message" = "Offer is Activated successfully";
