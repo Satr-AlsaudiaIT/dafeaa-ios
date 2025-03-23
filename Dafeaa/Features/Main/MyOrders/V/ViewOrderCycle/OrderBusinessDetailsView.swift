@@ -42,8 +42,8 @@ struct OrderBusinessDetailsView: View {
                                         .padding(.horizontal,-10)
                                         .padding(.vertical,-10)
                                 }
-                               if orderData.qrCode != ""{
-                                    QRCodeView(text: viewModel.orderData?.qrCode ?? "")
+                                if orderData.qrCode != nil {
+                                    QRCodeView(text: orderData.qrCode ?? "")
                                 }
                                 //  Order Items Section
                                 VStack(spacing: 8) {
@@ -77,8 +77,7 @@ struct OrderBusinessDetailsView: View {
                                         .frame(maxWidth: .infinity,alignment: .leading)
                                     
                                     
-                                    
-                                    PaymentInfoView(breakdown: PaymentDetails(tax: orderData.taxPrice ?? 0.00, deliveryPrice: orderData.deliveryPrice ?? 0.00),itemsPrice: $itemsPrice, isShowDetails: true)
+                                    PaymentInfoView(breakdown: PaymentDetails(commission: Double(orderData.commissionRatio ?? "0") ?? 0, commissionMaxPrice: Double(orderData.maxCommissionValue ?? "0") ?? 0),itemsPrice: $itemsPrice, isShowDetails: true,isCalculateCommission: false)
                                     
                                     
                                     
@@ -166,7 +165,7 @@ struct OrderBusinessDetailsView: View {
         .sheet(isPresented: $showingProductDetails, onDismiss: {
             showingProductDetails = false
         }, content: {
-            ProductDetailsPopUp(product: $selectedProduct )
+            ProductDetailsPopUp(product: $selectedProduct,isMerchant: true)
                 .presentationCornerRadius(24)
                 .presentationDragIndicator(.visible)
                 .presentationDetents([.medium])

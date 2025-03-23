@@ -15,18 +15,35 @@ struct QRCodeView: View {
     private let filter = CIFilter.qrCodeGenerator()
     
     var body: some View {
-        if let qrImage = generateQRCode(from: text) {
-            Image(uiImage: qrImage)
-                .interpolation(.none)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 200 ,height: 200)
-        } else {
-            Text("QR code generation failed")
-                .foregroundColor(.red)
-        }
+        
+            
+            if let qrCodeImage = qrcodeImage(string: text) {
+                // Use the qrCodeImage with the logo
+                
+                Image(uiImage: qrCodeImage)
+                    .interpolation(.none)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 200 ,height: 200)
+            }
+       
+        
+        
+//        if let qrImage = generateQRCode(from: text) {
+//            Image(uiImage: qrImage)
+//                .interpolation(.none)
+//                .resizable()
+//                .scaledToFit()
+//                .frame(width: 200 ,height: 200)
+//        } else {
+//            Text("QR code generation failed")
+//                .foregroundColor(.red)
+//        }
     }
-    
+
+
+
+
     private func generateQRCode(from string: String) -> UIImage? {
         filter.message = Data(string.utf8)
         if let outputImage = filter.outputImage {
@@ -38,6 +55,8 @@ struct QRCodeView: View {
         return nil
     }
 }
+
+
 
 struct OrderItemView: View {
     var itemName  : String
@@ -88,40 +107,28 @@ struct PaymentInfoView: View {
     @State var isMerchantOfferDetails: Bool = false
     @Binding var itemsPrice: Double
     @State var isShowDetails: Bool = false
+    @State var itemsCommissionValue: Double = 0
+    @State var isCalculateCommission: Bool = true
     var body: some View {
         ZStack() {
-//            Text("paymentWay".localized())
-//                .textModifier(.plain, 14, .black222222)
-//            Text("buyWithDafea".localized())
-//                .textModifier(.plain, 12, .grayAAAAAA)
-//            
-//            Divider()
-//                .foregroundColor(Color(.black).opacity(0.10))
-//                .padding(.vertical, 12)
-            
-            // Use PriceRowView for each item in breakdown
+
             VStack(alignment: .leading, spacing: 8) {
-//                if !isMerchantOfferDetails {
-                    PriceRowView(title: "product".localized(), price: itemsPrice)
-//                }
-                PriceRowView(title: "delaviryAndRecive".localized(), price: breakdown?.deliveryPrice ?? 0)
-//                if !isMerchantOfferDetails {
-                    PriceRowView(title: "totalBeforeTax".localized(), price: ( (breakdown?.deliveryPrice ?? 0) + (itemsPrice)))
-//                }
-                PriceRowView(title: "tax".localized(), price: breakdown?.tax ?? 0,isTax: isShowDetails ? false : true)
-//                if !isMerchantOfferDetails {
+                
+                PriceRowView(title: "product".localized(), price: itemsPrice)
+                
+                PriceRowView(title: "commissionVal".localized(), price: itemsCommissionValue)
+//                PriceRowView(title: "totalBeforeTax".localized(), price: ( (itemsCommissionValue) + (itemsPrice)))
+
                     Divider()
                         .foregroundColor( Color(.black).opacity(0.10))
                     // Total row
                    if isShowDetails {
-                       let totalPrice: Double = (breakdown?.deliveryPrice ?? 0.0) + (itemsPrice)  + (breakdown?.tax ?? 0.0)
-                       PriceRowView(title: "total".localized(), price: totalPrice, isTotal: true)
-
+                       PriceRowView(title: "total".localized(), price: ( (itemsCommissionValue) + (itemsPrice)), isTotal: true)
                     }
                     else {
-                        let taxPrice = (itemsPrice) * (breakdown?.tax ?? 0.0) / 100
-                        let totalPrice: Double = (breakdown?.deliveryPrice ?? 0.0) + (itemsPrice) + taxPrice
-                        PriceRowView(title: "total".localized(), price: totalPrice, isTotal: true)
+//                        let taxPrice = (itemsPrice) * (breakdown?.tax ?? 0.0) / 100
+//                        let totalPrice: Double = (breakdown?.deliveryPrice ?? 0.0) + (itemsPrice)
+                        PriceRowView(title: "total".localized(), price: ( (itemsCommissionValue) + (itemsPrice)), isTotal: true)
                     }
 //                }
             }
@@ -130,6 +137,13 @@ struct PaymentInfoView: View {
         }
         .onChange(of: itemsPrice, { oldValue, newValue in
             print(itemsPrice,"itemPriccccc")
+            if isCalculateCommission {
+                itemsCommissionValue = (newValue * (breakdown?.commission ?? 0) )
+                itemsCommissionValue = itemsCommissionValue > breakdown?.commissionMaxPrice ?? 0 ? breakdown?.commissionMaxPrice ?? 0 : itemsCommissionValue
+            }
+            else {
+                itemsCommissionValue = breakdown?.commission ?? 0
+            }
         })
         .overlay {
             RoundedRectangle(cornerRadius: 15)
@@ -193,4 +207,82 @@ struct AddressView: View {
         }.padding(.horizontal,12)
         .padding(.vertical,16)
     }
+}
+
+
+
+
+import UIKit
+import CoreImage
+import QRCode
+
+
+
+func qrcodeImage (string: String) -> UIImage?{
+    // Generate the QR code
+     do {
+         let doc = try QRCode.Document(utf8String: string)
+
+         doc.design.shape.eye = QRCode.EyeShape.RoundedPointingIn()
+         
+         doc.design.shape.onPixels = QRCode.PixelShape.RoundedPath()
+         let image = UIImage(named: "logowithWithBackGround") ?? UIImage()
+
+         // Centered square logo
+         doc.logoTemplate = QRCode.LogoTemplate(
+            image: image.cgImage!,
+            path: CGPath(rect: CGRect(x: 0.4, y: 0.4, width: 0.22, height: 0.24), transform: nil),
+            inset: 2
+         )
+
+         let logoQRCode = try doc.platformImage(dimension: 300, dpi: 512)
+         return logoQRCode
+     } catch {
+         print("Failed to create QRCode document: \(error)")
+         return UIImage()
+     }
+}
+
+ func generateQRCodeWithLogo(from string: String, withLogo logo: UIImage?) -> UIImage? {
+   
+    let filter = CIFilter(name: "CIQRCodeGenerator")!
+    filter.setValue(Data(string.utf8), forKey: "inputMessage")
+    
+    if let outputImage = filter.outputImage {
+        let transformedImage = outputImage.transformed(by: CGAffineTransform(scaleX: 10, y: 10))
+        
+        // Create a CGImage from the CIImage
+        let context = CIContext()
+        if let cgImage = context.createCGImage(transformedImage, from: transformedImage.extent) {
+            var qrCodeImage = UIImage(cgImage: cgImage)
+            
+            // If a logo is provided, overlay it on the QR code
+            if let logo = logo {
+                qrCodeImage = overlayLogo(on: qrCodeImage, with: logo)
+            }
+            
+            return qrCodeImage
+        }
+    }
+    
+    return nil
+}
+
+ func overlayLogo(on qrCodeImage: UIImage, with logo: UIImage) -> UIImage {
+    let qrCodeSize = qrCodeImage.size
+    let logoSize = CGSize(width: 55, height: 65)
+    UIGraphicsBeginImageContextWithOptions(qrCodeSize, false, UIScreen.main.scale)
+    
+    qrCodeImage.draw(in: CGRect(origin: .zero, size: qrCodeSize))
+    
+    let logoX = (qrCodeSize.width - logoSize.width) / 2
+    let logoY = (qrCodeSize.height - logoSize.height) / 2
+    let logoRect = CGRect(x: logoX, y: logoY, width: logoSize.width, height: logoSize.height)
+    
+    logo.draw(in: logoRect)
+    
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    
+    return newImage ?? qrCodeImage
 }

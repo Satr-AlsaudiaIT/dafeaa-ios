@@ -22,7 +22,7 @@ struct PopUpComponent: View {
                 ZStack {
                     VStack(spacing: 0) {
                         Text(title.localized())
-                            .textModifier(.bold, 22, .black010202)
+                            .textModifier(.plain, 22, .black010202)
                         Text(question.localized())
                             .textModifier(.plain, 15,.black222222)
                             .multilineTextAlignment(.center)

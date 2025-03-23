@@ -19,7 +19,7 @@ struct SubscriptionCell: View {
                         let val = subscriptionData.price ?? 0
                         HStack(spacing: 5) {
                             Text(String(format: "%.2f", val))
-                                .textModifier(.bold, 28, .black222222)
+                                .textModifier(.plain, 28, .black222222)
                             Image(.riyal)
                                 .aspectRatio(contentMode: .fit)
                                 .foregroundColor(.gray8B8C86)

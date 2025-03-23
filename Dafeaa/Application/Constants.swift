@@ -33,7 +33,8 @@ class Constants {
     let userId = "userId"
     let businessInformationStatus = "businessInformationStatus"
     let subPlanId = "subPlanId"
-
+    let activeNotification = "activeNotification"
+    
 
     static var accountStatus: Int {
         get {

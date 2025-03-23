@@ -21,7 +21,7 @@ struct StaticPagesModel: Codable {
 }
 // MARK: - StaticPagesData
 struct StaticPagesData: Codable {
-    let privacyPolicy: String?
+    let privacy: String?
     let terms: String?
     let about: String?
 
@@ -35,8 +35,9 @@ struct NotificationsModel: Codable {
 
 // MARK: - NotificationsData
 struct NotificationsData: Codable {
-    let orderId, actionType, iconType,visitType, id, isRead : Int?
-    let title,  createdAt, body, data, time: String?
+    let  id, isRead, actionId, actionType : Int?
+    let title,  createdAt, body, data, time : String?
+    let userType: String?
 }
 // MARK: - LoginModel
 struct LoginModel: Codable {

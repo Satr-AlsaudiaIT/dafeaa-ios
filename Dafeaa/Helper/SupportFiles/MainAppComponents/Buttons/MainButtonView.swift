@@ -46,7 +46,6 @@ struct ReusableButton: View {
             }
         }) {
             Text(buttonText.localized())
-                .font(.system(size: 15, weight: .bold))
                 .textModifier(.plain, 15,.white)
                 .frame(maxWidth: .infinity, minHeight: 51)
                 .background(isEnabled ? Color(buttonColor.color()) : Color(.grayDADADA))

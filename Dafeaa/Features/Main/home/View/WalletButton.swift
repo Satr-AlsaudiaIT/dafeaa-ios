@@ -22,7 +22,6 @@ struct WalletButton: View {
                 Image(uiImage: image)
             }
             Text(buttonText.localized())
-                .font(.system(size: 15, weight: .bold))
                 .textModifier(.plain, 16,.gray8B8C86)
                 .frame(maxWidth: .infinity)
                 

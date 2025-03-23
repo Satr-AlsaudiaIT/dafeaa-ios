@@ -1,46 +1,56 @@
 PODS:
   - Alamofire (5.9.1)
-  - Firebase/Analytics (7.1.0):
-    - Firebase/Core
-  - Firebase/Auth (7.1.0):
+  - DSF_QRCode (24.0.0):
+    - SwiftImageReadWrite (~> 1.9.1)
+    - SwiftQRCodeGenerator (~> 2.0.2)
+  - Firebase (7.11.0):
+    - Firebase/Core (= 7.11.0)
+  - Firebase/Core (7.11.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 7.1.0)
-  - Firebase/Core (7.1.0):
-    - Firebase/CoreOnly
-    - FirebaseAnalytics (= 7.1.0)
-  - Firebase/CoreOnly (7.1.0):
-    - FirebaseCore (= 7.1.0)
-  - Firebase/DynamicLinks (7.1.0):
-    - Firebase/CoreOnly
-    - FirebaseDynamicLinks (~> 7.1.0)
-  - Firebase/Messaging (7.1.0):
-    - Firebase/CoreOnly
-    - FirebaseMessaging (~> 7.1.0)
-  - FirebaseAnalytics (7.1.0):
+    - FirebaseAnalytics (~> 7.11.0)
+  - Firebase/CoreOnly (7.11.0):
+    - FirebaseCore (= 7.11.0)
+  - FirebaseAnalytics (7.11.0):
+    - FirebaseAnalytics/AdIdSupport (= 7.11.0)
     - FirebaseCore (~> 7.0)
     - FirebaseInstallations (~> 7.0)
-    - GoogleAppMeasurement (= 7.1.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/MethodSwizzler (~> 7.0)
     - GoogleUtilities/Network (~> 7.0)
     - "GoogleUtilities/NSData+zlib (~> 7.0)"
-    - nanopb (~> 2.30906.0)
-  - FirebaseAuth (7.1.0):
+    - nanopb (~> 2.30908.0)
+  - FirebaseAnalytics/AdIdSupport (7.11.0):
+    - FirebaseAnalytics/Base (= 7.11.0)
+    - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
+    - GoogleAppMeasurement/AdIdSupport (= 7.11.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
+    - GoogleUtilities/MethodSwizzler (~> 7.0)
+    - GoogleUtilities/Network (~> 7.0)
+    - "GoogleUtilities/NSData+zlib (~> 7.0)"
+    - nanopb (~> 2.30908.0)
+  - FirebaseAnalytics/Base (7.11.0):
+    - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
+    - GoogleUtilities/MethodSwizzler (~> 7.0)
+    - GoogleUtilities/Network (~> 7.0)
+    - "GoogleUtilities/NSData+zlib (~> 7.0)"
+    - nanopb (~> 2.30908.0)
+  - FirebaseAuth (7.11.0):
     - FirebaseCore (~> 7.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GTMSessionFetcher/Core (~> 1.4)
-  - FirebaseCore (7.1.0):
-    - FirebaseCoreDiagnostics (~> 7.0)
+  - FirebaseCore (7.11.0):
+    - FirebaseCoreDiagnostics (~> 7.4)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/Logger (~> 7.0)
-  - FirebaseCoreDiagnostics (7.3.0):
-    - GoogleDataTransport (~> 8.0)
+  - FirebaseCoreDiagnostics (7.11.0):
+    - GoogleDataTransport (~> 8.4)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/Logger (~> 7.0)
-    - nanopb (~> 2.30906.0)
-  - FirebaseDynamicLinks (7.1.0):
-    - FirebaseCore (~> 7.0)
+    - nanopb (~> 2.30908.0)
   - FirebaseInstallations (7.11.0):
     - FirebaseCore (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
@@ -51,8 +61,9 @@ PODS:
     - FirebaseInstallations (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/UserDefaults (~> 7.0)
-  - FirebaseMessaging (7.1.0):
+  - FirebaseMessaging (7.11.0):
     - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
     - FirebaseInstanceID (~> 7.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
@@ -61,14 +72,16 @@ PODS:
   - FlagPhoneNumber (0.8.0):
     - FlagPhoneNumber/libPhoneNumberiOS (= 0.8.0)
   - FlagPhoneNumber/libPhoneNumberiOS (0.8.0)
-  - GoogleAppMeasurement (7.1.0):
+  - GoogleAppMeasurement/AdIdSupport (7.11.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/MethodSwizzler (~> 7.0)
     - GoogleUtilities/Network (~> 7.0)
     - "GoogleUtilities/NSData+zlib (~> 7.0)"
-    - nanopb (~> 2.30906.0)
-  - GoogleDataTransport (8.1.0):
-    - nanopb (~> 2.30906.0)
+    - nanopb (~> 2.30908.0)
+  - GoogleDataTransport (8.4.0):
+    - GoogleUtilities/Environment (~> 7.2)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (~> 1.2)
   - GoogleUtilities/AppDelegateSwizzler (7.13.3):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -100,26 +113,29 @@ PODS:
   - GTMSessionFetcher/Core (1.7.2)
   - IQKeyboardManagerSwift (7.0.3)
   - lottie-ios (4.5.0)
-  - nanopb (2.30906.0):
-    - nanopb/decode (= 2.30906.0)
-    - nanopb/encode (= 2.30906.0)
-  - nanopb/decode (2.30906.0)
-  - nanopb/encode (2.30906.0)
+  - nanopb (2.30908.0):
+    - nanopb/decode (= 2.30908.0)
+    - nanopb/encode (= 2.30908.0)
+  - nanopb/decode (2.30908.0)
+  - nanopb/encode (2.30908.0)
   - PromisesObjC (1.2.12)
   - SDWebImage (5.19.4):
     - SDWebImage/Core (= 5.19.4)
   - SDWebImage/Core (5.19.4)
   - SDWebImageSwiftUI (3.1.1):
     - SDWebImage (~> 5.10)
+  - SwiftImageReadWrite (1.9.2)
+  - SwiftQRCodeGenerator (2.0.2)
   - SwiftyJSON (5.0.2)
 
 DEPENDENCIES:
   - Alamofire
-  - Firebase/Analytics (~> 7.1.0)
-  - Firebase/Auth (~> 7.1.0)
-  - Firebase/Core (~> 7.1.0)
-  - Firebase/DynamicLinks (~> 7.1.0)
-  - Firebase/Messaging (~> 7.1.0)
+  - DSF_QRCode (~> 24.0.0)
+  - Firebase
+  - FirebaseAnalytics
+  - FirebaseAuth
+  - FirebaseCore
+  - FirebaseMessaging
   - FlagPhoneNumber
   - IQKeyboardManagerSwift
   - lottie-ios
@@ -129,12 +145,12 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - DSF_QRCode
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
-    - FirebaseDynamicLinks
     - FirebaseInstallations
     - FirebaseInstanceID
     - FirebaseMessaging
@@ -149,32 +165,36 @@ SPEC REPOS:
     - PromisesObjC
     - SDWebImage
     - SDWebImageSwiftUI
+    - SwiftImageReadWrite
+    - SwiftQRCodeGenerator
     - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
-  Firebase: 78e8dd2e39d653de6270432ad84fe8b59f7bf4e8
-  FirebaseAnalytics: 7f165a56dea86ddd5b8ce02af3bee982c683405c
-  FirebaseAuth: f82c2cfcc1c107bb0a97735cdbce4eb2a601f710
-  FirebaseCore: 20046127eef0fcb8fa25df7fc12f7b97d4e48611
-  FirebaseCoreDiagnostics: d50e11039e5984d92c8a512be2395f13df747350
-  FirebaseDynamicLinks: dadf4564851de0ecdad2dab7fc2d1c401dcaa406
+  DSF_QRCode: dbe9c291a2e7ad238d388c6087458d4ed7cf6dec
+  Firebase: c121feb35e4126c0b355e3313fa9b487d47319fd
+  FirebaseAnalytics: cd3bd84d722a24a8923918af8af8e5236f615d77
+  FirebaseAuth: 5fe4585c2ed847319f0ea68bd1d82c77e49ff9a0
+  FirebaseCore: 907447d8917a4d3eb0cce2829c5a0ad21d90b432
+  FirebaseCoreDiagnostics: 68ad972f99206cef818230f3f3179d52ccfb7f8c
   FirebaseInstallations: a58d4f72ec5861840b84df489f2668d970df558a
   FirebaseInstanceID: ad5135045a498d7775903efd39762d2cdfa1be27
-  FirebaseMessaging: 076054895c9260f82c7304cc7709dbf19b8f3e4a
+  FirebaseMessaging: 163435fb6db065e3b6228f1e577b10ed2cc506d2
   FlagPhoneNumber: 3712455b95f66cb0f2016fef7d9e34cddf8c7f9a
-  GoogleAppMeasurement: 89e1a64593f968713b0506ba1b53b38a154bf9a5
-  GoogleDataTransport: 116c84c4bdeb76be2a7a46de51244368f9794eab
+  GoogleAppMeasurement: fd19169c3034975cb934e865e5667bfdce59df7f
+  GoogleDataTransport: cd9db2180fcecd8da1b561aea31e3e56cf834aa7
   GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
   IQKeyboardManagerSwift: f9c5dc36cba16ddd2e51fa7d51c34a2e083029b5
   lottie-ios: a881093fab623c467d3bce374367755c272bdd59
-  nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
+  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   SDWebImage: 066c47b573f408f18caa467d71deace7c0f8280d
   SDWebImageSwiftUI: dcff3d05fd0579ff280221ae8856c34ac3b67f25
+  SwiftImageReadWrite: f58e807c5e3e211b788b5e058c4da464096ed430
+  SwiftQRCodeGenerator: cc02fed209335064d0b0dd61b2a0874b9bc6bd5a
   SwiftyJSON: f5b1bf1cd8dd53cd25887ac0eabcfd92301c6a5a
 
-PODFILE CHECKSUM: 8a5c330e5c078e69e726d630fca80fa7a30e5bfd
+PODFILE CHECKSUM: 68422807577c4924ca0f22ccb50be7c086144631
 
 COCOAPODS: 1.15.2

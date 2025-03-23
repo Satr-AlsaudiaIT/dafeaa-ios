@@ -10,22 +10,22 @@ import SwiftUI
 struct WithdrawsView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel = MoreVM()
+    @State var heighlightedId: Int = 0
+    
     var body: some View {
-        
-        //MARK: - upperView
         ZStack {
             VStack(spacing: 0) {
-                NavigationBarView(title: "withdrawsProcess".localized()){
+                NavigationBarView(title: "withdrawsProcess".localized()) {
                     presentationMode.wrappedValue.dismiss()
                 }
+                
                 if viewModel.withdrawsData.isEmpty {
                     EmptyCostumeView()
                 } else {
                     ScrollView {
-                        
                         LazyVStack(spacing: 8) {
-                            ForEach(0..<viewModel.withdrawsData.count,id: \.self){ index in
-                                WithdrawComponent(process: viewModel.withdrawsData[index])
+                            ForEach(0..<viewModel.withdrawsData.count, id: \.self) { index in
+                                WithdrawComponent(process: viewModel.withdrawsData[index], heighlightedId: heighlightedId)
                                     .onAppear {
                                         if index == viewModel.withdrawsData.count - 1 {
                                             loadMoreOrdersIfNeeded()
@@ -33,10 +33,11 @@ struct WithdrawsView: View {
                                     }
                             }
                         }
-                        
-                    }.padding(24)
+                    }
+                    .padding(24)
                 }
             }
+            
             if viewModel.isLoading {
                 ProgressView("Loading...".localized())
                     .foregroundColor(.white)
@@ -48,7 +49,9 @@ struct WithdrawsView: View {
         }
         .toastView(toast: $viewModel.toast)
         .navigationBarHidden(true)
-        .onAppear(){viewModel.getWithDraws(skip: 0)}
+        .onAppear {
+            viewModel.getWithDraws(skip: 0)
+        }
     }
     
     private func loadMoreOrdersIfNeeded() {
@@ -56,9 +59,7 @@ struct WithdrawsView: View {
             viewModel.getWithDraws(skip: viewModel.withdrawsData.count)
         }
     }
-    
 }
-
 #Preview {
     WithdrawsView()
 }

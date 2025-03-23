@@ -32,6 +32,7 @@ final class MoreVM : ObservableObject {
     @Published var _isCreateSuccess        = false
     @Published var _isActive               = false
     @Published var _subSuccess             = false
+    @Published var activeSuccess             = false
 
     @Published var toast: FancyToast?      = nil
     let apiAuth: AuthAPIProtocol = AuthAPI()
@@ -164,6 +165,8 @@ final class MoreVM : ObservableObject {
                 Constants.userName = response?.data?.name ?? ""
                 GenericUserDefault.shared.setValue(response?.data?.id ?? 0, Constants.shared.userId)
                 GenericUserDefault.shared.setValue(response?.data?.businessInformationStatus, Constants.shared.businessInformationStatus)
+                GenericUserDefault.shared.setValue(response?.data?.activeNotification ?? 0, Constants.shared.activeNotification)
+
                 self._isActive = Constants.accountStatus == 2 ? true : false
 
             case .failure(let error):
@@ -288,7 +291,8 @@ final class MoreVM : ObservableObject {
                 self._isLoading = false
                 self._isFailed = false
                 self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
-                
+                UserDefaults.standard.set(active, forKey: Constants.shared.activeNotification)
+                self.activeSuccess.toggle()
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false

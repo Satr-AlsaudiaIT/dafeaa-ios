@@ -221,34 +221,35 @@ struct TermsAndConditionsView: View {
     @State private var showTermsAndConditions: Bool = false // To handle navigation
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            
-            HStack(alignment: .top, spacing: 10) {
-                // Checkbox
-                Button(action: {
-                    isAgreeChecked.toggle()
-                }) {
-                    Image(systemName: isAgreeChecked ? "checkmark.square.fill" : "square")
-                        .foregroundColor(isAgreeChecked ? Color(.primary) : .gray)
-                        .font(.system(size: 24))
-                }
+            VStack(alignment: .leading, spacing: 10) {
                 
-                // Text with attributed clickable parts
-                Text(secondAttributedString())
-                    .font(.system(size: 14))
-                    .onTapGesture {
-                        showTermsAndConditions = true // Handle navigation on click
+                HStack(alignment: .top, spacing: 10) {
+                    // Checkbox
+                    Button(action: {
+                        isAgreeChecked.toggle()
+                    }) {
+                        Image(systemName: isAgreeChecked ? "checkmark.square.fill" : "square")
+                            .foregroundColor(isAgreeChecked ? Color(.primary) : .gray)
+                            .font(.system(size: 24))
                     }
-               
+                    
+                    // Text with attributed clickable parts
+                    Text(secondAttributedString())
+                        .textModifier(.plain, 14, Color(.primary))
+                        .onTapGesture {
+                            showTermsAndConditions = true // Handle navigation on click
+                        }
+                    
+                }
+                .padding(.horizontal)
+                
+                
             }
-            .padding(.horizontal)
-            
-            
-        }
-        .sheet(isPresented: $showTermsAndConditions) {
-            // This is a placeholder for the terms and conditions view
-            TermsAndConditionsDetailView()
-        }
+            .navigationDestination(isPresented: $showTermsAndConditions) {
+                StaticPagesView(type: .constant(.termsAndCondition))
+            }
+           
+        
     }
     
     // Function to create an AttributedString with clickable terms
@@ -280,22 +281,4 @@ struct TermsAndConditionsView: View {
     }
 }
 
-// A placeholder view for the terms and conditions detail view
-struct TermsAndConditionsDetailView: View {
-    var body: some View {
-        VStack {
-            Text("Terms and Conditions Details")
-                .font(.title)
-                .padding()
-            
-            Button("Close") {
-                // Code to close the sheet
-                UIApplication.shared.windows.first?.rootViewController?.dismiss(animated: true, completion: nil)
-            }
-        }
-    }
-}
 
-//#Preview {
-//    TermsAndConditionsView()
-//}

@@ -53,6 +53,7 @@
 "Email" = "البريد الالكتروني";
 "AgreeToTermsAndConditionsCheckText" = "بمجرد متابعتك وانشاء حسابك لدينا فإنك توافق على شروط الاستخدام";
 "Terms&Conditions" = " شروط الاستخدام";
+"privacy" = "سياسة الخصوصة";
 "AgreeTo" = "اوافق على ";
 "createAccount" = "إنشاء حساب جديد ";
 "haveAccount?" = "لديك حساب بالفعل؟";
@@ -90,7 +91,7 @@
 "profile"="الملف الشخصي";
 "Subscription Management"="إدارة الاشتراكات";
 "Saved Addresses"="العناوين المحفوظة";
-"About Dafeaa"="نبذة عن دافع";
+"About Dafeaa"="عن دافع";
 "FAQ"="أسئلة متكررة";
 "FAQNavTitle"="الأسئلة الشائعة";
 "Help and Support"="المساعدة والدعم";
@@ -116,7 +117,7 @@
 "merchants_service_body" = "هذة الخدمة خاصة بالتجار للحصول عليها عليك استكمال البيانات الخاصة بالتاجر";
 "add_data_button" = "أضف البيانات";
 "invite_friend" = "دعوة صديق";
-
+"orderNotAvailable" = "هذا العرض موقوف بواسطة البائع";
 //MARK: - ChangePassword
 "changePassword"="تغيير كلمة المرور";
 "currentPassword"="كلمة المرور الحالية";
@@ -194,15 +195,17 @@
 "notValidBalance" = "رصيدك غير كافي, برجاء إدخال مبلغ ضمن الرصيد المتاح";
 "Pending_Purchases_Balance" = "رصيد المشتريات المعلق";
 "Pending_Sales_Balance" = "رصيد المبيعات المعلق";
-"search_offer" = "البحث عن عرض";
-"search_by_number" = "البحث بواسطة كود العرض";
-"search_by_QR_code" = "البحث عن طريق رمز الاستجابة السريعة";
+"search_offer" = "قم بشراء منتج";
+"search_by_number" = "الشراء عن طريق إدخال كود العرض";
+"search_by_QR_code" = "مسح الرمز";
+"search_by_Scan_Image_QR_code" = "مسح الرمز من صورة";
+"or" = "أو";
 "search" = "البحث";
-"buy_product" = "شراء منتج";
-"buy_product_details" = "يمكن شراء منتجا بسهولة";
+"buy_product" = "قم بشراء منتج";
+"buy_product_details" = "يمكنك البحث عن العروض من خلال دافع من هنا";
 "buy_product_btn" = "شراء الأن" ;
-"sell_product" = "بيع منتج";
-"sell_product_details" = "يمكنك بيع منتجا بسهولة";
+"sell_product" = "قم ببيع منتج";
+"sell_product_details" = "يمكنك بيع المنتجات من خلال دافع من هنا";
 "sell_product_btn" = "بيع الأن" ;
 "exceedQuantity" = "الكمية المتبقية هي فقط";
 //MARK: - NOTIFICATIONS
@@ -220,6 +223,7 @@
 "buyWithDafea"="الدفع عن طريق تطبيق دافع";
 "product"="المنتج:";
 "delaviryAndRecive"="الشحن والتسليم:";
+"commissionVal" = "رسوم إضافية:";
 "totalBeforeTax"="الإجمالي قبل الضريبة:";
 "tax"="قيمة الضريبة المقدرة:";
 "total"="الإجمالي:";
@@ -246,6 +250,7 @@
 
 //MARK: - addresses
 "address"="العنوان";
+"shortAddress" = "العنوان المختصر";
 "AddAddress" = "إضافة عنوان جديد +";
 "streetName" = "إسم الشارع";
 "buildingNum" = "رقم المبنى";
@@ -278,6 +283,12 @@
 "offerContent"="مكونات العرض";
 "description"="الوصف";
 "productDetails" = "تفاصيل المنتج";
+"totalQuantity" = "إجمالي الكمية";
+"paidQuantity" = "الكمية المباعة";
+"remainingQuantity" = "الكمية المتبقية";
+"updateQuantity" = "تعديل الكمية";
+"newQuantity" = "الكمية الجديدة";
+"Update"  = "تعديل";
 "rs" = "ر.س";
 "month" = "الشهر";
 "productUnit" = "منتج";
@@ -311,7 +322,11 @@
 "copied successfully"="تم النسخ";
 "offerDetails"="تفاصيل العرض";
 "thereIsNoData"="لا توجد بيانات";
-"code" = "كود";
+"code" = "مشاركة كود";
+"copy" = "نسخ";
+"share" = "مشاركة رابط";
+"delete" = "مسح";
+
 //MARK: - Withdraws
 "withdrawsProcess" = "عمليات سحب الرصيد";
 "withdrawProcess" = "عملية سحب";

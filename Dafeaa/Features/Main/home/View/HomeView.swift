@@ -21,7 +21,7 @@ struct HomeView: View {
     @State private var isPresentBuySheet: Bool = false
     let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
     let businessInformationStatus = GenericUserDefault.shared.getValue(Constants.shared.businessInformationStatus) as? Int ?? nil
-
+    @State var isUnreadNotification: Bool = UserDefaults.standard.value(forKey: Constants.shared.unReadNotificationCount) as? Int ?? 0 > 0 ? true : false
     @State var showClientOfferDetails: Bool = false
     @State var showOfferDetails: Bool = false
     @State var offerData: ShowOfferData? = nil
@@ -56,7 +56,20 @@ struct HomeView: View {
                                 Button {
                                     isNotificationPresented = true
                                 } label: {
-                                    Image(.notificationIcon)
+                                    ZStack {
+                                        Image(.notificationIcon)
+                                        if isUnreadNotification {
+                                            VStack {
+                                                HStack {
+                                                    Circle().fill(.red)
+                                                        .frame(width: 3, height: 3)
+                                                    Spacer()
+                                                }
+                                                Spacer()
+                                            }
+                                        }
+                                    }
+                                    .fixedSize()
                                 }.navigationDestination(isPresented: $isNotificationPresented){ NotificationsView()}
                                 
                             }
@@ -66,7 +79,7 @@ struct HomeView: View {
                             VStack {
                                 HStack(spacing: 5) {
                                     Text(String(format: "%.1f",viewModel.walletAmount))
-                                        .textModifier(.extraBold, 36, .black030319)
+                                        .textModifier(.plain, 36, .black030319)
                                     Image(.riyal)
                                          .resizable()
                                          .aspectRatio(contentMode: .fit)
@@ -78,7 +91,7 @@ struct HomeView: View {
                             }
                             .padding(.top,20)
                             Text("yourBalance".localized())
-                                .textModifier(.extraBold, 16, .black222222)
+                                .textModifier(.plain, 16, .black222222)
                         }
                         
                     }
@@ -92,6 +105,8 @@ struct HomeView: View {
                         .frame(height: UIScreen.main.bounds.height * 0.4 - 39)
                     ZStack(alignment: .top) {
                         
+                        
+
                         ZStack {
                             Color(.white)
                             
@@ -100,119 +115,107 @@ struct HomeView: View {
                                     .frame(height: 32)
                                 HStack {
                                     
-                                    ZStack {
-                                        VStack(alignment: .leading, spacing: 15) {
-                                            HStack {
-                                                Text("buy_product".localized())
-                                                    .textModifier(.semiBold, 16, .gray8B8C86)
-                                                    .padding([.top],10)
+                                    
+                                    Button {
+                                        isPresentBuySheet = true
+                                    } label: {
+                                        ZStack {
+                                            VStack(alignment: .leading, spacing: 5) {
+                                                HStack {
+                                                    Text("buy_product".localized())
+                                                        .textModifier(.plain, 16, .black222222)
+                                                        .padding([.top],10)
+                                                    Spacer()
+                                                }
+                                                Text("buy_product_details".localized())
+                                                    .textModifier(.plain, 14, .gray8B8C86)
+                                                    .multilineTextAlignment(.leading)
                                                 Spacer()
                                             }
-                                            Text("buy_product_details".localized())
-                                                .textModifier(.plain, 14, .gray8B8C86)
-                                            
-                                            
-                                            ReusableButton(buttonText: "buy_product_btn",buttonColor: .yellow,cornerRadius: 10) {
-                                                isPresentBuySheet = true
-                                            }
-                                            
-                                            
+                                            .frame(width: (UIScreen.main.bounds.width / 2) - 50)
+                                            .padding()
                                             
                                         }
-                                        .frame(width: (UIScreen.main.bounds.width / 2) - 50)
-                                        .padding()
-                                        
+                                        .frame( height: 170)
+                                        .fixedSize()
+                                        .overlay(
+                                            ZStack {
+                                                VStack {
+                                                    Image(.buyProduct)
+                                                        .resizable()
+                                                        .frame(width: 28.05, height: 28)
+                                                    Spacer()
+                                                }
+                                                .padding(.top,-10)
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .stroke(LinearGradient(colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)], startPoint: .top, endPoint: .bottom), lineWidth: 1)
+                                            }
+                                        )
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .fill(Color.white)
+                                                .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
+                                        )
                                     }
                                     
-                                    .fixedSize()
-                                    .overlay(
+                                    
+                                    Button {
+                                        if businessInfo.rawValue == 0 {
+                                            showCompleteDataPopup = true
+                                        }
+                                        else if businessInfo.rawValue == 1 {
+                                            navigateToPendingView = true
+                                        }
+                                        else {
+                                            navigateToOffers = true
+                                        }
+                                    } label: {
                                         ZStack {
-                                            VStack {
-                                                Image(.buyProduct)
-                                                    .resizable()
-                                                    .frame(width: 28.05, height: 28)
-                                                Spacer()
+                                            VStack(alignment: .leading, spacing: 5) {
+                                                HStack {
+                                                    Text("sell_product".localized())
+                                                        .textModifier(.plain, 16, .black222222)
+                                                        .padding([.top],10)
+                                                        .lineLimit(nil)
+                                                    Spacer(minLength: 0)
+                                                }
+                                                Text("sell_product_details".localized())
+                                                    .textModifier(.plain, 14, .gray8B8C86)
+                                                    .multilineTextAlignment(.leading)
+                                                Spacer(minLength: 0)
                                             }
-                                            .padding(.top,-10)
+                                            .frame(width: (UIScreen.main.bounds.width / 2) - 50)
+                                            .padding()
+                                            
+                                        }
+                                        .frame( height: 170)
+                                        .fixedSize()
+                                        .overlay(
+                                            ZStack {
+                                                VStack {
+                                                    Image(.sellProduct)
+                                                        .resizable()
+                                                        .frame(width: 28.05, height: 28)
+                                                    Spacer()
+                                                }
+                                                .padding(.top,-10)
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .stroke(LinearGradient(colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)], startPoint: .top, endPoint: .bottom), lineWidth: 1)
+                                            }
+                                        )
+                                        .background(
                                             RoundedRectangle(cornerRadius: 10)
-                                                .stroke(LinearGradient(colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)], startPoint: .top, endPoint: .bottom), lineWidth: 1)
-                                        }
-                                    )
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .fill(Color.white)
-                                            .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
-                                    )
-                                    
-                                    
-                                    
-                                    
-                                    ZStack {
-                                        VStack(alignment: .leading, spacing: 15) {
-                                            HStack {
-                                                Text("sell_product".localized())
-                                                    .textModifier(.semiBold, 16, .gray8B8C86)
-                                                    .padding([.top],10)
-                                                
-                                                Spacer()
-                                            }
-                                            Text("sell_product_details".localized())
-                                                .textModifier(.plain, 14, .gray8B8C86)
-                                            
-                                            
-                                            ReusableButton(buttonText: "sell_product_btn",buttonColor: .yellow,cornerRadius: 10) {
-                                                
-                                                if businessInfo.rawValue == 0 {
-                                                    showCompleteDataPopup = true
-                                                }
-                                                else if businessInfo.rawValue == 1 {
-                                                    navigateToPendingView = true
-                                                }
-                                                else {
-                                                    navigateToOffers = true
-                                                }
-                                            }
-                                        }
-                                        .frame(width: (UIScreen.main.bounds.width / 2) - 50)
-                                        .padding()
+                                                .fill(Color.white)
+                                                .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
+                                        )
                                     }
-                                    .fixedSize()
-                                    .overlay(
-                                        ZStack {
-                                            VStack {
-                                                Image(.sellProduct)
-                                                    .resizable()
-                                                    .frame(width: 28.05, height: 28)
-                                                Spacer()
-                                            }
-                                            .padding(.top,-10)
-                                            RoundedRectangle(cornerRadius: 10)
-                                                .stroke(LinearGradient(colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)], startPoint: .top, endPoint: .bottom), lineWidth: 1)
-                                        }
-                                    )
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .fill(Color.white)
-                                            .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
-                                    )
+
+                                    
+                                   
                                     
                                 }
                                 Spacer()
-                                //                                LastProcessNavView(title: "lastProcesses".localized(), selectedTab: $selectedTab)
-                                //                                    .padding(.horizontal,24)
-                                //
-                                //                                if viewModel.processList.isEmpty {
-                                //                                    EmptyCostumeView()
-                                //                                }else {
-                                //                                    ScrollView (showsIndicators: false){
-                                //                                        VStack(spacing: 8) {
-                                //                                            ForEach(0..<viewModel.processList.count,id: \.self){ index in
-                                //                                                ProcessComponent(process: viewModel.processList[index])
-                                //                                            }
-                                //                                        }
-                                //                                    }
-                                //                                    .padding(.horizontal,24)
-                                //                                }
+                              
                             }
                         }
                         .cornerRadius(24)
@@ -356,7 +359,7 @@ struct HomeView: View {
             })
             .sheet(isPresented: $isPresentBuySheet, content: {
                 BuyProductBottomSheet(isShowClientLinkDetails: $showClientOfferDetails, isShowOrderLinkDetails: $showOfferDetails, offerData: $offerData,isSheetPresented: $isPresentBuySheet)
-                    .presentationDetents([.fraction(0.6)]) // Use fraction to make height consistent
+                    .presentationDetents([.fraction(0.45)]) // Use fraction to make height consistent
                     .presentationCornerRadius(24)
                     .presentationDragIndicator(.visible)
             })
@@ -393,7 +396,7 @@ struct LastProcessNavView: View {
             Spacer()
             if  isShow {
                 Button {
-                    selectedTab = .processes
+//                    selectedTab = .processes
                 } label: {
                     Image(.leftArrow)
                     

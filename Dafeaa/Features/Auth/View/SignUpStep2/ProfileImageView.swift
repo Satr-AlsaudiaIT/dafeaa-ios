@@ -20,6 +20,7 @@ struct ProfileImageView: View {
     @State private var showFileTypeSelection: Bool = false
     @State private var pickerSourceType: UIImagePickerController.SourceType = .photoLibrary
     @State private var isEdited: Bool = false
+
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             ZStack(alignment: .center) {

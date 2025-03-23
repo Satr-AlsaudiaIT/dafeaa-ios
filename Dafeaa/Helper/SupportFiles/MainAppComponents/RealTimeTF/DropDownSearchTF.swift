@@ -79,8 +79,8 @@ struct DropdownSearchTF: View {
                             }
                             Spacer()
                             Image(systemName: "chevron.down")
-                                .font(.system(size: 15, weight: .bold))
-                                .foregroundColor(.black)
+                                .textModifier(.plain, 15,.black)
+
                                 .padding(.trailing,15)
                         }
                     }
@@ -93,6 +93,7 @@ struct DropdownSearchTF: View {
                     )
                 }
             }
+            
             if isOpen ?? false {
                 VStack{
                    

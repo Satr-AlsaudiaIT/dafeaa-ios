@@ -19,9 +19,11 @@ struct ClientLinkDetails: View {
     @State var address: String = Constants.selectedAddress
     @State var isNavigateToAddress: Bool = false
     @State var showingProductDetails: Bool = false
+    @State var isAmountInCellDisabled: Bool = false
+
     @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000,amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 0, remainingQuantity: 1)
     var linkDetails: ShowOfferData  {
-        return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [], status: 0)
+        return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [], status: 0,commissionRatio: "",maxCommissionValue: "")
     }
     var body: some View {
             ZStack {
@@ -34,17 +36,21 @@ struct ClientLinkDetails: View {
                         ScrollView {
                         VStack(alignment: .leading,spacing: 19) {
                             Text(linkDetails.name ?? "")
-                                .textModifier(.bold, 16, .black010202)
+                                .textModifier(.plain, 16, .black010202)
                             Text(linkDetails.description ?? "")
                                 .textModifier(.plain, 15, .black222222)
                                 .padding(.top,-10)
-                            
+                            if viewModel.offersData?.status == 2 {
+                                Text("orderNotAvailable".localized())
+                                    .textModifier(.plain, 15, .redFA4248)
+                            }
                             ForEach (linkDetails.products ?? []) { product in
                                 Button(action: {
                                     showingProductDetails = true
                                     selectedProduct = product
                                 }) {
-                                    ClientLinkCellIView(product: product, productAmountDic: $productAmountDic,amountChanged: $amountChanged)
+                                    ClientLinkCellIView(product: product, productAmountDic: $productAmountDic,amountChanged: $amountChanged,isDisabled: $isAmountInCellDisabled)
+                                        
                                         .onAppear {
                                             // Initialize the dictionary with product ID and initial amount
                                             let initialAmount = 1
@@ -57,11 +63,11 @@ struct ClientLinkDetails: View {
                                         }
                                 }
                             }
-                            PaymentInfoView(breakdown: PaymentDetails(tax: linkDetails.taxPrice, deliveryPrice: linkDetails.deliveryPrice),itemsPrice: $totalPrice)
+                            PaymentInfoView(breakdown: PaymentDetails(commission: Double(linkDetails.commissionRatio ?? "0") ?? 0, commissionMaxPrice: Double(linkDetails.maxCommissionValue ?? "0") ?? 0),itemsPrice: $totalPrice)
                             
                             HStack {
                                 Text("deliveryAddress".localized())
-                                    .textModifier(.bold, 15, .black010202)
+                                    .textModifier(.plain, 15, .black010202)
                                 Spacer()
                                 Button(action: {
                                     isNavigateToAddress = true
@@ -104,10 +110,13 @@ struct ClientLinkDetails: View {
                         .hidden()
                 }
             }
+            .onChange(of: viewModel.offersData, { oldValue, newValue in
+                isAmountInCellDisabled = viewModel.offersData?.status == 2 ? true : false
+            })
             .sheet(isPresented: $showingProductDetails, onDismiss: {
                 showingProductDetails = false
             }, content: {
-                ProductDetailsPopUp(product: $selectedProduct )
+                ProductDetailsPopUp(product: $selectedProduct)
                     .presentationCornerRadius(24)
                     .presentationDragIndicator(.visible)
                     .presentationDetents([.medium])
@@ -116,7 +125,7 @@ struct ClientLinkDetails: View {
             .navigationBarHidden(true)
         
             .onAppear{
-                if let offerData { viewModel._offersData = offerData
+                if let offerData { viewModel.offersData = offerData
                 } else { viewModel.showOffer(code: code) }
             }
         

@@ -76,40 +76,8 @@ struct ProfileView: View {
                             
                             
                             
-//                            HStack(spacing:12) {
-//                                Image(.subscribtion)
-//                                    .resizable()
-//                                    .aspectRatio(contentMode: .fill)
-//                                    .frame(width: 28, height: 28)
-//                                
-//                                Text("Subscription Management".localized())
-//                                    .textModifier(.plain, 16, .black194558)
-//                                Spacer()
-//                                
-//                                Image(.iconArrowNav)
-//                                    .frame(width: 32, height: 32)
-//                                    .foregroundColor(Color(.black194558))
-//                            }
-//                            .frame(height: 32)
-//                            .onTapGesture {
-//                                if businessInfo.rawValue == 0 {
-//                                    showCompleteDataPopup = true
-//                                }
-//                                else if businessInfo.rawValue == 1 {
-//                                    navigateToPendingView = true
-//                                }
-//                                else {
-//                                    navigateToSubscriptionView = true
-//                                }
-//                            }
-                           
-//                            NavigationLinkComponent(
-//                                destination: OrdersOffersLinksView(),
-//                                label: "offers",
-//                                image: Image(.iconOffer))
-//
                             NavigationLinkComponent(
-                                destination: StaticPagesView(type: .constant(.aboutApp)),
+                                destination: StaticPagesList(),
                                 label: "About Dafeaa",
                                 image: Image(.iconAbout)
                             )
@@ -164,7 +132,8 @@ struct ProfileView: View {
                                     .textModifier(.plain, 16, .redFA4248)
                                     .frame(maxWidth: .infinity,alignment: .leading)
                             }
-                        }                        }
+                        }
+                    }
                     
                 }.padding([.top,.trailing,.leading],24)
                 Button(action: {
@@ -177,7 +146,9 @@ struct ProfileView: View {
                         .frame(height:51)
                         .background(.redFA4248.opacity(0.1))
                         .cornerRadius(5)
-                }.padding(24)
+                }
+                .padding(20)
+                
             }.navigationDestination(isPresented: $showingChangePhone) {
                 ChangePhoneView()
             }

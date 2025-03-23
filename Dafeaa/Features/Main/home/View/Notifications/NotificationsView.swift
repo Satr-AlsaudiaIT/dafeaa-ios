@@ -10,7 +10,10 @@ import SwiftUI
 struct NotificationsView: View {
     @StateObject var viewModel = HomeVM()
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-
+    @State var navigateToClientOrder: Bool = false
+    @State var navigateToMerchentOrder: Bool = false
+    @State var navigateToWithdraws: Bool = false
+    @State var actionId: Int = 0
     var body: some View {
         
         //MARK: - upperView
@@ -39,10 +42,28 @@ struct NotificationsView: View {
                             
                             LazyVStack(spacing: 0) {
                                 ForEach(0..<viewModel.notifications.count,id: \.self){ index in
+                                    
                                     notificationsComponent(model: viewModel.notifications[index])
                                         .onAppear {
                                             if index == viewModel.notifications.count - 1 {
                                                 loadMoreOrdersIfNeeded()
+                                            }
+                                        }
+                                        .onTapGesture {
+                                            if viewModel.notifications[index].actionType ?? 0 == 1 {
+                                                if viewModel.notifications[index].userType ?? "" == "client" {
+                                                    self.navigateToClientOrder = true
+                                                    self.actionId = viewModel.notifications[index].actionId ?? 0
+                                                }
+                                                else if viewModel.notifications[index].userType ?? "" == "merchant" {
+                                                    self.navigateToMerchentOrder = true
+                                                    self.actionId = viewModel.notifications[index].actionId ?? 0
+                                                }
+                                            }
+                                            else if viewModel.notifications[index].actionType ?? 0 == 2 {
+                                                self.navigateToWithdraws = true
+                                                self.actionId = viewModel.notifications[index].actionId ?? 0
+
                                             }
                                         }
                                 }
@@ -64,8 +85,17 @@ struct NotificationsView: View {
         }
         .toastView(toast: $viewModel.toast)
         .navigationBarHidden(true)
+//        .navigationDestination(isPresented: $navigateToClientOrder) {
+//            OrderClientDetailsView(orderID:actionId)
+//        }
+//        .navigationDestination(isPresented: $navigateToMerchentOrder) {
+//            OrderBusinessDetailsView(orderID: actionId)
+//        }
+//        .navigationDestination(isPresented: $navigateToWithdraws) {
+//            WithdrawsView(heighlightedId: actionId)
+//        }
         .onAppear(){
-//            viewModel.notificationsList(skip: 0)
+            viewModel.notificationsList(skip: 0)
         }
     }
     

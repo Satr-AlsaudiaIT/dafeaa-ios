@@ -28,7 +28,7 @@ struct PathViewChoice: View {
                             Spacer()
                             HStack {
                                 Text(orderStatus.title)
-                                    .textModifier(.bold, 12, .green026C34)
+                                    .textModifier(.plain, 12, .green026C34)
                                     .padding(.leading,4)
                                 Spacer()
 
@@ -57,7 +57,7 @@ struct PathViewChoice: View {
                         HStack {
                             Spacer()
                             Text(orderStatus.title)
-                                .textModifier(.bold, 12, .green026C34)
+                                .textModifier(.plain, 12, .green026C34)
                                 
                             Spacer()
                             Spacer()
@@ -88,7 +88,7 @@ struct PathViewChoice: View {
                             Spacer()
                             Spacer()
                             Text(orderStatus.title)
-                                .textModifier(.bold, 12, .green026C34)
+                                .textModifier(.plain, 12, .green026C34)
                             Spacer()
 
                         }
@@ -117,7 +117,7 @@ struct PathViewChoice: View {
                             Spacer()
                             
                             Text(orderStatus.title)
-                                .textModifier(.bold, 12, .redEE002B)
+                                .textModifier(.plain, 12, .redEE002B)
                                 .padding(.trailing,5)
                             Spacer()
                             Spacer()
@@ -147,7 +147,7 @@ struct PathViewChoice: View {
                         HStack {
                             Spacer()
                             Text(orderStatus.title)
-                                .textModifier(.bold, 12, .redEE002B)
+                                .textModifier(.plain, 12, .redEE002B)
                                 .padding(.trailing,5)
                             Spacer()
                             Spacer()
@@ -177,7 +177,7 @@ struct PathViewChoice: View {
                         HStack {
                             Spacer()
                             Text(orderStatus.title)
-                                .textModifier(.bold, 12, .green026C34)
+                                .textModifier(.plain, 12, .green026C34)
                                 .padding(.trailing,3)
                             
 

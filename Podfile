@@ -9,13 +9,15 @@ target 'Dafeaa' do
 
   pod 'IQKeyboardManagerSwift'
   pod 'SwiftyJSON'
-  pod 'Firebase/Auth','~>7.1.0'
-  pod 'Firebase/Analytics','~>7.1.0'
-  pod 'Firebase/Core','~>7.1.0'
-  pod 'Firebase/Messaging','~>7.1.0'
-  pod 'Firebase/DynamicLinks','~>7.1.0'
+  pod 'FirebaseAuth'
+  pod 'FirebaseAnalytics'
+  pod 'FirebaseCore'
+  pod 'FirebaseMessaging'
   pod 'SDWebImageSwiftUI'
   pod 'Alamofire'
+  pod 'Firebase'
+  pod 'DSF_QRCode', '~> 24.0.0'
+  
 #  pod 'PhoneNumberKit'
 pod "FlagPhoneNumber"
 pod 'lottie-ios'

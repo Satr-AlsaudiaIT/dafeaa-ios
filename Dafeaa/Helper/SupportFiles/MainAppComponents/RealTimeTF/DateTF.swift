@@ -39,8 +39,7 @@ struct DateTF: View {
 //                                    .padding(.leading,10)
                                 Spacer()
                                 Image(systemName: "chevron.down")
-                                    .font(.system(size: 15, weight: .bold))
-                                    .foregroundColor(.black)
+                                    .textModifier(.plain, 15,.black)
                                     .padding(.trailing,15)
                             }
                             .background(Color(.grayF6F6F6))

@@ -19,11 +19,11 @@ struct PopUpTitleView: View {
                 Image (image)
                    
                 Text(title)
-                    .font(.custom(AppFonts.shared.name(AppFontsTypes.bold), size: 27))
+                    .font(.custom(AppFonts.shared.name(AppFontsTypes.plain), size: 27))
                     .foregroundStyle(Color(.mainOrange))
                     .padding(.bottom)
                 Text(subTitle)
-                .font(.custom(AppFonts.shared.name(AppFontsTypes.bold), size: 17))
+                    .font(.custom(AppFonts.shared.name(AppFontsTypes.plain), size: 17))
                 .foregroundStyle(Color(.lightGray))
                 .multilineTextAlignment(.center)
                 .padding([.leading,.trailing],30)

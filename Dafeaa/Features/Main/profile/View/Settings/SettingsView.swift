@@ -13,7 +13,6 @@ struct SettingsView: View {
     @StateObject var viewModel = MoreVM()
     @State private var showingLanguageActionSheet = false
     @State private var isSwitchOn: Bool = false
-      
     var body: some View {
         
         ZStack{
@@ -80,7 +79,7 @@ struct SettingsView: View {
         .toastView(toast: $viewModel.toast)
         .navigationBarHidden(true)
         .onAppear(){
-            isSwitchOn = GenericUserDefault.shared.getValue(Constants.shared.notificationOnOrOff) as? String == "1" ? true : false
+            isSwitchOn =  UserDefaults.standard.value(forKey: Constants.shared.activeNotification) as? Int ?? 0 == 1 ? true : false
             AppState.shared.swipeEnabled = true
         }
         
@@ -88,7 +87,6 @@ struct SettingsView: View {
     
     func toggleNotification(newValue: Bool) {
         viewModel.activeNotification(active: newValue ? 1:0)
-
         }
     
     func changeLanguage(to languageCode: String) {

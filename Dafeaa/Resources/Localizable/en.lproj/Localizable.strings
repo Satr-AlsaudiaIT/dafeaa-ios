@@ -53,6 +53,7 @@
 "Email" = "Email";
 "AgreeToTermsAndConditionsCheckText" = "By proceeding and creating your account, you agree to the terms of use";
 "Terms&Conditions" = " Terms and Conditions";
+"privacy" = "Privacy Policy";
 "AgreeTo" = "I agree to ";
 "createAccount" = "Create a new account ";
 "haveAccount?" = "Already have an account?";
@@ -117,6 +118,7 @@
 "merchants_service_body" = "This service is specifically for merchants. To obtain it, you must complete the merchant's required information.";
 "add_data_button" = "Add data";
 "invite_friend" = "Invite a Friend";
+"orderNotAvailable" = "This offer is stopped by merchant";
 
 //MARK: - ChangePassword
 "changePassword"="Change Password";
@@ -199,13 +201,15 @@
 "search_offer" = "Search Offer";
 "search_by_number" = "Search by Offer Code";
 "search_by_QR_code" = "Search by QR Code";
+"search_by_Scan_Image_QR_code" = "Scan QR Code from Image";
+"or" = "OR";
 "search" = "Search";
-"buy_product" = "Buy Product";
-"buy_product_details" = "You can easily buy a product";
+"buy_product" = "Buy a Product";
+"buy_product_details" = "You can search for offers through Dafea from here";
 "buy_product_btn" = "Buy Now";
 "sell_product" = "Sell Product";
-"sell_product_details" = "You can easily sell a product";
-"sell_product_btn" = "Sell Now";
+"sell_product_details" = "You can sell products through Dafea from here";
+"sell_product_btn" = "Sell a Product";
 "exceedQuantity" = "The remaining quantity is only";
 //MARK: - NOTIFICATIONS
 "emptyNotifications"="You don't have any notifications yet. You will be alerted when you receive any notifications.";
@@ -222,6 +226,7 @@
 "buyWithDafea"="Pay through Dafeaa";
 "product"="Product:";
 "delaviryAndRecive"="Delivery and Receipt:";
+"commissionVal" = "Additional Fees:";
 "totalBeforeTax"="Total Before Tax:";
 "tax"="Estimated Tax:";
 "total"="Total:";
@@ -247,6 +252,7 @@
 
 //MARK: - addresses
 "address"="Address";
+"shortAddress" =  "Short Address";
 "AddAddress" = "Add New Address +";
 "streetName" = "Street Name";
 "buildingNum" = "Building Number";
@@ -279,6 +285,12 @@
 "offerContent"="Offer Content";
 "description"="Description";
 "productDetails" = "Product Details";
+"totalQuantity" = "Total quantity";
+"paidQuantity" = "Paid quantity";
+"remainingQuantity" = "Sold quantity";
+"updateQuantity" = "Update quantity";
+"newQuantity" = "New Quamtity";
+"Update"  = "Update";
 "rs" = " SAR";
 "month" = "Month";
 "productUnit" = "product";
@@ -312,8 +324,10 @@
 "copied successfully"="Copied successfully";
 "offerDetails"="Offer Details";
 "thereIsNoData"="No data available";
-"code" = "Code";
-
+"code" = "Share Code";
+"copy" = "Copy";
+"share" = "Share Link";
+"delete" = "Delete";
 //MARK: - Withdraws
 "withdrawsProcess" = "Withdrawal Transactions";
 "withdrawProcess" = "Withdrawal Process";

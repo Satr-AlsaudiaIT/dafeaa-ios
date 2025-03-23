@@ -132,38 +132,47 @@ struct SavedAddressesView: View {
                             .foregroundColor(selectedAddressId == address.id ? Color(.primary) : Color.gray8B8C86)
                         
                         VStack(alignment: .leading, spacing: 8) {
-                            Text(Constants.userName )
-                                .textModifier(.bold, 14, .black1E1E1E)
-                            Text("PhoneNum:".localized() + Constants.phone )
-                                .textModifier(.bold, 12, .gray979797)
-                            let address = "address".localized() + ": \(address.address ?? "")" //": \(address.countryName ?? "")," + " \(address.cityName ?? "")" + ", " + " \(address.address ?? "")" + ", " + " \(address.districtName ?? "")"
-                            Text(address)
+                            HStack {
+                                Text(Constants.userName )
+                                    .textModifier(.plain, 14, .black1E1E1E)
+                                // Edit Button
+                                Button(action: {
+                                    addressToEdit = address
+                                    isNavigatingToAddEdit = true
+                                }) {
+                                        Image(.editIcon)
+                                            .resizable()
+                                            .frame(width: 20, height: 20)
+                                            .foregroundColor(.blue)
+                                    }
+                                    .padding(.trailing, 8)
+                                
+                                // Delete Button
+                                Button(action: {
+                                    deleteAddress(address)
+                                }) {
+                                    Image(.trash)
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundColor(.red)
+                                }
+                            }
+                            Text("phoneNumber".localized() + " : " + Constants.phone )
+                                .textModifier(.plain, 12, .gray979797)
+                            
+                            let country = address.countryName != "" ? ("area".localized() + ": \(address.countryName ?? "")") : ""
+                            let city = address.cityName != "" ? ( ", " + "CityField".localized() + ": \(address.cityName ?? "")") : ""
+                            let naiborhood = address.districtName != "" ? (", " + "neighborhoodName".localized() + ": \(address.districtName ?? "")") : ""
+                            let streetName = address.districtName != "" ? ( ", " + "streetName".localized() + ": \(address.streetName ?? "")") : ""
+                            let addressShort = address.address != "" ? ( "," + "shortAddress".localized() + ": \(address.address ?? "")") : ""
+                            let fullAddress = "\(country)" + "\(city)" + "\(naiborhood)" + "\(streetName)" + "\(addressShort)"
+                            Text(fullAddress)
                                 .textModifier(.plain, 12, .gray979797)
                                 .multilineTextAlignment(.leading)
                         }
-                        Spacer()
+//                        Spacer()
                         
-                        // Edit Button
-                        Button(action: {
-                            addressToEdit = address
-                            isNavigatingToAddEdit = true
-                        }) {
-                                Image(.editIcon)
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(.blue)
-                            }
-                            .padding(.trailing, 8)
                         
-                        // Delete Button
-                        Button(action: {
-                            deleteAddress(address)
-                        }) {
-                            Image(.trash)
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.red)
-                        }
                     }
                 }
             }

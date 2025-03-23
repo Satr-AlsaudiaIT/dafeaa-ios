@@ -130,12 +130,14 @@
 		1835ECF42CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1835ECF32CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift */; };
 		1835ECF72CCF9B81007EEAC1 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1835ECF62CCF9B81007EEAC1 /* NotificationsView.swift */; };
 		184869672D57F09F0054BC26 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 184869662D57F09F0054BC26 /* GoogleService-Info.plist */; };
+		1851FA5B2D80A3A200C44A53 /* Bahij-Plain.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1851FA5A2D80A3A200C44A53 /* Bahij-Plain.ttf */; };
 		187607B22CDF468200F4D261 /* OrdersLinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187607B02CDF468200F4D261 /* OrdersLinksView.swift */; };
 		187607B42CDF5DAD00F4D261 /* AddOfferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187607B32CDF5DAD00F4D261 /* AddOfferView.swift */; };
 		187607B62CDFCA1700F4D261 /* ClientLinkCellIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187607B52CDFCA1700F4D261 /* ClientLinkCellIView.swift */; };
 		187607B82CDFCA3A00F4D261 /* ProductDetailsPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187607B72CDFCA3A00F4D261 /* ProductDetailsPopUp.swift */; };
 		187607BA2CDFD74800F4D261 /* LinksVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187607B92CDFD74800F4D261 /* LinksVM.swift */; };
 		187607BC2CDFE10200F4D261 /* urlExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187607BB2CDFE10200F4D261 /* urlExtension.swift */; };
+		1882D12C2D836781002EB5E2 /* StaticPagesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1882D12B2D836781002EB5E2 /* StaticPagesList.swift */; };
 		188FF2462CC38CF00070CC57 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FF2452CC38CF00070CC57 /* ChangePasswordView.swift */; };
 		188FF2492CC509B40070CC57 /* ChangePhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FF2482CC509B40070CC57 /* ChangePhoneView.swift */; };
 		188FF24F2CC6D49D0070CC57 /* SubscribtionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FF24E2CC6D49D0070CC57 /* SubscribtionView.swift */; };
@@ -144,14 +146,6 @@
 		189CD7452CDBE19E00E929DE /* PopUpComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189CD7442CDBE19E00E929DE /* PopUpComponent.swift */; };
 		189CD7492CDC83D500E929DE /* ClientLinkDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189CD7482CDC83D500E929DE /* ClientLinkDetails.swift */; };
 		18AF0DEF2CB114F80061F07E /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AF0DEE2CB114F80061F07E /* OnBoardingView.swift */; };
-		18AF0DF02CB15CB10061F07E /* Bahij_TheSansArabic-SemiLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E67B1E2CADB75900C10AB5 /* Bahij_TheSansArabic-SemiLight.ttf */; };
-		18AF0DF12CB15CB10061F07E /* Bahij_TheSansArabic-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E67B1B2CADB75900C10AB5 /* Bahij_TheSansArabic-SemiBold.ttf */; };
-		18AF0DF22CB15CB10061F07E /* Bahij_TheSansArabic-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E67B212CADB75900C10AB5 /* Bahij_TheSansArabic-Light.ttf */; };
-		18AF0DF32CB15CB10061F07E /* Bahij_TheSansArabic-Plain.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E67B222CADB75900C10AB5 /* Bahij_TheSansArabic-Plain.ttf */; };
-		18AF0DF42CB15CB10061F07E /* Bahij_TheSansArabic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E67B1F2CADB75900C10AB5 /* Bahij_TheSansArabic-Bold.ttf */; };
-		18AF0DF52CB15CB10061F07E /* Bahij_TheSansArabic-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E67B1C2CADB75900C10AB5 /* Bahij_TheSansArabic-Black.ttf */; };
-		18AF0DF62CB15CB10061F07E /* Bahij_TheSansArabic-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E67B202CADB75900C10AB5 /* Bahij_TheSansArabic-ExtraBold.ttf */; };
-		18AF0DF72CB15CB10061F07E /* Bahij_TheSansArabic-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E67B1D2CADB75900C10AB5 /* Bahij_TheSansArabic-ExtraLight.ttf */; };
 		18B8D56E2CC02C8D00C2676C /* PendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8D56D2CC02C8D00C2676C /* PendingView.swift */; };
 		18B8D5702CC02E6200C2676C /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8D56F2CC02E6200C2676C /* LottieAnimationView.swift */; };
 		18B8D5722CC0333500C2676C /* pending.json in Resources */ = {isa = PBXBuildFile; fileRef = 18B8D5712CC0333500C2676C /* pending.json */; };
@@ -167,6 +161,7 @@
 		18F54E882CCD1C0300462383 /* WalletModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F54E7E2CCD1C0300462383 /* WalletModel.swift */; };
 		18F54E8A2CCD1C0300462383 /* WalletVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F54E7C2CCD1C0300462383 /* WalletVM.swift */; };
 		18F54E8F2CCD2F1C00462383 /* ProcessesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F54E8D2CCD2F1C00462383 /* ProcessesVM.swift */; };
+		18F81CE72D907B6F00B732D7 /* BottomSheetLinkActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F81CE62D907B6F00B732D7 /* BottomSheetLinkActionsView.swift */; };
 		77A5DD200D504A0C538AF47E /* Pods_Dafeaa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BDD0028FB293E22686DB26E /* Pods_Dafeaa.framework */; };
 		9480EEBE8618DD074F2F05EA /* Pods_DafeaaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECBB82EEEBE50162348AA97C /* Pods_DafeaaTests.framework */; };
 /* End PBXBuildFile section */
@@ -271,14 +266,6 @@
 		14E67B0B2CADB73E00C10AB5 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		14E67B0C2CADB73E00C10AB5 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		14E67B0D2CADB73E00C10AB5 /* Poppins-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Thin.ttf"; sourceTree = "<group>"; };
-		14E67B1B2CADB75900C10AB5 /* Bahij_TheSansArabic-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bahij_TheSansArabic-SemiBold.ttf"; sourceTree = "<group>"; };
-		14E67B1C2CADB75900C10AB5 /* Bahij_TheSansArabic-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bahij_TheSansArabic-Black.ttf"; sourceTree = "<group>"; };
-		14E67B1D2CADB75900C10AB5 /* Bahij_TheSansArabic-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bahij_TheSansArabic-ExtraLight.ttf"; sourceTree = "<group>"; };
-		14E67B1E2CADB75900C10AB5 /* Bahij_TheSansArabic-SemiLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bahij_TheSansArabic-SemiLight.ttf"; sourceTree = "<group>"; };
-		14E67B1F2CADB75900C10AB5 /* Bahij_TheSansArabic-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bahij_TheSansArabic-Bold.ttf"; sourceTree = "<group>"; };
-		14E67B202CADB75900C10AB5 /* Bahij_TheSansArabic-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bahij_TheSansArabic-ExtraBold.ttf"; sourceTree = "<group>"; };
-		14E67B212CADB75900C10AB5 /* Bahij_TheSansArabic-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bahij_TheSansArabic-Light.ttf"; sourceTree = "<group>"; };
-		14E67B222CADB75900C10AB5 /* Bahij_TheSansArabic-Plain.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bahij_TheSansArabic-Plain.ttf"; sourceTree = "<group>"; };
 		14E67B232CADBA4200C10AB5 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		14E67B252CADBA4200C10AB5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		18086A622CCB7F4800F5C2F8 /* OrdersVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersVM.swift; sourceTree = "<group>"; };
@@ -328,6 +315,7 @@
 		1835ECF32CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWithdrawButtomSheet.swift; sourceTree = "<group>"; };
 		1835ECF62CCF9B81007EEAC1 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		184869662D57F09F0054BC26 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1851FA5A2D80A3A200C44A53 /* Bahij-Plain.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bahij-Plain.ttf"; sourceTree = "<group>"; };
 		187607B02CDF468200F4D261 /* OrdersLinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersLinksView.swift; sourceTree = "<group>"; };
 		187607B32CDF5DAD00F4D261 /* AddOfferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOfferView.swift; sourceTree = "<group>"; };
 		187607B52CDFCA1700F4D261 /* ClientLinkCellIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientLinkCellIView.swift; sourceTree = "<group>"; };
@@ -336,6 +324,7 @@
 		187607BB2CDFE10200F4D261 /* urlExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = urlExtension.swift; sourceTree = "<group>"; };
 		187607BF2CE0072D00F4D261 /* DafeaaRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DafeaaRelease.entitlements; sourceTree = "<group>"; };
 		187607C02CE0095500F4D261 /* Dafeaa.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dafeaa.entitlements; sourceTree = "<group>"; };
+		1882D12B2D836781002EB5E2 /* StaticPagesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticPagesList.swift; sourceTree = "<group>"; };
 		188FF2452CC38CF00070CC57 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		188FF2482CC509B40070CC57 /* ChangePhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePhoneView.swift; sourceTree = "<group>"; };
 		188FF24E2CC6D49D0070CC57 /* SubscribtionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribtionView.swift; sourceTree = "<group>"; };
@@ -359,6 +348,7 @@
 		18F54E7C2CCD1C0300462383 /* WalletVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletVM.swift; sourceTree = "<group>"; };
 		18F54E7E2CCD1C0300462383 /* WalletModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletModel.swift; sourceTree = "<group>"; };
 		18F54E8D2CCD2F1C00462383 /* ProcessesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessesVM.swift; sourceTree = "<group>"; };
+		18F81CE62D907B6F00B732D7 /* BottomSheetLinkActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetLinkActionsView.swift; sourceTree = "<group>"; };
 		2F9ED0EE802D3E9A391C0DEE /* Pods-Dafeaa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dafeaa.release.xcconfig"; path = "Target Support Files/Pods-Dafeaa/Pods-Dafeaa.release.xcconfig"; sourceTree = "<group>"; };
 		3763B1BE20778E9F0CE18D3E /* Pods-Dafeaa-DafeaaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dafeaa-DafeaaUITests.debug.xcconfig"; path = "Target Support Files/Pods-Dafeaa-DafeaaUITests/Pods-Dafeaa-DafeaaUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		40CD5E17D66EBD2C506C1CF3 /* Pods-DafeaaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DafeaaTests.debug.xcconfig"; path = "Target Support Files/Pods-DafeaaTests/Pods-DafeaaTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -751,7 +741,7 @@
 		14E67AEA2CADB0CF00C10AB5 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				14E67B1A2CADB74500C10AB5 /* Bahij_TheSansArabic */,
+				14E67B1A2CADB74500C10AB5 /* Bahij-Plain */,
 				14E67B0E2CADB73E00C10AB5 /* Poppins */,
 			);
 			path = Fonts;
@@ -775,19 +765,12 @@
 			path = Poppins;
 			sourceTree = "<group>";
 		};
-		14E67B1A2CADB74500C10AB5 /* Bahij_TheSansArabic */ = {
+		14E67B1A2CADB74500C10AB5 /* Bahij-Plain */ = {
 			isa = PBXGroup;
 			children = (
-				14E67B1E2CADB75900C10AB5 /* Bahij_TheSansArabic-SemiLight.ttf */,
-				14E67B1C2CADB75900C10AB5 /* Bahij_TheSansArabic-Black.ttf */,
-				14E67B1F2CADB75900C10AB5 /* Bahij_TheSansArabic-Bold.ttf */,
-				14E67B202CADB75900C10AB5 /* Bahij_TheSansArabic-ExtraBold.ttf */,
-				14E67B1D2CADB75900C10AB5 /* Bahij_TheSansArabic-ExtraLight.ttf */,
-				14E67B212CADB75900C10AB5 /* Bahij_TheSansArabic-Light.ttf */,
-				14E67B222CADB75900C10AB5 /* Bahij_TheSansArabic-Plain.ttf */,
-				14E67B1B2CADB75900C10AB5 /* Bahij_TheSansArabic-SemiBold.ttf */,
+				1851FA5A2D80A3A200C44A53 /* Bahij-Plain.ttf */,
 			);
-			path = Bahij_TheSansArabic;
+			path = "Bahij-Plain";
 			sourceTree = "<group>";
 		};
 		14E67B272CADBA4200C10AB5 /* Localizable */ = {
@@ -987,6 +970,7 @@
 				14C79BB92CC4DF8600EF837F /* Subscribtions */,
 				18D4285E2CE676960059CAF4 /* WithdrawView */,
 				188FF2472CC509A70070CC57 /* ChangePhone */,
+				1882D12A2D83673B002EB5E2 /* StaticPagesList */,
 				188FF2442CC38CE10070CC57 /* ChangePassword */,
 				1820E2C42CBAAC2800627DF9 /* Profile */,
 				1820E2C52CBAAC3400627DF9 /* Addresses */,
@@ -1141,6 +1125,14 @@
 			path = OrdersLinkes;
 			sourceTree = "<group>";
 		};
+		1882D12A2D83673B002EB5E2 /* StaticPagesList */ = {
+			isa = PBXGroup;
+			children = (
+				1882D12B2D836781002EB5E2 /* StaticPagesList.swift */,
+			);
+			path = StaticPagesList;
+			sourceTree = "<group>";
+		};
 		188FF2442CC38CE10070CC57 /* ChangePassword */ = {
 			isa = PBXGroup;
 			children = (
@@ -1170,6 +1162,7 @@
 			isa = PBXGroup;
 			children = (
 				187607B02CDF468200F4D261 /* OrdersLinksView.swift */,
+				18F81CE62D907B6F00B732D7 /* BottomSheetLinkActionsView.swift */,
 				189437DB2CE0CA0900CA5D96 /* OrderLinkDetailsView.swift */,
 			);
 			path = Show;
@@ -1401,7 +1394,7 @@
 			);
 			mainGroup = 14E67A222CAC5CCA00C10AB5;
 			packageReferences = (
-				18277EC12CB2E7C50020A647 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */,
+				1873BBCC2D8C840000B674F1 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */,
 			);
 			productRefGroup = 14E67A2C2CAC5CCA00C10AB5 /* Products */;
 			projectDirPath = "";
@@ -1428,19 +1421,12 @@
 				14E67A362CAC5CCD00C10AB5 /* Preview Assets.xcassets in Resources */,
 				14E67B152CADB73E00C10AB5 /* Poppins-Light.ttf in Resources */,
 				14E67B102CADB73E00C10AB5 /* Poppins-Black.ttf in Resources */,
-				18AF0DF02CB15CB10061F07E /* Bahij_TheSansArabic-SemiLight.ttf in Resources */,
-				18AF0DF12CB15CB10061F07E /* Bahij_TheSansArabic-SemiBold.ttf in Resources */,
-				18AF0DF22CB15CB10061F07E /* Bahij_TheSansArabic-Light.ttf in Resources */,
-				18AF0DF32CB15CB10061F07E /* Bahij_TheSansArabic-Plain.ttf in Resources */,
-				18AF0DF42CB15CB10061F07E /* Bahij_TheSansArabic-Bold.ttf in Resources */,
-				18AF0DF52CB15CB10061F07E /* Bahij_TheSansArabic-Black.ttf in Resources */,
-				18AF0DF62CB15CB10061F07E /* Bahij_TheSansArabic-ExtraBold.ttf in Resources */,
-				18AF0DF72CB15CB10061F07E /* Bahij_TheSansArabic-ExtraLight.ttf in Resources */,
 				14E67A332CAC5CCD00C10AB5 /* Assets.xcassets in Resources */,
 				14E67B132CADB73E00C10AB5 /* Poppins-ExtraLight.ttf in Resources */,
 				14E67B162CADB73E00C10AB5 /* Poppins-Plain.ttf in Resources */,
 				14E67A662CAC5E3400C10AB5 /* MOLH-Info.plist in Resources */,
 				14E67B292CADBA4200C10AB5 /* Localizable.strings in Resources */,
+				1851FA5B2D80A3A200C44A53 /* Bahij-Plain.ttf in Resources */,
 				14E67B122CADB73E00C10AB5 /* Poppins-ExtraBold.ttf in Resources */,
 				18B8D5722CC0333500C2676C /* pending.json in Resources */,
 				14E67B172CADB73E00C10AB5 /* Poppins-Regular.ttf in Resources */,
@@ -1597,6 +1583,7 @@
 				188FF24F2CC6D49D0070CC57 /* SubscribtionView.swift in Sources */,
 				189437DF2CE0F74D00CA5D96 /* AddProductView.swift in Sources */,
 				14E67ADE2CAC643B00C10AB5 /* ValidateTF.swift in Sources */,
+				18F81CE72D907B6F00B732D7 /* BottomSheetLinkActionsView.swift in Sources */,
 				14E67A652CAC5E3400C10AB5 /* MOLH-dummy.m in Sources */,
 				14E67AD32CAC643B00C10AB5 /* NetWorkHelper.swift in Sources */,
 				14E67ACE2CAC643B00C10AB5 /* UploadImage.swift in Sources */,
@@ -1663,6 +1650,7 @@
 				18EF4D8D2CB4F92F00599D03 /* ForgotPasswordView.swift in Sources */,
 				1820E2D82CBBB22600627DF9 /* MoreVM.swift in Sources */,
 				14E67AE22CAC643B00C10AB5 /* UploadFileView.swift in Sources */,
+				1882D12C2D836781002EB5E2 /* StaticPagesList.swift in Sources */,
 				14E67AE42CAC643B00C10AB5 /* NotificationConfigration.swift in Sources */,
 				18277EC52CB3A3BE0020A647 /* AccountTypeOption.swift in Sources */,
 				14E67ACF2CAC643B00C10AB5 /* NetWorkLogger.swift in Sources */,
@@ -1884,7 +1872,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/Dafeaa.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 11.1;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
@@ -1895,6 +1883,7 @@
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "App needs to access to your Photo library to get a photo for you";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Dafeaa need access to your location  if  you need to pick location.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Dafeaa need access to your location  if  you need to pick location.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Dafeaa need access to your ploto library to add picture to the profile.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Dafeaa need access to your ploto library to add picture to the profile.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1927,7 +1916,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/DafeaaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 11.1;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
@@ -1938,6 +1927,7 @@
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "App needs to access to your Photo library to get a photo for you";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Dafeaa need access to your location  if  you need to pick location.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Dafeaa need access to your location  if  you need to pick location.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Dafeaa need access to your ploto library to add picture to the profile.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Dafeaa need access to your ploto library to add picture to the profile.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -2087,7 +2077,7 @@
 				minimumVersion = 4.0.0;
 			};
 		};
-		18277EC12CB2E7C50020A647 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */ = {
+		1873BBCC2D8C840000B674F1 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MojtabaHs/iPhoneNumberField.git";
 			requirement = {

@@ -77,7 +77,9 @@ struct SplashView: View {
     }
     
     func tabBarTransition() {
-        window?.rootViewController = UIHostingController(rootView: TabBarView() .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
+        let navigationHelper = NavigationHelper(actionType: 0, actionId: 0, userType: "")
+
+        window?.rootViewController = UIHostingController(rootView: TabBarView().environmentObject(navigationHelper) .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
         .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight)
         )
     }

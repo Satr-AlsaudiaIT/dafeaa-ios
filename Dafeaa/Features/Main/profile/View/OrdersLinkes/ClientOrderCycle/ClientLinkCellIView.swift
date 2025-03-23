@@ -14,11 +14,13 @@ struct ClientLinkCellIView: View {
         @State private var amount: Int  // Local state for amount
         @Binding var amountChanged: Bool
         @State private var showAmountError: Bool = false
-    init(product: productList, productAmountDic: Binding<[[String: Any]]>,amountChanged: Binding<Bool>) {
+        @Binding var isDisabled: Bool 
+    init(product: productList, productAmountDic: Binding<[[String: Any]]>,amountChanged: Binding<Bool>,isDisabled: Binding<Bool>) {
             self.product = product
             _productAmountDic = productAmountDic
             _amount = State(initialValue: 1)
             _amountChanged = amountChanged
+        _isDisabled = isDisabled
         }
     var body: some View {
         ZStack {
@@ -47,6 +49,7 @@ struct ClientLinkCellIView: View {
                                         .strikethrough(true, color: .black)
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.8)
+                                        .fixedSize()
                                     Image(.riyal)
                                          .resizable()
                                          .aspectRatio(contentMode: .fit)
@@ -62,6 +65,7 @@ struct ClientLinkCellIView: View {
                                         .padding(.trailing,5)
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.8)
+                                        .fixedSize()
                                     Image(.riyal)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
@@ -81,6 +85,7 @@ struct ClientLinkCellIView: View {
                                     .strikethrough(true, color: .black)
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.8)
+                                    .fixedSize()
                                 Image(.riyal)
                                      .resizable()
                                      .aspectRatio(contentMode: .fit)
@@ -109,6 +114,8 @@ struct ClientLinkCellIView: View {
                                     .foregroundStyle(Color(.black222222))
                                     .font(.system(size: 14, weight: .medium))
                                     .padding(.all,5)
+                                    .background(Color( isDisabled ? .grayDADADA : .clear).cornerRadius(3))
+
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 3)
                                             .stroke( Color(.grayAAAAAA), lineWidth: 0.4)
@@ -116,6 +123,7 @@ struct ClientLinkCellIView: View {
                                     )
                             }
                             .frame(width: 25, height: 25)
+                            .disabled(isDisabled)
                             Text("\(amount)")
                                 .textModifier(.plain, 15, .black010202)
                             Button(action: {
@@ -129,7 +137,7 @@ struct ClientLinkCellIView: View {
                                         .padding(.all,5)
                                 }
                             }
-                            .disabled(amount == 1)
+                            .disabled(amount == 1 || isDisabled)
                             .frame(width: 25, height: 25)
                             .background(Color(amount == 1 ? .grayDADADA : .clear).cornerRadius(3))
                             .overlay(
@@ -159,13 +167,17 @@ struct ClientLinkCellIView: View {
             }
             .padding(.all,10)
         }
-        
         .cornerRadius(15)
         .overlay(
             RoundedRectangle(cornerRadius: 15)
                 .stroke( Color(.primary), lineWidth: 1)
         )
-        
+        .onAppear{
+            if product.remainingQuantity ?? 0 == 0 {
+                isDisabled = true
+                showAmountError = true 
+            }
+        }
         .onChange(of: amount) { newAmount in
             if let index = productAmountDic.firstIndex(where: { $0["product_id"] as? Int == product.id }) {
                 amountChanged.toggle()
@@ -213,6 +225,7 @@ struct BusinessLinkCellIView: View {
                                     .strikethrough(true, color: .black)
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.8)
+                                    .fixedSize()
                                 Image(.riyal)
                                      .resizable()
                                      .aspectRatio(contentMode: .fit)
@@ -228,6 +241,7 @@ struct BusinessLinkCellIView: View {
                                     .padding(.trailing,5)
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.8)
+                                    .fixedSize()
                                 Image(.riyal)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
@@ -245,6 +259,7 @@ struct BusinessLinkCellIView: View {
                                     .strikethrough(true, color: .black)
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.8)
+                                    .fixedSize()
                                 Image(.riyal)
                                      .resizable()
                                      .aspectRatio(contentMode: .fit)
@@ -313,6 +328,7 @@ struct BusinessCreateLinkCellView: View {
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.8)
                                         .strikethrough(true, color: .black)
+                                        .fixedSize()
                                     Image(.riyal)
                                          .resizable()
                                          .aspectRatio(contentMode: .fit)
@@ -328,6 +344,7 @@ struct BusinessCreateLinkCellView: View {
                                          .padding(.trailing,5)
                                          .lineLimit(1)
                                          .minimumScaleFactor(0.8)
+                                         .fixedSize()
                                     Image(.riyal)
                                          .resizable()
                                          .aspectRatio(contentMode: .fit)
@@ -345,6 +362,7 @@ struct BusinessCreateLinkCellView: View {
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.8)
                                     .padding(.trailing,5)
+                                    .fixedSize()
                                 Image(.riyal)
                                      .resizable()
                                      .aspectRatio(contentMode: .fit)

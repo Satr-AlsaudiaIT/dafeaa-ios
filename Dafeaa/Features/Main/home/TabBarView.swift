@@ -7,75 +7,151 @@
 
 import SwiftUI
 
+//
+//  TabBarView.swift
+//  Dafeaa
+//
+//  Created by AMNY on 11/10/2024.
+//
+
 import SwiftUI
 
 struct TabBarView: View {
-    
     @State private var selectedTab: Tab = .home
     private let userType: Int = GenericUserDefault.shared.getValue(Constants.shared.userType) as? Int ?? 0
-    
-    enum Tab {
-        case home, wallet, myOrders, processes, profile
+    @EnvironmentObject var navigationHelper: NavigationHelper
+
+    enum Tab: CaseIterable {
+        case home, wallet, myOrders, profile
+
+        var icon: Image {
+            switch self {
+            case .home:
+                return Image(.home)
+            case .wallet:
+                return Image(.wallet)
+            case .myOrders:
+                return Image(.bag)
+            case .profile:
+                return Image(.profile)
+            }
+        }
+
+        var selectedIcon: Image {
+            switch self {
+            case .home:
+                return Image(.homeFill)
+            case .wallet:
+                return Image(.walletFill)
+            case .myOrders:
+                return Image(.bagFill)
+            case .profile:
+                return Image(.profileFill)
+            }
+        }
+
+        func title(userType: Int) -> String {
+            switch self {
+            case .home:
+                return "home".localized()
+            case .wallet:
+                return "wallet".localized()
+            case .myOrders:
+                return userType == 1 ? "myOrders".localized() : "orders".localized()
+            case .profile:
+                return "profile".localized()
+            }
+        }
     }
-    
+
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                TabView(selection: $selectedTab) {
-                    HomeView(selectedTab: $selectedTab)
-                        .tabItem {
-                            Image(selectedTab == .home ? .homeFill:.home)
-                                
-                            Text("home".localized())
-                                .textModifier(.bold,12, selectedTab == .home ? Color(.primary) : Color(.grayBDBDBD))
-                        }
-                        .tag(Tab.home)
-                    
-                    WalletView( selectedTab: $selectedTab)
-                        .tabItem {
-                            Image(selectedTab == .wallet ? .walletFill:.wallet)
-                               
-                            Text("wallet".localized())
-                                .textModifier(.bold,12, selectedTab == .wallet ? Color(.primary) : Color(.grayBDBDBD))
-                        }
-                        .tag(Tab.wallet)
-                    
-                    MyOrdersView()
-                        .tabItem {
-                            Image(selectedTab == .myOrders ? .bagFill : .bag)
-                                
-                            Text(userType == 1 ? "myOrders".localized() : "orders".localized())
-                                .textModifier(.bold,12, selectedTab == .myOrders ? Color(.primary) : Color(.grayBDBDBD))
-                        }
-                        .tag(Tab.myOrders)
-                    
-//                    ProcessesView()
-//                        .tabItem {
-//                            Image(selectedTab == .processes ? .receiptFill : .receipt)
-//                                
-//                            Text("processes".localized())
-//                                .textModifier(.bold,12, selectedTab == .processes ? Color(.primary) : Color(.grayBDBDBD))
-//                        }
-//                        .tag(Tab.processes)
-//                    
-                    ProfileView()
-                        .tabItem {
-                            Image(selectedTab == .profile ? .profileFill : .profile)
-                                
-                            Text("profile".localized())
-                                .textModifier(.bold,12, selectedTab == .profile ? Color(.primary) : Color(.grayBDBDBD))
-                        }
-                        .tag(Tab.profile)
+                // Main content view based on the selected tab
+                Group {
+                    switch selectedTab {
+                    case .home:
+                        HomeView(selectedTab: $selectedTab)
+                            .padding(.bottom,80)
+                    case .wallet:
+                        WalletView(selectedTab: $selectedTab)
+                            .padding(.bottom,80)
+                    case .myOrders:
+                        MyOrdersView()
+                            .padding(.bottom,80)
+                    case .profile:
+                        ProfileView()
+                            .padding(.bottom,80)
+                    }
                 }
-                .accentColor(Color(.primary))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-      
+                // Custom Tab Bar
+                CustomTabBar(selectedTab: $selectedTab, userType: userType)
+
             }
+            .edgesIgnoringSafeArea(.bottom)
+            .navigationDestination(isPresented: $navigationHelper.navigateToClientOrder) {
+                OrderClientDetailsView(orderID: navigationHelper.actionId)
+            }
+            .navigationDestination(isPresented: $navigationHelper.navigateToMerchentOrder) {
+                OrderBusinessDetailsView(orderID: navigationHelper.actionId)
+            }
+            .navigationDestination(isPresented: $navigationHelper.navigateToWithdraws) {
+                WithdrawsView(heighlightedId: navigationHelper.actionId)
+            }
+            .navigationBarHidden(true)
         }
-        .navigationBarHidden(true)
     }
 }
 
+// Custom Tab Bar
+struct CustomTabBar: View {
+    @Binding var selectedTab: TabBarView.Tab
+    let userType: Int
+
+    var body: some View {
+        HStack {
+            ForEach(TabBarView.Tab.allCases, id: \.self) { tab in
+                Spacer()
+
+                Button(action: {
+                    selectedTab = tab
+                }) {
+                    VStack(spacing: 4) {
+                        if selectedTab == tab {
+                            tab.selectedIcon
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 24, height: 24)
+                        } else {
+                            tab.icon
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 24, height: 24)
+                        }
+
+                        Text(tab.title(userType: userType)) // Pass userType here
+                            .font(.custom("BahijTheSansArabicPlain", size: 12)) // Apply custom font
+                            .foregroundColor(selectedTab == tab ? .primaryF9CE29 : .gray)
+                    }
+                    .padding(.bottom,20)
+                }
+
+                Spacer()
+            }
+            
+        }
+        .padding(.top, 15)
+        .background(Color.white)
+        .cornerRadius(16, corners: [.topLeft,.topRight])
+        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: -1)
+    }
+}
+
+#Preview {
+    TabBarView()
+}
 extension UITabBarController {
     open override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -84,7 +160,7 @@ extension UITabBarController {
         tabBar.layer.cornerRadius = 16
         // Choose with corners should be rounded
         tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner] // top left, top right
-
+        
         // Uses `accessibilityIdentifier` in order to retrieve shadow view if already added
         if let shadowView = view.subviews.first(where: { $0.accessibilityIdentifier == "TabBarShadow" }) {
             shadowView.frame = tabBar.frame

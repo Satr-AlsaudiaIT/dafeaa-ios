@@ -106,7 +106,7 @@ struct FancyToastModifier: ViewModifier {
                     message: toast.message) {
                         dismissToast()
                     }
-            }.padding(.bottom,70)
+            }.padding(.bottom,30)
             .transition(.move(edge: .bottom))
         }
     }

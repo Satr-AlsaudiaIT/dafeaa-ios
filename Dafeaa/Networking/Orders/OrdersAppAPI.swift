@@ -17,6 +17,8 @@ protocol OrdersAPIProtocol {
     func deleteDynamicLinks(id: Int, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func createDynamicLinks(dic: [String:Any], Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func activateStopLink(code: String,status:Int, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
+    func updateQuantity(productId: Int,quantity:Int, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
+
 }
 
 class OrdersAPI: BaseAPI<OrdersNetwork>, OrdersAPIProtocol
@@ -82,5 +84,9 @@ class OrdersAPI: BaseAPI<OrdersNetwork>, OrdersAPIProtocol
         }
     }
     
-
+    func updateQuantity(productId: Int,quantity:Int, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void) {
+        self.fetchData(target: .updateQuantity(productId: productId, newQuantity: quantity), responseClass: GeneralModel.self) { (result) in
+            Completion(result)
+        }
+    }
 }

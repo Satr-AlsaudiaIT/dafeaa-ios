@@ -27,11 +27,11 @@ class BaseAPI<T: TargetType> {
             print("url is -----------:> \(target.path)")
             print("parameters is -----------:> \(params)")
             print("response is -----------:> \(response)")
-            let notificationCount = response.response?.headers["UnReadNotification-Count"]
-            GenericUserDefault.shared.setValue(notificationCount, Constants.shared.unReadNotificationCount)
+            let notificationCount = response.response?.headers["X-Unread-Notifications-Count"]
+            UserDefaults.standard.set(notificationCount, forKey: Constants.shared.unReadNotificationCount)
+               let headerActive = response.response?.headers["X-Active-Notification"]  ?? ""
+            UserDefaults.standard.set(headerActive, forKey: Constants.shared.activeNotification)
 
-               let headerActive = response.response?.headers["Active-Notification"]  ?? ""
-            GenericUserDefault.shared.setValue(headerActive, Constants.shared.notificationOnOrOff)
             debugPrint(response)
             guard response.error == nil else {
                 self.handleUrlError(target, error: response.error, completion: { Error in

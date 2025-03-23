@@ -15,11 +15,7 @@ class HomeVM: ObservableObject {
     @Published private var _isFailed       = false
     @Published private var _processList    : [HomeModelData] = []
     @Published private var _homeData       : HomeModel?
-    @Published private var _notifications  : [NotificationsData] = [NotificationsData(orderId: 1, actionType: 1, iconType: 1, visitType: 1, id: 1, isRead: 1, title: "hjww", createdAt: "12-01-2024", body: "dfghjkljhgfdghjklkjhgfdghjk dfghjkljhgfdghjk", data: "dfghjkl", time: "03:04"),
-                                                                    NotificationsData(orderId: 1, actionType: 1, iconType: 1, visitType: 1, id: 1, isRead: 1, title: "hjww", createdAt: "12-01-2024", body: "dfghjkljhgfdghjklkjhgfdghjk dfghjkljhgfdghjk", data: "dfghjkl", time: "03:04"),
-                                                                    NotificationsData(orderId: 1, actionType: 1, iconType: 1, visitType: 1, id: 1, isRead: 1, title: "hjww", createdAt: "12-01-2024", body: "dfghjkljhgfdghjklkjhgfdghjk dfghjkljhgfdghjk", data: "dfghjkl", time: "03:04"),
-                                                                    NotificationsData(orderId: 1, actionType: 1, iconType: 1, visitType: 1, id: 1, isRead: 0, title: "hjww", createdAt: "12-01-2024", body: "dfghjkljhgfdghjklkjhgfdghjk dfghjkljhgfdghjk", data: "dfghjkl", time: "03:04"),
-                                                                    NotificationsData(orderId: 1, actionType: 1, iconType: 1, visitType: 1, id: 1, isRead: 0, title: "hjww", createdAt: "12-01-2024", body: "dfghjkljhgfdghjklkjhgfdghjk dfghjkljhgfdghjk", data: "dfghjkl", time: "03:04")]
+    @Published private var _notifications  : [NotificationsData] = []
     @Published private var _notificationsCount  : Int = 1
     @Published private var _offerData     : ShowOfferData?
     @Published var _getData                : Bool = false
@@ -85,7 +81,7 @@ class HomeVM: ObservableObject {
     
     func notificationsList(skip: Int) {
         if skip == 0 {_isLoading = true; hasMoreData = true }
-        else if self._notifications.count >= self._notifications.count {
+        else if self._notifications.count >= self._notificationsCount {
             self.hasMoreData = false
         }
         guard hasMoreData  else { _isLoading = false ;return }
@@ -112,12 +108,12 @@ class HomeVM: ObservableObject {
         }
     }
     func validateWithdrawAmount(amount: Double) {
-        if walletAmount > amount {
+//        if walletAmount > amount {
             withdrawAmount(amount: amount)
-        }
-        else {
-            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "notValidBalance".localized())
-        }
+//        }
+//        else {
+//            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "notValidBalance".localized())
+//        }
     }
     
     func withdrawAmount(amount: Double) {

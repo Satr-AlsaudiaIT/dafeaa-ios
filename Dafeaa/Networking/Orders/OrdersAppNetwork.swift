@@ -19,6 +19,7 @@ enum OrdersNetwork {
     case deleteDynamicLinks(id: Int)
     case createDynamicLinks(dic: [String:Any])
     case activateStopLink(code: String,status: Int)
+    case updateQuantity(productId:Int,newQuantity:Int)
 }
 
 extension OrdersNetwork: TargetType {
@@ -44,14 +45,15 @@ extension OrdersNetwork: TargetType {
         case .createDynamicLinks :           return "links"
         case .activateStopLink(code: let code,_):
             return "links/\(code)"
-            
+        case .updateQuantity(productId: let id,_):
+            return "links/products/\(id)"
         }
     }
     
     var methods: HTTPMethod {
         switch self  {
         case .changeStatus,.createClientOrder,
-                .createDynamicLinks,.completeOrder,.activateStopLink:  return .post
+                .createDynamicLinks, .completeOrder, .activateStopLink, .updateQuantity:                               return .post
         case .deleteDynamicLinks :              return .delete
         default:                                return .get
         }
@@ -64,7 +66,10 @@ extension OrdersNetwork: TargetType {
         case .createDynamicLinks(let dic),.createClientOrder(let dic):    return .requestParameters(Parameters: dic, encoding: JSONEncoding.default)
         case .activateStopLink(_,let status):
             return .requestParameters(Parameters: ["_method": "put","status": status], encoding: JSONEncoding.default)
-            
+        case .updateQuantity(_, let quantity):
+            let param : [String: Any] = ["_method": "put",
+                                         "quantity": quantity]
+            return .requestParameters(Parameters: param, encoding: JSONEncoding.default)
         default:                              return .requestPlain
             
         }

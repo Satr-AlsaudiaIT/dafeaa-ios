@@ -71,8 +71,9 @@ struct OrderClientDetailsView: View {
                                     .textModifier(.plain, 15,  .black222222)
                                     .frame(maxWidth: .infinity,alignment: .leading)
                                 
-                                   
-                                PaymentInfoView(breakdown: PaymentDetails(tax: viewModel.orderData?.taxPrice ?? 0.00, deliveryPrice: viewModel.orderData?.deliveryPrice ?? 0.00),itemsPrice: $totalPrice, isShowDetails: true)
+                                PaymentInfoView(breakdown: PaymentDetails(commission: Double( viewModel.orderData?.commissionRatio ?? "0") ?? 0, commissionMaxPrice: Double(viewModel.orderData?.maxCommissionValue ?? "0") ?? 0),itemsPrice: $totalPrice, isShowDetails: true,isCalculateCommission: false)
+                                
+                             
                                         
                                   
                                 

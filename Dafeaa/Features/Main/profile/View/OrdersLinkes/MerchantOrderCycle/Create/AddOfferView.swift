@@ -36,14 +36,14 @@ struct AddOfferView: View {
                                     CustomMainTextField(text: $description, placeHolder: "description")
                                         .focused($focusedField, equals: .description)
                                         .id(FormField.description)
-                                    HStack{
-                                        CustomMainTextField(text: $deliveryPrice, placeHolder: "deliveryPriceTitle", keyBoardType: .numberPad,fieldType: .price)
-                                            .focused($focusedField, equals: .delivery)
-                                            .id(FormField.delivery)
-                                        CustomMainTextField(text: $tax, placeHolder: "taxPriceTitle",  keyBoardType: .numberPad,fieldType: .percentage)
-                                            .focused($focusedField, equals: .tax)
-                                            .id(FormField.tax)
-                                    }
+//                                    HStack{
+//                                        CustomMainTextField(text: $deliveryPrice, placeHolder: "deliveryPriceTitle", keyBoardType: .numberPad,fieldType: .price)
+//                                            .focused($focusedField, equals: .delivery)
+//                                            .id(FormField.delivery)
+//                                        CustomMainTextField(text: $tax, placeHolder: "taxPriceTitle",  keyBoardType: .numberPad,fieldType: .percentage)
+//                                            .focused($focusedField, equals: .tax)
+//                                            .id(FormField.tax)
+//                                    }
                                 }
                                 ForEach (0..<productsAdding.count, id: \.self) { index in
                                     BusinessCreateLinkCellView(product: productsAdding[index])
@@ -74,7 +74,7 @@ struct AddOfferView: View {
                         }                    .padding(24)
 
                         ReusableButton(buttonText: "saveBtn", action: {
-                            viewModel.validateAddOffer(offerName: name, offerDescription: description, deliveryPrice: deliveryPrice, tax: tax, productsAdding:productsAdding )
+                            viewModel.validateAddOffer(offerName: name, offerDescription: description,  productsAdding:productsAdding )
                         })
                     
                     .padding(24)

@@ -40,7 +40,8 @@ struct OrderData: Codable, Identifiable {
     let taxPrice: Double?
     let totalPrice: Double?
     let addressDetails: AddressDetails?
-
+    let commissionRatio: String?
+    let maxCommissionValue: String?
     // Custom initializer with default nil values
     init(
         id: Int? = nil,
@@ -58,7 +59,9 @@ struct OrderData: Codable, Identifiable {
         address: String? = nil,
         taxPrice: Double? = nil,
         totalPrice: Double? = nil,
-        addressDetails: AddressDetails? = nil
+        addressDetails: AddressDetails? = nil,
+        commissionRatio: String? = nil,
+        maxCommissionValue: String? = nil
     ) {
         self.id = id
         self.clientImage = clientImage
@@ -76,6 +79,8 @@ struct OrderData: Codable, Identifiable {
         self.taxPrice = taxPrice
         self.totalPrice = totalPrice
         self.addressDetails = addressDetails
+        self.commissionRatio = commissionRatio
+        self.maxCommissionValue = maxCommissionValue
     }
 }
 
@@ -88,12 +93,12 @@ struct productList: Codable, Identifiable,Equatable {
     let offerPrice          : Double?
     let totalQuantity       : Int?
     let paiedQuantity       : Int?
-    let remainingQuantity   : Int?
+    var remainingQuantity   : Int?
 }
 
 struct PaymentDetails: Codable {
-    let tax     : Double?
-    let deliveryPrice       : Double?
+    let commission           : Double?
+    let commissionMaxPrice   : Double?
 }
 struct AddressDetails: Codable {
     let id                  : Int?
@@ -109,6 +114,8 @@ struct LinkDetailsClient: Codable {
     let clientId                            : Int?
     let deliveryPrice, taxPrice             : Double?
     let products                            : [productList]?
+    let commissionRatio                     : String?
+    let maxCommissionValue                  : String?
 }
 
 // MARK: - OffersModel
@@ -120,7 +127,7 @@ struct OffersModel: Codable {
 }
 
 // MARK: - OffersData
-struct OffersData: Codable {
+struct OffersData: Codable,Equatable, Identifiable{
     let id: Int?
     let name, code, description: String?
 }
@@ -138,10 +145,10 @@ struct ShowOfferData: Codable, Equatable {
     let name, code, description             : String?
     let clientId                            : Int?
     let deliveryPrice, taxPrice             : Double?
-    let products                            : [productList]?
+    var products                            : [productList]?
     var status                              : Int?
-    
-    
+    let commissionRatio                     : String?
+    let maxCommissionValue                  : String?
 }
 
 // MARK: - Product

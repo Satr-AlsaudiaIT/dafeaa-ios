@@ -79,7 +79,7 @@ struct AddEditAddressView: View {
                     CustomMainTextField(text: $streetName, placeHolder: "streetName",fieldType:.optional)
                         .focused($focusedField, equals: .streetName)
                         .id(FormField.streetName)
-                    CustomMainTextField(text: $address, placeHolder: "address",fieldType:.optional)
+                    CustomMainTextField(text: $address, placeHolder: "shortAddress",fieldType:.optional)
                         .focused($focusedField, equals: .address)
                         .id(FormField.address)
                     HStack {

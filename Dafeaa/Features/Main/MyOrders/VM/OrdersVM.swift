@@ -13,6 +13,8 @@ final class OrdersVM : ObservableObject {
     @Published var toast: FancyToast?      = nil
     @Published private var _isLoading      = false
     @Published private var _isFailed       = false
+    @Published var isUpdateQuantitySuccess   = false
+
     @Published var _ordersList     : [OrdersData] = []//[OrdersData(id: 1, name: "ww", orderNo: 1, date: "2121", status: "1")]
     @Published var _ordersListCount     : Int = 1
     @Published var outStandingBalance     : Double = 0
@@ -21,7 +23,7 @@ final class OrdersVM : ObservableObject {
     @Published var _offersList      : [OffersData] = []
     @Published private var _offersListCount :Int = 1
 
-    @Published var _offersData      : ShowOfferData?
+    @Published var offersData      : ShowOfferData?
     @Published var productsListInCreateOrder: [[String:Any]] = []
 
     @Published var _getData                 : Bool = false
@@ -42,7 +44,7 @@ final class OrdersVM : ObservableObject {
     var ordersList   : [OrdersData]         { get {return _ordersList }  set {} }
     var orderData    : OrderData?           { get {return _orderData  }  set {} }
     var offersList   : [OffersData]         { get {return _offersList }  set {} }
-    var offersData   : ShowOfferData?       { get {return _offersData }  set {} }
+//    var offersData   : ShowOfferData?       { get {return _offersData }  set {} }
 
     func validations(dynamic_link_id:Int,address_id:Int,products:[[String:Any]]){
          if address_id == 0 {
@@ -210,6 +212,9 @@ final class OrdersVM : ObservableObject {
 
     func deleteOffer(id: Int) {
         _isLoading = true
+        print("Deleting offer with ID: \(id)")
+        print("Current offers list before deletion: \(_offersList)")
+        
         api.deleteDynamicLinks(id: id) { [weak self] (Result) in
             guard let self = self else { return }
             self._isLoading = false
@@ -219,11 +224,16 @@ final class OrdersVM : ObservableObject {
                 self._isLoading = false
                 self._isFailed = false
                 self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2){
-                    self._isSuccess = true
+                
+                // Ensure the removal happens on the main thread
+                DispatchQueue.main.async {
+                    print("Removing offer with ID: \(id)")
                     self._offersList.removeAll { $0.id == id }
+                    print("Current offers list after deletion: \(self._offersList)")
+                    self._isSuccess = true
                 }
-                case .failure(let error):
+                
+            case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
                 self._isFailed = true
@@ -231,7 +241,7 @@ final class OrdersVM : ObservableObject {
             }
         }
     }
-    
+
     func stopActivateOffer(code: String,status:Int) {
         _isLoading = true
         api.activateStopLink(code: code, status: status) { [weak self] (Result) in
@@ -254,6 +264,27 @@ final class OrdersVM : ObservableObject {
             }
         }
     }
+    func updateQuantity(productId: Int,quantity:Int) {
+        _isLoading = true
+        api.updateQuantity(productId: productId, quantity: quantity) { [weak self] (Result) in
+            guard let self = self else { return }
+            self._isLoading = false
+            switch Result {
+            case .success(let response):
+                self._message = response?.message ?? ""
+                self._isLoading = false
+                self._isFailed = false
+                isUpdateQuantitySuccess = true 
+                self.toast = FancyToast(type: .success, title: "success".localized(), message: self._message)
+                
+                case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+            }
+        }
+    }
 
     
     func showOffer(code:String) {
@@ -266,7 +297,7 @@ final class OrdersVM : ObservableObject {
                 guard let data = response?.data else { return }
                 self._isLoading = false
                 self._isFailed = false
-                self._offersData = data
+                self.offersData = data
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
@@ -322,26 +353,24 @@ final class OrdersVM : ObservableObject {
         }
     }
     
-    func validateAddOffer(offerName:String, offerDescription:String, deliveryPrice: String,tax:String, productsAdding: [[String: Any]]) {
+    func validateAddOffer(offerName:String, offerDescription:String, productsAdding: [[String: Any]]) {
         if offerName.isBlank {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message:"enterOfferName".localized())
         }
         else if offerDescription.isBlank {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message:"enterOfferDescription".localized())
         }
-        else if deliveryPrice.isBlank {
-            self.toast = FancyToast(type: .error, title: "Error".localized(), message:"enterDeliveryPrice".localized())
-        }
-        else if tax.isBlank {
-            self.toast = FancyToast(type: .error, title: "Error".localized(), message:"enterTax".localized())
-        }
+//        else if deliveryPrice.isBlank {
+//            self.toast = FancyToast(type: .error, title: "Error".localized(), message:"enterDeliveryPrice".localized())
+//        }
+//        else if tax.isBlank {
+//            self.toast = FancyToast(type: .error, title: "Error".localized(), message:"enterTax".localized())
+//        }
         else if productsAdding.count == 0 {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message:"pleaseAddProducts".localized())
         }
         else {
-            let param: [String:Any] = ["name": offerName,                                               "description": offerDescription,
-                                       "delivery_price": Double(deliveryPrice.convertDigitsToEng) ?? 0,
-                                       "tax_price": Double(tax.convertDigitsToEng) ?? 0]
+            let param: [String:Any] = ["name": offerName,                                               "description": offerDescription]
             self.createOrderByMerchant(param: param, products: productsAdding)
         }
     }

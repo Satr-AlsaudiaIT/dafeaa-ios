@@ -15,6 +15,8 @@
 			</array>
 		</dict>
 	</array>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -22,15 +24,8 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Bahij_TheSansArabic-SemiLight.ttf</string>
-		<string>Bahij_TheSansArabic-Black.ttf</string>
-		<string>Bahij_TheSansArabic-Bold.ttf</string>
-		<string>Bahij_TheSansArabic-ExtraBold.ttf</string>
-		<string>Bahij_TheSansArabic-ExtraLight.ttf</string>
-		<string>Bahij_TheSansArabic-Light.ttf</string>
-		<string>Bahij_TheSansArabic-SemiBold.ttf</string>
-		<string>Bahij_TheSansArabic-Plain.ttf</string>
 		<string>Poppins-Black.ttf</string>
+		<string>Bahij-Plain.ttf</string>
 		<string>Poppins-Bold.ttf</string>
 		<string>Poppins-ExtraBold.ttf</string>
 		<string>Poppins-ExtraLight.ttf</string>

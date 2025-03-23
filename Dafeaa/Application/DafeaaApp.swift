@@ -53,6 +53,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
     }
     
     func reset() {
+        for family in UIFont.familyNames {
+            let name = UIFont.fontNames(forFamilyName: family)
+            print("family = \(family) - name = \(name)")
+        }
+        
         NotificationConfigration.shared.firebaseConfigration()
         //        checkAppAvailability()
         let window = UIWindow()
@@ -67,7 +72,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
                 )
         } else if token != ""  {
             if status == 2{
-                window.rootViewController = UIHostingController(rootView: TabBarView() .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
+                let navigationHelper = NavigationHelper(actionType: 0, actionId: 0, userType: "")
+
+                window.rootViewController = UIHostingController(rootView: TabBarView().environmentObject(navigationHelper)
+                    .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
                     .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight)
                     )
                 UserDefaults.standard.set(false, forKey:  Constants.shared.resetLanguage)

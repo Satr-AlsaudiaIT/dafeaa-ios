@@ -45,7 +45,7 @@ extension MoreNetwork: TargetType
         case .logOut:                       return "auth/logout"
         case .deleteAccount:                return "auth/delete-account"
         case .notifyOnOff:                  return "notifications/active"
-        case .notificationList(let skip):   return "notifications?skip=\(skip)"
+        case .notificationList(let skip):   return "notifications?skip=\(skip)&&take=10"
         case .getStaticPages(let type):     return "\(type)"
         case .questions(let skip):          return"settings/faq?skip=\(skip)"
         case .contacts:                     return "settings/contact"

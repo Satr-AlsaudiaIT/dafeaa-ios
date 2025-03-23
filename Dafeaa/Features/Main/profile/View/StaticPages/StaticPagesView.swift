@@ -26,7 +26,7 @@ struct StaticPagesView: View {
         case .aboutApp :
            return viewModel.staticData?.about ?? ""
         case .privacyPolicy :
-            return viewModel.staticData?.privacyPolicy ?? ""
+            return viewModel.staticData?.privacy ?? ""
         case .termsAndCondition :
             return viewModel.staticData?.terms ?? ""
         }
@@ -89,7 +89,7 @@ enum StaticPages{
 
 struct HTMLTextView: UIViewRepresentable {
     var htmlText: String
-    var font : UIFont = UIFont(name: AppFonts.shared.name(.bold), size: 14) ?? .systemFont(ofSize: 14)
+    var font : UIFont = UIFont(name: AppFonts.shared.name(.plain), size: 14) ?? .systemFont(ofSize: 14)
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
         textView.isEditable = false

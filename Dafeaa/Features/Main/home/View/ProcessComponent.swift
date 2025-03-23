@@ -12,25 +12,29 @@ struct ProcessComponent: View {
     
     var body: some View {
         HStack(alignment: .center) {
-            Image(.process)
-                .resizable()
-                .frame(width: 48,height: 48)
-                .cornerRadius(24)
+            ZStack {
+                Color(.black010202)
+                Image(process?.amount?.first == "+" ? .addBlanceProcess : .withdrawProcess)
+                    .resizable()
+                    .frame(width: 28,height: 28)
+            }
+            .frame(width: 48,height: 48)
+            .cornerRadius(24)
             VStack(alignment: .leading, spacing: 8) {
                 Text(process?.description ?? "")
                     .textModifier(.plain, 15, .black1E1E1E)
                 Text(process?.date ?? "")
-                    .textModifier(.extraBold, 14, .gray616161)
+                    .textModifier(.plain, 17, .gray616161)
             }
             Spacer()
             HStack(spacing: 2) {
                 Text(process?.amount ?? "")
-                    .textModifier(.extraBold, 16,  process?.amount?.first == "+" ? .green026C34 : .redD73D24)
+                    .textModifier(.plain, 18,  process?.amount?.first == "+" ? .green026C34 : .redD73D24)
                 Image(.riyal)
                      .resizable()
                      .aspectRatio(contentMode: .fit)
-                     .foregroundColor(.gray8B8C86)
-                     .frame(width: 20)
+                     .foregroundColor(process?.amount?.first == "+" ? .green026C34 : .redD73D24)
+                     .frame(width: 15)
                      .padding(.trailing, 10)
             }
             .environment(\.layoutDirection, .rightToLeft)

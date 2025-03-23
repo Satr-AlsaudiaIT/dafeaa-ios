@@ -20,12 +20,12 @@ struct OrderLinkDetailsView: View {
     @State var showingProductDetails: Bool = false
     @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 1, remainingQuantity: 1)
     var linkDetails: ShowOfferData  {
-        return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [], status: 0)
+        return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [], status: 0,commissionRatio: "",maxCommissionValue: "")
     }
     @State var status: Int = 0
     @State var toast: FancyToast? = nil
     var offerDataView: ShowOfferData {
-        return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [], status: 0)
+        return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [], status: 0,commissionRatio: "",maxCommissionValue: "")
     }
     
     var body: some View {
@@ -58,7 +58,7 @@ struct OrderLinkDetailsView: View {
                             .foregroundColor(.black222222)})
                         .frame(width: 25,height: 20)
                         let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
-                        if let offerID = viewModel.offersData?.id , let offerCode = viewModel.offersData?.code, let url = URL(string: "https://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)/\(userId)"){
+                        if let offerID = viewModel.offersData?.id , let offerCode = viewModel.offersData?.code, let url = URL(string: "https://dafeaa-backend.deplanagency.com/offers/\(offerID)/\(offerCode)/\(userId)"){
                             ShareLink(item: url) {  Image(.share).resizable().frame(width: 25,height: 20)} }
                     }
                     .padding(24)
@@ -81,7 +81,7 @@ struct OrderLinkDetailsView: View {
                                         
                                     }
                                 }
-                                PaymentInfoView(breakdown: PaymentDetails(tax: linkDetails.taxPrice, deliveryPrice: linkDetails.deliveryPrice),isMerchantOfferDetails: true, itemsPrice: $totalPrice)
+                                PaymentInfoView(breakdown: PaymentDetails(commission: Double(linkDetails.commissionRatio ?? "0" ) ?? 0, commissionMaxPrice: Double(linkDetails.maxCommissionValue ?? "0") ?? 0),isMerchantOfferDetails: true, itemsPrice: $totalPrice)
                             
                             }
                             .padding(.bottom,40)
@@ -122,15 +122,16 @@ struct OrderLinkDetailsView: View {
                 
             }
             .onChange(of: viewModel.activeStopSuccess, { _, _ in
-                status = status == 1 ? 2 : 1
+              
+                
             })
             .sheet(isPresented: $showingProductDetails, onDismiss: {
                 showingProductDetails = false
             }, content: {
-                ProductDetailsPopUp(product: $selectedProduct )
+                ProductDetailsPopUp(product: $selectedProduct,isAbleToEdit: true,isMerchant: true)
                     .presentationCornerRadius(24)
                     .presentationDragIndicator(.visible)
-                    .presentationDetents([.fraction(0.7)])
+                    .presentationDetents([.fraction(0.85)])
             }).edgesIgnoringSafeArea(.bottom)
                 .toastView(toast: $viewModel.toast)
                 .toastView(toast: $toast)
@@ -138,8 +139,8 @@ struct OrderLinkDetailsView: View {
                 .navigationBarHidden(true)
                 .onAppear{
                     if let offerData {
-                        status = offerData.status ?? 0
-                        viewModel._offersData = offerData
+//                        status = offerData.status ?? 0
+                        viewModel.offersData = offerData
                     } else {
                         viewModel.showOffer(code: code)
                     }
@@ -148,8 +149,11 @@ struct OrderLinkDetailsView: View {
                     if value {
                         self.presentationMode.wrappedValue.dismiss()
                 }}
-                .onChange(of: viewModel._offersData) { oldValue, newValue in
-                    if let products = viewModel._offersData?.products {
+                .onChange(of: selectedProduct, { oldValue, newValue in
+                    updateOfferData(with: newValue)
+                })
+                .onChange(of: viewModel.offersData) { oldValue, newValue in
+                    if let products = viewModel.offersData?.products {
                         totalPrice = products.reduce(0.0) { (result, product) in
                             let productPrice = product.offerPrice ?? 0 > 0 ? product.offerPrice! : product.price ?? 0
                             let totalProductPrice = productPrice * Double(product.amount ?? 1)
@@ -157,7 +161,7 @@ struct OrderLinkDetailsView: View {
                         }
                         
                     }
-                    status = viewModel._offersData?.status ?? 0
+                    status = viewModel.offersData?.status ?? 0
                 }
         }
     }
@@ -166,10 +170,18 @@ struct OrderLinkDetailsView: View {
         let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
 
         if let offerID = viewModel.offersData?.id , let offerCode = viewModel.offersData?.code{
-            let urlString = "https://dafeaa-backend.deplanagency.com/api/offers/\(offerID)/\(offerCode)/\(userId)"
+            let urlString = "https://dafeaa-backend.deplanagency.com/offers/\(offerID)/\(offerCode)/\(userId)"
             UIPasteboard.general.string = urlString
-            self.toast = FancyToast(type: .info, title: "copied successfully".localized(), message: "")
+            self.toast = FancyToast(type: .error, title: "".localized(), message:  "copied successfully".localized())
+        }
+    }
+    
+    private func updateOfferData(with selectedProduct: productList) {
+        guard var products = viewModel.offersData?.products else { return }
 
+        if let index = products.firstIndex(where: { $0.id == selectedProduct.id }) {
+            viewModel.offersData?.products?[index] = selectedProduct
+//            offerData?.products = products
         }
     }
 }
