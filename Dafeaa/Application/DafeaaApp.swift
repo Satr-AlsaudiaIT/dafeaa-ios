@@ -121,27 +121,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
             let pathComponents = urlComponents.path.split(separator: "/")
             
             // Check if the URL structure matches `/offers/{offerID}/{offerCode}/{userId}`
-             if pathComponents.count >= 3, pathComponents[0] == "offers" {
-                 let offerCode = String(pathComponents[2])
+             if pathComponents.count >= 1, pathComponents[0] == "offers" {
+                 let offerCode = String(pathComponents[1])
                          Constants.clientOrderCode = offerCode
                      
                      print("Offer ID: \(Constants.clientOrderCode), Offer Code: (Constants.offerCode)")
-                     handleDeepLinkNav(code: offerCode,offerUserId: Int(pathComponents[3]) ?? 0) // Navigate in the app based on this link
+                     handleDeepLinkNav(code: offerCode) // Navigate in the app based on this link
                  
              }
-            else if pathComponents.count >= 3, pathComponents[1] == "offers" {
-                let offerCode = String(pathComponents[3])
-                    Constants.clientOrderCode = offerCode
-                    
-                
-                     print("Offer ID: \(Constants.clientOrderCode), Offer Code: (Constants.offerCode)")
-                handleDeepLinkNav(code: offerCode,offerUserId: Int(pathComponents[4]) ?? 0) // Navigate in the app based on this link
-                 
-             }
+//            else if pathComponents.count >= 3, pathComponents[1] == "offers" {
+//                let offerCode = String(pathComponents[3])
+//                    Constants.clientOrderCode = offerCode
+//                    
+//                
+//                     print("Offer ID: \(Constants.clientOrderCode), Offer Code: (Constants.offerCode)")
+//                handleDeepLinkNav(code: offerCode) // Navigate in the app based on this link
+//                 
+//             }
          }
     }
     
-    func handleDeepLinkNav(code:String, offerUserId: Int){
+    func handleDeepLinkNav(code:String){
         let api: OrdersAPIProtocol = OrdersAPI()
 
         api.showDynamicLinks(code: code) { [weak self] (Result) in
@@ -149,7 +149,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
             switch Result {
             case .success(let response):
                 guard let data = response?.data else { return }
-                navToOffer(offerData:data, offerUserId:offerUserId )
+                navToOffer(offerData:data, offerUserId:response?.data?.clientId ?? 0 )
             case .failure(let error):
                 if error.code == 404 {
                     return
@@ -184,46 +184,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
         }
     }}
 
-/*extension AppDelegate: UIGestureRecognizerDelegate {
-    private func observeKeyboardDismissManager() {
-         keyboardDismissManager.$shouldDismissKeyboard
-             .sink { [weak self] shouldDismiss in
-                 guard let self = self, let window = self.window else { return }
-                 if shouldDismiss {
-                     self.addGesture(to: window)
-                 } else {
-                     self.removeGesture(from: window)
-                 }
-             }
-             .store(in: &keyboardDismissManager.cancellables)
-     }
-
-     private func addGesture(to window: UIWindow) {
-         if tapGesture == nil {
-             let gesture = AnyGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-             gesture.requiresExclusiveTouchType = false
-             gesture.cancelsTouchesInView = false
-             gesture.delegate = self
-             window.addGestureRecognizer(gesture)
-             tapGesture = gesture
-         }
-     }
-
-     private func removeGesture(from window: UIWindow) {
-         if let gesture = tapGesture {
-             window.removeGestureRecognizer(gesture)
-             tapGesture = nil
-         }
-     }
-
-     @objc private func dismissKeyboard() {
-         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-     }
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-}
-*/
 
 struct DafeaaApp: App {
     @StateObject private var keyboardDismissManager = KeyboardDismissManager() // Create a shared instance

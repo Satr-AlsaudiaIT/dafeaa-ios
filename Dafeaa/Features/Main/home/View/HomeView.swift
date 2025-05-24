@@ -31,7 +31,12 @@ struct HomeView: View {
     @State private var navigateToOffers: Bool = false
     @StateObject var profileViewModel = MoreVM()
     @State private var navigateToCompleteProfileView: Bool = false
+    @State var showTransferBottomSheet : Bool = false
+    @State var isNavigateToTransferView : Bool = false
+    @State var transferBalancePhone : String = ""
+    @State var transferBalanceName : String = ""
 
+    @State var transferBalanceAmount : String = ""
     var body: some View {
         NavigationStack {
             ZStack {
@@ -109,7 +114,7 @@ struct HomeView: View {
 
                         ZStack {
                             Color(.white)
-                            
+    
                             VStack(spacing: 17) {
                                 Rectangle().fill(.white)
                                     .frame(height: 32)
@@ -217,6 +222,7 @@ struct HomeView: View {
                                 Spacer()
                               
                             }
+//                            .padding(.top)
                         }
                         .cornerRadius(24)
                         .padding(.bottom,-24)
@@ -230,7 +236,6 @@ struct HomeView: View {
                                         WalletButton(buttonText: "addBalance".localized(),image: .addBalance) {
                                             balanceActionType = .addBalance
                                             isSheetPresented = true
-                                            
                                         }
                                         
                                     }
@@ -242,16 +247,28 @@ struct HomeView: View {
                                     Spacer()
                                     HStack {
                                         WalletButton(buttonText: "withdrawBalance".localized(), image: .withdrawBalance) {
-                                            balanceActionType = .withDraw
-                                            isSheetPresented = true
+//                                            balanceActionType = .withDraw
+//                                            isSheetPresented = true
+                                        }
+                                        
+                                    }
+                                    Spacer()
+                                    Rectangle()
+                                        .fill(.black.opacity(0.1))
+                                        .frame(width: 2,height: 24)
+                                    
+                                    Spacer()
+                                    HStack {
+                                        WalletButton(buttonText: "transferBalance".localized(), image: .transferBalance) {
+                                            showTransferBottomSheet = true
                                         }
                                         
                                     }
                                     
                                 }
                                 .padding(.horizontal,24)
+                                .padding(.vertical,10)
                             }
-                            
                             .frame(maxWidth: .infinity)
                             .frame(height: 72)
                             .cornerRadius(16)
@@ -327,9 +344,8 @@ struct HomeView: View {
             .onChange(of: isViewAppeared, { _, newValue in
                 if newValue {
                     viewModel.home()
-                    if userId == 0 || businessInformationStatus == nil || businessInformationStatus == 3 {
-                        profileViewModel.profile()
-                    }
+                    profileViewModel.profile()
+                    
                 }
             })
             .navigationDestination(isPresented: $navigateToCompleteProfileView, destination: {
@@ -369,9 +385,20 @@ struct HomeView: View {
                     .presentationCornerRadius(24)
                     .presentationDragIndicator(.visible)
             })
-//            .navigationDestination(isPresented: $isGoingToOfferScreen, destination: {
-//                OrdersOffersLinksView()
-//            })
+            .sheet(isPresented: $showTransferBottomSheet, content: {
+                TransferBottomSheet(isSheetPresented: $showTransferBottomSheet,amount: $transferBalanceAmount,phoneNumber: $transferBalancePhone, name: $transferBalanceName,isNavigateToTransferView: $isNavigateToTransferView)
+                    .presentationDetents([.fraction(0.4)]) // Use fraction to make height consistent
+                    .presentationCornerRadius(24)
+                    .presentationDragIndicator(.visible)
+                    .onAppear{
+                        transferBalancePhone = ""
+                        transferBalanceAmount = ""
+                        transferBalanceName = ""
+                    }
+            })
+            .navigationDestination(isPresented: $isNavigateToTransferView, destination: {
+                ConfirmTransferView( balance: String(viewModel.walletAmount),phoneNumber: transferBalancePhone, amount: transferBalanceAmount, name: transferBalanceName)
+            })
             .navigationDestination(isPresented: $navigateToWebView) {
                 PaymentWebViewContainer(url: paymentURL)
             }

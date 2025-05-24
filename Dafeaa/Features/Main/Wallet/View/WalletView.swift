@@ -42,7 +42,7 @@ struct WalletView: View {
                             }
                             .environment(\.layoutDirection, .rightToLeft)
                         }
-                        
+//                        .padding(.top)
                         //MARK: - Wallet View
                         ZStack{
                             Color.white
@@ -71,6 +71,19 @@ struct WalletView: View {
                                     WalletButton(buttonText: "withdrawBalance".localized(), image: .withdrawBalance) {
                                         balanceActionType = .withDraw
                                         isSheetPresented = true
+                                    }
+                                    
+                                }
+                                Spacer()
+                                Rectangle()
+                                    .fill(.black.opacity(0.1))
+                                    .frame(width: 2,height: 24)
+                                
+                                Spacer()
+                                HStack {
+                                    WalletButton(buttonText: "transferBalance".localized(), image: .transferBalance) {
+//                                        balanceActionType = .withDraw
+//                                        isSheetPresented = true
                                     }
                                     
                                 }
@@ -158,6 +171,9 @@ struct WalletView: View {
     }
     
 }
+
+
+
 #Preview {
     WalletView( selectedTab: .constant(.home))
 }

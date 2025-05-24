@@ -39,20 +39,20 @@ struct ProfileDetailView:  View {
                                 CustomMainTextField(text: $email, placeHolder: "Email", image: .mailTFIcon)
                                     .focused($focusedField, equals: .email)
                                 
-                                Button(action: {
-                                    // Handle forgot password action
-                                    showChangePassword = true
-                                }) {
-                                    Text("changePassword".localized())
-                                        .textModifier(.plain, 15, .gray)
-                                        .frame(maxWidth:.infinity,alignment: .trailing)
-                                }
+//                                Button(action: {
+//                                    // Handle forgot password action
+//                                    showChangePassword = true
+//                                }) {
+//                                    Text("changePassword".localized())
+//                                        .textModifier(.plain, 15, .gray)
+//                                        .frame(maxWidth:.infinity,alignment: .trailing)
+//                                }
                             }
                             
-                            
-                            .navigationDestination(isPresented: $showChangePassword) {
-                                ChangePasswordView()
-                            }
+//                            
+//                            .navigationDestination(isPresented: $showChangePassword) {
+//                                ChangePasswordView()
+//                            }
                             
                         }
                         

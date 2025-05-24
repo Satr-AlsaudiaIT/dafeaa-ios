@@ -309,43 +309,47 @@ final class OrdersVM : ObservableObject {
     
     
     //MARK: - Create Link Requests
-    func validateAddOrder(image: UIImage?, nameAr: String, nameEn: String, descriptionAr: String, descriptionEn: String, quantity:String, price: String, offerPrice: String) -> [String: Any]? {
-        if image == nil {
-            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "chooseProductImage".localized())
+    func validateAddOrder(images: [UIImage]?, name: String, description: String, quantity:String, price: String, offerPrice: String, haveOffer: Bool) -> [String: Any]? {
+        if name.isBlank {
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "enterName".localized())
             return nil
-        } else if nameAr.isBlank {
-            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "enterNameAr".localized())
+        }
+       
+        else if description.isBlank {
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "enterDescription".localized())
             return nil
-        } else if nameEn.isBlank {
-            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "enterNameEn".localized())
-            return nil
-        } else if descriptionAr.isBlank {
-            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "enterDescriptionAr".localized())
-            return nil
-        } else if descriptionEn.isBlank {
-            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "enterDescriptionEn".localized())
-            return nil
-        } else if quantity.isBlank {
+        }
+     
+        else if quantity.isBlank {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message: "enterQuantity".localized())
             return nil
         }
         else if price.isBlank {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPrice".localized())
             return nil
-        } else {
+        }else if haveOffer ,offerPrice.isBlank {
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "enterOfferPrice".localized())
+            return nil
+        } else if haveOffer ,!offerPrice.isBlank ,(Double(offerPrice) ?? 0) > (Double(price) ?? 0 ) {
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "offerPriceMustBeLessThanPrice".localized())
+            return nil
+        }
+        else if images?.count  ?? 0 == 0 {
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "chooseProductImage".localized())
+            return nil
+        }
+        else {
             var product: [String: Any] = [
-                "image": image ?? UIImage(),
-                "name_en": nameEn,
-                "name_ar": nameAr,
-                "description_en": descriptionEn,
-                "description_ar": descriptionAr,
+                "images": images,
+                "name": name,
+                "description": description,
                 "price": Double(price.convertDigitsToEng) ?? 0,
                 "quantity": Int(quantity.convertDigitsToEng) ?? 0
             ]
-            if !offerPrice.isBlank {
+            if haveOffer, !offerPrice.isBlank {
                 product["offer_price"] = Double(offerPrice.convertDigitsToEng) ?? 0
             }
-
+            
             self.toast = FancyToast(type: .success, title: "Success".localized(), message: "addProductSuccess".localized())
             self._isAddProDuctValid = true
 
@@ -360,12 +364,7 @@ final class OrdersVM : ObservableObject {
         else if offerDescription.isBlank {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message:"enterOfferDescription".localized())
         }
-//        else if deliveryPrice.isBlank {
-//            self.toast = FancyToast(type: .error, title: "Error".localized(), message:"enterDeliveryPrice".localized())
-//        }
-//        else if tax.isBlank {
-//            self.toast = FancyToast(type: .error, title: "Error".localized(), message:"enterTax".localized())
-//        }
+
         else if productsAdding.count == 0 {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message:"pleaseAddProducts".localized())
         }

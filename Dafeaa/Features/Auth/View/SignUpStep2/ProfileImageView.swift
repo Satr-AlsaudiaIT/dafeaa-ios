@@ -16,9 +16,11 @@ struct ProfileImageView: View {
     @State var isShowFromEdit: Bool
     @State var height: CGFloat = 85
     @State var editHeight: CGFloat = 20
+    
     @State private var showFilePicker: Bool = false
     @State private var showFileTypeSelection: Bool = false
     @State private var pickerSourceType: UIImagePickerController.SourceType = .photoLibrary
+    
     @State private var isEdited: Bool = false
 
     var body: some View {

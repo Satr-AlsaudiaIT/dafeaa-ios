@@ -18,14 +18,16 @@ struct WalletButton: View {
                 action()
             
         }) {
-            if let image = image {
-                Image(uiImage: image)
+            VStack(spacing: 0) {
+                if let image = image {
+                    Image(uiImage: image)
+                }
+                Text(buttonText.localized())
+                    .textModifier(.plain, 12,.gray8B8C86)
+//                    .minimumScaleFactor(0.7)
+//                    .lineLimit(2)
+                    .frame(maxWidth: .infinity)
             }
-            Text(buttonText.localized())
-                .textModifier(.plain, 16,.gray8B8C86)
-                .frame(maxWidth: .infinity)
-                
-            
         }
         
     }

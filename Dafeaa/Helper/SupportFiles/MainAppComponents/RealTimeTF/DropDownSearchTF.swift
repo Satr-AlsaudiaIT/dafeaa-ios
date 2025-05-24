@@ -60,6 +60,7 @@ struct DropdownSearchTF: View {
                                 self.active =  editingChanged ? true:false
                                 self.isOpen = editingChanged ? true:false
                             })
+                            .foregroundColor(text.isEmpty ? .grayB5B5B5 : .black)
                             .placeholder(when: selection == "") {
                                 Text(selection == "" && !(isOpen ?? false) ? placeHolder: selection).foregroundColor(Color(.lightGray))
                             }

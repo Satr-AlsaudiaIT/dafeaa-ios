@@ -24,6 +24,19 @@ struct OrdersOffersLinksView: View {
                         self.presentationMode.wrappedValue.dismiss()
                     }
                     ZStack(alignment: .bottom) {
+                        if viewModel._offersList.isEmpty {
+                            VStack {
+                                Spacer()
+                                VStack {
+                                    Image(.empty)
+                                    Text("noOffers".localized())
+                                        .textModifier(.plain, 16, .black222222)
+                                }
+                                .padding(.top, -60)
+                                Spacer()
+                            }
+                        }
+                        else {
                         ScrollView {
                             VStack(spacing: 17) {
                                 // Bind directly to viewModel._offersList
@@ -45,6 +58,7 @@ struct OrdersOffersLinksView: View {
                             }
                             .padding(.bottom, 60)
                         }
+                    }
                         ReusableButton(buttonText: "addOffer", action: { goToAddOffer = true })
                             .navigationDestination(isPresented: $goToAddOffer, destination: { AddOfferView() })
                     }
@@ -74,7 +88,7 @@ struct OrdersOffersLinksView: View {
             BottomSheetLinkActionsView(offer: selectedOffer, toast: $toast, isShow: $isShowActionBottomSheet, onDelete: {
                 viewModel.deleteOffer(id: selectedOffer?.id ?? 0)
             })
-            .presentationDetents([.fraction(0.3)])
+            .presentationDetents([.fraction(0.32)])
             .presentationCornerRadius(24)
             .presentationDragIndicator(.visible)
         })
@@ -123,7 +137,8 @@ struct OfferComponent: View {
             
 //                // Three dots  Button
                 Button(action: { onThreeDotsTap() }, label: {
-                    Image(.threeDots)
+                    Image(.threeDots).resizable()
+                        .frame(width: 20, height: 20)
                 })
 //            }
         }

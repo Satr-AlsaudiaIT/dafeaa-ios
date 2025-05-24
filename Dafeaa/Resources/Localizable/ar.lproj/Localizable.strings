@@ -32,7 +32,8 @@
 "forgetPassword"="نسيت كلمة المرور؟";
 "haventAccount"="ليس لديك حساب؟";
 "openAccount"="افتح حساب جديد";
-"phoneNumber"="رقم الموبايل";
+"phoneNumber"="رقم الهاتف";
+"date" = "التاريخ";
 "loginWelcomeSubtitle"="اكتب معلوماتك لتسجيل الدخول لحسابك ...";
 
 //MARK: - step1
@@ -128,7 +129,7 @@
 "messageValidNewPassword8character"="برجاء ادخال كلمة مرور صحيحة على الأقل ٨ أحرف";
 "messageEmptyConfirmPassword"="برجاء تأكيد كلمة المرور";
 "messageMatchPasswordConfirm"="كلمة المرور الجديدة وتأكيد كلمة المرور غير متطابقين";
-
+"developerKeys" = "مفاتيح المطور";
 //MARK: - complete Info
 "uploadFileHere" = "ارفع الملف هنا";
 "CommercialInfo" = "معلومات النشاط التجاري";
@@ -187,6 +188,8 @@
 "lastTransactions"="اخر المعاملات";
 "addBalance"="إضافة رصيد";
 "withdrawBalance"="سحب رصيد ";
+"transferBalance" = "تحويل رصيد";
+"transferAmount" = "المبلغ المراد تحويله";
 "lastProcessAndPayment"="اخر العمليات والمدفوعات";
 "withdrawWalletBalance" = "سحب رصيد من المحفظة";
 "addWalletBalance" = "إضافة رصيد الي المحفظة";
@@ -299,17 +302,23 @@
 "deliveryPriceTitle" = "سعر التوصيل";
 "taxPriceTitle" = "ضريبة القيمة";
 "addProductTitle" = "اضف منتج";
-"nameAr" = "اسم المنتج عربي";
+"productName" = "اسم المنتج";
 "nameEn" = "اسم المنتج انجليزي";
-"descriptionAr" = "وصف المنتج عربي";
+"productDescription" = "وصف المنتج";
 "descriptionEn" = "وصف المنتج انجليزي";
 "quantity" = "الكمية المتاحة";
 "productPrice" = "سعر المنتج";
-"offerPrice" =  "سعر العرض";
+"offerPrice" =  "السعر بعد الخصم";
+"apply_discount?" = "تطبيق خصم؟";
+"hide_discount?" = "إخفاء الخصم؟";
+"offerPriceMustBeLessThanPrice" = "السعر بعد الخصم يجب ان يكون أقل من السعر قبل الخصم";
+
 "chooseProductImage" = "برجاء اختيار صورة المنتج";
-"enterNameAr" = "برجاء ادخال اسم المنتج عربي";
+"enterOfferPrice" = "برجاء إدخال السعر بعد الخصم او اخفاء هذا الإختيار";
+"Choose the file type you want to upload" = "برجاء اختيار الملف الذي ترغب في رفعه";
+"enterName" = "برجاء ادخال اسم المنتج";
 "enterNameEn" = "برجاء ادخال اسم المنتج انجليزي";
-"enterDescriptionAr" = "برجاء ادخال وصف المنج عربي";
+"enterDescription" = "برجاء ادخال وصف المنج";
 "enterDescriptionEn" = "برجاء ادخال وصف المنتج انجليزي";
 "enterQuantity" = "برجاء ادخال الكمية المتاحة من المنتج";
 "enterPrice" = "برجاء ادخال سعر المنتج";
@@ -326,7 +335,10 @@
 "copy" = "نسخ";
 "share" = "مشاركة رابط";
 "delete" = "مسح";
-
+"noOffers" = "ليس ليدك عروض حتى الأن";
+"availableBalance:" = "الرصيد المتاح:";
+"userNotExist" = "هذا الرقم غير مرتبط باي حساب";
+"amount_validation" = "برجاء إدخال المبلغ المراد تحويله";
 //MARK: - Withdraws
 "withdrawsProcess" = "عمليات سحب الرصيد";
 "withdrawProcess" = "عملية سحب";
@@ -352,3 +364,15 @@
 "stop_message" = "تم ايقاف تفعيل العرض بنجاح";
 "active_message" = "تم تفعيل العرض بنجاح";
 
+//MARK: - developerKeys
+"profile_id"="معرف الملف الشخصي";
+"secret_key"="المفتاح السري";
+"reset_codes"="إعادة ضبط الأكواد";
+"hide_code"="اخفاء الكود";
+"show_code"="عرض الكود";
+"transferSuccess" = "تم التحويل بنجاح";
+"referenceNumber" = "الرقم المرجعي";
+"confirmTransfer" = "تأكيد التحويل";
+"O.K" = "حسنا";
+"transferTo" = "تم التحويل إلى:";
+"transferFrom" = "تم التحويل من:";

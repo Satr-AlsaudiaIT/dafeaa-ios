@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "14E67A2A2CAC5CCA00C10AB5"
-               BuildableName = "Dafeaa.app"
+               BuildableName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.app"
                BlueprintName = "Dafeaa"
                ReferencedContainer = "container:Dafeaa.xcodeproj">
             </BuildableReference>
@@ -69,7 +69,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "14E67A2A2CAC5CCA00C10AB5"
-            BuildableName = "Dafeaa.app"
+            BuildableName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.app"
             BlueprintName = "Dafeaa"
             ReferencedContainer = "container:Dafeaa.xcodeproj">
          </BuildableReference>
@@ -86,7 +86,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "14E67A2A2CAC5CCA00C10AB5"
-            BuildableName = "Dafeaa.app"
+            BuildableName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.app"
             BlueprintName = "Dafeaa"
             ReferencedContainer = "container:Dafeaa.xcodeproj">
          </BuildableReference>

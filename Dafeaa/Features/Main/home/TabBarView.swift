@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-//
-//  TabBarView.swift
-//  Dafeaa
-//
-//  Created by AMNY on 11/10/2024.
-//
-
 import SwiftUI
 
 struct TabBarView: View {

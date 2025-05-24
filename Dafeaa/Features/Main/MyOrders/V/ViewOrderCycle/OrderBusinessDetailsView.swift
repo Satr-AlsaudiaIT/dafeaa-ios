@@ -19,7 +19,7 @@ struct OrderBusinessDetailsView: View {
     @State var isNavigateToContactInfo: Bool = false
     @State var isCancelTapped: Bool = false
     @State var isRejectTapped: Bool = false
-    @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 1, remainingQuantity: 0)
+    @State var selectedProduct: productList = productList(id: 3, images: [ImageModel(file: "ww")], name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 1, remainingQuantity: 0)
     @State var showingProductDetails: Bool = false
     @State var totalPrice: Double = 0
     @State var itemsPrice: Double = 0
@@ -63,6 +63,7 @@ struct OrderBusinessDetailsView: View {
                                                 }) {
                                                     OrderItemView(itemName: orderData.products?[index].name ?? "" ,
                                                                   price: orderData.products?[index].price ?? 0,
+                                                                  offerPrice: viewModel.orderData?.products?[index].offerPrice ?? 0,
                                                                   amount: orderData.products?[index].amount ?? 0,
                                                                   isLast: index == (orderData.products?.count ?? 3 ) - 1 )
                                                 }
@@ -97,7 +98,8 @@ struct OrderBusinessDetailsView: View {
                                                 .fill(Color.clear))
                                         
                                         VStack(spacing: 8) {
-                                            AddressView(name: orderData.clientName ?? "", address: orderData.address ?? "", phone: orderData.clientPhone ?? "")
+                                            AddressView(name: orderData.clientName ?? "", address: orderData.address ?? "", streetName: orderData.streetName ?? "", buildingNum: orderData.buildingNum ?? "", area: orderData.area ?? "", floatNum: orderData.floatNum ?? "", phone: orderData.clientPhone ?? "")
+                                           
                                             
                                         }
                                     }
@@ -168,7 +170,7 @@ struct OrderBusinessDetailsView: View {
             ProductDetailsPopUp(product: $selectedProduct,isMerchant: true)
                 .presentationCornerRadius(24)
                 .presentationDragIndicator(.visible)
-                .presentationDetents([.medium])
+                .presentationDetents([.large])
         })
         .navigationDestination(isPresented: $isNavigateToContactInfo) {
             HelpAndSupportView()

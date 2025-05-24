@@ -61,6 +61,7 @@ struct QRCodeView: View {
 struct OrderItemView: View {
     var itemName  : String
     var price     : Double
+    var offerPrice: Double
     var amount    : Int
     var isLast    : Bool
     
@@ -74,10 +75,11 @@ struct OrderItemView: View {
                     Text(itemName)
                         .textModifier(.plain, 14,  .black222222)
                     HStack {
-                        
+                      
                         HStack(spacing: 5) {
-                            Text(String(format: "%.2f %@", price))
+                            Text(String(format: "%.2f", price))
                                 .textModifier(.plain, 12, .gray8B8C86)
+                                .strikethrough((offerPrice == 0) ? false : true, color: .black)
                             Image(.riyal)
                                  .resizable()
                                  .aspectRatio(contentMode: .fit)
@@ -86,6 +88,19 @@ struct OrderItemView: View {
                                  .padding(.trailing, 10)
                         }
                         .environment(\.layoutDirection, .rightToLeft)
+                        if offerPrice != 0 {
+                            HStack(spacing: 5) {
+                                Text(String(format: "%.2f", offerPrice ))
+                                    .textModifier(.plain, 12, .gray8B8C86)
+                                Image(.riyal)
+                                     .resizable()
+                                     .aspectRatio(contentMode: .fit)
+                                     .foregroundColor(.gray8B8C86)
+                                     .frame(width: 20)
+                                     .padding(.trailing, 10)
+                            }
+                            .environment(\.layoutDirection, .rightToLeft)
+                        }
                         Spacer()
                         Text("amount: ".localized() + "\(amount)" )
                             .textModifier(.plain, 12, .gray8B8C86)
@@ -138,7 +153,7 @@ struct PaymentInfoView: View {
         .onChange(of: itemsPrice, { oldValue, newValue in
             print(itemsPrice,"itemPriccccc")
             if isCalculateCommission {
-                itemsCommissionValue = (newValue * (breakdown?.commission ?? 0) )
+                itemsCommissionValue = (newValue * (breakdown?.commission ?? 0) / 100 )
                 itemsCommissionValue = itemsCommissionValue > breakdown?.commissionMaxPrice ?? 0 ? breakdown?.commissionMaxPrice ?? 0 : itemsCommissionValue
             }
             else {
@@ -191,14 +206,19 @@ struct PriceRowView: View {
 struct AddressView: View {
     var name: String
     var address: String
+    var streetName:String
+    var buildingNum:String
+    var area:String
+    var floatNum:String
     var phone: String
-    
+    @State var concatenatedAddress: String = ""
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 8) {
                 Text("clientName:".localized() + name)
                     .textModifier(.plain, 12, .gray979797)
-                Text("address".localized()+": \(address)")
+                
+                Text("address".localized()+": \(concatenatedAddress)")
                     .textModifier(.plain, 12, .gray979797)
                 Text("clientPhone:".localized() + "\(phone)")
                     .textModifier(.plain, 12, .gray979797)
@@ -206,6 +226,22 @@ struct AddressView: View {
             Spacer()
         }.padding(.horizontal,12)
         .padding(.vertical,16)
+        .onAppear{
+            concatenatedAddress = address
+            if !buildingNum.isBlank  {
+                concatenatedAddress += "," + "buildingNum".localized() + ": "  + buildingNum
+            }
+            if !floatNum.isBlank  {
+                concatenatedAddress += "," + "FloatNum" + ": " + floatNum
+            }
+            if !streetName.isBlank  {
+                concatenatedAddress += "," + "streetName" + ": " + streetName
+            }
+            if !area.isBlank  {
+                concatenatedAddress += "," + "area" + ": " + area
+            }
+           
+        }
     }
 }
 

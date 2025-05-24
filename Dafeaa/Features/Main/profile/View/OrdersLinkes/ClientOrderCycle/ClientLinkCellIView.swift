@@ -25,16 +25,27 @@ struct ClientLinkCellIView: View {
     var body: some View {
         ZStack {
             HStack {
-                WebImage(url: URL(string: product.image ?? ""))
+                if  product.images?.count ?? 0 > 0  {
+                    WebImage(url: URL(string: product.images?[0].file ?? ""))
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 80, height: 80)
+                        .mask(Circle().frame(width: 80, height: 80))
+                        .placeholder(when: product.images?[0].file ?? "" == ""  , placeholder: {
+                            Image(.process)
+                        })
+                        .overlay(
+                            Circle()
+                                .stroke( Color(.primary), lineWidth: 1)
+                        )
+                }
+                else {
+                    Image(.process)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 80, height: 80)
                     .mask(Circle().frame(width: 80, height: 80))
-                    .overlay(
-                        Circle()
-                            .stroke( Color(.primary), lineWidth: 1)
-                    )
-                
+                }
                 VStack(alignment: .leading,spacing: 10) {
                     HStack {
                         Text(product.name ?? "")
@@ -82,7 +93,6 @@ struct ClientLinkCellIView: View {
                                 Text(String(format: "%.1f", product.price ?? 0.0))
                                     .textModifier(.semiBold, 13, .black010202)
                                     .padding(.trailing,5)
-                                    .strikethrough(true, color: .black)
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.8)
                                     .fixedSize()
@@ -202,16 +212,27 @@ struct BusinessLinkCellIView: View {
     var body: some View {
         ZStack {
             HStack {
-                WebImage(url: URL(string: product.image ?? ""))
+                if product.images?.count ?? 0 > 0 {
+                    WebImage(url: URL(string: product.images?[0].file ?? ""))
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 80, height: 80)
+                        .mask(Circle().frame(width: 80, height: 80))
+                        .placeholder(when: product.images?[0].file ?? "" == ""  , placeholder: {
+                            Image(.process)
+                        })
+                        .overlay(
+                            Circle()
+                                .stroke( Color(.primary), lineWidth: 1)
+                        )
+                }
+                else {
+                    Image(.process)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 80, height: 80)
                     .mask(Circle().frame(width: 80, height: 80))
-                    .overlay(
-                        Circle()
-                            .stroke( Color(.primary), lineWidth: 1)
-                    )
-                
+                }
                 VStack(alignment: .leading,spacing: 19) {
                     HStack {
                         Text(product.name ?? "")
@@ -256,7 +277,6 @@ struct BusinessLinkCellIView: View {
                                 Text(String(format: "%.1f", product.price ?? 0.0))
                                     .textModifier(.semiBold, 13, .black010202)
                                     .padding(.trailing,5)
-                                    .strikethrough(true, color: .black)
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.8)
                                     .fixedSize()
@@ -304,9 +324,10 @@ struct BusinessCreateLinkCellView: View {
     var body: some View {
         ZStack {
             HStack {
-                Image(uiImage:  product["image"]  as? UIImage ?? UIImage())
+                let images = product["images"]  as? [UIImage] ?? []
+                Image(uiImage: images[0])
                     .resizable()
-                    .scaledToFit()
+                    .scaledToFill()
                     .frame(width: 80, height: 80)
                     .mask(Circle().frame(width: 80, height: 80))
                     .overlay(

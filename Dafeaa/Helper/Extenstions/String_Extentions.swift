@@ -212,6 +212,21 @@ extension String{
         }else {
             return self}
     }
+    func to12HourDateFormat() -> String? {
+          let inputFormatter = DateFormatter()
+          inputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+          inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+
+          guard let date = inputFormatter.date(from: self) else {
+              return nil
+          }
+
+          let outputFormatter = DateFormatter()
+          outputFormatter.dateFormat = "yyyy-MM-dd  hh:mm a" // 12-hour with AM/PM
+          outputFormatter.locale = Locale(identifier: "en_US_POSIX")
+
+          return outputFormatter.string(from: date)
+      }
     
     func getDateAndTime() -> String {
         let full: String = self

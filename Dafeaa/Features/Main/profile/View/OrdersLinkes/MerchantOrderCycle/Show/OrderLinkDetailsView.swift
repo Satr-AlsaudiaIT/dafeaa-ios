@@ -18,7 +18,7 @@ struct OrderLinkDetailsView: View {
     @State var address: String = Constants.selectedAddress
     @State var isNavigateToAddress: Bool = false
     @State var showingProductDetails: Bool = false
-    @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 1, remainingQuantity: 1)
+    @State var selectedProduct: productList = productList(id: 3, images: [ImageModel(file: "ww")], name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 1, remainingQuantity: 1)
     var linkDetails: ShowOfferData  {
         return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [], status: 0,commissionRatio: "",maxCommissionValue: "")
     }
@@ -58,7 +58,7 @@ struct OrderLinkDetailsView: View {
                             .foregroundColor(.black222222)})
                         .frame(width: 25,height: 20)
                         let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
-                        if let offerID = viewModel.offersData?.id , let offerCode = viewModel.offersData?.code, let url = URL(string: "https://dafeaa-backend.deplanagency.com/offers/\(offerID)/\(offerCode)/\(userId)"){
+                        if let offerID = viewModel.offersData?.id , let offerCode = viewModel.offersData?.code, let url = URL(string: "https://dafeaa-backend.deplanagency.com/offers/\(offerCode)"){
                             ShareLink(item: url) {  Image(.share).resizable().frame(width: 25,height: 20)} }
                     }
                     .padding(24)
@@ -122,8 +122,6 @@ struct OrderLinkDetailsView: View {
                 
             }
             .onChange(of: viewModel.activeStopSuccess, { _, _ in
-              
-                
             })
             .sheet(isPresented: $showingProductDetails, onDismiss: {
                 showingProductDetails = false
@@ -131,7 +129,7 @@ struct OrderLinkDetailsView: View {
                 ProductDetailsPopUp(product: $selectedProduct,isAbleToEdit: true,isMerchant: true)
                     .presentationCornerRadius(24)
                     .presentationDragIndicator(.visible)
-                    .presentationDetents([.fraction(0.85)])
+                    .presentationDetents([.large])
             }).edgesIgnoringSafeArea(.bottom)
                 .toastView(toast: $viewModel.toast)
                 .toastView(toast: $toast)
@@ -170,7 +168,7 @@ struct OrderLinkDetailsView: View {
         let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
 
         if let offerID = viewModel.offersData?.id , let offerCode = viewModel.offersData?.code{
-            let urlString = "https://dafeaa-backend.deplanagency.com/offers/\(offerID)/\(offerCode)/\(userId)"
+            let urlString = "https://dafeaa-backend.deplanagency.com/offers/\(offerCode)"
             UIPasteboard.general.string = urlString
             self.toast = FancyToast(type: .error, title: "".localized(), message:  "copied successfully".localized())
         }

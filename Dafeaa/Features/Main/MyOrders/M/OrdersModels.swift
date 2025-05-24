@@ -42,6 +42,10 @@ struct OrderData: Codable, Identifiable {
     let addressDetails: AddressDetails?
     let commissionRatio: String?
     let maxCommissionValue: String?
+    let streetName: String?
+    let buildingNum: String?
+    let area: String?
+    let floatNum: String?
     // Custom initializer with default nil values
     init(
         id: Int? = nil,
@@ -61,7 +65,11 @@ struct OrderData: Codable, Identifiable {
         totalPrice: Double? = nil,
         addressDetails: AddressDetails? = nil,
         commissionRatio: String? = nil,
-        maxCommissionValue: String? = nil
+        maxCommissionValue: String? = nil,
+         streetName: String? = nil,
+         buildingNum: String? = nil,
+         area: String? = nil,
+         floatNum: String? = nil
     ) {
         self.id = id
         self.clientImage = clientImage
@@ -81,12 +89,16 @@ struct OrderData: Codable, Identifiable {
         self.addressDetails = addressDetails
         self.commissionRatio = commissionRatio
         self.maxCommissionValue = maxCommissionValue
+        self.streetName = streetName
+        self.buildingNum = buildingNum
+        self.area = area
+        self.floatNum = floatNum    
     }
 }
 
 struct productList: Codable, Identifiable,Equatable {
     let id                  : Int?
-    let image               : String?
+    let images              : [ImageModel]?
     let name, description   : String?
     let price               : Double?
     let amount              : Int?
@@ -95,7 +107,9 @@ struct productList: Codable, Identifiable,Equatable {
     let paiedQuantity       : Int?
     var remainingQuantity   : Int?
 }
-
+struct ImageModel : Codable, Equatable {
+    var file: String?
+}
 struct PaymentDetails: Codable {
     let commission           : Double?
     let commissionMaxPrice   : Double?

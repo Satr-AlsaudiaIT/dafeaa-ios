@@ -35,6 +35,9 @@ struct ReusableButton: View {
     var isEnabled: Bool = true
     var image : UIImage?
     @State var buttonColor: ButtonColors = .black
+    @State var borderColor: Color = Color.clear
+    @State var textColor = Color.white
+
     var cornerRadius: CGFloat = 32
     var action: () -> Void
 
@@ -46,8 +49,13 @@ struct ReusableButton: View {
             }
         }) {
             Text(buttonText.localized())
-                .textModifier(.plain, 15,.white)
+                .textModifier(.plain, 15,textColor)
                 .frame(maxWidth: .infinity, minHeight: 51)
+                .background(isEnabled ? Color(buttonColor.color()) : Color(.grayDADADA))
+                .overlay(
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .stroke(borderColor, lineWidth: 1)
+                ).padding(1)
                 .background(isEnabled ? Color(buttonColor.color()) : Color(.grayDADADA))
                 .cornerRadius(cornerRadius)
             if let image = image {
@@ -68,5 +76,9 @@ struct ReusableButton: View {
         ReusableButton(buttonText: "الاستمرار") {
             print("Button Pressed")
         }
+        ReusableButton(buttonText: "Cancel".localized(),isEnabled: true,buttonColor: .transparent, borderColor: .black222222, textColor: .black222222){
+            
+        
+    }
     }
 }

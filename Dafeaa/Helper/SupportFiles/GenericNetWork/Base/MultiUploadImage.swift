@@ -333,10 +333,13 @@ class MultipartUploadImageWithModel {
                         form.append("\(intValue)".data(using: .utf8)!, withName: fieldName)
                     } else if let doubleValue = value as? Double {
                         form.append("\(doubleValue)".data(using: .utf8)!, withName: fieldName)
-                    } else if let image = value as? UIImage, let imageData = image.jpegData(compressionQuality: 0.5) {
-                        // Append image data for each product
-                        let imageFieldName = "products[\(index)][image]"
-                        form.append(imageData, withName: imageFieldName, fileName: "product_\(index).jpeg", mimeType: "image/jpeg")
+                    } else if let images = value as? [UIImage] {
+                        for (imageIndex, image) in images.enumerated() {
+                            if let imageData = image.jpegData(compressionQuality: 0.5) {
+                                let imageFieldName = "products[\(index)][images][\(imageIndex)]"
+                                form.append(imageData, withName: imageFieldName, fileName: "product_\(index)_image_\(imageIndex).jpeg", mimeType: "image/jpeg")
+                            }
+                        }
                     }
                 }
             }

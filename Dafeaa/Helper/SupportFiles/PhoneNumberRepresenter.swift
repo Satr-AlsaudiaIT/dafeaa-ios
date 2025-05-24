@@ -22,15 +22,25 @@ struct CustomPasswordField: View {
                 .frame(width: 20, height: 20)
             
             // Password TextField with Eye Toggle
-            if isPasswordVisible {
-                TextField(placeholder.localized(), text: $password)
-                    .textModifier(.plain, 15, .grayB5B5B5)
-                    .focused($isFocused)
+            ZStack {
+                if password.isEmpty {
+                    HStack {
+                        Text(placeholder.localized())
+                            .textModifier(.plain, 15, .grayB5B5B5)
+                        Spacer()
+                    }
+                }
+                if isPasswordVisible {
+                    TextField("", text: $password)
+                        .textModifier(.plain, 15, .black010202)
+                        .focused($isFocused)
                     
-            } else {
-                SecureField(placeholder.localized(), text: $password)
-                    .textModifier(.plain, 15, .grayB5B5B5)
-                    .focused($isFocused)
+                }
+                else {
+                    SecureField("", text: $password)
+                        .textModifier(.plain, 15, .black010202)
+                        .focused($isFocused)
+                }
             }
             
             // Eye Icon for showing/hiding password
@@ -66,20 +76,39 @@ struct PhoneNumberField: View {
     var body: some View {
         HStack {
             // Icon on the left
-            Image(uiImage: image)
-                .foregroundColor(Color.yellow)
-                .frame(width: 20, height: 20)
-            
+            if Constants.shared.isAR {
+                Image(uiImage: image)
+                    .foregroundColor(Color.yellow)
+                    .frame(width: 20, height: 20)
+            }
+            if !Constants.shared.isAR { Image(.phoneCountryCode)
+                        .resizable()
+                        .frame(width: 91, height: 48)
+                    .padding(.leading,-20)
+}
+//            Text("+966").textModifier(.plain, 15, .black222222)
             // Phone number text field
-            TextField(placeholder.localized(), text: $phoneNumber)
-                .textModifier(.plain, 15, .grayB5B5B5)
-                .keyboardType(.numberPad)
-                .focused($isFocused) // Track the focus state
-            
-            // Country code icon or additional UI on the right
-            Image(.phoneCountryCode)
-                .resizable()
-                .frame(width: 91, height: 48)
+            ZStack {
+                if phoneNumber.isEmpty {
+                    HStack {
+                        Text(placeholder.localized())
+                            .textModifier(.plain, 15, .grayB5B5B5)
+                        Spacer()
+                    }
+                }
+                
+                TextField("", text: $phoneNumber)
+                    .textModifier(.plain, 15, .black010202)
+                    .keyboardType(.numberPad)
+                    .focused($isFocused) // Track the focus state
+                //            Text("+966").textModifier(.plain, 15, .black222222)
+                // Country code icon or additional UI on the right
+            }
+            if Constants.shared.isAR {
+                Image(.phoneCountryCode)
+                    .resizable()
+                    .frame(width: 91, height: 48)
+            }
         }
         .frame(height: 48)
         .padding(.leading, 20)
@@ -111,15 +140,24 @@ struct CustomMainTextField: View {
                     .frame(width: 20, height: 20)
             }
             ZStack {
-                TextField(placeHolder.localized(), text: $text)
-                    .textModifier(.plain, (fieldType == .price || fieldType == .percentage) ? 12 : 15, .grayB5B5B5)
-                    .focused($isFocused) // Track whether the text field is focused
-                    .keyboardType(keyBoardType)
-                    .onChange(of: text) { newValue,oldValue in
-                        if fieldType == .arabicOnly || fieldType == .englishOnly {
-                            validateInput(for: fieldType)
-                        }
+                
+                if text.isEmpty {
+                    HStack {
+                        Text(placeHolder.localized())
+                            .textModifier(.plain, 15, .grayB5B5B5)
+                        Spacer()
                     }
+                }
+               
+                    TextField("", text: $text)
+                    .textModifier(.plain, 15, .black010202)
+                        .focused($isFocused) // Track whether the text field is focused
+                        .keyboardType(keyBoardType)
+                        .onChange(of: text) { newValue,oldValue in
+                            if fieldType == .arabicOnly || fieldType == .englishOnly {
+                                validateInput(for: fieldType)
+                            }
+                        }
                 
                 if fieldType == .price || fieldType == .percentage {
                     HStack {
@@ -306,7 +344,14 @@ struct CustomPhoneNumberField: View {
             .cornerRadius(10)
             
             // Phone Number TextField
-            TextField("phoneNumber", text: $phoneNumber)
+            if phoneNumber.isEmpty {
+                HStack {
+                    Text("phoneNumber".localized())
+                        .textModifier(.plain, 15, .grayB5B5B5)
+                    Spacer()
+                }
+            }
+            TextField("", text: $phoneNumber)
                 .padding()
                 .background(Color.gray.opacity(0.1))
                 .cornerRadius(10)

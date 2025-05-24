@@ -74,13 +74,6 @@ struct ProfileView: View {
                                 image: Image(.iconProfile)
                             )
                             
-                            
-                            
-                            NavigationLinkComponent(
-                                destination: StaticPagesList(),
-                                label: "About Dafeaa",
-                                image: Image(.iconAbout)
-                            )
                             NavigationLinkComponent(
                                 destination: WithdrawsView(),
                                 label: "withdrawsProcess",
@@ -107,6 +100,12 @@ struct ProfileView: View {
                             }
                             
                             NavigationLinkComponent(
+                                destination: StaticPagesList(),
+                                label: "About Dafeaa",
+                                image: Image(.iconAbout)
+                            )
+                            
+                            NavigationLinkComponent(
                                 destination: FAQView(),
                                 label: "FAQ",
                                 image: Image(.iconFAQ)
@@ -122,16 +121,6 @@ struct ProfileView: View {
                                 image: Image(.iconSettings)
                             )
                            
-                          
-                            Button(action:{
-                                isActiveActionSheet = true
-                                activeActionSheet = .deleteAccount
-                                
-                            }){
-                                Text("deleteAccount".localized())
-                                    .textModifier(.plain, 16, .redFA4248)
-                                    .frame(maxWidth: .infinity,alignment: .leading)
-                            }
                         }
                     }
                     
@@ -214,7 +203,7 @@ struct ProfileView: View {
                     name         = viewModel.profileData?.name ?? ""
                     phone        = viewModel.profileData?.phone?.convertDigitsToEng ?? ""
                     
-                    businessInfo = BusinessInfo(rawValue: viewModel.profileData?.businessInformationStatus ?? 0) ?? .noFilesUploaded
+                    businessInfo = BusinessInfo(rawValue: viewModel.profileData?.status ?? 0) ?? .noFilesUploaded
 //                    selectedProfileImageURL = viewModel.profileData?.profileImage ?? ""
                     
                 }

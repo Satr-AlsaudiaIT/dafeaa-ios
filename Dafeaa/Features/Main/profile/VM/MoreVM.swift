@@ -150,8 +150,8 @@ final class MoreVM : ObservableObject {
  
     //MARK: - APIs
     
-    func profile() {
-        self._isLoading = true
+    func profile(_ animated: Bool = true) {
+        self._isLoading = animated ? true:false
         api.profile {(result)  in
             switch result {
             case .success(let response):
@@ -177,6 +177,7 @@ final class MoreVM : ObservableObject {
             }
         }
     }
+    
     
     func  questions(skip : Int,completion: @escaping (Bool) -> Void) {
         self._isLoading = true
@@ -541,4 +542,23 @@ final class MoreVM : ObservableObject {
         }
     }
     
+    func updateSecretKey() {
+        self._isLoading = true
+        api.updateSecretKey {(result)  in
+            switch result {
+            case .success(let response):
+                self._message = response?.message ?? ""
+                self.toast = FancyToast(type: .success, title:"", message:  self._message)
+                self._isSuccess = true
+                self._isLoading = false
+                self._isFailed = false
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+            }
+        }
+    }
+
 }

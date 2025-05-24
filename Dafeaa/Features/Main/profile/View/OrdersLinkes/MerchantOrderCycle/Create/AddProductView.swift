@@ -12,17 +12,21 @@ struct AddProductView: View {
     @StateObject var viewModel = OrdersVM()
     @State var selectedImage: UIImage?
     @State var imageURL: String?
-    @State var nameAr: String = ""
-    @State var nameEn: String = ""
-    @State var descriptionAr: String = ""
-    @State var descriptionEn: String = ""
+    @State var name: String = ""
+    @State var description: String = ""
     @State var quantity: String = ""
-
+    
+    @State private var selectedProductImage :[UIImage] = []
+    @State private var isShowingImagesSheet = false
+    @State private var sourceType: UIImagePickerController.SourceType?
+    @State private var isShowingImagesPicker = false
+    
     @State var price: String = ""
     @State var offerPrice: String = ""
     @Binding var productsAdding: [[String:Any]]
     @FocusState private var focusedField: FormField?
-
+    @State private var showOfferPriceTextField: Bool = false
+    
     var body: some View {
         
         ZStack{
@@ -31,43 +35,146 @@ struct AddProductView: View {
                     NavigationBarView(title: "addProductTitle"){
                         self.presentationMode.wrappedValue.dismiss()
                     }
-                    UploadFileView(selectedImage: $selectedImage, imageURL: $imageURL)
-                        .padding(.top,24)
-                    VStack(spacing: 20) {
-                        CustomMainTextField(text: $nameAr, placeHolder: "nameAr", fieldType: .none)
-                            .focused($focusedField, equals: .nameAr)
-                            .id(FormField.nameAr)
-                        CustomMainTextField(text: $nameEn, placeHolder: "nameEn",fieldType: .none)
-                            .focused($focusedField, equals: .nameEn)
-                            .id(FormField.nameEn)
-                        CustomMainTextField(text: $descriptionAr, placeHolder: "descriptionAr", fieldType:.none)
-                            .focused($focusedField, equals: .descriptionAr)
-                            .id(FormField.descriptionAr)
-                        CustomMainTextField(text: $descriptionEn, placeHolder: "descriptionEn", fieldType: .none)
-                            .focused($focusedField, equals: .descriptionEn)
-                            .id(FormField.descriptionEn)
-                        CustomMainTextField(text: $quantity, placeHolder: "quantity", keyBoardType:.numberPad,fieldType: .none)
-                            .focused($focusedField, equals: .quantity)
-                            .id(FormField.quantity)
-                        HStack(spacing: 20) {
-                            CustomMainTextField(text: $price, placeHolder: "productPrice",keyBoardType: .numberPad,fieldType: .price)
-                                .focused($focusedField, equals: .price)
-                                .id(FormField.price)
-                            CustomMainTextField(text: $offerPrice, placeHolder: "offerPrice",keyBoardType: .numberPad,fieldType: .price)
-                                .focused($focusedField, equals: .offerPrice)
-                                .id(FormField.offerPrice)
-                        }
-                        Spacer()
-                        ReusableButton(buttonText: "addProductTitle") {
-                            if let product = viewModel.validateAddOrder(image: selectedImage, nameAr: nameAr, nameEn: nameEn, descriptionAr: descriptionAr, descriptionEn: descriptionEn,quantity: quantity, price: price, offerPrice: offerPrice) {
-                                productsAdding.append(product)  // Update the binding array
-                                self.presentationMode.wrappedValue.dismiss()
+//                    UploadFileView(selectedImage: $selectedImage, imageURL: $imageURL)
+//                        .padding(.top,24)
+                    ScrollView {
+                        VStack(spacing: 20) {
+                            CustomMainTextField(text: $name, placeHolder: "productName", fieldType: .none)
+                                .focused($focusedField, equals: .name)
+                                .id(FormField.name)
+                            //                        CustomMainTextField(text: $nameEn, placeHolder: "nameEn",fieldType: .none)
+                            //                            .focused($focusedField, equals: .nameEn)
+                            //                            .id(FormField.nameEn)
+                            CustomMainTextField(text: $description, placeHolder: "productDescription", fieldType:.none)
+                                .focused($focusedField, equals: .description)
+                                .id(FormField.description)
+                            //                        CustomMainTextField(text: $descriptionEn, placeHolder: "descriptionEn", fieldType: .none)
+                            //                            .focused($focusedField, equals: .descriptionEn)
+                            //                            .id(FormField.descriptionEn)
+                            CustomMainTextField(text: $quantity, placeHolder: "quantity", keyBoardType:.numberPad,fieldType: .none)
+                                .focused($focusedField, equals: .quantity)
+                                .id(FormField.quantity)
+                                CustomMainTextField(text: $price, placeHolder: "productPrice",keyBoardType: .numberPad,fieldType: .price)
+                                    .focused($focusedField, equals: .price)
+                                    .id(FormField.price)
+                            if showOfferPriceTextField {
+                                CustomMainTextField(text: $offerPrice,
+                                                   placeHolder: "offerPrice",
+                                                   keyBoardType: .numberPad,
+                                                   fieldType: .price)
+                                    .focused($focusedField, equals: .offerPrice)
+                                    .id(FormField.offerPrice)
+                                    .transition(.move(edge: .trailing).combined(with: .opacity)) // Slide in from right
+                                    .animation(.easeInOut(duration: 0.3), value: showOfferPriceTextField)
+                            }
+
+                            Button {
+                                withAnimation(.easeInOut(duration: 0.3)) {
+                                    showOfferPriceTextField.toggle()
+                                }
+                            } label: {
+                                HStack {
+                                    Text(showOfferPriceTextField == true ? "hide_discount?".localized() : "apply_discount?".localized())
+                                        .textModifier(.plain, 14, .primaryF9CE29)
+                                        .underline()
+                                    Spacer()
+                                }
+                                .padding(.top,-10)
+                            }
+
+                            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 4), spacing: 10) {
+                                
+                                let validateIndex = (selectedProductImage.count)
+                                if validateIndex < 4 {
+                                    Button {
+                                        isShowingImagesSheet = true
+                                    } label: {
+                                        ZStack {
+                                            Rectangle()
+                                                .fill(Color(.primaryF9CE29).opacity(0.1))
+                                                .cornerRadius(10)
+                                                .frame(width: (UIScreen.main.bounds.width - 80 ) / 4 ,height: (UIScreen.main.bounds.width - 80 ) / 4)
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 10)
+                                                        .stroke(style: StrokeStyle(lineWidth: 2, dash: [8]))
+                                                        .foregroundColor(Color(.primaryF9CE29))
+                                                )
+                                            VStack {
+                                                Spacer()
+                                                Image(systemName: "plus")
+                                                    .foregroundColor(Color(.gray979797))
+                                                Text("Image".localized())
+                                                    .textModifier(.plain, 12,  .gray979797)
+                                                   
+                                                Spacer()
+                                            }
+                                        }
+                                        .frame(width: (UIScreen.main.bounds.width - 80 ) / 4 ,height: (UIScreen.main.bounds.width - 80 ) / 4)
+                                    }
+                                    .actionSheet(isPresented: $isShowingImagesSheet) {
+                                        ActionSheet(title: Text("Choose the file type you want to upload".localized()), buttons: [
+                                            .default(Text("Image".localized())) {
+                                                sourceType = .photoLibrary
+                                                isShowingImagesPicker = true
+                                            },
+                                            .default(Text("Camera".localized())) {
+                                                sourceType = .camera
+                                                isShowingImagesPicker = true
+                                            },
+                                            .cancel()
+                                        ])
+                                    }
+                                    .sheet(isPresented: $isShowingImagesPicker) {
+                                        ImagePickerMultiSelection(sourceType: .photoLibrary, isMultiSelection: true, selectedImages: $selectedProductImage, selectionNumber: (4 - (( selectedProductImage.count))))
+                                    }
+                                }
+                                
+                                
+                                ForEach( 0 ..< selectedProductImage.count, id: \.self) { index in
+                                    
+                                    ZStack {
+                                        Image(uiImage: selectedProductImage[index])
+                                            .resizable()
+                                            .frame(width: (UIScreen.main.bounds.width - 80 ) / 4 ,height: (UIScreen.main.bounds.width - 80 ) / 4)
+                                            .aspectRatio(contentMode: .fill)
+                                            .cornerRadius(15)
+                                        VStack {
+                                            HStack {
+                                                Spacer()
+                                                Button {
+                                                    //Delete image from array
+                                                    selectedProductImage.remove(at: (index))
+                                                } label: {
+                                                    Image(systemName: "multiply.circle")
+                                                        .resizable()
+                                                        .foregroundColor(.black)
+                                                        .frame(width: 17, height: 17)
+                                                        .scaledToFit()
+                                                        .shadow(radius: 10)
+                                                }
+                                                .padding(.top,-7)
+                                                .padding(.trailing,-7)
+                                            }
+                                            Spacer()
+                                        }
+                                    }
+                                    .frame(width: (UIScreen.main.bounds.width - 80 ) / 4 ,height: (UIScreen.main.bounds.width - 80 ) / 4)
+                                }
+                            }
+                            .padding([.leading,.trailing],10)
+                            .padding(.bottom,50)
+                            Spacer()
+                            ReusableButton(buttonText: "addProductTitle") {
+                                if let product = viewModel.validateAddOrder(images: selectedProductImage, name: name, description: description,quantity: quantity, price: price, offerPrice: offerPrice,haveOffer: showOfferPriceTextField) {
+                                    productsAdding.append(product)  // Update the binding array
+                                    self.presentationMode.wrappedValue.dismiss()
+                                }
                             }
                         }
+                        .padding(.horizontal,20)
+                        .padding(.top,10)
+                        
                     }
-                    .padding(.horizontal,20)
-                    .padding(.top,10)
-                    
                     
                 }
                 .onChange(of: viewModel._isAddProDuctValid) { oldValue, newValue in
@@ -118,11 +225,9 @@ struct AddProductView: View {
     
     func showNextTextField(){
         switch focusedField {
-        case .nameAr:
-            focusedField = .nameEn
-        case .nameEn:
-            focusedField = .descriptionAr
-        case .descriptionEn:
+        case .name:
+            focusedField = .description
+        case .description:
             focusedField = .quantity
         case .quantity:
             focusedField = .price
@@ -141,20 +246,16 @@ struct AddProductView: View {
         case .price:
             focusedField = .quantity
         case .quantity:
-            focusedField = .descriptionEn
-        case .descriptionEn:
-            focusedField = .descriptionAr
-        case .descriptionAr:
-            focusedField = .nameEn
-        case .nameEn:
-            focusedField = .nameAr
+            focusedField = .description
+        case .description:
+            focusedField = .name
         default:
             focusedField = nil
         }
     }
     
     enum FormField {
-        case nameAr, nameEn, descriptionAr, descriptionEn,quantity, price, offerPrice
+        case name,  description, quantity, price, offerPrice
     }
 }
 

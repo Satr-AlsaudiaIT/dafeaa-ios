@@ -26,7 +26,7 @@ struct OnBoardingView: View {
             TabView(selection: $currentIndex) {
                 ForEach(0..<onboardingData.count, id: \.self) { index in
                         VStack(alignment: .center, spacing: 0) {
-                            if currentIndex == 0 {
+                            if currentIndex == 0 && !viewAppear {
                                 Image(.splashLogoWithoutName)
                                     .resizable()
                                     .frame(width: isScaledDown ? 57 : 71 ,height: isScaledDown ?  65 : 81)
@@ -41,7 +41,7 @@ struct OnBoardingView: View {
                                     .animation(.easeInOut(duration: 1))
                                     .environment(\.layoutDirection, .leftToRight)
                                 Spacer(minLength: 15)
-                            }else {
+                            } else {
                                 Image(.splashLogoWithoutName)
                                     .resizable()
                                     .frame(width:  57  ,height:  65 )
@@ -71,12 +71,13 @@ struct OnBoardingView: View {
                                             Text(onboardingData[index].1)
                                                 .textModifier(.plain, 22, .black222222)
                                                 .multilineTextAlignment(.center)
-                                               
+                                                .lineLimit(nil)
                                             Text(onboardingData[index].2)
                                                 .textModifier(.plain, 15, Color(.gray8B8C86))
                                                 .multilineTextAlignment(.center)
                                                 .padding(.horizontal)
-                                                .frame(height:70 )
+                                                .lineLimit(nil)
+//                                                .frame(height:70 )
                                         }
                                         
                                         Button(action: {

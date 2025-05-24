@@ -25,8 +25,9 @@ protocol MoreAPIProtocol {
     func addAmountToWallet( amount:Double, Completion: @escaping (Result<AddToWalletModel?, NSError>) -> Void)
     func getSubscriptionPlans(Completion: @escaping (Result<SubscriptionModel?, NSError>) -> Void)
     func selectSubscriptionPlan(id:Int, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
-
-
+    func updateSecretKey(Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
+    func getNameFromPhone(phone:String, Completion: @escaping (Result<GetNameFromPhoneModel?, NSError>) -> Void)
+    func confirmTransfer(phone:String,amount:Double ,Completion: @escaping (Result<ConfirmTransferModel?, NSError>) -> Void)
 }
 
 
@@ -127,8 +128,26 @@ class MoreAPI: BaseAPI<MoreNetwork>, MoreAPIProtocol
             Completion(result)
         }
     }
+    
     func selectSubscriptionPlan(id: Int, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void) {
         self.fetchData(target: .selectSubscriptionPlan(id: id), responseClass: GeneralModel.self) { (result) in
+            Completion(result)
+        }
+    }
+    
+    func updateSecretKey(Completion: @escaping (Result<GeneralModel?, NSError>) -> Void){
+        self.fetchData(target: .updateSecretKey, responseClass: GeneralModel.self) { (result) in
+            Completion(result)
+        }
+    }
+    func getNameFromPhone(phone:String, Completion: @escaping (Result<GetNameFromPhoneModel?, NSError>) -> Void) {
+        self.fetchData(target: .getNameFromPhone(phone: phone), responseClass: GetNameFromPhoneModel.self) { (result) in
+            Completion(result)
+        }
+        
+    }
+    func confirmTransfer(phone:String,amount:Double ,Completion: @escaping (Result<ConfirmTransferModel?, NSError>) -> Void) {
+        self.fetchData(target: .confirmTransfer(phone: phone, amount: amount), responseClass: ConfirmTransferModel.self) { (result) in
             Completion(result)
         }
     }

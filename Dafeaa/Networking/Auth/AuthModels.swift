@@ -54,6 +54,8 @@ struct LoginData:Codable, Equatable {
     let status, accountType, activeNotification, uncompletedData: Int?
     let businessInformationStatus: Int? // 0 no files uploaded, 1 pending, 2 accepted
     let subscriptionPlan, subscriptionPlanEndDate: String?
+    let profileId: String?
+    var secretKey : String? = nil
 }
 
 struct QuestionsListModel: Codable {

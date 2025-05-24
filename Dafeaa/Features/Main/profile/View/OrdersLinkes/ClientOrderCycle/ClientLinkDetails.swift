@@ -21,7 +21,7 @@ struct ClientLinkDetails: View {
     @State var showingProductDetails: Bool = false
     @State var isAmountInCellDisabled: Bool = false
 
-    @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000,amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 0, remainingQuantity: 1)
+    @State var selectedProduct: productList = productList(id: 3, images: [ImageModel(file: "ww")], name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000,amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 0, remainingQuantity: 1)
     var linkDetails: ShowOfferData  {
         return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [], status: 0,commissionRatio: "",maxCommissionValue: "")
     }
@@ -119,7 +119,7 @@ struct ClientLinkDetails: View {
                 ProductDetailsPopUp(product: $selectedProduct)
                     .presentationCornerRadius(24)
                     .presentationDragIndicator(.visible)
-                    .presentationDetents([.medium])
+                    .presentationDetents([.large])
             })
             .toastView(toast: $viewModel.toast)
             .navigationBarHidden(true)

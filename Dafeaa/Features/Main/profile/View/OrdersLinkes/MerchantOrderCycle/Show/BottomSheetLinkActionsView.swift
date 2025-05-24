@@ -40,7 +40,7 @@ struct BottomSheetLinkActionsView: View {
                 
                 // Share Link Button
                 let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
-                if let offerID = offer?.id, let offerCode = offer?.code, let url = URL(string: "https://dafeaa-backend.deplanagency.com/offers/\(offerID)/\(offerCode)/\(userId)") {
+                if let offerID = offer?.id, let offerCode = offer?.code, let url = URL(string: "https://dafeaa-backend.deplanagency.com/offers/\(offerCode)") {
                     ShareLink(item: url) {
                         HStack(spacing: 3) {
                             Image(.share)
@@ -70,12 +70,13 @@ struct BottomSheetLinkActionsView: View {
         .toastView(toast: $toast)
         .padding(.horizontal,30)
         .padding(.top ,52)
+        .environment(\.layoutDirection, Constants.shared.isAR ?  .rightToLeft : .leftToRight)
         
     }
     private func copyURL() {
         let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
         if let offerID = offer?.id, let offerCode = offer?.code {
-            let urlString = "https://dafeaa-backend.deplanagency.com/offers/\(offerID)/\(offerCode)/\(userId)"
+            let urlString = "https://dafeaa-backend.deplanagency.com/offers/\(offerCode)"
             UIPasteboard.general.string = urlString
             self.toast = FancyToast(type: .info, title:"", message:  "copied successfully".localized())
         }

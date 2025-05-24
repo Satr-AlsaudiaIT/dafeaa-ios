@@ -131,6 +131,8 @@
 		1835ECF72CCF9B81007EEAC1 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1835ECF62CCF9B81007EEAC1 /* NotificationsView.swift */; };
 		184869672D57F09F0054BC26 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 184869662D57F09F0054BC26 /* GoogleService-Info.plist */; };
 		1851FA5B2D80A3A200C44A53 /* Bahij-Plain.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1851FA5A2D80A3A200C44A53 /* Bahij-Plain.ttf */; };
+		1859135D2DBFD7D10035D6EF /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1859135C2DBFD7D10035D6EF /* SuccessView.swift */; };
+		1859135F2DBFDBEC0035D6EF /* FailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1859135E2DBFDBEC0035D6EF /* FailedView.swift */; };
 		187607B22CDF468200F4D261 /* OrdersLinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187607B02CDF468200F4D261 /* OrdersLinksView.swift */; };
 		187607B42CDF5DAD00F4D261 /* AddOfferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187607B32CDF5DAD00F4D261 /* AddOfferView.swift */; };
 		187607B62CDFCA1700F4D261 /* ClientLinkCellIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187607B52CDFCA1700F4D261 /* ClientLinkCellIView.swift */; };
@@ -146,13 +148,18 @@
 		189CD7452CDBE19E00E929DE /* PopUpComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189CD7442CDBE19E00E929DE /* PopUpComponent.swift */; };
 		189CD7492CDC83D500E929DE /* ClientLinkDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189CD7482CDC83D500E929DE /* ClientLinkDetails.swift */; };
 		18AF0DEF2CB114F80061F07E /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AF0DEE2CB114F80061F07E /* OnBoardingView.swift */; };
+		18AF59442DB42855000DF15F /* ImageSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AF59432DB42847000DF15F /* ImageSlider.swift */; };
 		18B8D56E2CC02C8D00C2676C /* PendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8D56D2CC02C8D00C2676C /* PendingView.swift */; };
 		18B8D5702CC02E6200C2676C /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8D56F2CC02E6200C2676C /* LottieAnimationView.swift */; };
 		18B8D5722CC0333500C2676C /* pending.json in Resources */ = {isa = PBXBuildFile; fileRef = 18B8D5712CC0333500C2676C /* pending.json */; };
+		18C8A9C52DBE4B0D00A2AB42 /* DeveloperKeyBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C8A9C42DBE4B0D00A2AB42 /* DeveloperKeyBottomSheet.swift */; };
+		18C8A9C82DBE75AB00A2AB42 /* ConfirmTransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C8A9C72DBE75AB00A2AB42 /* ConfirmTransferView.swift */; };
 		18D3655B2CD27CF000D50A34 /* AddEditAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D3655A2CD27CF000D50A34 /* AddEditAddressView.swift */; };
 		18D3655D2CD81E8300D50A34 /* PathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D3655C2CD81E8300D50A34 /* PathView.swift */; };
 		18D428602CE676F70059CAF4 /* WithdrawsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4285F2CE676F70059CAF4 /* WithdrawsView.swift */; };
 		18D428622CE679F30059CAF4 /* WithdrawComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D428612CE679F30059CAF4 /* WithdrawComponent.swift */; };
+		18E676852DBD63D50043B84B /* TransferBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E676842DBD63CF0043B84B /* TransferBottomSheet.swift */; };
+		18E676872DBD63F20043B84B /* BuyProductBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E676862DBD63F20043B84B /* BuyProductBottomSheet.swift */; };
 		18EF4D8D2CB4F92F00599D03 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF4D8C2CB4F92F00599D03 /* ForgotPasswordView.swift */; };
 		18EF4D8F2CB4F98300599D03 /* OTPConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF4D8E2CB4F98300599D03 /* OTPConfirmationView.swift */; };
 		18EF4D912CB4F9C300599D03 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF4D902CB4F9C300599D03 /* ResetPasswordView.swift */; };
@@ -189,7 +196,7 @@
 		12A71B42AE0FB38CD9AEFC62 /* Pods-DafeaaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DafeaaTests.release.xcconfig"; path = "Target Support Files/Pods-DafeaaTests/Pods-DafeaaTests.release.xcconfig"; sourceTree = "<group>"; };
 		14D124A12CC4E068005F0084 /* SubscribtionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribtionCell.swift; sourceTree = "<group>"; };
 		14D124A72CC56A46005F0084 /* SubscribtionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribtionModel.swift; sourceTree = "<group>"; };
-		14E67A2B2CAC5CCA00C10AB5 /* Dafeaa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dafeaa.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		14E67A2B2CAC5CCA00C10AB5 /* DAFEA | دافع.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DAFEA | دافع.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		14E67A302CAC5CCA00C10AB5 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		14E67A322CAC5CCD00C10AB5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		14E67A352CAC5CCD00C10AB5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -316,6 +323,8 @@
 		1835ECF62CCF9B81007EEAC1 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		184869662D57F09F0054BC26 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1851FA5A2D80A3A200C44A53 /* Bahij-Plain.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bahij-Plain.ttf"; sourceTree = "<group>"; };
+		1859135C2DBFD7D10035D6EF /* SuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
+		1859135E2DBFDBEC0035D6EF /* FailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedView.swift; sourceTree = "<group>"; };
 		187607B02CDF468200F4D261 /* OrdersLinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersLinksView.swift; sourceTree = "<group>"; };
 		187607B32CDF5DAD00F4D261 /* AddOfferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOfferView.swift; sourceTree = "<group>"; };
 		187607B52CDFCA1700F4D261 /* ClientLinkCellIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientLinkCellIView.swift; sourceTree = "<group>"; };
@@ -333,13 +342,18 @@
 		189CD7442CDBE19E00E929DE /* PopUpComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpComponent.swift; sourceTree = "<group>"; };
 		189CD7482CDC83D500E929DE /* ClientLinkDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientLinkDetails.swift; sourceTree = "<group>"; };
 		18AF0DEE2CB114F80061F07E /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
+		18AF59432DB42847000DF15F /* ImageSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSlider.swift; sourceTree = "<group>"; };
 		18B8D56D2CC02C8D00C2676C /* PendingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingView.swift; sourceTree = "<group>"; };
 		18B8D56F2CC02E6200C2676C /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
 		18B8D5712CC0333500C2676C /* pending.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pending.json; sourceTree = "<group>"; };
+		18C8A9C42DBE4B0D00A2AB42 /* DeveloperKeyBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperKeyBottomSheet.swift; sourceTree = "<group>"; };
+		18C8A9C72DBE75AB00A2AB42 /* ConfirmTransferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmTransferView.swift; sourceTree = "<group>"; };
 		18D3655A2CD27CF000D50A34 /* AddEditAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditAddressView.swift; sourceTree = "<group>"; };
 		18D3655C2CD81E8300D50A34 /* PathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathView.swift; sourceTree = "<group>"; };
 		18D4285F2CE676F70059CAF4 /* WithdrawsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawsView.swift; sourceTree = "<group>"; };
 		18D428612CE679F30059CAF4 /* WithdrawComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawComponent.swift; sourceTree = "<group>"; };
+		18E676842DBD63CF0043B84B /* TransferBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferBottomSheet.swift; sourceTree = "<group>"; };
+		18E676862DBD63F20043B84B /* BuyProductBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyProductBottomSheet.swift; sourceTree = "<group>"; };
 		18EF4D8C2CB4F92F00599D03 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		18EF4D8E2CB4F98300599D03 /* OTPConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPConfirmationView.swift; sourceTree = "<group>"; };
 		18EF4D902CB4F9C300599D03 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
@@ -411,7 +425,7 @@
 		14E67A2C2CAC5CCA00C10AB5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				14E67A2B2CAC5CCA00C10AB5 /* Dafeaa.app */,
+				14E67A2B2CAC5CCA00C10AB5 /* DAFEA | دافع.app */,
 				14E67A3B2CAC5CCD00C10AB5 /* DafeaaTests.xctest */,
 				14E67A452CAC5CCD00C10AB5 /* DafeaaUITests.xctest */,
 			);
@@ -815,8 +829,11 @@
 				1835ECF52CCF9B5B007EEAC1 /* Notifications */,
 				1820E2B92CBA985300627DF9 /* HomeView.swift */,
 				1835ECF32CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift */,
+				18E676862DBD63F20043B84B /* BuyProductBottomSheet.swift */,
+				18E676842DBD63CF0043B84B /* TransferBottomSheet.swift */,
 				182776E62D468FDD00437FDB /* PaymentWebView.swift */,
 				18086A772CCC04C900F5C2F8 /* WalletButton.swift */,
+				18C8A9C62DBE754E00A2AB42 /* Transferes */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1030,6 +1047,7 @@
 			isa = PBXGroup;
 			children = (
 				1820E2CE2CBAACB200627DF9 /* SettingsView.swift */,
+				18C8A9C42DBE4B0D00A2AB42 /* DeveloperKeyBottomSheet.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1192,6 +1210,7 @@
 			children = (
 				1820E2C12CBA98C400627DF9 /* MyOrdersView.swift */,
 				18F54E7A2CCCFF1D00462383 /* OrderBusinessDetailsView.swift */,
+				18AF59432DB42847000DF15F /* ImageSlider.swift */,
 				18086A7C2CCC1F7A00F5C2F8 /* OrderClientDetailsView.swift */,
 				180DDD002CDA91540002F6F1 /* ScanQRCodeView.swift */,
 				18F54E782CCCFE7A00462383 /* OrderComponentsView.swift */,
@@ -1215,6 +1234,16 @@
 				14E67A302CAC5CCA00C10AB5 /* SplashView.swift */,
 			);
 			path = Splash;
+			sourceTree = "<group>";
+		};
+		18C8A9C62DBE754E00A2AB42 /* Transferes */ = {
+			isa = PBXGroup;
+			children = (
+				18C8A9C72DBE75AB00A2AB42 /* ConfirmTransferView.swift */,
+				1859135C2DBFD7D10035D6EF /* SuccessView.swift */,
+				1859135E2DBFDBEC0035D6EF /* FailedView.swift */,
+			);
+			path = Transferes;
 			sourceTree = "<group>";
 		};
 		18D4285E2CE676960059CAF4 /* WithdrawView */ = {
@@ -1318,7 +1347,7 @@
 			);
 			name = Dafeaa;
 			productName = Dafeaa;
-			productReference = 14E67A2B2CAC5CCA00C10AB5 /* Dafeaa.app */;
+			productReference = 14E67A2B2CAC5CCA00C10AB5 /* DAFEA | دافع.app */;
 			productType = "com.apple.product-type.application";
 		};
 		14E67A3A2CAC5CCD00C10AB5 /* DafeaaTests */ = {
@@ -1564,6 +1593,7 @@
 				1820E2B02CB9667000627DF9 /* TabBarView.swift in Sources */,
 				14E67AE02CAC643B00C10AB5 /* MapView.swift in Sources */,
 				187607B42CDF5DAD00F4D261 /* AddOfferView.swift in Sources */,
+				18E676852DBD63D50043B84B /* TransferBottomSheet.swift in Sources */,
 				187607B62CDFCA1700F4D261 /* ClientLinkCellIView.swift in Sources */,
 				18D3655B2CD27CF000D50A34 /* AddEditAddressView.swift in Sources */,
 				14E67A312CAC5CCA00C10AB5 /* SplashView.swift in Sources */,
@@ -1596,11 +1626,13 @@
 				187607BA2CDFD74800F4D261 /* LinksVM.swift in Sources */,
 				1835ECF42CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift in Sources */,
 				18277EBF2CB2B9BA0020A647 /* PhoneNumberRepresenter.swift in Sources */,
+				18E676872DBD63F20043B84B /* BuyProductBottomSheet.swift in Sources */,
 				1820E2C92CBAAC6600627DF9 /* SavedAddressesView.swift in Sources */,
 				14E67A6A2CAC5E3400C10AB5 /* MOLHFontLocalizableViews.swift in Sources */,
 				18086A682CCB81F000F5C2F8 /* OrdersAppAPI.swift in Sources */,
 				18F54E7B2CCCFF1D00462383 /* OrderBusinessDetailsView.swift in Sources */,
 				18086A782CCC04C900F5C2F8 /* WalletButton.swift in Sources */,
+				18C8A9C82DBE75AB00A2AB42 /* ConfirmTransferView.swift in Sources */,
 				1820E2CF2CBAACB200627DF9 /* SettingsView.swift in Sources */,
 				14E67AC62CAC643B00C10AB5 /* SliderView.swift in Sources */,
 				189CD7452CDBE19E00E929DE /* PopUpComponent.swift in Sources */,
@@ -1660,6 +1692,7 @@
 				18B8D56E2CC02C8D00C2676C /* PendingView.swift in Sources */,
 				1820E2AE2CB965CE00627DF9 /* MainView.swift in Sources */,
 				14E67ADC2CAC643B00C10AB5 /* MainAppSecuredTF.swift in Sources */,
+				18C8A9C52DBE4B0D00A2AB42 /* DeveloperKeyBottomSheet.swift in Sources */,
 				18086A6A2CCB847800F5C2F8 /* OrdersModels.swift in Sources */,
 				18F54E882CCD1C0300462383 /* WalletModel.swift in Sources */,
 				18086A632CCB7F4800F5C2F8 /* OrdersVM.swift in Sources */,
@@ -1668,6 +1701,7 @@
 				14E67AE72CAC643B00C10AB5 /* DocumentPickerView.swift in Sources */,
 				18277EC32CB306990020A647 /* SignUpStep1View.swift in Sources */,
 				18F54E792CCCFE7A00462383 /* OrderComponentsView.swift in Sources */,
+				1859135D2DBFD7D10035D6EF /* SuccessView.swift in Sources */,
 				1820E2822CB904F500627DF9 /* DafeaaApp.swift in Sources */,
 				18F54E8F2CCD2F1C00462383 /* ProcessesVM.swift in Sources */,
 				14E67AC72CAC643B00C10AB5 /* CustomSegmentView.swift in Sources */,
@@ -1676,8 +1710,10 @@
 				14E67AD62CAC643B00C10AB5 /* NavigationBarView.swift in Sources */,
 				1820E2BE2CBA98A600627DF9 /* ProfileView.swift in Sources */,
 				14E67ABC2CAC643B00C10AB5 /* GenaricUserDefult.swift in Sources */,
+				18AF59442DB42855000DF15F /* ImageSlider.swift in Sources */,
 				14E67ABE2CAC643B00C10AB5 /* Calender.swift in Sources */,
 				14E67AC12CAC643B00C10AB5 /* FileManger+ext.swift in Sources */,
+				1859135F2DBFDBEC0035D6EF /* FailedView.swift in Sources */,
 				1820E2D12CBAACCD00627DF9 /* HelpAndSupportView.swift in Sources */,
 				14E67AD42CAC643B00C10AB5 /* KeyboardResponsiveModifier.swift in Sources */,
 				1820E2DF2CBBD58F00627DF9 /* ProfileImageView.swift in Sources */,
@@ -1872,7 +1908,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/Dafeaa.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11.1;
+				CURRENT_PROJECT_VERSION = 11.7;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
@@ -1899,7 +1935,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Dafeaa.Plantech;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "DAFEA | دافع";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1916,7 +1952,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/DafeaaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11.1;
+				CURRENT_PROJECT_VERSION = 11.7;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
@@ -1943,7 +1979,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Dafeaa.Plantech;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "DAFEA | دافع";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

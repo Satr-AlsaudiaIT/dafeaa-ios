@@ -11,6 +11,7 @@ class HomeVM: ObservableObject {
     @Published var phoneNumber: String = ""
     @Published var password: String = ""
     @Published var toast: FancyToast?      = nil
+    @Published var transferToast: FancyToast? = nil
     @Published private var _isLoading      = false
     @Published private var _isFailed       = false
     @Published private var _processList    : [HomeModelData] = []
@@ -38,8 +39,14 @@ class HomeVM: ObservableObject {
     var homeData     : HomeModel?          { get { return _homeData   } set{}}
     var notifications: [NotificationsData] { get { return _notifications} set{}}
     var offerData     : ShowOfferData?     { get { return _offerData} set{}}
-
+    @Published var userNameOfPhone: String = ""
     @Published var walletAmount : Double = 0
+    @Published var isUserFound: Bool = false
+    @Published var isTransferSuccess: Bool = false
+    @Published var isTransferFailed: Bool = false
+
+    @Published var transferData: ConfirmTransferData = ConfirmTransferData()
+
     //MARK: - APIs
     
     func home() {
@@ -171,12 +178,74 @@ class HomeVM: ObservableObject {
                     self.showOfferSuccess = true
                 case .failure(_):
                         self.toast = FancyToast(type: .error, title: "Error".localized(), message: "order_not_found".localized())
-                    
                 }
             }
         }
     }
 
+    func validateTransferAmount(phone:String,amount: String) {
+        if phone.isBlank {
+            transferToast = FancyToast(type: .error, title: "Error".localized(), message: "enterPhone".localized())
+        } else if !phone.isValidPhoneNumber {
+            transferToast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidPhone".localized())
+        } else if amount == "" {
+            self.transferToast = FancyToast(type: .error, title: "Error".localized(), message: "amount_validation".localized())
+            
+        }else {
+            checkPhoneNumber(phone: phone)
+        }
+    }
+    
+    func checkPhoneNumber(phone: String) {
+        self._isLoading = true
+        isUserFound = false
+        api2.getNameFromPhone(phone: phone) { [weak self] (Result) in
+            guard let self = self else { return }
+            self._isLoading = false
+            switch Result {
+            case .success(let Result):
+                guard let data = Result else { return }
+                userNameOfPhone = data.data ?? ""
+                isUserFound = true
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.transferToast = FancyToast(type: .error, title: "Error".localized(), message: "userNotExist".localized())
+            }
+        }
+    }
+    
+    
+    
+    func confirmTransfer(phone:String,amount:Double) {
+        self._isLoading = true
+        isUserFound = false
+        api2.confirmTransfer(phone: phone, amount: amount) { [weak self] (Result) in
+            guard let self = self else { return }
+            self._isLoading = false
+            switch Result {
+            case .success(let Result):
+                guard let data = Result else { return }
+                
+                if data.status == true {
+                    isTransferSuccess = true
+                    isTransferFailed =  false
+                    transferData = data.data ?? ConfirmTransferData()
+                }else {
+                    isTransferFailed =  true
+                    isTransferSuccess = false
+                    transferData = data.errors ?? ConfirmTransferData()
+                }
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                isTransferFailed =  true
+                self.transferToast = FancyToast(type: .error, title: "Error".localized(), message: "userNotExist".localized())
+            }
+        }
+    }
     
 }
 

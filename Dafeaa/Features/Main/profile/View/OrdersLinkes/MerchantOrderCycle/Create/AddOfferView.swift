@@ -39,7 +39,7 @@ struct AddOfferView: View {
 //                                    HStack{
 //                                        CustomMainTextField(text: $deliveryPrice, placeHolder: "deliveryPriceTitle", keyBoardType: .numberPad,fieldType: .price)
 //                                            .focused($focusedField, equals: .delivery)
-//                                            .id(FormField.delivery)
+//                       4                     .id(FormField.delivery)
 //                                        CustomMainTextField(text: $tax, placeHolder: "taxPriceTitle",  keyBoardType: .numberPad,fieldType: .percentage)
 //                                            .focused($focusedField, equals: .tax)
 //                                            .id(FormField.tax)
@@ -47,7 +47,6 @@ struct AddOfferView: View {
                                 }
                                 ForEach (0..<productsAdding.count, id: \.self) { index in
                                     BusinessCreateLinkCellView(product: productsAdding[index])
-                                    
                                 }
                                 
                                 Button(action: {

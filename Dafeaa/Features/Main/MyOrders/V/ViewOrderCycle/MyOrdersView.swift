@@ -155,10 +155,9 @@ struct MyOrdersView: View {
                                         viewModel.orders(skip: 0, status: "current" ,type: selectedSegment == 0 ? "client" : "merchant" )
                                     } label: {
                                         HStack {
-                                            
                                             Text("current".localized())
-                                                .textModifier(.plain, 14, .gray666666)
-                                                .frame(width: 100)
+                                                .textModifier(.plain, 13, .gray666666)
+//                                                .frame(width: 100)
                                                 .multilineTextAlignment(.leading)
                                             Spacer()
                                             Image(systemName: "arrow.up")
@@ -174,8 +173,8 @@ struct MyOrdersView: View {
                                     } label: {
                                         HStack {
                                             Text("history".localized())
-                                                .textModifier(.plain, 14, .gray666666)
-                                                .frame(width: 100)
+                                                .textModifier(.plain, 13, .gray666666)
+//                                                .frame(width: 100)
                                                 .multilineTextAlignment(.leading)
                                             Spacer()
                                             Image(systemName: "arrow.down")
@@ -248,12 +247,14 @@ struct OrderComponent: View {
                         .resizable()
                         .frame(width: 65,height: 65)
                         .clipShape(.circle)
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: 4) {
                         Text(order?.name ?? "")
                             .textModifier(.plain, 14, .black222222)
                         
                         Text(orderStatusEnum(rawValue: order?.orderStatus ?? 0)?.title ?? "" + " - \(order?.date ?? "")")
                             .textModifier(.plain, 12, .orangeFF6021)
+                        Text("referenceNumber".localized() + " : \(order?.id ?? 0)")
+                            .textModifier(.plain, 14, .gray858585)
                     }
                 }
                 HStack(spacing: 2) {

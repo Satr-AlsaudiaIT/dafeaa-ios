@@ -18,11 +18,11 @@
 "Change Language" = "Change Language";
 "Start Now" = "Start Now";
 "Next" = "Next";
-"onboardingTitle1"="Dafeaa is an e-payment platform";
-"onboardingTitle2"="Pay for all your purchases via Dafeaa";
-"onboardingTitle3"="Your information is secure with Dafeaa";
-"onboardingDesc1"="Dafeaa allows users to manage their financial transactions with ease and security. Dafeaa offers a range of payment services and solutions for both individuals and businesses.";
-"onboardingDesc2"="The Dafeaa digital platform enables you to complete all financial transactions locally and internationally with ease and complete security without needing a bank or cash.";
+"onboardingTitle1"="DAFEA is an e-payment platform";
+"onboardingTitle2"="Pay for all your purchases via DAFEA";
+"onboardingTitle3"="Your information is secure with DAFEA";
+"onboardingDesc1"="DAFEA allows users to manage their financial transactions with ease and security. DAFEA offers a range of payment services and solutions for both individuals and businesses.";
+"onboardingDesc2"="The DAFEA digital platform enables you to complete all financial transactions locally and internationally with ease and complete security without needing a bank or cash.";
 "onboardingDesc3"="Share your information and accounts with us securely and confidently. We only use them to provide services to you, securely linking your financial accounts.";
 
 //MARK: - Login
@@ -33,6 +33,7 @@
 "haventAccount"="Don't have an account?";
 "openAccount"="Open a new account";
 "phoneNumber"="Mobile Number";
+"date" = "Date";
 "loginWelcomeSubtitle"="Enter your information to log into your account...";
 
 //MARK: - step1
@@ -41,8 +42,8 @@
 "continue"="Continue";
 "companyOrMerchant"="Company or Merchant";
 "individual"="Individual";
-"companyOrMerchantDesc"="Register with Dafeaa as a company or merchant and get additional benefits.";
-"individualDesc"="Register with Dafeaa as an individual and enjoy electronic payment benefits for individuals.";
+"companyOrMerchantDesc"="Register with DAFEA as a company or merchant and get additional benefits.";
+"individualDesc"="Register with DAFEA as an individual and enjoy electronic payment benefits for individuals.";
 
 //MARK: - step2
 "selectAccountInfo"="Add your business information";
@@ -91,7 +92,7 @@
 "profile"="Profile";
 "Subscription Management"="Subscription Management";
 "Saved Addresses"="Saved Addresses";
-"About Dafeaa"="About Dafeaa";
+"About Dafeaa"="About DAFEA";
 "FAQ"="FAQ";
 "FAQNavTitle"="FAQ";
 "Help and Support"="Help and Support";
@@ -130,7 +131,7 @@
 "messageValidNewPassword8character"="Please enter a valid password of at least 8 characters";
 "messageEmptyConfirmPassword"="Please confirm the password";
 "messageMatchPasswordConfirm"="The new password and confirmation do not match";
-
+"developerKeys" = "Developer Keys";
 //MARK: - complete Info
 "uploadFileHere" = "Upload the file here";
 "CommercialInfo" = "Commercial Information";
@@ -189,7 +190,9 @@
 "lastProcesses"="Last Transactions";
 "lastTransactions"="Last Transactions";
 "addBalance"="Add Balance";
-"withdrawBalance"="Withdraw Balance";
+"withdrawBalance"="Withdraw";
+"transferBalance" = "Transfer";
+"transferAmount" = "Amount to Transfer";
 "lastProcessAndPayment"="Last Transactions and Payments";
 "withdrawWalletBalance" = "Withdraw Balance from Wallet";
 "addWalletBalance" = "Add Balance to Wallet";
@@ -205,10 +208,10 @@
 "or" = "OR";
 "search" = "Search";
 "buy_product" = "Buy a Product";
-"buy_product_details" = "You can search for offers through Dafea from here";
+"buy_product_details" = "You can search for offers through DAFEA from here";
 "buy_product_btn" = "Buy Now";
 "sell_product" = "Sell Product";
-"sell_product_details" = "You can sell products through Dafea from here";
+"sell_product_details" = "You can sell products through DAFEA from here";
 "sell_product_btn" = "Sell a Product";
 "exceedQuantity" = "The remaining quantity is only";
 //MARK: - NOTIFICATIONS
@@ -223,7 +226,7 @@
 "confirmReceivingOrder"="Confirm Order Receipt";
 "confirmReceiveOrder"="Confirm Order Delivery";
 "paymentWay"="Payment Method";
-"buyWithDafea"="Pay through Dafeaa";
+"buyWithDafea"="Pay through DAFEA";
 "product"="Product:";
 "delaviryAndRecive"="Delivery and Receipt:";
 "commissionVal" = "Additional Fees:";
@@ -301,17 +304,23 @@
 "deliveryPriceTitle" = "Delivery Price";
 "taxPriceTitle" = "Tax Price";
 "addProductTitle" = "Add Product";
-"nameAr" = "Product Name (Arabic)";
+"productName" = "Product Name";
 "nameEn" = "Product Name (English)";
-"descriptionAr" = "Product Description (Arabic)";
+"productDescription" = "Product Description";
 "descriptionEn" = "Product Description (English)";
 "quantity" = "Available Quantity";
 "productPrice" = "Product Price";
-"offerPrice" =  "Offer Price";
+"offerPrice" =  "Offer after disscount";
+"apply_discount?" = "Apply Discount?";
+"hide_discount?" = "Hide discount?";
+
+"offerPriceMustBeLessThanPrice" = "offer price must be Less than price";
 "chooseProductImage" = "Please choose a product image";
-"enterNameAr" = "Please enter the product name in Arabic";
+"enterOfferPrice" = "Add your offer price or tap to hide this option";
+"Choose the file type you want to upload" = "Choose the file you want to upload";
+"enterName" = "Please enter the product name";
 "enterNameEn" = "Please enter the product name in English";
-"enterDescriptionAr" = "Please enter the product description in Arabic";
+"enterDescription" = "Please enter the product description";
 "enterDescriptionEn" = "Please enter the product description in English";
 "enterQuantity" = "Please enter the product available quantity";
 "enterPrice" = "Please enter the product price";
@@ -328,6 +337,10 @@
 "copy" = "Copy";
 "share" = "Share Link";
 "delete" = "Delete";
+"noOffers" = "You have no offers yet";
+"availableBalance:" = "Available Balance:";
+"userNotExist" = "This number not connected to any account";
+"amount_validation" = "Please enter amount to transfer";
 //MARK: - Withdraws
 "withdrawsProcess" = "Withdrawal Transactions";
 "withdrawProcess" = "Withdrawal Process";
@@ -336,7 +349,7 @@
 "pending"  = "Pending";
 
 //MARK: - subscription
-"subscription_plans_features_title_en" = "All Dafeaa subscription plans include amazing features tailored to your daily needs";
+"subscription_plans_features_title_en" = "All DAFEA subscription plans include amazing features tailored to your daily needs";
 "dashboard_title_en" = "A complete dashboard for your business";
 "transactions_list_title_en" = "A list of all sales and purchase transactions";
 "profit_reports_title_en" = "Profit and earnings reports";
@@ -350,3 +363,16 @@
 "payment" = "payment";
 "stop_message" = "Offer is Deactivated successfully";
 "active_message" = "Offer is Activated successfully";
+
+//MARK: - developerKeys
+"profile_id" = "Profile ID";
+"secret_key" = "Secret Key";
+"reset_codes" = "Reset Codes";
+"hide_code" = "Hide Code";
+"show_code" = "Show Code";
+"transferSuccess" = "Transfer Success";
+"referenceNumber" = "Reference Number";
+"confirmTransfer" = "Confirm Transfer";
+"O.K" = "O.K";
+"transferTo" = "Transfer to:";
+"transferFrom" = "Transfer From:";

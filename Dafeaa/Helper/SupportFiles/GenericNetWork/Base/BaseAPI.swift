@@ -48,6 +48,19 @@ class BaseAPI<T: TargetType> {
                         completion(.failure(NSError(domain: target.baseURL, code: 401, userInfo: [NSLocalizedDescriptionKey:error ?? ""])))
                         
                     }
+                    if target.path == "wallet/transfer" {
+                        guard let data = response.data else { return }
+                        self.decode(fromData: data, toObject: responseClass, completion: { object, error in
+                            guard let object = object , error == nil else {
+                                completion(.failure(error!))
+                                return
+                            }
+                            
+                            print("result is:- \(object)")
+                            
+                            completion(.success(object))
+                        })
+                    }
                     completion(.failure(NSError(domain: target.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey:error ?? ""])))
                     return
                 }

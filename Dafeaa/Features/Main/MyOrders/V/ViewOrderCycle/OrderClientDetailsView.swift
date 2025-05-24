@@ -19,7 +19,7 @@ struct OrderClientDetailsView: View {
     @State var confirmReceivingOrder: Bool = false
     @State var isCancelTapped: Bool = false
     @StateObject private var scanner = ScannerViewModel()
-    @State var selectedProduct: productList = productList(id: 3, image: "www", name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 1, remainingQuantity: 0)
+    @State var selectedProduct: productList = productList(id: 3, images: [ImageModel(file: "ww")], name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 1, remainingQuantity: 0)
     @State var showingProductDetails: Bool = false
     @State var totalPrice: Double = 0
 
@@ -58,6 +58,7 @@ struct OrderClientDetailsView: View {
                                             }) {
                                                 OrderItemView(itemName:viewModel.orderData?.products?[index].name ?? "",
                                                               price: viewModel.orderData?.products?[index].price ?? 0,
+                                                              offerPrice: viewModel.orderData?.products?[index].offerPrice ?? 0,
                                                               amount: viewModel.orderData?.products?[index].amount ?? 0,
                                                               isLast: index == (viewModel.orderData?.products?.count ?? 3 ) - 1 )
                                             }
@@ -93,7 +94,14 @@ struct OrderClientDetailsView: View {
                                             .fill(Color.clear))
                                     
                                     VStack(spacing: 8) {
-                                        AddressView(name: Constants.userName , address: viewModel.orderData?.address ?? "",phone: Constants.phone)
+                                        AddressView(name: Constants.userName,
+                                                    address: viewModel.orderData?.address ?? "",
+                                                    streetName: viewModel.orderData?.streetName ?? "",
+                                                    buildingNum: viewModel.orderData?.buildingNum ?? "",
+                                                    area: viewModel.orderData?.area ?? "",
+                                                    floatNum:viewModel.orderData?.floatNum ?? "",
+                                                    phone: Constants.phone)
+                                    
                                     }
                                 }
                             }
@@ -169,7 +177,7 @@ struct OrderClientDetailsView: View {
             ProductDetailsPopUp(product: $selectedProduct )
                 .presentationCornerRadius(24)
                 .presentationDragIndicator(.visible)
-                .presentationDetents([.medium])
+                .presentationDetents([.large])
         })
         .toastView(toast: $viewModel.toast)
         .onChange(of: viewModel._isCompleteOrderSuccess) {_,newValue in

@@ -11,13 +11,14 @@ struct ProductDetailsPopUp: View {
     @Binding var product:productList
     @StateObject var viewModel = OrdersVM()
     @State private var isEditTapped : Bool = false
+    @State private var  selectedImage: String?
+    @State private var showSelectedImage: Bool = false
     @State var quantity : String = ""
      var isAbleToEdit : Bool = false
      var isMerchant : Bool = false
 
     var body: some View {
         ZStack {
-            
             VStack(alignment: .leading) {
                 HStack {
                     Spacer()
@@ -28,25 +29,20 @@ struct ProductDetailsPopUp: View {
                 .padding(.vertical,19)
                 ScrollView {
                     VStack {
-                        WebImage(url: URL(string: product.image ?? ""))
-                            .resizable()
-                            .frame(height: 260)
-                            .cornerRadius(10)
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke( Color(.primary),lineWidth: 1)
-                            }
-                        
+                        InfiniteCarouselView(listOfPages: .constant(product.images ?? []),onImageTap: { file in
+                            selectedImage = file
+                            showSelectedImage = true
+                        })
                         HStack {
                             Text(product.name ?? "")
                                 .textModifier(.plain, 15, .black222222)
                             Spacer()
-                            if product.offerPrice != 0 {
+                            
                                 HStack {
                                     HStack(spacing: 5){
                                         Text(String(format: "%.1f", product.price ?? 0))
                                             .textModifier(.plain, 14, .black010202)
-                                            .strikethrough(true, color: .black010202)
+                                            .strikethrough((product.offerPrice == 0 || product.offerPrice == nil) ? false : true, color: .black010202)
                                             .fixedSize()
                                         Image(.riyal)
                                             .resizable()
@@ -56,7 +52,7 @@ struct ProductDetailsPopUp: View {
                                             .padding(.trailing, 10)
                                     }
                                     .environment(\.layoutDirection, .rightToLeft)
-                                    
+                                if product.offerPrice != 0, product.offerPrice != nil {
                                     HStack(spacing: 5){
                                         Text(String(format: "%.1f", product.offerPrice ?? 0))
                                             .textModifier(.plain, 14, .black010202)
@@ -73,10 +69,11 @@ struct ProductDetailsPopUp: View {
                             }
                         }
                         VStack(alignment: .leading, spacing: 10) {
-                                
+                            HStack {
                                 Text(product.description ?? "")
                                     .textModifier(.plain, 15, .gray565656)
-                            
+                                Spacer()
+                            }
                             if isMerchant {
                                 HStack {
                                     Text("totalQuantity".localized())
@@ -132,6 +129,22 @@ struct ProductDetailsPopUp: View {
                 .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft : .leftToRight)
             }
             .padding(.horizontal,20)
+            if let selectedImage = selectedImage, showSelectedImage {
+                ZStack {
+                    Color(.black010202.opacity(0.5))
+                        .onTapGesture {
+                            showSelectedImage = false
+                        }
+                    WebImage(url: URL(string: selectedImage))
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: UIScreen.main.bounds.width * 0.9)
+                        .disabled(true)
+                        .cornerRadius(10)
+                        }
+                .ignoresSafeArea(.all)
+                
+            }
         }
         .onAppear{
             isEditTapped = false
