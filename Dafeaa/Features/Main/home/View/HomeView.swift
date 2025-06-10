@@ -247,8 +247,8 @@ struct HomeView: View {
                                     Spacer()
                                     HStack {
                                         WalletButton(buttonText: "withdrawBalance".localized(), image: .withdrawBalance) {
-//                                            balanceActionType = .withDraw
-//                                            isSheetPresented = true
+                                            balanceActionType = .withDraw
+                                            isSheetPresented = true
                                         }
                                         
                                     }
