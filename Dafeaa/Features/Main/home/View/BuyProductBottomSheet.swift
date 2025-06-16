@@ -37,7 +37,7 @@ struct BuyProductBottomSheet: View {
                 .padding(.horizontal)
                 Spacer()
                 TextField("code".localized(), text: $number)
-                    .keyboardType(.numberPad)
+                    .keyboardType(.default)
                     .multilineTextAlignment(.center)
                     .textModifier(.plain, 43, .black2B2D33)
                     .frame(minHeight: 50) // Explicit height for text field

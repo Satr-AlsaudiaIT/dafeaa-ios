@@ -309,7 +309,7 @@ final class OrdersVM : ObservableObject {
     
     
     //MARK: - Create Link Requests
-    func validateAddOrder(images: [UIImage]?, name: String, description: String, quantity:String, price: String, offerPrice: String, haveOffer: Bool) -> [String: Any]? {
+    func validateAddOrderOLD(images: [UIImage]?, name: String, description: String, quantity:String, price: String, offerPrice: String, haveOffer: Bool) -> [String: Any]? {
         if name.isBlank {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message: "enterName".localized())
             return nil
@@ -357,7 +357,7 @@ final class OrdersVM : ObservableObject {
         }
     }
     
-    func validateAddOffer(offerName:String, offerDescription:String, productsAdding: [[String: Any]]) {
+    func validateAddOfferOld(offerName:String, offerDescription:String, productsAdding: [[String: Any]]) {
         if offerName.isBlank {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message:"enterOfferName".localized())
         }
@@ -373,7 +373,67 @@ final class OrdersVM : ObservableObject {
             self.createOrderByMerchant(param: param, products: productsAdding)
         }
     }
+
+    
+    //MARK: - NEw add order
+    func validateAddOrderNew(images: [UIImage]?, name: String, description: String, quantity:String, price: String, offerPrice: String, haveOffer: Bool) -> [String: Any]? {
+        if name.isBlank {
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "enterName".localized())
+            return nil
+        }
+       
+        else if description.isBlank {
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "enterDescription".localized())
+            return nil
+        }
+     
+        else if price.isBlank {
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPrice".localized())
+            return nil
+        }else if haveOffer ,offerPrice.isBlank {
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "enterOfferPrice".localized())
+            return nil
+        } else if haveOffer ,!offerPrice.isBlank ,(Double(offerPrice) ?? 0) > (Double(price) ?? 0 ) {
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "offerPriceMustBeLessThanPrice".localized())
+            return nil
+        }
+        else if images?.count  ?? 0 == 0 {
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "chooseProductImage".localized())
+            return nil
+        }
+        else {
+            var product: [String: Any] = [
+                "images": images,
+                "name": name,
+                "description": description,
+                "price": Double(price.convertDigitsToEng) ?? 0,
+                "quantity": 1
+            ]
+            if haveOffer, !offerPrice.isBlank {
+                product["offer_price"] = Double(offerPrice.convertDigitsToEng) ?? 0
+            }
+            
+//            self.toast = FancyToast(type: .success, title: "Success".localized(), message: "addProductSuccess".localized())
+            self._isAddProDuctValid = true
+
+            return product
+        }
+    }
+
+    
+    
+    
    
+    func validateAddOfferNew(offerName:String, offerDescription:String, productsAdding: [[String: Any]]) {
+        if productsAdding.count == 0 {
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message:"pleaseAddProducts".localized())
+        }
+        else {
+            let param: [String:Any] = ["name": offerName,                                               "description": offerDescription]
+            self.createOrderByMerchant(param: param, products: productsAdding)
+        }
+    }
+    
     private func  createOrderByMerchant(param:[String:Any], products:[[String:Any]]){
         let params:[String:Any] = param
             self._isLoading = true

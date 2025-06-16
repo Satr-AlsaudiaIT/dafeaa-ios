@@ -283,7 +283,7 @@
 "offerDetails" = "تفاصيل العرض";
 "offers"="عروض";
 "addOffer"="أضف عرض";
-"offerContent"="مكونات العرض";
+"offerContent"= "أضف عرض";
 "description"="الوصف";
 "productDetails" = "تفاصيل المنتج";
 "totalQuantity" = "إجمالي الكمية";

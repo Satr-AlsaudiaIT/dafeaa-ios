@@ -60,7 +60,7 @@ struct OrdersOffersLinksView: View {
                         }
                     }
                         ReusableButton(buttonText: "addOffer", action: { goToAddOffer = true })
-                            .navigationDestination(isPresented: $goToAddOffer, destination: { AddOfferView() })
+                            .navigationDestination(isPresented: $goToAddOffer, destination: { AddOfferViewNew() })
                     }
                     .padding(24)
                 }
@@ -79,7 +79,7 @@ struct OrdersOffersLinksView: View {
         .toastView(toast: $viewModel.toast)
         .toastView(toast: $toast)
         .navigationBarHidden(true)
-        .navigationDestination(isPresented: $goToDetails, destination: { OrderLinkDetailsView(code: selectedOffer?.code ?? "") })
+        .navigationDestination(isPresented: $goToDetails, destination: { OrderLinkDetailsViewNew(code: selectedOffer?.code ?? "") })
         .onChange(of: viewModel._isSuccess, { _, newValue in
             isShowActionBottomSheet = false
             viewModel._isSuccess = false

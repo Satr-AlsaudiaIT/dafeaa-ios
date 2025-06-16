@@ -35,22 +35,17 @@ struct AddProductView: View {
                     NavigationBarView(title: "addProductTitle"){
                         self.presentationMode.wrappedValue.dismiss()
                     }
-//                    UploadFileView(selectedImage: $selectedImage, imageURL: $imageURL)
-//                        .padding(.top,24)
+
                     ScrollView {
                         VStack(spacing: 20) {
                             CustomMainTextField(text: $name, placeHolder: "productName", fieldType: .none)
                                 .focused($focusedField, equals: .name)
                                 .id(FormField.name)
-                            //                        CustomMainTextField(text: $nameEn, placeHolder: "nameEn",fieldType: .none)
-                            //                            .focused($focusedField, equals: .nameEn)
-                            //                            .id(FormField.nameEn)
+                  
                             CustomMainTextField(text: $description, placeHolder: "productDescription", fieldType:.none)
                                 .focused($focusedField, equals: .description)
                                 .id(FormField.description)
-                            //                        CustomMainTextField(text: $descriptionEn, placeHolder: "descriptionEn", fieldType: .none)
-                            //                            .focused($focusedField, equals: .descriptionEn)
-                            //                            .id(FormField.descriptionEn)
+                     
                             CustomMainTextField(text: $quantity, placeHolder: "quantity", keyBoardType:.numberPad,fieldType: .none)
                                 .focused($focusedField, equals: .quantity)
                                 .id(FormField.quantity)
@@ -165,7 +160,7 @@ struct AddProductView: View {
                             .padding(.bottom,50)
                             Spacer()
                             ReusableButton(buttonText: "addProductTitle") {
-                                if let product = viewModel.validateAddOrder(images: selectedProductImage, name: name, description: description,quantity: quantity, price: price, offerPrice: offerPrice,haveOffer: showOfferPriceTextField) {
+                                if let product = viewModel.validateAddOrderOLD(images: selectedProductImage, name: name, description: description,quantity: quantity, price: price, offerPrice: offerPrice,haveOffer: showOfferPriceTextField) {
                                     productsAdding.append(product)  // Update the binding array
                                     self.presentationMode.wrappedValue.dismiss()
                                 }

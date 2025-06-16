@@ -368,10 +368,10 @@ struct HomeView: View {
                 OrdersOffersLinksView()
             })
             .navigationDestination(isPresented: $showOfferDetails, destination: {
-                OrderLinkDetailsView(offerData: offerData)
+                OrderLinkDetailsViewNew(offerData: offerData)
             })
             .navigationDestination(isPresented: $showClientOfferDetails, destination: {
-                ClientLinkDetails(offerData: offerData)
+                ClientLinkDetailsNew(offerData: offerData)
             })
             .sheet(isPresented: $isPresentBuySheet, content: {
                 BuyProductBottomSheet(isShowClientLinkDetails: $showClientOfferDetails, isShowOrderLinkDetails: $showOfferDetails, offerData: $offerData,isSheetPresented: $isPresentBuySheet)

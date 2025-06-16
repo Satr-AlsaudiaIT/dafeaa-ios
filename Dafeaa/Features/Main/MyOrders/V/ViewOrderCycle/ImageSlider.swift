@@ -32,7 +32,7 @@ struct InfiniteCarouselView: View {
             let size = proxy.size
             VStack(spacing: 10) {
                 if listOfPages.count != 0 {
-                    if listOfPages.count > 1 {
+                    if listOfPages.count > 0 {
                         TabView(selection: $currentIndex) {
                             ForEach(fakedPages.indices, id: \.self) { index in
                                 //                            Button {
@@ -87,32 +87,32 @@ struct InfiniteCarouselView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .tabViewStyle(.page(indexDisplayMode: .never))
                     }
-                    else if let singlePage = listOfPages.first {
-                        Button(action: {
-                            onImageTap?(singlePage.file ?? "")
-                        }) {
-                            // Show a single page without scrolling
-                            ZStack {
-                                Color(.black010202)
-                                WebImage(url: URL(string: singlePage.file ?? ""))
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: size.width - 50, height: 250)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                            }
-                            Spacer()
-                            
-                            //                        }
-                            //                        placeholder: {
-                            //                            Image(.banner)
-                            //                                .resizable()
-                            //                                .scaledToFill()
-                            //                                .frame(width: size.width - 100, height: 150)
-                            //                                .clipped()
-                            //                        }
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                    }
+//                    else if let singlePage = listOfPages.first {
+//                        Button(action: {
+//                            onImageTap?(singlePage.file ?? "")
+//                        }) {
+//                            // Show a single page without scrolling
+//                            ZStack {
+//                                Color(.black010202)
+//                                WebImage(url: URL(string: singlePage.file ?? ""))
+//                                    .resizable()
+//                                    .aspectRatio(contentMode: .fit)
+//                                    .frame(width: size.width - 50, height: 250)
+//                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+//                            }
+//                            Spacer()
+//                            
+//                            //                        }
+//                            //                        placeholder: {
+//                            //                            Image(.banner)
+//                            //                                .resizable()
+//                            //                                .scaledToFill()
+//                            //                                .frame(width: size.width - 100, height: 150)
+//                            //                                .clipped()
+//                            //                        }
+//                        }
+//                        .buttonStyle(PlainButtonStyle())
+//                    }
                     if listOfPages.count > 1 {
                         HStack {
                             ForEach(0..<(listOfPages.count), id: \.self) { index in

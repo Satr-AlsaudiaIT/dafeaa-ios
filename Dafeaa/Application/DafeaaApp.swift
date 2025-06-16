@@ -165,12 +165,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
         let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
         if let window = self.window {
             if userId != offerUserId {
-                let rootView = ClientLinkDetails(offerData: offerData)
+                let rootView = ClientLinkDetailsNew(offerData: offerData)
                     .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar" : "en"))
                     .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft : .leftToRight)
                 window.rootViewController = UIHostingController(rootView: rootView)
             } else {
-                let rootView = OrderLinkDetailsView(offerData: offerData)
+                let rootView = OrderLinkDetailsViewNew(offerData: offerData)
                     .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar" : "en"))
                     .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft : .leftToRight)
                 window.rootViewController = UIHostingController(rootView: rootView)
