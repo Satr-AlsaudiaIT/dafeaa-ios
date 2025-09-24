@@ -69,9 +69,14 @@ struct ProfileView: View {
                         
                         VStack(spacing: 16) {
                             NavigationLinkComponent(
-                                destination: ProfileList(),
+                                destination: ProfileList(profileId: viewModel.profileData?.profileId ?? "",secretKey: viewModel.profileData?.secretKey ?? ""),
                                 label: "profile",
                                 image: Image(.iconProfile)
+                            )
+                            NavigationLinkComponent(
+                                destination: OrdersOffersLinksView(),
+                                label: "offers",
+                                image: Image(.iconOffer)
                             )
                             
                             NavigationLinkComponent(
@@ -184,11 +189,12 @@ struct ProfileView: View {
             .navigationDestination(isPresented: $navigateToSubscriptionView) {
                 SubscribtionView()
             }
-            if viewModel.isLoading {
+            .disabled( (viewModel.isLoading && phone == "") ? true : false)
+            if viewModel.isLoading, phone == ""{
                 ProgressView("Loading...".localized())
                     .foregroundColor(.white)
                     .progressViewStyle(WithBackgroundProgressViewStyle())
-            } else if viewModel.isFailed {
+            } else {
                 ProgressView()
                     .hidden()
             }
@@ -207,6 +213,9 @@ struct ProfileView: View {
 //                    selectedProfileImageURL = viewModel.profileData?.profileImage ?? ""
                     
                 }
+            }
+            .onDisappear{
+                viewModel._getData = false
             }
     }
 }

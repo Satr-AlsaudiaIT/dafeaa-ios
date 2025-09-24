@@ -148,6 +148,20 @@ final class MoreVM : ObservableObject {
         }
     }
  
+    func updateMainAddress(id:Int? = nil, isShowSuccess: Bool = true){
+        var  dic : [String: Any] = [
+                "is_main" :1
+            ]
+        if id != nil{
+            dic.updateValue("put", forKey: "_method")
+            self.address(id: id ?? 0, method: .post, dic: dic, isShowSuccess: isShowSuccess)
+        }
+                
+          
+        
+    }
+
+    
     //MARK: - APIs
     
     func profile(_ animated: Bool = true) {
@@ -343,8 +357,8 @@ final class MoreVM : ObservableObject {
         }
     }
 
-    func addressesList() {
-        _isLoading = true
+    func addressesList(isLoading: Bool? = true) {
+        _isLoading = isLoading ?? false
         api.addresses() { [weak self] (Result) in
             guard let self = self else { return }
             self._isLoading = false
@@ -352,7 +366,8 @@ final class MoreVM : ObservableObject {
             case .success(let Result):
                 guard let data = Result?.data else { return }
                 self._addressList = data
-                
+                Constants.selectedAddressId = data.compactMap { $0.isMain == 1 ? $0.id : nil }.first ?? 0
+                Constants.selectedAddress = data.compactMap { $0.isMain == 1 ? $0.address : nil }.first ?? ""
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
@@ -362,8 +377,8 @@ final class MoreVM : ObservableObject {
         }
     }
     
-    func address(id: Int, method: HTTPMethod,dic: [String: Any]) {
-        _isLoading = true
+    func address(id: Int, method: HTTPMethod,dic: [String: Any], isShowSuccess: Bool = true) {
+        _isLoading = isShowSuccess
         api.address(id: id, method: method, dic: dic) { [weak self] (Result) in
             guard let self = self else { return }
             self._isLoading = false
@@ -372,11 +387,17 @@ final class MoreVM : ObservableObject {
                 self._message = Result?.message ?? ""
                 self._isLoading = false
                 self._isFailed = false
-                self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
-                if method == .delete { _addressList.removeAll { $0.id == id }}
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+                if isShowSuccess  {
+                    self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+                        self._isCreateSuccess = true
+                    }
+                }else {
                     self._isCreateSuccess = true
                 }
+                if method == .delete { _addressList.removeAll { $0.id == id }}
+                
+                
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
@@ -552,6 +573,7 @@ final class MoreVM : ObservableObject {
                 self._isSuccess = true
                 self._isLoading = false
                 self._isFailed = false
+                
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false

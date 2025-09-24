@@ -12,6 +12,7 @@ struct SavedAddressesView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Binding var selectedAddressId: Int
     @Binding var selectedAddress: String
+    @State var initSelectedAddressId: Int = 0
     @State private var isNavigatingToAddEdit = false
     @State private var addressToEdit: AddressesData?
     @State var isComingFromSelection: Bool = false
@@ -21,20 +22,19 @@ struct SavedAddressesView: View {
             VStack(spacing: 0) {
                 // MARK: - Navigation Bar
                 NavigationBarView(title: "Saved Addresses".localized()) {
-                    presentationMode.wrappedValue.dismiss()
+                    if selectedAddressId != initSelectedAddressId {
+                        viewModel.updateMainAddress(id: selectedAddressId,isShowSuccess: false)
+                    } else {
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }
                 
                 // MARK: - Content
                 VStack(alignment: .center, spacing: 24) {
                     if viewModel.addressList.isEmpty {
                         EmptyCostumeView()
-                                ReusableButton(buttonText: "saveSelectedAddress".localized(),buttonColor: .yellow) {
-                                    Constants.selectedAddressId = selectedAddressId
-                                    Constants.selectedAddress = selectedAddress
-                                    presentationMode.wrappedValue.dismiss()
-                                }
                             
-                            ReusableButton(buttonText: "AddAddress".localized()) {
+                        ReusableButton(buttonText: "AddAddress".localized()) {
                                 addressToEdit = nil
                                 isNavigatingToAddEdit = true
                                 
@@ -61,10 +61,12 @@ struct SavedAddressesView: View {
         }
         .toastView(toast: $viewModel.toast)
         .navigationBarHidden(true)
+        .onChange(of: viewModel._isCreateSuccess, { oldValue, newValue in
+            presentationMode.wrappedValue.dismiss()
+        })
         .onAppear {
             viewModel.addressesList()
         }
-    
         .navigationDestination(isPresented: $isNavigatingToAddEdit) {
             if let address = addressToEdit {
                 AddEditAddressView(isEdit: true, editedAddress: address)
@@ -96,7 +98,7 @@ struct SavedAddressesView: View {
                     ReusableButton(buttonText: "saveSelectedAddress".localized(),buttonColor: .yellow) {
                         Constants.selectedAddressId = selectedAddressId
                         Constants.selectedAddress = selectedAddress
-                        presentationMode.wrappedValue.dismiss()
+                        viewModel.updateMainAddress(id: selectedAddressId)
                     }
                 
                 ReusableButton(buttonText: "AddAddress".localized()) {

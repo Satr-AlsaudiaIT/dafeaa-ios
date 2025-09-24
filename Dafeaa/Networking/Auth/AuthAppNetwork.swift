@@ -20,6 +20,7 @@ enum AuthNetwork
     case countries
     case cities(countryId:Int)
     case changePhone(dic: [String: Any])
+    case confirmChangePhone(dic: [String: Any])
 
 }
 
@@ -43,13 +44,14 @@ extension AuthNetwork: TargetType
         case .countries                   : return "countries"
         case .cities                      : return "cities"
         case .changePhone                 : return "auth/change-phone"
+        case .confirmChangePhone          : return "auth/confirm-new-phone"
 }
     }
     
     var methods: HTTPMethod
     {
         switch self  {
-        case.Login, .signUp, .userSubmitToken, .verify, .verifyCode, .sendCode, .forgetPassword,.changePhone: return .post
+        case.Login, .signUp, .userSubmitToken, .verify, .verifyCode, .sendCode, .forgetPassword,.changePhone, .confirmChangePhone: return .post
 
         default:  return .get
         }
@@ -65,6 +67,8 @@ extension AuthNetwork: TargetType
         case let .userSubmitToken(token, device_id):
             return .requestParameters(Parameters: ["token": token, "device_id": device_id], encoding: JSONEncoding.default)
         case let .sendCode(dic):
+            return .requestParameters(Parameters: dic, encoding: JSONEncoding.default)
+        case let .confirmChangePhone(dic):
             return .requestParameters(Parameters: dic, encoding: JSONEncoding.default)
         case let .cities(countryId):
             return .requestParameters(Parameters: ["filter[country_id]": countryId], encoding: URLEncoding.default)

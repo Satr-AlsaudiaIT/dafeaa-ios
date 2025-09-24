@@ -11,6 +11,7 @@ import CoreImage.CIFilterBuiltins
 
 struct OrderClientDetailsView: View {
     @State var orderID: Int?
+    @State var isComingFromCreateOrder: Bool = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     private let userType: Int = GenericUserDefault.shared.getValue(Constants.shared.userType) as? Int ?? 0
     @StateObject var viewModel = OrdersVM()
@@ -21,13 +22,19 @@ struct OrderClientDetailsView: View {
     @StateObject private var scanner = ScannerViewModel()
     @State var selectedProduct: productList = productList(id: 3, images: [ImageModel(file: "ww")], name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 1, remainingQuantity: 0)
     @State var showingProductDetails: Bool = false
-    @State var totalPrice: Double = 0
+    @State var orderPrice: Double = 0
 
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
                 NavigationBarView(title: "orderDetails".localized()) {
-                    self.presentationMode.wrappedValue.dismiss()
+                    if isComingFromCreateOrder {
+                            GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
+                            MOLH.reset()
+                        
+                    }else {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
                 }
                 
                 VStack(alignment: .leading, spacing: 24) {
@@ -71,9 +78,9 @@ struct OrderClientDetailsView: View {
                                 Text("paymentInfo".localized())
                                     .textModifier(.plain, 15,  .black222222)
                                     .frame(maxWidth: .infinity,alignment: .leading)
-                                
-                                PaymentInfoView(breakdown: PaymentDetails(commission: Double( viewModel.orderData?.commissionRatio ?? "0") ?? 0, commissionMaxPrice: Double(viewModel.orderData?.maxCommissionValue ?? "0") ?? 0),itemsPrice: $totalPrice, isShowDetails: true,isCalculateCommission: false)
-                                
+                                if viewModel.orderData?.orderPrice != nil {
+                                    PaymentInfoView(breakdown: PaymentDetails(commission: Double( viewModel.orderData?.commissionValue ?? 0), commissionMaxPrice: Double(viewModel.orderData?.maxCommissionValue ?? "0") ?? 0),itemsPrice: $orderPrice,totalPrice: viewModel.orderData?.totalPrice ?? 0, deliveryPrice: viewModel.orderData?.deliveryPrice ?? 0,  isShowDetails: true,isCalculateCommission: false)
+                                }
                              
                                         
                                   
@@ -94,20 +101,17 @@ struct OrderClientDetailsView: View {
                                             .fill(Color.clear))
                                     
                                     VStack(spacing: 8) {
-                                        AddressView(name: Constants.userName,
-                                                    address: viewModel.orderData?.address ?? "",
-                                                    streetName: viewModel.orderData?.streetName ?? "",
-                                                    buildingNum: viewModel.orderData?.buildingNum ?? "",
-                                                    area: viewModel.orderData?.area ?? "",
-                                                    floatNum:viewModel.orderData?.floatNum ?? "",
-                                                    phone: Constants.phone)
-                                    
+                                        if viewModel.orderData != nil {
+                                            
+                                            AddressView(
+                                                name: Constants.userName,
+                                                phone: Constants.phone,
+                                                addressDetails: viewModel.orderData?.addressDetails
+                                            )
+                                        }
                                     }
                                 }
                             }
-                            
-                            
-                            
                             // Customer Service Section
                             Button(action: {
                                 isNavigateToContactInfo = true
@@ -196,8 +200,7 @@ struct OrderClientDetailsView: View {
        
         .onChange(of: viewModel.isLoading, { oldValue, newValue in
             if !newValue {
-                
-                totalPrice = viewModel.orderData?.totalPrice ?? 0
+                orderPrice = viewModel.orderData?.orderPrice ?? 0
             }
         })
     }

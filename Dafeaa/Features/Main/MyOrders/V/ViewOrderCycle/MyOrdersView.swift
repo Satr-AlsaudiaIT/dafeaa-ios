@@ -250,8 +250,10 @@ struct OrderComponent: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(order?.name ?? "")
                             .textModifier(.plain, 14, .black222222)
-                        
-                        Text(orderStatusEnum(rawValue: order?.orderStatus ?? 0)?.title ?? "" + " - \(order?.date ?? "")")
+                        let statusTitle = orderStatusEnum(rawValue: order?.orderStatus ?? 0)?.title ?? ""
+                        let createdAt = order?.createdAt ?? ""
+                        let time = order?.time ?? ""
+                        Text("\(statusTitle) - \(createdAt) - \(time)")
                             .textModifier(.plain, 12, .orangeFF6021)
                         Text("referenceNumber".localized() + " : \(order?.id ?? 0)")
                             .textModifier(.plain, 14, .gray858585)

@@ -102,8 +102,9 @@ struct OrderItemView: View {
                             .environment(\.layoutDirection, .rightToLeft)
                         }
                         Spacer()
-                        Text("amount: ".localized() + "\(amount)" )
-                            .textModifier(.plain, 12, .gray8B8C86)
+                        //to do return if needed v2 to v3 changes
+//                        Text("amount: ".localized() + "\(amount)" )
+//                            .textModifier(.plain, 12, .gray8B8C86)
                     }
                 }
             }
@@ -121,9 +122,12 @@ struct PaymentInfoView: View {
     var breakdown: PaymentDetails?
     @State var isMerchantOfferDetails: Bool = false
     @Binding var itemsPrice: Double
+    @State var totalPrice : Double = 0
+    @State var deliveryPrice: Double = 0
     @State var isShowDetails: Bool = false
     @State var itemsCommissionValue: Double = 0
     @State var isCalculateCommission: Bool = true
+   
     var body: some View {
         ZStack() {
 
@@ -132,13 +136,16 @@ struct PaymentInfoView: View {
                 PriceRowView(title: "product".localized(), price: itemsPrice)
                 
                 PriceRowView(title: "commissionVal".localized(), price: itemsCommissionValue)
+                if deliveryPrice != 0  {
+                    PriceRowView(title: "deliveryPrice".localized(), price: deliveryPrice)
+                }
 //                PriceRowView(title: "totalBeforeTax".localized(), price: ( (itemsCommissionValue) + (itemsPrice)))
 
                     Divider()
                         .foregroundColor( Color(.black).opacity(0.10))
                     // Total row
                    if isShowDetails {
-                       PriceRowView(title: "total".localized(), price: ( (itemsCommissionValue) + (itemsPrice)), isTotal: true)
+                       PriceRowView(title: "total".localized(), price: totalPrice, isTotal: true)
                     }
                     else {
 //                        let taxPrice = (itemsPrice) * (breakdown?.tax ?? 0.0) / 100
@@ -205,43 +212,65 @@ struct PriceRowView: View {
 
 struct AddressView: View {
     var name: String
-    var address: String
-    var streetName:String
-    var buildingNum:String
-    var area:String
-    var floatNum:String
     var phone: String
+    var addressDetails: AddressDetails?
     @State var concatenatedAddress: String = ""
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 8) {
                 Text("clientName:".localized() + name)
                     .textModifier(.plain, 12, .gray979797)
                 
-                Text("address".localized()+": \(concatenatedAddress)")
+                Text("address".localized() + ": \(concatenatedAddress)")
                     .textModifier(.plain, 12, .gray979797)
+                
                 Text("clientPhone:".localized() + "\(phone)")
                     .textModifier(.plain, 12, .gray979797)
             }
             Spacer()
-        }.padding(.horizontal,12)
-        .padding(.vertical,16)
-        .onAppear{
-            concatenatedAddress = address
-            if !buildingNum.isBlank  {
-                concatenatedAddress += "," + "buildingNum".localized() + ": "  + buildingNum
-            }
-            if !floatNum.isBlank  {
-                concatenatedAddress += "," + "FloatNum" + ": " + floatNum
-            }
-            if !streetName.isBlank  {
-                concatenatedAddress += "," + "streetName" + ": " + streetName
-            }
-            if !area.isBlank  {
-                concatenatedAddress += "," + "area" + ": " + area
-            }
-           
         }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 16)
+        .onAppear {
+            buildConcatenatedAddress()
+        }
+    }
+    
+    private func buildConcatenatedAddress() {
+        guard let addressDetails = addressDetails else {
+            concatenatedAddress = ""
+            return
+        }
+        
+        var addressComponents: [String] = []
+        
+        // Add main address
+        if let address = addressDetails.adress, !address.isBlank {
+            addressComponents.append(address)
+        }
+        
+        // Add street name
+        if let streetName = addressDetails.streetName, !streetName.isBlank {
+            addressComponents.append("streetName".localized() + ": " + streetName)
+        }
+        
+        // Add district name
+        if let districtName = addressDetails.districtName, !districtName.isBlank {
+            addressComponents.append("districtName".localized() + ": " + districtName)
+        }
+        
+        // Add city
+        if let city = addressDetails.city, !city.isBlank {
+            addressComponents.append("city".localized() + ": " + city)
+        }
+        
+        // Add country name
+        if let countryName = addressDetails.countryName, !countryName.isBlank {
+            addressComponents.append("countryName".localized() + ": " + countryName)
+        }
+        
+        concatenatedAddress = addressComponents.joined(separator: ", ")
     }
 }
 

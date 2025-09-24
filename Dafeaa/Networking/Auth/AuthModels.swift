@@ -131,6 +131,7 @@ struct AddressesData: Codable {
     let cityId,countryId: Int?
     let districtName: String?
     let lat, lng: String?
+    let isMain: Int?
 }
 
 // MARK: - withdrawsModel

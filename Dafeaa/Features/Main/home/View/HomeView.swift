@@ -340,6 +340,11 @@ struct HomeView: View {
             .onAppear{
                 isViewAppeared = true
                 businessInfo = BusinessInfo(rawValue: self.businessInformationStatus ?? 0) ?? .noFilesUploaded
+                if !Constants.sessionFlag {
+                    profileViewModel.addressesList(isLoading: false)
+                    Constants.sessionFlag = true
+                }
+            
             }
             .onChange(of: isViewAppeared, { _, newValue in
                 if newValue {

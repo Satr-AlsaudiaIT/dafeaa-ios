@@ -12,6 +12,10 @@ class Constants {
     
     var isAR: Bool { return (MOLHLanguage.currentAppleLanguage() == "ar") }
     let baseURL =  "https://dafeaa-backend.deplanagency.com/api/v2/"  // develop instance
+    //To do
+    let basURLV3 = "https://dafeaa-backend.deplanagency.com/api/v3/"  //develop for links and orders V3
+    // possible to get back to V2
+    
 //    let baseURL =   "" // live
     let developerMode = false
     let resetLanguage = "resetLanguage"
@@ -68,7 +72,17 @@ class Constants {
             ud.set(token, forKey: "phone")
         }
     }
-    
+    static var sessionFlag: Bool {
+        get {
+            let ud = UserDefaults.standard
+            return ud.value(forKey: "sessionFlag") as? Bool ?? false
+        }
+        set(token) {
+            let ud = UserDefaults.standard
+            ud.set(token, forKey: "sessionFlag")
+        }
+    }
+
     static var selectedAddressId: Int {
         get {
             let ud = UserDefaults.standard

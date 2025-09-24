@@ -61,12 +61,12 @@ struct SettingsView: View {
                         .padding(.leading, 24)
                         .background(Color(.grayF6F6F6))
                         .cornerRadius(5)
-                        ButtonWithImageView(imageName: .changePassword, trailingImageName:.sideArrow, text: "changePassword".localized()){
-                            showChangePassword = true
-                        }
-                        ButtonWithImageView(imageName: .developersKey, trailingImageName:.sideArrow, text: "developerKeys".localized()){
-                            showDeveloperKeyBottomSheet = true
-                        }
+//                        ButtonWithImageView(imageName: .changePassword, trailingImageName:.sideArrow, text: "changePassword".localized()){
+//                            showChangePassword = true
+//                        }
+//                        ButtonWithImageView(imageName: .developersKey, trailingImageName:.sideArrow, text: "developerKeys".localized()){
+//                            showDeveloperKeyBottomSheet = true
+//                        }
                         
                         Spacer()
                         Button(action: {
@@ -95,9 +95,9 @@ struct SettingsView: View {
                     .hidden()
             }
         }
-        .navigationDestination(isPresented: $showChangePassword) {
-            ChangePasswordView()
-        }
+//        .navigationDestination(isPresented: $showChangePassword) {
+//            ChangePasswordView()
+//        }
     
         .actionSheet(isPresented: $isActiveActionSheet) {
             switch activeActionSheet {
@@ -132,12 +132,12 @@ struct SettingsView: View {
                 )
             }
                    }
-        .sheet(isPresented: $showDeveloperKeyBottomSheet, content: {
-            DeveloperKeyBottomSheet(isSheetPresented: $showDeveloperKeyBottomSheet, profileID: viewModel.profileData?.profileId ?? "", secretKey: viewModel.profileData?.secretKey ?? "")
-                .presentationDetents([.medium,.large])
-                .presentationCornerRadius(24)
-                .presentationDragIndicator(.visible)
-        })
+//        .sheet(isPresented: $showDeveloperKeyBottomSheet, content: {
+//            DeveloperKeyBottomSheet(isSheetPresented: $showDeveloperKeyBottomSheet, profileID: viewModel.profileData?.profileId ?? "", secretKey: viewModel.profileData?.secretKey ?? "")
+//                .presentationDetents([.medium,.large])
+//                .presentationCornerRadius(24)
+//                .presentationDragIndicator(.visible)
+//        })
         .toastView(toast: $viewModel.toast)
         .navigationBarHidden(true)
         .onAppear(){

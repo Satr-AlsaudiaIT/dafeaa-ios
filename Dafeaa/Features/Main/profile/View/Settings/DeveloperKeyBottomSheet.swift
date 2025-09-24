@@ -9,8 +9,8 @@ import SwiftUI
 
 struct DeveloperKeyBottomSheet: View {
     @Binding var isSheetPresented: Bool
-    @State var profileID: String = "************************"
-    @State var secretKey: String = "************************"
+    @Binding var profileID: String
+    @Binding var secretKey: String 
     @State private var dots: String = "************************"
     @State private var showProfileID: Bool = false
     @State private var showSecretKey: Bool = false
@@ -26,39 +26,52 @@ struct DeveloperKeyBottomSheet: View {
                     .textModifier(.plain, 16, .black222222)
                     .padding(.top, 40)
                 
-                // Profile ID Section
-                keySection(
-                    title: "profile_id".localized(),
-                    value: showProfileID ? profileID : dots,
-                    copyAction: {
-                        UIPasteboard.general.string = profileID
-                        self.toast = FancyToast(type: .info, title:"", message:  "copied successfully".localized())
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//                            isSheetPresented = false
-//                        }
-                    },
-                    toggleAction: { showProfileID.toggle() },
-                    showValue: showProfileID
-                )
+                // Profile ID Section - Only show if profileID is not empty
+                if !profileID.isEmpty {
+                    keySection(
+                        title: "profile_id".localized(),
+                        value: showProfileID ? profileID : dots,
+                        copyAction: {
+                            UIPasteboard.general.string = profileID
+                            self.toast = FancyToast(type: .info, title:"", message:  "copied successfully".localized())
+                        },
+                        toggleAction: { showProfileID.toggle() },
+                        showValue: showProfileID
+                    )
+                }
                 
-                // Secret Key Section
-                keySection(
-                    title: "secret_key".localized(),
-                    value: showSecretKey ? secretKey : dots,
-                    copyAction: {
-                        UIPasteboard.general.string = secretKey
-                        self.toast = FancyToast(type: .info, title:"", message:  "copied successfully".localized())
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//                            isSheetPresented = false
-//                        }
-                    },
-                    toggleAction: { showSecretKey.toggle() },
-                    showValue: showSecretKey
-                )
-                
+                // Secret Key Section - Only show if secretKey is not empty
+                if !secretKey.isEmpty {
+                    keySection(
+                        title: "secret_key".localized(),
+                        value: showSecretKey ? secretKey : dots,
+                        copyAction: {
+                            UIPasteboard.general.string = secretKey
+                            self.toast = FancyToast(type: .info, title:"", message:  "copied successfully".localized())
+                        },
+                        toggleAction: { showSecretKey.toggle() },
+                        showValue: showSecretKey
+                    )
+                }
+                VStack(alignment: .center) {
+                    if profileID.isEmpty, secretKey.isEmpty{
+                        Text("createDeveloperKeyToGetCodes".localized())
+                            .textModifier(.plain, 15, .grayB5B5B5)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(16)
+                            .multilineTextAlignment(.center)
+                    }
+                    if secretKey.isEmpty{
+                        Text("createDeveloperKeyToGetSecretKeyCodes".localized())
+                            .textModifier(.plain, 15, .grayB5B5B5)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(16)
+                            .multilineTextAlignment(.center)
+                    }
+                }
                 // Reset Codes Button
                 ReusableButton(
-                    buttonText: "reset_codes".localized(),
+                    buttonText: (profileID.isEmpty && secretKey.isEmpty) ? "generate_codes".localized() : "reset_codes".localized(),
                     isEnabled: true
                 ) {
                     viewModel.updateSecretKey()
@@ -80,14 +93,18 @@ struct DeveloperKeyBottomSheet: View {
                     .hidden()
             }
         }.onReceive(viewModel.$_isSuccess){ isSuccess in
-            isSuccess ?
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                isSheetPresented = false
-            }: ()}
+            
+            if isSuccess {
+                viewModel.profile(false)
+            }
+        }
+        .onChange(of: viewModel.profileData?.secretKey, { _, newValue in
+            profileID = viewModel.profileData?.profileId ?? ""
+            secretKey = viewModel.profileData?.secretKey ?? ""
+           
+        })
         .toastView(toast: $toast)
         .toastView(toast: $viewModel.toast)
-
-
     }
     
     private func keySection(title: String, value: String, copyAction: @escaping () -> Void, toggleAction: @escaping () -> Void, showValue: Bool) -> some View {
@@ -98,7 +115,6 @@ struct DeveloperKeyBottomSheet: View {
             HStack(spacing: 10) {
                 Text(value)
                     .textModifier(.plain, 15, .grayB5B5B5)
-                    
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(16)
                     .background(Color.grayFAFAFA)
@@ -112,11 +128,9 @@ struct DeveloperKeyBottomSheet: View {
                         Text("copy".localized())
                             .textModifier(.plain, 15, .black222222)
                     }
-                   
                 }.frame(width: 100, height: 48)
                 .border(Color.black.opacity(0.1))
                 .cornerRadius(5)
-               
             }.frame( height: 48)
                 .frame(maxWidth: .infinity)
             
@@ -130,10 +144,9 @@ struct DeveloperKeyBottomSheet: View {
                 }
             }
         }
-       
     }
 }
 
 #Preview {
-    DeveloperKeyBottomSheet(isSheetPresented: .constant(true))
+    DeveloperKeyBottomSheet(isSheetPresented: .constant(true),profileID: .constant("0"), secretKey: .constant(""))
 }

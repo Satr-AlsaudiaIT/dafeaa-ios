@@ -185,7 +185,7 @@ struct AddOfferViewNew: View {
 
                         ReusableButton(buttonText: "saveBtn", action: {
                             if let product = viewModel.validateAddOrderNew(images: selectedProductImage, name: name, description: description,quantity: quantity, price: price, offerPrice: offerPrice,haveOffer: showOfferPriceTextField) {
-                                viewModel.validateAddOfferNew(offerName: name, offerDescription: description,  productsAdding:[product] )                            }
+                                viewModel.validateCreateOfferLinkNew(offerName: name, offerDescription: description,  productsAdding:[product] )                            }
                            
                         })
                     

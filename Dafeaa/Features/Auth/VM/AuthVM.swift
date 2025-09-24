@@ -22,6 +22,8 @@ class AuthVM: ObservableObject {
     @Published var _isSignUpSuccess = false
     @Published private var _isCheckCodeSuccess = false
     @Published var _isVerifyCodeSuccess = false
+    @Published var _isChangePhoneSuccess = false
+
     @Published private var _isCreatePasswordSuccess = false
     @Published var _hasUnCompletedData = false
     @Published private var _countries: [CountryCityModelData] = []
@@ -145,6 +147,22 @@ class AuthVM: ObservableObject {
         
     }
     
+    func validateChangePhoneCode(phone: String,password: String, code: String, expireAuth: Int) {
+        if code.isBlank {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "EnterThecode".localized())
+        } else if code.count != 4 {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "Enter4DigitCode".localized())
+        } else {
+            var dic: [String: Any] = ["phone": phone.convertDigitsToEng,
+                                      "password": password,
+                                      "code": code.convertDigitsToEng,
+                                      "expire_auth": expireAuth]
+            
+            confirmChangePhone(for: dic)
+        }
+    }
+    
+    
     func validateVerify(phone: String, code: String, isForgetPassword: Bool) {
         if code.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "EnterThecode".localized())
@@ -202,7 +220,7 @@ class AuthVM: ObservableObject {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidPhone".localized())
         }  else {
             changePhone(for: ["password"     : password,
-                              "phone"        : phone.convertDigitsToEng    ])
+                              "phone"        : phone.convertDigitsToEng])
         }
     }
     
@@ -254,6 +272,29 @@ class AuthVM: ObservableObject {
             }
         }
     }
+    
+    private func confirmChangePhone(for dic: [String:Any]) {
+        self._isLoading = true
+        self._isCheckCodeSuccess = false
+        api.confirmChangePhone(dic: dic) {(result)  in
+            switch result {
+            case .success(let response):
+                self._message = response?.message ?? ""
+                self._isLoading = false
+                self._isFailed = false
+                self._isCheckCodeSuccess = true
+                if let response = response,let phone = dic["phone"] as? String {
+                    self.logIn(response:response, phone: phone)
+                }
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+            }
+        }
+    }
+
     
     private func verify(for dic: [String:Any]) {
         self._isLoading = true
@@ -450,8 +491,10 @@ class AuthVM: ObservableObject {
                 self._message = response?.message ?? ""
                 self._isLoading = false
                 self._isFailed = false
-                if let phone = dic["phone"] as? String {
-                    self.sendCode(for: ["phone": phone, "usage": "verify"]) }
+                self._isChangePhoneSuccess = true
+                
+//                if let phone = dic["phone"] as? String {
+//                    self.sendCode(for: ["phone": phone, "usage": "verify"]) }
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false

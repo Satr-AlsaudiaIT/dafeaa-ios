@@ -42,8 +42,8 @@ struct ChangePhoneView: View {
                         ReusableButton(buttonText: "send"){
                             viewModel.validateChangePhone(password: password, phone: phoneNumber)
                         }.padding(.top,16)
-                            .navigationDestination(isPresented: $viewModel._isSendCodeSuccess) {
-                                OTPConfirmationView(phone:phoneNumber)
+                            .navigationDestination(isPresented: $viewModel._isChangePhoneSuccess) {
+                                OTPConfirmationView(phone:phoneNumber, password: password, isChangePhone: true)
                             }
                         Spacer()
                         

@@ -11,7 +11,10 @@ struct OTPConfirmationView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @FocusState private var focusedField: Int?
     @State var phone: String  = ""
+    @State var password: String  = ""
+    @State var isChangePhone: Bool = false
     @State var isForgetPassword: Bool = false
+    @State var isLogoutFromDevices: Bool = false
     @State var code: String = ""
     @StateObject var viewModel = AuthVM()
     @State private var pins: [PinInfo] = [
@@ -74,16 +77,39 @@ struct OTPConfirmationView: View {
                                 }
                             }
                             .environment(\.layoutDirection, .leftToRight)
-                        
                         .padding(.top, 12)
                         
+                        if isChangePhone {
+                            HStack(alignment: .top, spacing: 10) {
+                                // Checkbox
+                                Button(action: {
+                                    isLogoutFromDevices.toggle()
+                                }) {
+                                    Image(systemName: isLogoutFromDevices ? "checkmark.square.fill" : "square")
+                                        .foregroundColor(isLogoutFromDevices ? Color(.primary) : .gray)
+                                        .font(.system(size: 24))
+                                }
+                                
+                                // Text with attributed clickable parts
+                                Text("logOutFromDevicesMessage".localized())
+                                    .textModifier(.plain, 15, .gray666666)
+                                Spacer()
+                            }
+                            .padding(.top)
+                           
+                        }
+                            
                         ReusableButton(buttonText: "confirm") {
                             code = ""
                             for index in (0..<4) {
                                 code += "\(pins[index].pin)"
                             }
                             print("OTP Code: \(code)")
-                            viewModel.validateVerify(phone: phone, code: code, isForgetPassword: isForgetPassword)
+                            if isChangePhone {
+                                viewModel.validateChangePhoneCode(phone: phone, password: password, code: code, expireAuth: isLogoutFromDevices ?  1 : 0)
+                            } else {
+                                viewModel.validateVerify(phone: phone, code: code, isForgetPassword: isForgetPassword)
+                            }
                         }
                         .padding(.top, 16)
                         .navigationDestination(isPresented: $viewModel._isVerifyCodeSuccess) {
@@ -110,6 +136,15 @@ struct OTPConfirmationView: View {
                     .padding(24)
                 }
             }
+            .toolbar{
+                ToolbarItemGroup(placement: .keyboard){
+                    Button("Done".localized()){
+                        hideKeyboard()
+                    }
+                    Spacer()
+                }
+            }
+
             if viewModel.isLoading {
                 ProgressView("Loading...".localized())
                     .foregroundColor(.white)

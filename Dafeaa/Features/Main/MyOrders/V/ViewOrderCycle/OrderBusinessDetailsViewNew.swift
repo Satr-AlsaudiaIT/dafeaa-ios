@@ -80,9 +80,10 @@ struct OrderBusinessDetailsViewNew: View {
                                         .textModifier(.plain, 15,  .black222222)
                                         .frame(maxWidth: .infinity,alignment: .leading)
                                     
-                                    
-                                    PaymentInfoView(breakdown: PaymentDetails(commission: Double(orderData.commissionRatio ?? "0") ?? 0, commissionMaxPrice: Double(orderData.maxCommissionValue ?? "0") ?? 0),itemsPrice: $itemsPrice, isShowDetails: true,isCalculateCommission: false)
-                                    
+                                    if orderData.orderPrice != nil {
+                                        
+                                        PaymentInfoView(breakdown: PaymentDetails(commission: Double(orderData.commissionValue ?? 0), commissionMaxPrice: Double(orderData.maxCommissionValue ?? "0") ?? 0),itemsPrice: $itemsPrice,totalPrice: orderData.totalPrice ?? 0, deliveryPrice: orderData.deliveryPrice ?? 0, isShowDetails: true,isCalculateCommission: false)
+                                    }
                                     
                                     
                                 }
@@ -101,9 +102,15 @@ struct OrderBusinessDetailsViewNew: View {
                                                 .fill(Color.clear))
                                         
                                         VStack(spacing: 8) {
-                                            AddressView(name: orderData.clientName ?? "", address: orderData.address ?? "", streetName: orderData.streetName ?? "", buildingNum: orderData.buildingNum ?? "", area: orderData.area ?? "", floatNum: orderData.floatNum ?? "", phone: orderData.clientPhone ?? "")
-                                           
-                                            
+//                                            AddressView(name: orderData.clientName ?? "", address: orderData.address ?? "", streetName: orderData.streetName ?? "", buildingNum: orderData.buildingNum ?? "", area: orderData.area ?? "", floatNum: orderData.floatNum ?? "", phone: orderData.clientPhone ?? "")
+//
+                                            if orderData.addressDetails != nil {
+                                                AddressView(
+                                                    name: orderData.clientName ?? "",
+                                                    phone:orderData.clientPhone ?? "",
+                                                    addressDetails: orderData.addressDetails
+                                                )
+                                            }
                                         }
                                     }
                                 }
@@ -187,11 +194,14 @@ struct OrderBusinessDetailsViewNew: View {
         .onChange(of: viewModel.isLoading, { oldValue, newValue in
             if !newValue {
                 totalPrice = orderData.totalPrice ?? 0
-                itemsPrice = orderData.products?.reduce(0.0) { total, product in
-                          let price = product.offerPrice ?? product.price ?? 0.0
-                          let quantity = Double(product.amount ?? 0)
-                          return total + (price * quantity)
-                      } ?? 0.0
+                // to do v3 remove for v2
+                itemsPrice = orderData.orderPrice ?? 0
+                //to do return if v2
+//                itemsPrice = orderData.products?.reduce(0.0) { total, product in
+//                          let price = product.offerPrice ?? product.price ?? 0.0
+//                          let quantity = Double(product.amount ?? 0)
+//                          return total + (price * quantity)
+//                      } ?? 0.0
             }
         })
         .onChange(of: viewModel._isStatusChangedSuccess) { _, newValue in

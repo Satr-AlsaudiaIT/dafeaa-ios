@@ -66,7 +66,7 @@ struct OrderLinkDetailsViewNew: View {
                             .foregroundColor(.black222222)})
                         .frame(width: 25,height: 20)
                         let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
-                        if let offerID = viewModel.offersData?.id , let offerCode = viewModel.offersData?.code, let url = URL(string: "https://dafeaa-backend.deplanagency.com/offers/\(offerCode)"){
+                        if let offerID = viewModel.offersData?.id , let offerCode = viewModel.offersData?.code, let url = URL(string: "https://dafea.com.sa/offers/\(offerCode)"){
                             ShareLink(item: url) {  Image(.share).resizable().frame(width: 25,height: 20)} }
                     }
                     .padding(24)
@@ -142,10 +142,12 @@ struct OrderLinkDetailsViewNew: View {
                             }
                             .padding(.bottom,40)
                             .navigationDestination(isPresented: $isNavigateToAddress) {
-                                SavedAddressesView(selectedAddressId: $addressId, selectedAddress: $address,isComingFromSelection: true)
+                                SavedAddressesView(selectedAddressId: $addressId, selectedAddress: $address,initSelectedAddressId: addressId,isComingFromSelection: true)
                             }
+                            .padding(.bottom, 70)
                         }
-                        VStack (spacing: 20) {
+                        .scrollIndicators(.hidden)
+                        VStack (spacing: 8) {
                             
                             if status == 1 {
                                     ReusableButton(buttonText: "stopOffer",buttonColor: .yellow){
@@ -239,7 +241,7 @@ struct OrderLinkDetailsViewNew: View {
         let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
 
         if let offerID = viewModel.offersData?.id , let offerCode = viewModel.offersData?.code{
-            let urlString = "https://dafeaa-backend.deplanagency.com/offers/\(offerCode)"
+            let urlString = "https://dafea.com.sa/offers/\(offerCode)"
             UIPasteboard.general.string = urlString
             self.toast = FancyToast(type: .error, title: "".localized(), message:  "copied successfully".localized())
         }

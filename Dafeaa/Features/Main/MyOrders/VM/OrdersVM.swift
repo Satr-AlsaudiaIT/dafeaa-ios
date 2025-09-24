@@ -14,7 +14,10 @@ final class OrdersVM : ObservableObject {
     @Published private var _isLoading      = false
     @Published private var _isFailed       = false
     @Published var isUpdateQuantitySuccess   = false
+    @Published var isOrderSuccess   = false
+    @Published var orderId : Int?  = nil
 
+    
     @Published var _ordersList     : [OrdersData] = []//[OrdersData(id: 1, name: "ww", orderNo: 1, date: "2121", status: "1")]
     @Published var _ordersListCount     : Int = 1
     @Published var outStandingBalance     : Double = 0
@@ -24,6 +27,7 @@ final class OrdersVM : ObservableObject {
     @Published private var _offersListCount :Int = 1
 
     @Published var offersData      : ShowOfferData?
+    @Published var offersDataV3      : ShowOfferDataV3?
     @Published var productsListInCreateOrder: [[String:Any]] = []
 
     @Published var _getData                 : Bool = false
@@ -36,6 +40,7 @@ final class OrdersVM : ObservableObject {
     private var _message                    : String = ""
     private var token                       = ""
     let api                                 : OrdersAPIProtocol = OrdersAPI()
+    let apiV3                               : OrdersAPIProtocolV3 = OrdersAPIV3()
     var hasMoreData                         = true
 
     var isLoading    : Bool                 { get { return _isLoading }         }
@@ -46,16 +51,21 @@ final class OrdersVM : ObservableObject {
     var offersList   : [OffersData]         { get {return _offersList }  set {} }
 //    var offersData   : ShowOfferData?       { get {return _offersData }  set {} }
 
-    func validations(dynamic_link_id:Int,address_id:Int,products:[[String:Any]]){
-         if address_id == 0 {
+    func validations(dynamicLinkId:Int,addressId:Int,products:[[String:Any]]){
+         if addressId == 0 {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message:"please choose address".localized())
         
         }else{
-            createClientOrder(dic: ["dynamic_link_id":dynamic_link_id,"address_id":address_id,"products":products])
+//            //to do v2
+//            createClientOrder(dic: ["dynamic_link_id":dynamicLinkId,"address_id":addressId,"products":products])
+            
+            //to do v3
+            createClientOrder(dic: ["dynamic_link_id":dynamicLinkId,"address_id":addressId])
         }
     }
-    //MARK: - APIs
     
+    
+    //MARK: - APIs
     func orders(skip: Int, status: String,type:String, animated: Bool = true) {
         if skip == 0 {
              _isLoading = animated ; hasMoreData = true ;
@@ -65,7 +75,7 @@ final class OrdersVM : ObservableObject {
             self.hasMoreData = false
         }
         guard hasMoreData  else { _isLoading = false ;return }
-        api.orders(skip: skip, status: status,type: type) { [weak self] (Result) in
+        apiV3.orders(skip: skip, status: status,type: type) { [weak self] (Result) in
             guard let self = self else { return }
             self._isLoading = false
             switch Result {
@@ -95,15 +105,16 @@ final class OrdersVM : ObservableObject {
     
     func getOrder(id : Int) {
         self._isLoading = true
-        api.getOrder(id: id) { [weak self] (Result) in
+        apiV3.getOrder(id: id) { [weak self] (Result) in
             guard let self = self else {return}
             switch Result {
                 
             case .success(let Result):
                 self._isLoading = false
                 self._isFailed = false
-                guard let data = Result?.data else {return}
-                self._orderData = data
+                guard let result = Result else {return}
+                let convertedOrder = convertOrdersModelV3ToOrderModel(result)
+                self._orderData = convertedOrder.data
                 self._isStatusChangedSuccess = false
 
             case .failure(let error):
@@ -114,6 +125,55 @@ final class OrdersVM : ObservableObject {
             }
         }
     }
+    
+    func convertOrdersModelV3ToOrderModel(_ ordersModelV3: OrdersModelV3) -> OrderModel {
+        let orderData = OrderData(
+            id: ordersModelV3.data?.id,
+            clientImage: ordersModelV3.data?.userImage,
+            clientName: ordersModelV3.data?.userName,
+            orderStatus: ordersModelV3.data?.orderStatus,
+            clientPhone: ordersModelV3.data?.userPhone,
+            clientEmail: ordersModelV3.data?.userEmail,
+            qrCode: ordersModelV3.data?.qrCode,
+            name: ordersModelV3.data?.name,
+            products: ordersModelV3.data?.products,
+            orderPrice: ordersModelV3.data?.orderPrice,
+            deliveryPrice: Double(ordersModelV3.data?.deliveryPrice ?? 0),
+            commissionValue: ordersModelV3.data?.commission ?? 0,
+            paymentStatus: ordersModelV3.data?.paymentStatus,
+            address: ordersModelV3.data?.address,
+            
+            taxPrice: nil,
+            totalPrice: Double(ordersModelV3.data?.totalPrice ?? 0),
+            addressDetails: AddressDetails(
+                id: ordersModelV3.data?.cityId,
+                adress: ordersModelV3.data?.address,
+                name: ordersModelV3.data?.name,
+                phone: ordersModelV3.data?.userPhone,
+                countryId: ordersModelV3.data?.countryId,
+                countryName: ordersModelV3.data?.countryName,
+                cityId: ordersModelV3.data?.cityId,
+                city: ordersModelV3.data?.city,
+                districtName: ordersModelV3.data?.districtName,
+                streetName: ordersModelV3.data?.streetName,
+                lat: ordersModelV3.data?.lat,
+                lng: ordersModelV3.data?.lng
+            ),
+            commissionRatio: nil,
+            maxCommissionValue: nil,
+            streetName: ordersModelV3.data?.streetName,
+            buildingNum: nil,
+            area: ordersModelV3.data?.districtName,
+            floatNum: nil
+        )
+        
+        return OrderModel(
+            data: orderData,
+            message: ordersModelV3.message
+        )
+    }
+
+    
     
     func changeOrderStatus(id : Int,status:Int) {
         self._isLoading = true
@@ -159,7 +219,7 @@ final class OrdersVM : ObservableObject {
     
     func createClientOrder(dic:[String:Any]) {
         _isLoading = true
-        api.createClientOrder(dic: dic) { [weak self] (Result) in
+        apiV3.createClientOrder(dic: dic) { [weak self] (Result) in
             guard let self = self else { return }
             self._isLoading = false
             switch Result {
@@ -168,10 +228,9 @@ final class OrdersVM : ObservableObject {
                 self._isLoading = false
                 self._isFailed = false
                 self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2){
-                    GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
-                    MOLH.reset()
-                }
+
+                self.orderId = response?.data?.orderId ?? 0
+                self.isOrderSuccess = true
                 case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
@@ -253,7 +312,6 @@ final class OrdersVM : ObservableObject {
                 self._isLoading = false
                 self._isFailed = false
                 self.toast = FancyToast(type: .success, title: "Success".localized(), message: status == 1 ? "active_message".localized() : "stop_message".localized())
-                
                 self.activeStopSuccess.toggle()
                 self.offersData?.status = status
                 case .failure(let error):
@@ -289,15 +347,19 @@ final class OrdersVM : ObservableObject {
     
     func showOffer(code:String) {
         _isLoading = true
-        api.showDynamicLinks(code: code) { [weak self] (Result) in
+        apiV3.showDynamicLinks(code: code) { [weak self] (Result) in
             guard let self = self else { return }
             self._isLoading = false
             switch Result {
             case .success(let response):
-                guard let data = response?.data else { return }
+                guard let response = response else { return }
+        //to do if needed to return to v2 remove this and return self.offersData = data
+            if let mappedModel = mapShowOfferModelV3ToShowOfferModel(v3Model: response) {
                 self._isLoading = false
                 self._isFailed = false
-                self.offersData = data
+                self.offersData = mappedModel.data
+                }
+//                self.offersData = data
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
@@ -307,6 +369,45 @@ final class OrdersVM : ObservableObject {
         }
     }
     
+    //to do if needed to return to v2 remove this
+    func mapShowOfferModelV3ToShowOfferModel(v3Model: ShowOfferModelV3) -> ShowOfferModel? {
+        guard let v3Data = v3Model.data else { return nil }
+        
+        // Create a single product from V3 data since V3 represents a single offer
+        let product = productList(
+            id: v3Data.id,
+            images: v3Data.images,
+            name: v3Data.name,
+            description: v3Data.description,
+            price: v3Data.price,
+            amount: nil, // Not available in V3
+            offerPrice: v3Data.offerPrice,
+            totalQuantity: nil, // Not available in V3
+            paiedQuantity: nil, // Not available in V3
+            remainingQuantity: nil // Not available in V3
+        )
+        
+        let showOfferData = ShowOfferData(
+            id: v3Data.id,
+            name: v3Data.name,
+            code: v3Data.code,
+            description: v3Data.description,
+            clientId: v3Data.clientId,
+            deliveryPrice: nil, // Not available in V3
+            taxPrice: nil, // Not available in V3
+            products: [product], // Convert single offer to product array
+            status: v3Data.status,
+            commissionRatio: v3Data.commissionRatio,
+            maxCommissionValue: v3Data.maxCommissionValue
+        )
+        
+        return ShowOfferModel(
+            status: v3Model.status,
+            message: v3Model.message,
+            data: showOfferData
+        )
+    }
+
     
     //MARK: - Create Link Requests
     func validateAddOrderOLD(images: [UIImage]?, name: String, description: String, quantity:String, price: String, offerPrice: String, haveOffer: Bool) -> [String: Any]? {
@@ -357,7 +458,7 @@ final class OrdersVM : ObservableObject {
         }
     }
     
-    func validateAddOfferOld(offerName:String, offerDescription:String, productsAdding: [[String: Any]]) {
+    func validateCreateOfferLinkOld(offerName:String, offerDescription:String, productsAdding: [[String: Any]]) {
         if offerName.isBlank {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message:"enterOfferName".localized())
         }
@@ -370,7 +471,7 @@ final class OrdersVM : ObservableObject {
         }
         else {
             let param: [String:Any] = ["name": offerName,                                               "description": offerDescription]
-            self.createOrderByMerchant(param: param, products: productsAdding)
+            self.createOrderLinkByMerchant(param: param, products: productsAdding)
         }
     }
 
@@ -413,7 +514,6 @@ final class OrdersVM : ObservableObject {
                 product["offer_price"] = Double(offerPrice.convertDigitsToEng) ?? 0
             }
             
-//            self.toast = FancyToast(type: .success, title: "Success".localized(), message: "addProductSuccess".localized())
             self._isAddProDuctValid = true
 
             return product
@@ -423,22 +523,22 @@ final class OrdersVM : ObservableObject {
     
     
     
-   
-    func validateAddOfferNew(offerName:String, offerDescription:String, productsAdding: [[String: Any]]) {
+   //to do v2
+    func validateCreateOfferLinkNew(offerName:String, offerDescription:String, productsAdding: [[String: Any]]) {
         if productsAdding.count == 0 {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message:"pleaseAddProducts".localized())
         }
         else {
             let param: [String:Any] = ["name": offerName,                                               "description": offerDescription]
-            self.createOrderByMerchant(param: param, products: productsAdding)
+            self.createOrderLinkByMerchant(param: param, products: productsAdding)
         }
     }
     
-    private func  createOrderByMerchant(param:[String:Any], products:[[String:Any]]){
+    private func  createOrderLinkByMerchant(param:[String:Any], products:[[String:Any]]){
         let params:[String:Any] = param
             self._isLoading = true
         let path :String = "links"
-            
+
         MultipartUploadImageWithModel.shared.uploadOrderWithProduct(path: path, parameterS: params, products: products, responseClass: CreateOrderPostModel.self) {
                 [weak self] (Result) in
                 guard let self = self else {return}
@@ -460,5 +560,45 @@ final class OrdersVM : ObservableObject {
                 }
             }
         }
+    
+    // to do v3
+    func validateCreateOfferLinkNewV3(offerName:String, offerDescription:String, productsAdding: [[String: Any]]) {
+        if productsAdding.count == 0 {
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message:"pleaseAddProducts".localized())
+        }
+        else {
+            let param: [String:Any] = ["name": offerName,                                               "description": offerDescription,
+                                       "price": productsAdding[0]["price"] ?? 0]
+            self.createOrderLinkByMerchant(param: param, products: productsAdding)
+        }
+    }
+    
+    private func  createOrderLinkByMerchantV3(param:[String:Any], products:[[String:Any]]){
+        let params:[String:Any] = param
+            self._isLoading = true
+        let path :String = "v3/links"
+            
+        MultipartUploadImageWithModel.shared.uploadImage(path: path, pdfUrl: [:], parameterS: params, photos: ["images":products[0]["images"] as? UIImage ?? UIImage()] , responseClass: CreateOrderPostModel.self) {
+            [weak self] (Result) in
+            guard let self = self else {return}
+            switch Result {
+            case .success(let Result):
+                guard  let data = Result else {return}
+                self._isLoading = false
+                self._isFailed = false
+                self.toast = FancyToast(type: .success, title: "Success".localized(), message: data.message ?? "")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self._isCreateOrderSuccess = true
+                }
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+                
+            }
+        }
+    }
+    
 
 }

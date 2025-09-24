@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
         
         return true
     }
-    
+  
     func applicationWillEnterForeground(_ application: UIApplication) {
         print("applicationWillEnterForeground")
         
@@ -39,6 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
     
     func setUpDidFinishLaunch() {
         // Keyboard setup
+        Constants.sessionFlag = false
         IQKeyboardManager.shared.enable = true
         languageConfiguration()
         self.reset()
@@ -142,14 +143,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
     }
     
     func handleDeepLinkNav(code:String){
-        let api: OrdersAPIProtocol = OrdersAPI()
+        let api: OrdersAPIProtocolV3 = OrdersAPIV3()
 
         api.showDynamicLinks(code: code) { [weak self] (Result) in
             guard let self = self else { return }
             switch Result {
             case .success(let response):
-                guard let data = response?.data else { return }
-                navToOffer(offerData:data, offerUserId:response?.data?.clientId ?? 0 )
+                guard let response = response else { return }
+                //to do if needed to return to v2 remove this and return self.offersData = data
+                
+                    if let mappedModel = mapShowOfferModelV3ToShowOfferModel(v3Model: response) {
+                        navToOffer(offerData:mappedModel.data, offerUserId:response.data?.clientId ?? 0 )
+                        }
             case .failure(let error):
                 if error.code == 404 {
                     return
@@ -158,6 +163,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
         }
         
     }
+    
+    //to do if needed to return to v2 remove this
+    func mapShowOfferModelV3ToShowOfferModel(v3Model: ShowOfferModelV3) -> ShowOfferModel? {
+        guard let v3Data = v3Model.data else { return nil }
+        
+        // Create a single product from V3 data since V3 represents a single offer
+        let product = productList(
+            id: v3Data.id,
+            images: v3Data.images,
+            name: v3Data.name,
+            description: v3Data.description,
+            price: v3Data.price,
+            amount: nil, // Not available in V3
+            offerPrice: v3Data.offerPrice,
+            totalQuantity: nil, // Not available in V3
+            paiedQuantity: nil, // Not available in V3
+            remainingQuantity: nil // Not available in V3
+        )
+        
+        let showOfferData = ShowOfferData(
+            id: v3Data.id,
+            name: v3Data.name,
+            code: v3Data.code,
+            description: v3Data.description,
+            clientId: v3Data.clientId,
+            deliveryPrice: nil, // Not available in V3
+            taxPrice: nil, // Not available in V3
+            products: [product], // Convert single offer to product array
+            status: v3Data.status,
+            commissionRatio: v3Data.commissionRatio,
+            maxCommissionValue: v3Data.maxCommissionValue
+        )
+        
+        return ShowOfferModel(
+            status: v3Model.status,
+            message: v3Model.message,
+            data: showOfferData
+        )
+    }
+    
     
     private func navToOffer(offerData: ShowOfferData?,offerUserId: Int) {
         guard Constants.accountStatus == 2 else { return }

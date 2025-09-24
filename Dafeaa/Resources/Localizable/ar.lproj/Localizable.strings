@@ -70,6 +70,7 @@
 "confirmPhone" = "تأكيد رقم الهاتف";
 "confirmPhoneSubTitle" = "برجاء إدخال الرقم المرسل اليكم عبر الهاتف المحمول لتأكيد رقم الهاتف والدخول الى حسابك." ;
 "confirm" = "تأكيد";
+"logOutFromDevicesMessage" = "الخروج من كل الاجهزة الاخري";
 
 //MARK: - ResetPasswordView
 "didn’tReceiveCode?" = "لم يصلك الرمز بعد؟ ?";
@@ -257,6 +258,10 @@
 "AddAddress" = "إضافة عنوان جديد +";
 "streetName" = "إسم الشارع";
 "buildingNum" = "رقم المبنى";
+"districtName" = "اسم المقاطعة";
+"city" = "المدينة";
+"countryName" = "Country Name";
+
 "FloatNum" = "رقم الطابق";
 "Add" = "إضافة";
 "Save" = "حفظ";
@@ -376,3 +381,6 @@
 "O.K" = "حسنا";
 "transferTo" = "تم التحويل إلى:";
 "transferFrom" = "تم التحويل من:";
+"createDeveloperKeyToGetCodes" ="يمكنك إنشاء مفتاح المطور بالنقر على الزر أدناه";
+"generate_codes" = "إنشاء الاكواد";
+"createDeveloperKeyToGetSecretKeyCodes" = "لانشاء المفتاح السري يجب الضغط على الزر أدناه";

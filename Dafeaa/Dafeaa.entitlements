@@ -6,7 +6,9 @@
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
+		<string>applinks:dafea-website.vercel.app?mode=developer</string>
 		<string>applinks:dafeaa-backend.deplanagency.com?mode=developer</string>
+		<string>applinks:dafea.com.sa?mode=developer</string>
 	</array>
 </dict>
 </plist>

@@ -70,6 +70,7 @@
 "confirmPhone" = "Confirm Phone Number";
 "confirmPhoneSubTitle" = "Please enter the code sent to you via mobile to confirm your phone number and access your account." ;
 "confirm" = "Confirm";
+"logOutFromDevicesMessage" = "Log out from all other devices" ;
 
 //MARK: - ResetPasswordView
 "didn’tReceiveCode?" = "Didn't receive the code yet?";
@@ -259,6 +260,10 @@
 "AddAddress" = "Add New Address +";
 "streetName" = "Street Name";
 "buildingNum" = "Building Number";
+"districtName" = "District Name";
+"city" = "City";
+"countryName" = "Country Name";
+
 "FloatNum" = "Floor Number";
 "Add" = "Add";
 "Save" = "Save";
@@ -376,3 +381,7 @@
 "O.K" = "O.K";
 "transferTo" = "Transfer to:";
 "transferFrom" = "Transfer From:";
+"createDeveloperKeyToGetCodes" ="you can create a developer key by clicking on the button below";
+"generate_codes" = "Generate Codes";
+"createDeveloperKeyToGetSecretKeyCodes" = "to generate secret key code press the below button";
+

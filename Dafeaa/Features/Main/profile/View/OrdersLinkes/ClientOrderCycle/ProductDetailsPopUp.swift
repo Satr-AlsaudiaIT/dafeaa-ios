@@ -74,27 +74,34 @@ struct ProductDetailsPopUp: View {
                                     .textModifier(.plain, 15, .gray565656)
                                 Spacer()
                             }
+                            
                             if isMerchant {
-                                HStack {
-                                    Text("totalQuantity".localized())
-                                        .textModifier(.plain, 15, .gray565656)
-                                    Spacer()
-                                    Text("\(product.totalQuantity ?? 0)")
-                                        .textModifier(.plain, 15, .gray565656)
+                                if product.totalQuantity != 0 && product.totalQuantity != nil {
+                                    HStack {
+                                        Text("totalQuantity".localized())
+                                            .textModifier(.plain, 15, .gray565656)
+                                        Spacer()
+                                        Text("\(product.totalQuantity ?? 0)")
+                                            .textModifier(.plain, 15, .gray565656)
+                                    }
                                 }
-                                HStack {
-                                    Text("paidQuantity".localized())
-                                        .textModifier(.plain, 15, .gray565656)
-                                    Spacer()
-                                    Text("\(product.paiedQuantity ?? 0)")
-                                        .textModifier(.plain, 15, .gray565656)
+                                if product.paiedQuantity != 0 && product.paiedQuantity != nil {
+                                    HStack {
+                                        Text("paidQuantity".localized())
+                                            .textModifier(.plain, 15, .gray565656)
+                                        Spacer()
+                                        Text("\(product.paiedQuantity ?? 0)")
+                                            .textModifier(.plain, 15, .gray565656)
+                                    }
                                 }
-                                HStack {
-                                    Text("remainingQuantity".localized())
-                                        .textModifier(.plain, 15, .gray565656)
-                                    Spacer()
-                                    Text("\(product.remainingQuantity ?? 0)")
-                                        .textModifier(.plain, 15, .gray565656)
+                                if product.remainingQuantity != 0 && product.remainingQuantity != nil {
+                                    HStack {
+                                        Text("remainingQuantity".localized())
+                                            .textModifier(.plain, 15, .gray565656)
+                                        Spacer()
+                                        Text("\(product.remainingQuantity ?? 0)")
+                                            .textModifier(.plain, 15, .gray565656)
+                                    }
                                 }
                             }
                         }

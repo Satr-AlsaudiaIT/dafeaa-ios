@@ -20,7 +20,7 @@ struct ClientLinkDetailsNew: View {
     @State var isNavigateToAddress: Bool = false
     @State var showingProductDetails: Bool = false
     @State var isAmountInCellDisabled: Bool = false
-
+    @State var showOrderDetails: Bool = false
     @State private var  selectedImage: String?
     @State private var showSelectedImage: Bool = false
     @State var quantity : String = ""
@@ -149,12 +149,23 @@ struct ClientLinkDetailsNew: View {
                                 )
                                 
                             }
-                            ReusableButton(buttonText: "orderNow",isEnabled: viewModel.offersData?.status == 1 ? true : false){ viewModel.validations(dynamic_link_id: viewModel.offersData?.id ?? 0, address_id: addressId, products: productAmountDic)}
+                            ReusableButton(buttonText: "orderNow",isEnabled: viewModel.offersData?.status == 1 ? true : false){ viewModel.validations(dynamicLinkId: viewModel.offersData?.id ?? 0, addressId: addressId, products: productAmountDic)}
                             Spacer()
                         }
                         .padding(.all,24)
                         .navigationDestination(isPresented: $isNavigateToAddress) {
-                            SavedAddressesView(selectedAddressId: $addressId, selectedAddress: $address,isComingFromSelection: true)
+                            SavedAddressesView(selectedAddressId: $addressId, selectedAddress: $address,initSelectedAddressId: addressId,isComingFromSelection: true)
+                        }
+                        .onChange(of: viewModel.isOrderSuccess) { _, newValue in
+                            if newValue {
+                                showOrderDetails = true
+                            }
+                        }
+                        .navigationDestination(isPresented: $showOrderDetails) {
+                            if let orderId = viewModel.orderId {
+                                OrderClientDetailsView(orderID: orderId, isComingFromCreateOrder: true)
+                            }
+                            
                         }
                     }
                     

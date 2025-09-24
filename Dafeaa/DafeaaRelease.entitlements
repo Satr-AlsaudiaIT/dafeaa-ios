@@ -4,7 +4,9 @@
 <dict>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
+		<string>applinks:dafea-website.vercel.app</string>
 		<string>applinks:dafeaa-backend.deplanagency.com</string>
+		<string>applinks:dafea.com.sa</string>
 	</array>
 </dict>
 </plist>

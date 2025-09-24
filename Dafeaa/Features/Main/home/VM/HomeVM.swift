@@ -66,24 +66,6 @@ class HomeVM: ObservableObject {
             }
         }
 
-//        api.home() { [weak self] (Result) in
-//            guard let self = self else {return}
-//            switch Result {
-//                
-//            case .success(let Result):
-//                self._isLoading = false
-//                self._isFailed = false
-//                guard let data = Result?.data else {return}
-//                self._homeData = Result
-//                self._processList = data
-//                self.walletAmount = self._homeData?.availableBalance ?? 0
-//            case .failure(let error):
-//                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
-//                self._isLoading = false
-//                self._isFailed = true
-//                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
-//            }
-//        }
     }
     
     func notificationsList(skip: Int) {

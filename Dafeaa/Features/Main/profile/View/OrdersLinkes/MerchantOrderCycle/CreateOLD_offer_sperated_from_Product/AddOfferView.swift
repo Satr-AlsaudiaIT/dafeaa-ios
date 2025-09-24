@@ -66,7 +66,7 @@ struct AddOfferView: View {
                         }                    .padding(24)
 
                         ReusableButton(buttonText: "saveBtn", action: {
-                            viewModel.validateAddOfferOld(offerName: name, offerDescription: description,  productsAdding:productsAdding )
+                            viewModel.validateCreateOfferLinkOld(offerName: name, offerDescription: description,  productsAdding:productsAdding )
                         })
                     
                     .padding(24)

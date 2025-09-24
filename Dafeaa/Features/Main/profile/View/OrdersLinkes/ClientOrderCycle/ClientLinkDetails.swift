@@ -20,6 +20,7 @@ struct ClientLinkDetails: View {
     @State var isNavigateToAddress: Bool = false
     @State var showingProductDetails: Bool = false
     @State var isAmountInCellDisabled: Bool = false
+    @State var showOrderDetails: Bool = false
 
     @State var selectedProduct: productList = productList(id: 3, images: [ImageModel(file: "ww")], name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000,amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 0, remainingQuantity: 1)
     var linkDetails: ShowOfferData  {
@@ -91,13 +92,24 @@ struct ClientLinkDetails: View {
                                 )
                                 
                             }
-                            ReusableButton(buttonText: "orderNow",isEnabled: viewModel.offersData?.status == 1 ? true : false){ viewModel.validations(dynamic_link_id: viewModel.offersData?.id ?? 0, address_id: addressId, products: productAmountDic)}
+                            ReusableButton(buttonText: "orderNow",isEnabled: viewModel.offersData?.status == 1 ? true : false){ viewModel.validations(dynamicLinkId: viewModel.offersData?.id ?? 0, addressId: addressId, products: productAmountDic)}
                             Spacer()
                         }
                         .padding(.all,24)
                         .navigationDestination(isPresented: $isNavigateToAddress) {
-                            SavedAddressesView(selectedAddressId: $addressId, selectedAddress: $address,isComingFromSelection: true)
+                            SavedAddressesView(selectedAddressId: $addressId, selectedAddress: $address,initSelectedAddressId: addressId,isComingFromSelection: true)
                         }
+                        .onChange(of: viewModel.isOrderSuccess) { _, newValue in
+                                if newValue {
+                                    showOrderDetails = true
+                                }
+                            }
+                            .navigationDestination(isPresented: $showOrderDetails) {
+                                if let orderId = viewModel.orderId {
+                                    OrderClientDetailsView(orderID: orderId, isComingFromCreateOrder: true)
+                                }
+                                
+                            }
                     }
                     
                 }

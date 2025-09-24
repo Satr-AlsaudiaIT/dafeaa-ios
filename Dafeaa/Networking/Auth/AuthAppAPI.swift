@@ -18,6 +18,8 @@ protocol AuthAPIProtocol {
     func getCountries(Completion: @escaping (Result<CountryCityModel?, NSError>) -> Void)
     func getCities(countryId:Int,Completion: @escaping (Result<CountryCityModel?, NSError>) -> Void)
     func changePhone(dic: [String:Any], Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
+    func confirmChangePhone(dic: [String:Any], Completion: @escaping (Result<LoginModel?, NSError>) -> Void)
+
 }
 
 
@@ -98,6 +100,12 @@ class AuthAPI: BaseAPI<AuthNetwork>, AuthAPIProtocol
     
     func changePhone(dic: [String:Any], Completion: @escaping (Result<GeneralModel?, NSError>) -> Void){
         self.fetchData(target: .changePhone(dic: dic), responseClass: GeneralModel.self) { (result) in
+            Completion(result)
+        }
+    }
+    func confirmChangePhone(dic: [String:Any], Completion: @escaping (Result<LoginModel?, NSError>) -> Void)
+    {
+        self.fetchData(target: .confirmChangePhone(dic: dic), responseClass: LoginModel.self) { (result) in
             Completion(result)
         }
     }
