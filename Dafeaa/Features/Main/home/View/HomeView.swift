@@ -35,6 +35,8 @@ struct HomeView: View {
     @State var isNavigateToTransferView : Bool = false
     @State var transferBalancePhone : String = ""
     @State var transferBalanceName : String = ""
+    @State var navigateToWithDrawView: Bool = false
+    @State var navigateToAddBalance: Bool = false
 
     @State var transferBalanceAmount : String = ""
     var body: some View {
@@ -380,19 +382,19 @@ struct HomeView: View {
             })
             .sheet(isPresented: $isPresentBuySheet, content: {
                 BuyProductBottomSheet(isShowClientLinkDetails: $showClientOfferDetails, isShowOrderLinkDetails: $showOfferDetails, offerData: $offerData,isSheetPresented: $isPresentBuySheet)
-                    .presentationDetents([.fraction(0.45)]) // Use fraction to make height consistent
+                    .presentationDetents([.fraction(0.45)])
                     .presentationCornerRadius(24)
                     .presentationDragIndicator(.visible)
             })
             .sheet(isPresented: $isSheetPresented, content: {
-                AddWithdrawBottomSheet(actionType: $balanceActionType, amountDouble: $amount, isSheetPresented: $isSheetPresented,navigateToWebView: $navigateToWebView,paymentURL: $paymentURL)
-                    .presentationDetents([.fraction(0.6)]) // Use fraction to make height consistent
+                AddWithdrawBottomSheet(actionType: $balanceActionType, amountDouble: $amount, isSheetPresented: $isSheetPresented,navigateToWebView: $navigateToWebView,paymentURL: $paymentURL, navigateToWithDrawView: $navigateToWithDrawView, navigateToAddBalance: $navigateToAddBalance)
+                    .presentationDetents([.fraction(0.6)])
                     .presentationCornerRadius(24)
                     .presentationDragIndicator(.visible)
             })
             .sheet(isPresented: $showTransferBottomSheet, content: {
                 TransferBottomSheet(isSheetPresented: $showTransferBottomSheet,amount: $transferBalanceAmount,phoneNumber: $transferBalancePhone, name: $transferBalanceName,isNavigateToTransferView: $isNavigateToTransferView)
-                    .presentationDetents([.fraction(0.4)]) // Use fraction to make height consistent
+                    .presentationDetents([.fraction(0.4)])
                     .presentationCornerRadius(24)
                     .presentationDragIndicator(.visible)
                     .onAppear{
@@ -406,6 +408,16 @@ struct HomeView: View {
             })
             .navigationDestination(isPresented: $navigateToWebView) {
                 PaymentWebViewContainer(url: paymentURL)
+            }
+            .navigationDestination(isPresented: $navigateToWithDrawView) {
+                WithdrawDetailsView(
+                    withdrawAmount: amount
+                )
+            }
+            .navigationDestination(isPresented: $navigateToAddBalance) {
+                AddBalanceCardDetailsView(
+                    addAmount: amount
+                )
             }
         }
     }

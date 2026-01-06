@@ -25,6 +25,7 @@ class HomeVM: ObservableObject {
     @Published var _addToWalletURL         : String = ""
     @Published var paymentURL              : String = ""
     @Published var showOfferSuccess       : Bool = false
+    @Published var _isPaymentSuccess       = false 
     private var _message                   : String = ""
     private var token                      = ""
     let api                                : HomeAPIProtocol = HomeAPI()
@@ -96,53 +97,166 @@ class HomeVM: ObservableObject {
             }
         }
     }
-    func validateWithdrawAmount(amount: Double) {
-//        if walletAmount > amount {
-            withdrawAmount(amount: amount)
-//        }
-//        else {
-//            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "notValidBalance".localized())
-//        }
-    }
-    
-    func withdrawAmount(amount: Double) {
-        api2.withDrawAmount(amount: amount) { [weak self] (Result) in
-            guard let self = self else { return }
-            self._isLoading = false
-            switch Result {
-            case .success(let Result):
-                guard let data = Result else { return }
-                self.toast = FancyToast(type: .success, title: "Success".localized(), message: data.message ?? "")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                    self._isWithdrawSuccess = true
-                }
-            case .failure(let error):
-                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
-                self._isLoading = false
-                self._isFailed = true
-                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
-            }
+    func validateWithdrawAmount(amount: Double, accountName: String, iban: String, mobile: String, city: String) {
+        // Get UDID
+        guard let udid = UIDevice.current.identifierForVendor?.uuidString else {
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "Device ID not found".localized())
+            return
         }
+        
+       
+        
+        let amountInHalalas = Int(amount * 100)
+        
+        // Build request dictionary
+        let dic: [String: Any] = [
+            "source_id": "71b34f0e-c476-41c7-b16b-9701649320e0",
+            "amount": amountInHalalas,
+            "purpose": "personal",
+            "destination": [
+                "type": "bank",
+                "iban": iban,
+                "name": accountName,
+                "mobile": mobile,
+                "country": "SA",
+                "city": city
+            ]
+        ]
+        
+        withdrawAmount(dic: dic)
     }
-    
-    func addAmount(amount: Double) {
+
+    func withdrawAmount(dic: [String: Any]) {
         self._isLoading = true
-        api2.addAmountToWallet(amount: amount) { [weak self] (Result) in
+        api2.withDrawAmount(dic: dic) { [weak self] (Result) in
             guard let self = self else { return }
             self._isLoading = false
             switch Result {
             case .success(let Result):
                 guard let data = Result else { return }
-                paymentURL = data.data ?? ""
+                
+                // Check transaction status
+                if let transaction = data.transaction {
+                    let status = transaction.status ?? ""
+                    let message = transaction.message ?? data.message ?? ""
+                    
+                    if status == "initiated" {
+                        // Success - payment initiated
+                        self.toast = FancyToast(
+                            type: .success,
+                            title: "Success".localized(),
+                            message: message
+                        )
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                            self._isWithdrawSuccess = true
+                            Constants.shouldNavigateToWallet = true
+                            Constants.lastPayoutStatus = "done"
+                        }
+                    } else if status == "failed" {
+                        // Failed transaction
+                        let failureReason = transaction.failureReason ?? "Withdrawal failed".localized()
+                        self.toast = FancyToast(
+                            type: .error,
+                            title: "Error".localized(),
+                            message: failureReason
+                        )
+                    } else {
+                        // Other statuses (pending, processing, etc.)
+                        self.toast = FancyToast(
+                            type: .info,
+                            title: "Info".localized(),
+                            message: message
+                        )
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                            self._isWithdrawSuccess = true
+                        }
+                    }
+                } else {
+                    // No transaction data
+                    self.toast = FancyToast(
+                        type: .success,
+                        title: "Success".localized(),
+                        message: data.message ?? "Withdrawal request submitted".localized()
+                    )
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                        self._isWithdrawSuccess = true
+                    }
+                }
                 
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
                 self._isFailed = true
-                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+                self.toast = FancyToast(
+                    type: .error,
+                    title: "Error".localized(),
+                    message: self._message
+                )
             }
         }
     }
+
+    func addAmount(amount: Double, cardNumber: String, cardHolderName: String, month: String, year: String, cvv: String) {
+        self._isLoading = true
+        
+        // Convert amount to halalas (multiply by 100)
+        let amountInHalalas = Int(amount * 100)
+        
+        
+        // Convert month to Int
+        guard let monthInt = Int(month) else {
+            self._isLoading = false
+            self.toast = FancyToast(type: .error, title: "Error".localized(), message: "Invalid month".localized())
+            return
+        }
+        
+        // Build request dictionary
+        let dic: [String: Any] = [
+            "amount": amountInHalalas,
+            "source": [
+                "type": "card",
+                "number": cardNumber.replacingOccurrences(of: " ", with: ""),
+                "name": cardHolderName,
+                "month": monthInt,
+                "year": year,
+                "cvc": cvv
+            ]
+        ]
+        
+        api2.addAmountToWallet(dic: dic) { [weak self] (Result) in
+            guard let self = self else { return }
+            self._isLoading = false
+            switch Result {
+            case .success(let Result):
+                guard let data = Result else { return }
+                
+                if data.success == true, let transactionUrl = data.transactionUrl {
+                    self.paymentURL = transactionUrl
+                    self._isPaymentSuccess = true
+                } else {
+                    self.toast = FancyToast(
+                        type: .error,
+                        title: "Error".localized(),
+                        message: "Payment failed".localized()
+                    )
+                }
+                
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(
+                    type: .error,
+                    title: "Error".localized(),
+                    message: self._message
+                )
+            }
+        }
+    }
+    
     func handleFindOfferByNum(code:String){
         if code == "" {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message: "offer_num_validation".localized())

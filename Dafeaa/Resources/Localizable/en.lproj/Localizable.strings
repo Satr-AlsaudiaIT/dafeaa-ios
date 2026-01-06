@@ -385,3 +385,69 @@
 "generate_codes" = "Generate Codes";
 "createDeveloperKeyToGetSecretKeyCodes" = "to generate secret key code press the below button";
 
+//MARK: - saved IBAN View
+"Saved IBANs" = "Saved IBANs";
+"addNewIBAN" = "+ Add a new IBAN";
+"Add New IBAN" = "Add New IBAN";
+"Edit IBAN" = "Edit IBAN";
+"IBAN Number" = "IBAN Number";
+"Account Name" = "Account Name";
+"Confirm" = "Confirm";
+"ibanValidation" = "Please enter IBAN number";
+"accountNameValidation" = "Please enter account name";
+"invalidSaudiIBAN" = "Please enter a valid Saudi IBAN (24 characters starting with SA)";
+
+//MARK: - Withdraw
+"Payout" = "Payout";
+"Withdrawal Amount" = "Withdrawal Amount";
+"Notice" = "Notice";
+"Withdrawals are processed instantly or within 5 minutes." = "Withdrawals are processed instantly or within 5 minutes.";
+"ACCOUNT HOLDER NAME" = "ACCOUNT HOLDER NAME";
+"Account Holder Name" = "Account Holder Name";
+"Select IBAN" = "Select IBAN";
+"MOBILE NUMBER" = "MOBILE NUMBER";
+"Mobile Number" = "Mobile Number";
+"CITY" = "CITY";
+"City" = "City";
+"Withdraw" = "Withdraw";
+"accountHolderNameValidation" = "Please enter account holder name";
+"ibanSelectionValidation" = "Please select an IBAN";
+"mobileValidation" = "Please enter mobile number";
+"invalidMobileValidation" = "Please enter a valid Saudi mobile number";
+"cityValidation" = "Please enter city";
+"Device ID not found" = "Device ID not found";
+"IBAN not found" = "IBAN not found";
+"Withdrawal request submitted" = "Withdrawal request submitted";
+"Please select a valid IBAN" = "Please select a valid IBAN";
+
+//MARK: Add balance
+"Payment" = "Payment";
+"Secure & Fast Payment Processing" = "Secure & Fast Payment Processing";
+"Total Amount" = "Total Amount";
+"Pay with Card" = "Pay with Card";
+"Or pay with" = "Or pay with";
+"CARDHOLDER NAME" = "CARDHOLDER NAME";
+"Cardholder Name" = "Cardholder Name";
+"CARD NUMBER" = "CARD NUMBER";
+"EXPIRATION DATE" = "EXPIRATION DATE";
+"Charge" = "Charge";
+"Cardholder name required" = "Cardholder name required";
+"Card number required" = "Card number required";
+"Invalid card number" = "Invalid card number";
+"Month required" = "Month required";
+"Invalid month (01-12)" = "Invalid month (01-12)";
+"Year required" = "Year required";
+"Invalid year (YYYY)" = "Invalid year";
+"CVV required" = "CVV required";
+"Invalid CVV (3-4 digits)" = "Invalid CVV";
+"The amount will be charged to your wallet via Dafea" = "The amount will be charged to your wallet via Dafea";
+"Success" = "Success";
+"Failed" = "Failed";
+"The balance has been successfully recharged." = "The balance has been successfully recharged.";
+"Payment failed. Please try again." = "Payment failed. Please try again.";
+"The balance has been successfully withdrawn." = "The balance has been successfully withdrawn." ;
+"Total Amount" = "Total Amount";
+"Pay with" = "Pay with";
+"5 minutes during business hours, otherwise the next business day" = "5 minutes during business hours, otherwise the next business day";
+"SARIE transfer – for amounts over" = "SARIE transfer – for amounts over";
+

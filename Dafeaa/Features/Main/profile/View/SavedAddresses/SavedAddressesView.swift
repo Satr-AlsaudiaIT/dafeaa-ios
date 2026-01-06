@@ -137,6 +137,7 @@ struct SavedAddressesView: View {
                             HStack {
                                 Text(Constants.userName )
                                     .textModifier(.plain, 14, .black1E1E1E)
+                                Spacer()
                                 // Edit Button
                                 Button(action: {
                                     addressToEdit = address

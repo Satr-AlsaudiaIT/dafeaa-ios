@@ -24,7 +24,8 @@ struct AddWithdrawBottomSheet: View {
     @State var isUnlocked = false
     @Binding var navigateToWebView : Bool
     @Binding var paymentURL : String
-    
+    @Binding var navigateToWithDrawView: Bool
+    @Binding var navigateToAddBalance: Bool
     var body: some View {
         ZStack {
             Color.clear
@@ -33,8 +34,6 @@ struct AddWithdrawBottomSheet: View {
                 
                 Text(actionType == .addBalance ? "addWalletBalance".localized() : "withdrawWalletBalance".localized())
                     .textModifier(.plain, 19, .black222222)
-                
-                //                Spacer(minLength: 10) // Control minimum spacing
                     .padding(.bottom)
                 HStack {
                     Image(.saudiFlag)
@@ -61,17 +60,18 @@ struct AddWithdrawBottomSheet: View {
                     .textModifier(.plain, 17, actionType == .addBalance ? .gray919191 : Color(.redD73D24))
                     .multilineTextAlignment(.center)
                     .padding(.bottom)
-                //                Spacer(minLength: 10) // Control minimum spacing
                 
                 ReusableButton(buttonText: actionType == .addBalance ? "addBalance".localized() : "withdrawBalance".localized(), isEnabled: true) {
                     switch actionType {
                     case .addBalance:
-//                        actionFinished = true
                         amountDouble = Double(amount.convertDigitsToEng) ?? 0
-                        viewModel.addAmount(amount: amountDouble)
+                        navigateToAddBalance = true
+                        isSheetPresented = false
                         
                     case .withDraw:
-                        authenticate()
+                        amountDouble = Double(amount.convertDigitsToEng) ?? 0
+                        navigateToWithDrawView = true
+                        isSheetPresented = false
                     case .none:
                         return
                     }
@@ -102,6 +102,7 @@ struct AddWithdrawBottomSheet: View {
             paymentURL = viewModel.paymentURL
             navigateToWebView = true
         }
+       
 //        .navigationDestination(isPresented: $navigateToWebView) {
 //            PaymentWebView(url: viewModel.paymentURL)
 //        }
@@ -114,38 +115,38 @@ struct AddWithdrawBottomSheet: View {
     }
     
 
-    func authenticate() {
-        let context = LAContext()
-        var error: NSError?
-
-        // Check if device supports authentication
-        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-            let reason = "We need to unlock your passwords."
-
-            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, authenticationError in
-                DispatchQueue.main.async {
-                    if success {
-                        // Authentication Successful
-                        print("Authentication Successful")
-                        amountDouble = Double(amount.convertDigitsToEng) ?? 0
-                        viewModel.validateWithdrawAmount(amount: amountDouble)
-                    } else {
-                        // Authentication Failed
-                        if let error = authenticationError as NSError? {
-                            print("Authentication failed with error: \(error.localizedDescription)")
-                        }
-                    }
-                }
-            }
-        } else {
-            // No Biometrics or Passcode set
-            if let error = error {
-                print("Authentication not available: \(error.localizedDescription)")
-            }
-            amountDouble = Double(amount.convertDigitsToEng) ?? 0
-            viewModel.validateWithdrawAmount(amount: amountDouble)
-        }
-    }
+//    func authenticate() {
+//        let context = LAContext()
+//        var error: NSError?
+//
+//        // Check if device supports authentication
+//        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+//            let reason = "We need to unlock your passwords."
+//
+//            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, authenticationError in
+//                DispatchQueue.main.async {
+//                    if success {
+//                        // Authentication Successful
+//                        print("Authentication Successful")
+//                        amountDouble = Double(amount.convertDigitsToEng) ?? 0
+//                        viewModel.validateWithdrawAmount(amount: amountDouble)
+//                    } else {
+//                        // Authentication Failed
+//                        if let error = authenticationError as NSError? {
+//                            print("Authentication failed with error: \(error.localizedDescription)")
+//                        }
+//                    }
+//                }
+//            }
+//        } else {
+//            // No Biometrics or Passcode set
+//            if let error = error {
+//                print("Authentication not available: \(error.localizedDescription)")
+//            }
+//            amountDouble = Double(amount.convertDigitsToEng) ?? 0
+//            viewModel.validateWithdrawAmount(amount: amountDouble)
+//        }
+//    }
 
 
 }

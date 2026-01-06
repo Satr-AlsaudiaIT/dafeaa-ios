@@ -154,3 +154,47 @@ struct AddToWalletModel: Codable {
     let message: String?
     let data: String?
 }
+
+// MARK: - WithdrawResponseModel
+struct WithdrawResponseModel: Codable {
+    let message: String?
+    let transaction: WithdrawTransactionData?
+}
+
+// MARK: - WithdrawTransactionData
+struct WithdrawTransactionData: Codable {
+    let id: String?
+    let sourceId: String?
+    let sequenceNumber: String?
+    let channel: String?
+    let status: String?
+    let amount: Int?
+    let currency: String?
+    let purpose: String?
+    let comment: String?
+    let destination: WithdrawDestination?
+    let message: String?
+    let failureReason: String?
+    let createdAt: String?
+    let updatedAt: String?
+    let metadata: String?
+    
+  
+}
+
+// MARK: - WithdrawDestination
+struct WithdrawDestination: Codable {
+    let type: String?
+    let mobile: String?
+    let iban: String?
+    let name: String?
+    let country: String?
+    let city: String?
+}
+
+// MARK: - PaymentResponseModel
+struct PaymentResponseModel: Codable {
+    let success: Bool?
+    let transactionUrl: String?
+
+}

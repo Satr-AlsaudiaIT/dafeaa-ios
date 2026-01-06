@@ -384,3 +384,68 @@
 "createDeveloperKeyToGetCodes" ="يمكنك إنشاء مفتاح المطور بالنقر على الزر أدناه";
 "generate_codes" = "إنشاء الاكواد";
 "createDeveloperKeyToGetSecretKeyCodes" = "لانشاء المفتاح السري يجب الضغط على الزر أدناه";
+
+//MARK: - saved IBAN View
+"Saved IBANs" = "الحسابات البنكية المحفوظة";
+"addNewIBAN" = "+ إضافة حساب بنكي جديد";
+"Add New IBAN" = "إضافة حساب بنكي جديد";
+"Edit IBAN" = "تعديل الحساب البنكي";
+"IBAN Number" = "رقم IBAN";
+"Account Name" = "اسم الحساب";
+"Confirm" = "تأكيد";
+"ibanValidation" = "يرجى إدخال رقم IBAN";
+"accountNameValidation" = "يرجى إدخال اسم الحساب";
+"invalidSaudiIBAN" = "يرجى إدخال رقم IBAN سعودي صحيح (24 حرف يبدأ بـ SA)";
+
+//MARK: - withdraw
+"Payout" = "الدفع";
+"Withdrawal Amount" = "مبلغ السحب";
+"Notice" = "ملاحظة";
+"Withdrawals are processed instantly or within 5 minutes." = "يتم معالجة السحوبات فوراً أو خلال 5 دقائق.";
+"ACCOUNT HOLDER NAME" = "اسم صاحب الحساب";
+"Account Holder Name" = "اسم صاحب الحساب";
+"Select IBAN" = "اختر رقم IBAN";
+"MOBILE NUMBER" = "رقم الجوال";
+"Mobile Number" = "رقم الجوال";
+"CITY" = "المدينة";
+"City" = "المدينة";
+"Withdraw" = "سحب";
+"accountHolderNameValidation" = "يرجى إدخال اسم صاحب الحساب";
+"ibanSelectionValidation" = "يرجى اختيار رقم IBAN";
+"mobileValidation" = "يرجى إدخال رقم الجوال";
+"invalidMobileValidation" = "يرجى إدخال رقم جوال سعودي صحيح";
+"cityValidation" = "يرجى إدخال المدينة";
+"Device ID not found" = "لم يتم العثور على معرف الجهاز";
+"IBAN not found" = "لم يتم العثور على رقم IBAN";
+"Withdrawal request submitted" = "تم إرسال طلب السحب";
+"Please select a valid IBAN" = "يرجى اختيار رقم IBAN صحيح";
+
+//MARK: Add balance
+"Payment" = "الدفع";
+"Secure & Fast Payment Processing" = "معالجة دفع آمنة وسريعة";
+"Pay with Card" = "الدفع بالبطاقة";
+"Or pay with" = "أو ادفع بـ";
+"CARDHOLDER NAME" = "اسم حامل البطاقة";
+"Cardholder Name" = "اسم حامل البطاقة";
+"CARD NUMBER" = "رقم البطاقة";
+"EXPIRATION DATE" = "تاريخ الانتهاء";
+"Charge" = "إتمام الدفع";
+"Cardholder name required" = "اسم حامل البطاقة مطلوب";
+"Card number required" = "رقم البطاقة مطلوب";
+"Invalid card number" = "رقم بطاقة غير صحيح";
+"Month required" = "الشهر مطلوب";
+"Invalid month (01-12)" = "شهر غير صحيح (01-12)";
+"Year required" = "السنة مطلوبة";
+"Invalid year (YYYY)" = "سنة غير صحيحة";
+"CVV required" = "CVV مطلوب";
+"Invalid CVV (3-4 digits)" = "CVV غير صحيح ";
+"The amount will be charged to your wallet via Dafea" = "سيتم تحصيل المبلغ على محفظتك عبر دافع";
+"Success" = "نجح";
+"Failed" = "فشل";
+"The balance has been successfully recharged." = "تم إعادة شحن الرصيد بنجاح.";
+"Payment failed. Please try again." = "فشل الدفع. يرجى المحاولة مرة أخرى.";
+"The balance has been successfully withdrawn." = "تم سحب الرصيد بنجاح.";
+"Total Amount" = "اجمالي المبلغ";
+"Pay with" = "الدفع عن طريق";
+"5 minutes during business hours, otherwise the next business day" = "5 دقائق خلال ساعات العمل، وإلا في يوم العمل التالي";
+"SARIE transfer – for amounts over" = "تحويل سريع – للمبالغ التي تزيد عن";

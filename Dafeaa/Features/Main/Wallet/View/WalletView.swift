@@ -18,6 +18,8 @@ struct WalletView: View {
     @State var navigateToWebView : Bool = false
     @State var paymentURL : String = ""
     @State private var isViewAppeared: Bool = false
+    @State var navigateToWithDrawView: Bool = false
+    @State var navigateToAddBalance: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -139,7 +141,7 @@ struct WalletView: View {
             .sheet(isPresented: $isSheetPresented, onDismiss: {
                 //
             }, content: {
-                AddWithdrawBottomSheet(actionType : $balanceActionType, amountDouble: $amount ,isSheetPresented: $isSheetPresented,navigateToWebView: $navigateToWebView, paymentURL: $paymentURL)
+                AddWithdrawBottomSheet(actionType : $balanceActionType, amountDouble: $amount ,isSheetPresented: $isSheetPresented,navigateToWebView: $navigateToWebView, paymentURL: $paymentURL, navigateToWithDrawView: $navigateToWithDrawView, navigateToAddBalance: $navigateToAddBalance)
                     .presentationCornerRadius(24)
                     .presentationDragIndicator(.visible)
                     .presentationDetents([.medium])
@@ -149,6 +151,7 @@ struct WalletView: View {
             .navigationBarHidden(true)
             .onAppear(){
                 isViewAppeared = true
+                checkPaymentStatus()
             }
             .onDisappear{
                 isViewAppeared = false
@@ -161,12 +164,53 @@ struct WalletView: View {
             .navigationDestination(isPresented: $navigateToWebView) {
                 PaymentWebViewContainer(url: paymentURL)
             }
+            .navigationDestination(isPresented: $navigateToWithDrawView) {
+                WithdrawDetailsView(
+                    withdrawAmount: amount
+                )
+            }
+            .navigationDestination(isPresented: $navigateToAddBalance) {
+                AddBalanceCardDetailsView(
+                    addAmount: amount
+                )
+            }
         }
     }
     
     private func loadMoreOrdersIfNeeded() {
         if viewModel.hasMoreData && !viewModel.isLoading {
             viewModel.wallet(skip: viewModel.processList.count)
+        }
+    }
+    
+    private func checkPaymentStatus() {
+        if Constants.shouldNavigateToWallet {
+            let status = Constants.lastPaymentStatus
+            let payOutStatus = Constants.lastPayoutStatus
+            if status.lowercased() == "paid" {
+                viewModel.toast = FancyToast(
+                    type: .success,
+                    title: "Success".localized(),
+                    message: "The balance has been successfully recharged.".localized()
+                )
+            } else if status.lowercased() == "failed" {
+                viewModel.toast = FancyToast(
+                    type: .error,
+                    title: "Failed".localized(),
+                    message: "Payment failed. Please try again.".localized()
+                )
+            }else if payOutStatus == "done" {
+                viewModel.toast = FancyToast(
+                    type: .success,
+                    title: "Success".localized(),
+                    message: "The balance has been successfully withdrawn.".localized()
+                )
+            }
+            
+            Constants.shouldNavigateToWallet = false
+            Constants.lastPaymentStatus = ""
+            Constants.lastPayoutStatus  = ""
+            viewModel.wallet(skip: 0)
         }
     }
     
@@ -177,4 +221,3 @@ struct WalletView: View {
 #Preview {
     WalletView( selectedTab: .constant(.home))
 }
-

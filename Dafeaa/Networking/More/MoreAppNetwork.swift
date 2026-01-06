@@ -23,9 +23,9 @@ enum MoreNetwork
     case addresses
     case address(id: Int, method: HTTPMethod, dic: [String: Any])
     case createAddress(dic:[String:Any])
-    case withDraw(amount: Double)
+    case withDraw(dic: [String: Any])
     case getWithdraws(skip:Int)
-    case addAmountToWallet(amount: Double)
+    case addAmountToWallet(dic: [String: Any])
     case getSubScriptionPlans
     case selectSubscriptionPlan(id: Int)
     case updateSecretKey
@@ -36,8 +36,13 @@ enum MoreNetwork
 extension MoreNetwork: TargetType
 {
     var baseURL: String {
-        let source = Constants.shared.baseURL
-        return source
+        switch self {
+        case .withDraw,.addAmountToWallet:
+            return "https://dafeaa-backend.deplanagency.com/api/moyasar/"
+        default:
+            return Constants.shared.baseURL
+        }
+       
     }
     
     var path: String {
@@ -55,9 +60,9 @@ extension MoreNetwork: TargetType
         case .addresses:                    return "addresses"
         case .createAddress:                return "addresses"
         case .address(let id,_,_):          return "addresses/\(id)"
-        case .withDraw:                     return "withdraws"
+        case .withDraw:                     return "payout"
         case .getWithdraws(let skip):       return "withdraws?skip=\(skip)&take=10"
-        case .addAmountToWallet:            return "payments/submit"
+        case .addAmountToWallet:            return "pay"
         case .getSubScriptionPlans:         return "subscription-plans"
         case .selectSubscriptionPlan(let id):       return "plans/submit/\(id)"
         case .updateSecretKey:              return "auth/secret-key"
@@ -92,10 +97,10 @@ extension MoreNetwork: TargetType
             return.requestParameters(Parameters: dic , encoding: JSONEncoding.default)
         case let .createAddress(dic):
             return.requestParameters(Parameters: dic, encoding: JSONEncoding.default)
-        case let .withDraw(amount):
-            return.requestParameters(Parameters: ["amount":amount], encoding: JSONEncoding.default)
-        case let .addAmountToWallet(amount):
-            return.requestParameters(Parameters: ["amount":amount], encoding: JSONEncoding.default)
+        case let .withDraw(dic):
+            return .requestParameters(Parameters: dic, encoding: JSONEncoding.default)
+        case let .addAmountToWallet(dic):
+                  return .requestParameters(Parameters: dic, encoding: JSONEncoding.default)
         case let .confirmTransfer(phone, amount):
             return .requestParameters(Parameters: ["phone": phone,"amount":amount], encoding: JSONEncoding.default)
         default:

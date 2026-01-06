@@ -11,6 +11,7 @@ class Constants {
 
     
     var isAR: Bool { return (MOLHLanguage.currentAppleLanguage() == "ar") }
+    let baseURLV1 =  "https://dafeaa-backend.deplanagency.com/api/"  // develop instance
     let baseURL =  "https://dafeaa-backend.deplanagency.com/api/v2/"  // develop instance
     //To do
     let basURLV3 = "https://dafeaa-backend.deplanagency.com/api/v3/"  //develop for links and orders V3
@@ -39,7 +40,9 @@ class Constants {
     let subPlanId = "subPlanId"
     let activeNotification = "activeNotification"
     
-
+    static let ARAB_NATIONAL_BANK_CODE = "30"  // البنك العربي الوطني
+    static let WITHDRAW_THRESHOLD: Double = 20000.0  // SAR
+    
     static var accountStatus: Int {
         get {
             let ud = UserDefaults.standard
@@ -72,6 +75,7 @@ class Constants {
             ud.set(token, forKey: "phone")
         }
     }
+    
     static var sessionFlag: Bool {
         get {
             let ud = UserDefaults.standard
@@ -93,6 +97,7 @@ class Constants {
             ud.set(token, forKey: "selectedAddressId")
         }
     }
+    
     static var selectedAddress: String {
         get {
             let ud = UserDefaults.standard
@@ -114,6 +119,58 @@ class Constants {
             ud.set(token, forKey: "clientOrderCode")
         }
     }
+    
+    // Payment status tracking
+    static var shouldNavigateToWallet: Bool {
+        get {
+            let ud = UserDefaults.standard
+            return ud.value(forKey: "shouldNavigateToWallet") as? Bool ?? false
+        }
+        set(value) {
+            let ud = UserDefaults.standard
+            ud.set(value, forKey: "shouldNavigateToWallet")
+        }
+    }
+    
+    
+    static var lastPayoutStatus: String {
+        get {
+            let ud = UserDefaults.standard
+            return ud.value(forKey: "lastPaymentStatus") as? String ?? ""
+        }
+        set(value) {
+            let ud = UserDefaults.standard
+            ud.set(value, forKey: "lastPaymentStatus")
+        }
+    }
+    
+    static var lastPaymentStatus: String {
+        get {
+            let ud = UserDefaults.standard
+            return ud.value(forKey: "lastPaymentStatus") as? String ?? ""
+        }
+        set(value) {
+            let ud = UserDefaults.standard
+            ud.set(value, forKey: "lastPaymentStatus")
+        }
+    }
+    
+    static func getBankCodeFromIBAN(_ iban: String) -> String {
+            let cleanedIBAN = iban.replacingOccurrences(of: " ", with: "").uppercased()
+            
+            guard cleanedIBAN.count >= 6 else { return "" }
+            
+            let startIndex = cleanedIBAN.index(cleanedIBAN.startIndex, offsetBy: 4)
+            let endIndex = cleanedIBAN.index(cleanedIBAN.startIndex, offsetBy: 6)
+            let bankCode = String(cleanedIBAN[startIndex..<endIndex])
+            
+            return bankCode
+        }
+        
+        static func isArabNationalBank(_ iban: String) -> Bool {
+            let bankCode = getBankCodeFromIBAN(iban)
+            return bankCode == ARAB_NATIONAL_BANK_CODE
+        }
     
 //    static var offersData: ShowOfferData? {
 //        get {

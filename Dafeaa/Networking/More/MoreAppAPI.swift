@@ -20,9 +20,9 @@ protocol MoreAPIProtocol {
     func addresses(Completion: @escaping (Result<AddressesModel?, NSError>) -> Void)
     func address(id:Int,method: HTTPMethod, dic: [String:Any], Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func createAddress( dic: [String:Any], Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
-    func withDrawAmount( amount:Double, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
+    func withDrawAmount(dic: [String:Any], Completion: @escaping (Result<WithdrawResponseModel?, NSError>) -> Void)
     func getWithdraws(skip:Int,Completion: @escaping (Result<withdrawsModel?, NSError>) -> Void)
-    func addAmountToWallet( amount:Double, Completion: @escaping (Result<AddToWalletModel?, NSError>) -> Void)
+    func addAmountToWallet(dic: [String:Any], Completion: @escaping (Result<PaymentResponseModel?, NSError>) -> Void)
     func getSubscriptionPlans(Completion: @escaping (Result<SubscriptionModel?, NSError>) -> Void)
     func selectSubscriptionPlan(id:Int, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func updateSecretKey(Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
@@ -106,22 +106,22 @@ class MoreAPI: BaseAPI<MoreNetwork>, MoreAPIProtocol
             Completion(result)
         }
     }
-    func withDrawAmount( amount:Double, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void){
-        self.fetchData(target: .withDraw(amount: amount), responseClass: GeneralModel.self) { (result) in
-            Completion(result)
-        }
-    }
+    func withDrawAmount(dic: [String:Any], Completion: @escaping (Result<WithdrawResponseModel?, NSError>) -> Void) {
+          self.fetchData(target: .withDraw(dic: dic), responseClass: WithdrawResponseModel.self) { (result) in
+              Completion(result)
+          }
+      }
     func getWithdraws(skip:Int, Completion: @escaping (Result<withdrawsModel?, NSError>) -> Void){
         self.fetchData(target: .getWithdraws(skip: skip), responseClass: withdrawsModel.self) { (result) in
             Completion(result)
         }
     }
     
-    func addAmountToWallet( amount:Double, Completion: @escaping (Result<AddToWalletModel?, NSError>) -> Void){
-        self.fetchData(target: .addAmountToWallet(amount: amount), responseClass: AddToWalletModel.self) { (result) in
-            Completion(result)
-        }
-    }
+    func addAmountToWallet(dic: [String:Any], Completion: @escaping (Result<PaymentResponseModel?, NSError>) -> Void) {
+          self.fetchData(target: .addAmountToWallet(dic: dic), responseClass: PaymentResponseModel.self) { (result) in
+              Completion(result)
+          }
+      }
     
     func getSubscriptionPlans(Completion: @escaping (Result<SubscriptionModel?, NSError>) -> Void) {
         self.fetchData(target: .getSubScriptionPlans, responseClass: SubscriptionModel.self) { (result) in

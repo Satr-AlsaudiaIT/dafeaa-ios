@@ -13,7 +13,7 @@ struct TabBarView: View {
     @State private var selectedTab: Tab = .home
     private let userType: Int = GenericUserDefault.shared.getValue(Constants.shared.userType) as? Int ?? 0
     @EnvironmentObject var navigationHelper: NavigationHelper
-
+    @State private var isLoading : Bool = false
     enum Tab: CaseIterable {
         case home, wallet, myOrders, profile
 
@@ -59,31 +59,47 @@ struct TabBarView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack(alignment: .bottom) {
-                // Main content view based on the selected tab
-                Group {
-                    switch selectedTab {
-                    case .home:
-                        HomeView(selectedTab: $selectedTab)
-                            .padding(.bottom,80)
-                    case .wallet:
-                        WalletView(selectedTab: $selectedTab)
-                            .padding(.bottom,80)
-                    case .myOrders:
-                        MyOrdersView()
-                            .padding(.bottom,80)
-                    case .profile:
-                        ProfileView()
-                            .padding(.bottom,80)
+            ZStack {
+                if !isLoading {
+                    ZStack(alignment: .bottom) {
+                        Group {
+                            switch selectedTab {
+                            case .home:
+                                HomeView(selectedTab: $selectedTab)
+                                    .padding(.bottom,80)
+                            case .wallet:
+                                WalletView(selectedTab: $selectedTab)
+                                    .padding(.bottom,80)
+                            case .myOrders:
+                                MyOrdersView()
+                                    .padding(.bottom,80)
+                            case .profile:
+                                ProfileView()
+                                    .padding(.bottom,80)
+                            }
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        
+                        CustomTabBar(selectedTab: $selectedTab, userType: userType)
+                        
                     }
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-                // Custom Tab Bar
-                CustomTabBar(selectedTab: $selectedTab, userType: userType)
-
+                if isLoading {
+                    VStack {
+                        Spacer()
+                        ProgressView("Loading...".localized())
+                            .foregroundColor(.white)
+                            .progressViewStyle(WithBackgroundProgressViewStyle())
+                        Spacer()
+                        
+                    }
+                }
             }
             .edgesIgnoringSafeArea(.bottom)
+            .onAppear {
+                
+                        checkPaymentStatus()
+                    }
             .navigationDestination(isPresented: $navigationHelper.navigateToClientOrder) {
                 OrderClientDetailsView(orderID: navigationHelper.actionId)
             }
@@ -94,7 +110,15 @@ struct TabBarView: View {
                 WithdrawsView(heighlightedId: navigationHelper.actionId)
             }
             .navigationBarHidden(true)
+            
         }
+    }
+    private func checkPaymentStatus() {
+        
+        if Constants.shouldNavigateToWallet {
+                selectedTab = .wallet
+        }
+        isLoading = false
     }
 }
 

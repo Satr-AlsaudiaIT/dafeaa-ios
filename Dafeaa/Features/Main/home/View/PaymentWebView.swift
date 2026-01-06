@@ -5,33 +5,48 @@
 //  Created by AMNY on 26/01/2025.
 //
 
-
-//
-//  PaymentWebView.swift
-//  Dafeaa
-//
-//  Created by AMNY on 26/01/2025.
-//
-
 import SwiftUI
 @preconcurrency import WebKit
 
 class WebViewCoordinator: NSObject, WKNavigationDelegate {
     var onActionTriggered: (() -> Void)?
 
-    init( onActionTriggered: @escaping () -> Void) {
+    init(onActionTriggered: @escaping () -> Void) {
         self.onActionTriggered = onActionTriggered
     }
 
-    
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         let urlString = navigationAction.request.url?.absoluteString ?? ""
-        print(urlString)
+        print("PaymentWebView URL: \(urlString)")
+        
         if urlString.contains("status=") {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            // Extract status from URL
+            if let url = navigationAction.request.url,
+               let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+               let queryItems = components.queryItems {
+                
+                var status = ""
+                
+                for item in queryItems {
+                    if item.name == "status" {
+                        status = item.value ?? ""
+                        break
+                    }
+                }
+                
+                // Save payment status to Constants
+                if !status.isEmpty {
+                    Constants.lastPaymentStatus = status
+                    Constants.shouldNavigateToWallet = true
+                    print("Payment Status Saved: \(status)")
+                }
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 NavigationUtil.popToRootView()
             }
         }
+        
         decisionHandler(.allow)
     }
 }
@@ -68,20 +83,19 @@ struct PaymentWebViewContainer: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
     var body: some View {
-       
-            
-        ZStack  {
-                PaymentWebView(url: url)
+        ZStack {
+            PaymentWebView(url: url)
             VStack {
-                NavigationBarView(title: "payment") {
+                NavigationBarView(title: "Payment".localized()) {
                     self.presentationMode.wrappedValue.dismiss()
                 }
                 Spacer()
             }
-            }
+        }
         .navigationBarHidden(true)
     }
 }
+
 #Preview {
     PaymentWebViewContainer(url: "https://checkout.tap.company/?mode=page&themeMode=&language=en&token=eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY3OTY1OGNkZGVlZjQyNjg1YTY0NjUxYSJ9.-hd58sq_P4R2OT_Y9zJ6uK5nWCPkOTuTGn1JAOLebVE")
 }

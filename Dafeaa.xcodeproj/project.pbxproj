@@ -149,6 +149,8 @@
 		188FF24F2CC6D49D0070CC57 /* SubscribtionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FF24E2CC6D49D0070CC57 /* SubscribtionView.swift */; };
 		189437DC2CE0CA0900CA5D96 /* OrderLinkDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189437DB2CE0CA0900CA5D96 /* OrderLinkDetailsView.swift */; };
 		189437DF2CE0F74D00CA5D96 /* AddProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189437DE2CE0F74D00CA5D96 /* AddProductView.swift */; };
+		189962E12F0A6775005E833C /* WithdrawDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189962E02F0A6775005E833C /* WithdrawDetailsView.swift */; };
+		189962E32F0A9A37005E833C /* AddBalanceCardDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189962E22F0A9A37005E833C /* AddBalanceCardDetailsView.swift */; };
 		189CD7452CDBE19E00E929DE /* PopUpComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189CD7442CDBE19E00E929DE /* PopUpComponent.swift */; };
 		189CD7492CDC83D500E929DE /* ClientLinkDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189CD7482CDC83D500E929DE /* ClientLinkDetails.swift */; };
 		18AF0DEF2CB114F80061F07E /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AF0DEE2CB114F80061F07E /* OnBoardingView.swift */; };
@@ -173,6 +175,13 @@
 		18F54E8A2CCD1C0300462383 /* WalletVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F54E7C2CCD1C0300462383 /* WalletVM.swift */; };
 		18F54E8F2CCD2F1C00462383 /* ProcessesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F54E8D2CCD2F1C00462383 /* ProcessesVM.swift */; };
 		18F81CE72D907B6F00B732D7 /* BottomSheetLinkActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F81CE62D907B6F00B732D7 /* BottomSheetLinkActionsView.swift */; };
+		18FAE18F2F065ED900DE9128 /* IBANListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FAE18E2F065ED900DE9128 /* IBANListModel.swift */; };
+		18FAE1912F06608500DE9128 /* IBANVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FAE1902F06608500DE9128 /* IBANVM.swift */; };
+		18FAE1942F0660A300DE9128 /* SavedIBANsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FAE1932F0660A300DE9128 /* SavedIBANsView.swift */; };
+		18FAE1962F0660BD00DE9128 /* AddEditIBANView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FAE1952F0660BC00DE9128 /* AddEditIBANView.swift */; };
+		18FAE1982F06658100DE9128 /* IBANNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FAE1972F06658100DE9128 /* IBANNetwork.swift */; };
+		18FAE19A2F0665A000DE9128 /* IBANAPIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FAE1992F0665A000DE9128 /* IBANAPIProtocol.swift */; };
+		18FAE19C2F06692800DE9128 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FAE19B2F06692100DE9128 /* StringExt.swift */; };
 		77A5DD200D504A0C538AF47E /* Pods_Dafeaa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BDD0028FB293E22686DB26E /* Pods_Dafeaa.framework */; };
 		9480EEBE8618DD074F2F05EA /* Pods_DafeaaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECBB82EEEBE50162348AA97C /* Pods_DafeaaTests.framework */; };
 /* End PBXBuildFile section */
@@ -347,6 +356,8 @@
 		188FF24E2CC6D49D0070CC57 /* SubscribtionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribtionView.swift; sourceTree = "<group>"; };
 		189437DB2CE0CA0900CA5D96 /* OrderLinkDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderLinkDetailsView.swift; sourceTree = "<group>"; };
 		189437DE2CE0F74D00CA5D96 /* AddProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductView.swift; sourceTree = "<group>"; };
+		189962E02F0A6775005E833C /* WithdrawDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawDetailsView.swift; sourceTree = "<group>"; };
+		189962E22F0A9A37005E833C /* AddBalanceCardDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBalanceCardDetailsView.swift; sourceTree = "<group>"; };
 		189CD7442CDBE19E00E929DE /* PopUpComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpComponent.swift; sourceTree = "<group>"; };
 		189CD7482CDC83D500E929DE /* ClientLinkDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientLinkDetails.swift; sourceTree = "<group>"; };
 		18AF0DEE2CB114F80061F07E /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
@@ -371,6 +382,13 @@
 		18F54E7E2CCD1C0300462383 /* WalletModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletModel.swift; sourceTree = "<group>"; };
 		18F54E8D2CCD2F1C00462383 /* ProcessesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessesVM.swift; sourceTree = "<group>"; };
 		18F81CE62D907B6F00B732D7 /* BottomSheetLinkActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetLinkActionsView.swift; sourceTree = "<group>"; };
+		18FAE18E2F065ED900DE9128 /* IBANListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBANListModel.swift; sourceTree = "<group>"; };
+		18FAE1902F06608500DE9128 /* IBANVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBANVM.swift; sourceTree = "<group>"; };
+		18FAE1932F0660A300DE9128 /* SavedIBANsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedIBANsView.swift; sourceTree = "<group>"; };
+		18FAE1952F0660BC00DE9128 /* AddEditIBANView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditIBANView.swift; sourceTree = "<group>"; };
+		18FAE1972F06658100DE9128 /* IBANNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBANNetwork.swift; sourceTree = "<group>"; };
+		18FAE1992F0665A000DE9128 /* IBANAPIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBANAPIProtocol.swift; sourceTree = "<group>"; };
+		18FAE19B2F06692100DE9128 /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
 		2F9ED0EE802D3E9A391C0DEE /* Pods-Dafeaa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dafeaa.release.xcconfig"; path = "Target Support Files/Pods-Dafeaa/Pods-Dafeaa.release.xcconfig"; sourceTree = "<group>"; };
 		3763B1BE20778E9F0CE18D3E /* Pods-Dafeaa-DafeaaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dafeaa-DafeaaUITests.debug.xcconfig"; path = "Target Support Files/Pods-Dafeaa-DafeaaUITests/Pods-Dafeaa-DafeaaUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		40CD5E17D66EBD2C506C1CF3 /* Pods-DafeaaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DafeaaTests.debug.xcconfig"; path = "Target Support Files/Pods-DafeaaTests/Pods-DafeaaTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -532,6 +550,7 @@
 		14E67A802CAC643A00C10AB5 /* Extenstions */ = {
 			isa = PBXGroup;
 			children = (
+				18FAE19B2F06692100DE9128 /* StringExt.swift */,
 				14E67A782CAC643A00C10AB5 /* Calender.swift */,
 				14E67A792CAC643A00C10AB5 /* CustomSegment.swift */,
 				14E67A7A2CAC643A00C10AB5 /* Date+ext.swift */,
@@ -992,13 +1011,14 @@
 		1820E2C32CBAAC1000627DF9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				18FAE18C2F065EC200DE9128 /* SavedIbans */,
 				14C79BB92CC4DF8600EF837F /* Subscribtions */,
 				18D4285E2CE676960059CAF4 /* WithdrawView */,
 				188FF2472CC509A70070CC57 /* ChangePhone */,
 				1882D12A2D83673B002EB5E2 /* StaticPagesList */,
 				188FF2442CC38CE10070CC57 /* ChangePassword */,
 				1820E2C42CBAAC2800627DF9 /* Profile */,
-				1820E2C52CBAAC3400627DF9 /* Addresses */,
+				1820E2C52CBAAC3400627DF9 /* SavedAddresses */,
 				1820E2CA2CBAAC7600627DF9 /* StaticPages */,
 				187607B12CDF468200F4D261 /* OrdersLinkes */,
 				1820E2CB2CBAAC8100627DF9 /* FAQ */,
@@ -1018,13 +1038,13 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		1820E2C52CBAAC3400627DF9 /* Addresses */ = {
+		1820E2C52CBAAC3400627DF9 /* SavedAddresses */ = {
 			isa = PBXGroup;
 			children = (
 				1820E2C82CBAAC6600627DF9 /* SavedAddressesView.swift */,
 				18D3655A2CD27CF000D50A34 /* AddEditAddressView.swift */,
 			);
-			path = Addresses;
+			path = SavedAddresses;
 			sourceTree = "<group>";
 		};
 		1820E2CA2CBAAC7600627DF9 /* StaticPages */ = {
@@ -1063,6 +1083,7 @@
 		1820E2D62CBBB20500627DF9 /* VM */ = {
 			isa = PBXGroup;
 			children = (
+				18FAE1902F06608500DE9128 /* IBANVM.swift */,
 				1820E2D72CBBB22600627DF9 /* MoreVM.swift */,
 			);
 			path = VM;
@@ -1071,6 +1092,8 @@
 		1820E2DB2CBBB26F00627DF9 /* More */ = {
 			isa = PBXGroup;
 			children = (
+				18FAE1992F0665A000DE9128 /* IBANAPIProtocol.swift */,
+				18FAE1972F06658100DE9128 /* IBANNetwork.swift */,
 				1820E2D92CBBB26F00627DF9 /* MoreAppNetwork.swift */,
 				1820E2DA2CBBB26F00627DF9 /* MoreAppAPI.swift */,
 			);
@@ -1259,9 +1282,11 @@
 		18C8A9C62DBE754E00A2AB42 /* Transferes */ = {
 			isa = PBXGroup;
 			children = (
+				189962E22F0A9A37005E833C /* AddBalanceCardDetailsView.swift */,
 				18C8A9C72DBE75AB00A2AB42 /* ConfirmTransferView.swift */,
 				1859135C2DBFD7D10035D6EF /* SuccessView.swift */,
 				1859135E2DBFDBEC0035D6EF /* FailedView.swift */,
+				189962E02F0A6775005E833C /* WithdrawDetailsView.swift */,
 			);
 			path = Transferes;
 			sourceTree = "<group>";
@@ -1323,6 +1348,32 @@
 				18F54E8D2CCD2F1C00462383 /* ProcessesVM.swift */,
 			);
 			path = VM;
+			sourceTree = "<group>";
+		};
+		18FAE18C2F065EC200DE9128 /* SavedIbans */ = {
+			isa = PBXGroup;
+			children = (
+				18FAE1922F06609100DE9128 /* View */,
+				18FAE18D2F065ED300DE9128 /* Model */,
+			);
+			path = SavedIbans;
+			sourceTree = "<group>";
+		};
+		18FAE18D2F065ED300DE9128 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				18FAE18E2F065ED900DE9128 /* IBANListModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		18FAE1922F06609100DE9128 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				18FAE1932F0660A300DE9128 /* SavedIBANsView.swift */,
+				18FAE1952F0660BC00DE9128 /* AddEditIBANView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		227E5DC2F889908AF4E74C82 /* Frameworks */ = {
@@ -1554,9 +1605,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Dafeaa/Pods-Dafeaa-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Dafeaa/Pods-Dafeaa-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1593,9 +1648,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Dafeaa-DafeaaUITests/Pods-Dafeaa-DafeaaUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Dafeaa-DafeaaUITests/Pods-Dafeaa-DafeaaUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1641,15 +1700,18 @@
 				14E67AC52CAC643B00C10AB5 /* ViewExtension.swift in Sources */,
 				187851402E0066DC00E9BD79 /* AddOfferViewNew.swift in Sources */,
 				1820E2C72CBAAC4E00627DF9 /* ProfileDetailView.swift in Sources */,
+				18FAE1912F06608500DE9128 /* IBANVM.swift in Sources */,
 				18086A712CCBF23700F5C2F8 /* ProcessComponent.swift in Sources */,
 				18086A722CCBF23700F5C2F8 /* HomeModel.swift in Sources */,
 				14D124A82CC56A46005F0084 /* SubscribtionModel.swift in Sources */,
 				187607BA2CDFD74800F4D261 /* LinksVM.swift in Sources */,
 				1835ECF42CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift in Sources */,
 				18277EBF2CB2B9BA0020A647 /* PhoneNumberRepresenter.swift in Sources */,
+				189962E32F0A9A37005E833C /* AddBalanceCardDetailsView.swift in Sources */,
 				18E676872DBD63F20043B84B /* BuyProductBottomSheet.swift in Sources */,
 				1820E2C92CBAAC6600627DF9 /* SavedAddressesView.swift in Sources */,
 				14E67A6A2CAC5E3400C10AB5 /* MOLHFontLocalizableViews.swift in Sources */,
+				18FAE1982F06658100DE9128 /* IBANNetwork.swift in Sources */,
 				18086A682CCB81F000F5C2F8 /* OrdersAppAPI.swift in Sources */,
 				18F54E7B2CCCFF1D00462383 /* OrderBusinessDetailsView.swift in Sources */,
 				18086A782CCC04C900F5C2F8 /* WalletButton.swift in Sources */,
@@ -1658,6 +1720,7 @@
 				14E67AC62CAC643B00C10AB5 /* SliderView.swift in Sources */,
 				189CD7452CDBE19E00E929DE /* PopUpComponent.swift in Sources */,
 				1820E2D52CBAACED00627DF9 /* StaticPagesView.swift in Sources */,
+				189962E12F0A6775005E833C /* WithdrawDetailsView.swift in Sources */,
 				14E67A6B2CAC5E3400C10AB5 /* MOLHLanguage.swift in Sources */,
 				1820E2AB2CB9066D00627DF9 /* AuthModels.swift in Sources */,
 				1820E2A72CB905F800627DF9 /* AuthAppAPI.swift in Sources */,
@@ -1672,12 +1735,15 @@
 				14E67AC02CAC643B00C10AB5 /* Date+ext.swift in Sources */,
 				14E67AC32CAC643B00C10AB5 /* UIColor.swift in Sources */,
 				14E67A6C2CAC5E3400C10AB5 /* MOLHSizable.swift in Sources */,
+				18FAE18F2F065ED900DE9128 /* IBANListModel.swift in Sources */,
 				14E67A692CAC5E3400C10AB5 /* MOLHFont.swift in Sources */,
+				18FAE1942F0660A300DE9128 /* SavedIBANsView.swift in Sources */,
 				187851462E00998800E9BD79 /* OrderBusinessDetailsViewNew.swift in Sources */,
 				188FF2462CC38CF00070CC57 /* ChangePasswordView.swift in Sources */,
 				1820E2C22CBA98C400627DF9 /* MyOrdersView.swift in Sources */,
 				14E67ADB2CAC643B00C10AB5 /* DropDownSearchTF.swift in Sources */,
 				14E67AC82CAC643B00C10AB5 /* CalendarSheet.swift in Sources */,
+				18FAE19C2F06692800DE9128 /* StringExt.swift in Sources */,
 				18277EB72CB2B1D00020A647 /* AuthVM.swift in Sources */,
 				187607B22CDF468200F4D261 /* OrdersLinksView.swift in Sources */,
 				14E67AD82CAC643B00C10AB5 /* PopUpViewBack.swift in Sources */,
@@ -1706,6 +1772,7 @@
 				1820E2D82CBBB22600627DF9 /* MoreVM.swift in Sources */,
 				14E67AE22CAC643B00C10AB5 /* UploadFileView.swift in Sources */,
 				1882D12C2D836781002EB5E2 /* StaticPagesList.swift in Sources */,
+				18FAE1962F0660BD00DE9128 /* AddEditIBANView.swift in Sources */,
 				14E67AE42CAC643B00C10AB5 /* NotificationConfigration.swift in Sources */,
 				18277EC52CB3A3BE0020A647 /* AccountTypeOption.swift in Sources */,
 				14E67ACF2CAC643B00C10AB5 /* NetWorkLogger.swift in Sources */,
@@ -1730,6 +1797,7 @@
 				18F54E8F2CCD2F1C00462383 /* ProcessesVM.swift in Sources */,
 				14E67AC72CAC643B00C10AB5 /* CustomSegmentView.swift in Sources */,
 				14E67AE62CAC643B00C10AB5 /* ToastMessageSwiftUIView.swift in Sources */,
+				18FAE19A2F0665A000DE9128 /* IBANAPIProtocol.swift in Sources */,
 				1820E2E12CBC3A5400627DF9 /* CompleteDataView.swift in Sources */,
 				14E67AD62CAC643B00C10AB5 /* NavigationBarView.swift in Sources */,
 				1820E2BE2CBA98A600627DF9 /* ProfileView.swift in Sources */,
@@ -1932,7 +2000,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/Dafeaa.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12.1;
+				CURRENT_PROJECT_VERSION = 12.3;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
@@ -1976,7 +2044,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/DafeaaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12.1;
+				CURRENT_PROJECT_VERSION = 12.3;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;

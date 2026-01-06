@@ -53,6 +53,7 @@ struct DropdownSearchTF: View {
                     ZStack {
                         HStack {
                             Image(uiImage: image)
+                                .renderingMode(.template)
                                 .foregroundColor(Color.yellow)
                                 .frame(width: 20, height: 20)
                                 .padding(.leading,20)

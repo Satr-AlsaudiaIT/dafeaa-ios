@@ -136,6 +136,7 @@ struct CustomMainTextField: View {
         HStack {
             if let image = image {
                 Image(image)
+                    .resizable()
                     .foregroundColor(Color.yellow)
                     .frame(width: 20, height: 20)
             }

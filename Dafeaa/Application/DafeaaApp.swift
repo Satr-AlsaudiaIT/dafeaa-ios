@@ -58,7 +58,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
             let name = UIFont.fontNames(forFamilyName: family)
             print("family = \(family) - name = \(name)")
         }
-        
+        Constants.shouldNavigateToWallet = false
+        Constants.lastPaymentStatus = ""
+        Constants.lastPayoutStatus  = ""
         NotificationConfigration.shared.firebaseConfigration()
         //        checkAppAvailability()
         let window = UIWindow()

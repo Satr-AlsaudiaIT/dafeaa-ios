@@ -36,6 +36,11 @@ struct ProfileList: View {
                             label: "Saved Addresses",
                             image: Image(.iconAddress)
                         )
+                        NavigationLinkComponent(
+                            destination: SavedIBANsView(),
+                            label: "Saved IBAN",
+                            image: Image(.iconAddress)
+                        )
                         Button {
                             showChangePassword = true
                         } label: {
