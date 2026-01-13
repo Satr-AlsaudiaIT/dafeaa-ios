@@ -121,17 +121,20 @@ struct OfferComponent: View {
     var onThreeDotsTap: (() -> Void)
     
     var body: some View {
-        HStack(alignment: .center) {
-            Image(.process)
-                .resizable()
-                .frame(width: 48, height: 48)
-                .cornerRadius(24)
-            VStack(alignment: .leading, spacing: 8) {
-                Text(offer?.name ?? "")
-                    .textModifier(.plain, 15, .black1E1E1E)
-                Text(offer?.description ?? "")
-                    .textModifier(.plain, 14, .gray616161)
-                    .lineLimit(2)
+        HStack(alignment: .top) {
+            HStack(alignment: .center) {
+                Image(.process)
+                    .resizable()
+                    .frame(width: 48, height: 48)
+                    .cornerRadius(24)
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(offer?.name ?? "")
+                        .textModifier(.plain, 15, .black1E1E1E)
+ 
+              
+                    HTMLDescriptionView(html: offer?.description  ?? "")
+
+                }
             }
             Spacer()
             

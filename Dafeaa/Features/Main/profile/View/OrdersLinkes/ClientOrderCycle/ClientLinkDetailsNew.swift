@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ClientLinkDetailsNew: View {
     let code: String = Constants.clientOrderCode
@@ -23,13 +24,16 @@ struct ClientLinkDetailsNew: View {
     @State var showOrderDetails: Bool = false
     @State private var  selectedImage: String?
     @State private var showSelectedImage: Bool = false
+    @State var selectedShippingCompany: String?
+    @State var showDescription: Bool = false
     @State var quantity : String = ""
+    @State var shippingPrice: Double = 0
      var isAbleToEdit : Bool = false
      var isMerchant : Bool = false
     
     @State var selectedProduct: productList = productList(id: 3, images: [ImageModel(file: "ww")], name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000,amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 0, remainingQuantity: 1)
     var linkDetails: ShowOfferData  {
-        return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [], status: 0,commissionRatio: "",maxCommissionValue: "")
+        return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [], status: 0,commissionRatio: "",maxCommissionValue: "", shippingCompanies: [], address: nil)
     }
     var body: some View {
             ZStack {
@@ -67,7 +71,9 @@ struct ClientLinkDetailsNew: View {
                                             InfiniteCarouselView(listOfPages: .constant(product.images ?? []),onImageTap: { file in
                                                 selectedImage = file
                                                 showSelectedImage = true
-                                            })
+                                            }).onAppear{
+                                                    showDescription = true
+                                            }
                                             HStack {
                                                 Text(product.name ?? "")
                                                     .textModifier(.plain, 15, .black222222)
@@ -103,11 +109,13 @@ struct ClientLinkDetailsNew: View {
                                                     }
                                                 }
                                             }
-                                            VStack(alignment: .leading, spacing: 10) {
-                                                HStack {
-                                                    Text(product.description ?? "")
-                                                        .textModifier(.plain, 15, .gray565656)
-                                                    Spacer()
+                                            if showDescription {
+                                                VStack(alignment: .leading, spacing: 10) {
+                                                    HStack {
+                                                        
+                                                        HTMLDescriptionView(html: product.description ?? "", size: 15)
+                                                        Spacer()
+                                                    }
                                                 }
                                             }
                                         }
@@ -115,13 +123,14 @@ struct ClientLinkDetailsNew: View {
                                 }
 //                                .padding(.horizontal,20)
                                 .onAppear {
-                                    // Initialize the dictionary with product ID and initial amount
                                     let initialAmount = 1
                                     productAmountDic.append(["product_id": product.id ?? 0, "amount": "\(initialAmount)"])
                                     calculateTotalPrice()
                                 }
                             }
-                            PaymentInfoView(breakdown: PaymentDetails(commission: Double(linkDetails.commissionRatio ?? "0") ?? 0, commissionMaxPrice: Double(linkDetails.maxCommissionValue ?? "0") ?? 0),itemsPrice: $totalPrice)
+                          
+                            
+                            PaymentInfoViewWithShipping(breakdown: PaymentDetails(commission: Double(linkDetails.commissionRatio ?? "0") ?? 0, commissionMaxPrice: Double(linkDetails.maxCommissionValue ?? "0") ?? 0),itemsPrice: $totalPrice, deliveryPrice: $shippingPrice)
                             
                             HStack {
                                 Text("deliveryAddress".localized())
@@ -149,6 +158,14 @@ struct ClientLinkDetailsNew: View {
                                 )
                                 
                             }
+                            if let shippingCompanies = linkDetails.shippingCompanies, !shippingCompanies.isEmpty {
+                                ShippingCompanySelectionView(
+                                    selectedCompany: $selectedShippingCompany,
+                                    availableCompanies: shippingCompanies,
+                                    showRadioButtons: true
+                                )
+                                .padding(.top, 8)
+                            }
                             ReusableButton(buttonText: "orderNow",isEnabled: viewModel.offersData?.status == 1 ? true : false){ viewModel.validations(dynamicLinkId: viewModel.offersData?.id ?? 0, addressId: addressId, products: productAmountDic)}
                             Spacer()
                         }
@@ -170,6 +187,23 @@ struct ClientLinkDetailsNew: View {
                     }
                     
                 }
+                if let selectedImage = selectedImage, showSelectedImage {
+                    ZStack {
+                        Color(.black010202.opacity(0.5))
+                            .onTapGesture {
+                                showSelectedImage = false
+                            }
+                        WebImage(url: URL(string: selectedImage))
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: UIScreen.main.bounds.width * 0.9)
+                            .disabled(true)
+                            .cornerRadius(10)
+                            }
+                    .ignoresSafeArea(.all)
+                    
+                }
+
                 if viewModel.isLoading {
                     ProgressView("Loading...".localized())
                         .foregroundColor(.white)
@@ -194,8 +228,21 @@ struct ClientLinkDetailsNew: View {
             .navigationBarHidden(true)
         
             .onAppear{
-                if let offerData { viewModel.offersData = offerData
+                if let offerData {
+                    viewModel.offersData = offerData
                 } else { viewModel.showOffer(code: code) }
+            }
+            .onChange(of: viewModel.offersData) { _, _ in
+                selectedShippingCompany = viewModel.offersData?.shippingCompanies?.first
+            }
+            .onChange(of: selectedShippingCompany, { _, _ in
+                viewModel.getShippingRates(company: selectedShippingCompany ??  "dhl", for: viewModel.offersData?.products?.first?.id ?? 1, from: viewModel.offersData?.address?.id ?? 1, to: addressId)
+            })
+            .onChange(of: addressId) { _, newValue in
+                viewModel.getShippingRates(company: selectedShippingCompany ?? "dhl", for: viewModel.offersData?.products?.first?.id ?? 1, from: viewModel.offersData?.address?.id ?? 1, to: addressId)
+            }
+            .onChange(of: viewModel.shippingRatePrice) { _, _ in
+                shippingPrice = viewModel.shippingRatePrice ?? 0
             }
         
     }

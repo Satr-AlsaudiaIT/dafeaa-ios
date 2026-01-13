@@ -10,7 +10,8 @@ import UIKit
 import SwiftUI
 import IQKeyboardManagerSwift
 import FirebaseCore
-
+import GoogleMaps
+import GooglePlaces
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
@@ -21,7 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
                 FirebaseApp.configure()
-        
+        GMSServices.provideAPIKey("AIzaSyAsii5qK2U6xsP39ahyNOoDjXDfHIzH9yU")
+        GMSPlacesClient.provideAPIKey("AIzaSyAsii5qK2U6xsP39ahyNOoDjXDfHIzH9yU")
         setUpDidFinishLaunch()
         
         return true
@@ -195,7 +197,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
             products: [product], // Convert single offer to product array
             status: v3Data.status,
             commissionRatio: v3Data.commissionRatio,
-            maxCommissionValue: v3Data.maxCommissionValue
+            maxCommissionValue: v3Data.maxCommissionValue,
+            shippingCompanies: v3Data.shippingCompanies,
+            address: v3Data.address
         )
         
         return ShowOfferModel(

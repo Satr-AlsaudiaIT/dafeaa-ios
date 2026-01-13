@@ -97,13 +97,19 @@ enum OrdersNetworkV3 {
     case createDynamicLinks(dic: [String:Any])
     case activateStopLink(code: String,status: Int)
     case updateQuantity(productId:Int,newQuantity:Int)
+    case shippingRates(company: String, parm: [String: Any])
 }
 
 extension OrdersNetworkV3: TargetType {
     var baseURL: String {
-        // To do if return to v2
-        let source = Constants.shared.basURLV3
-        return source
+        switch self {
+        case .shippingRates:
+            let source = Constants.shared.baseURLV1
+            return source
+        default: 
+            let source = Constants.shared.basURLV3
+            return source
+        }
     }
     
     var path: String {
@@ -125,6 +131,8 @@ extension OrdersNetworkV3: TargetType {
             return "links/\(code)"
         case .updateQuantity(productId: let id,_)://5
             return "links/products/\(id)"
+        case .shippingRates(company: let company, _):
+            return "\(company)/rates"
         }
     }
     
@@ -148,6 +156,9 @@ extension OrdersNetworkV3: TargetType {
             let param : [String: Any] = ["_method": "put",
                                          "quantity": quantity]
             return .requestParameters(Parameters: param, encoding: JSONEncoding.default)
+        case .shippingRates(_, let parameters):
+            
+            return .requestParameters(Parameters: parameters, encoding: URLEncoding.default)
         default:                              return .requestPlain
             
         }

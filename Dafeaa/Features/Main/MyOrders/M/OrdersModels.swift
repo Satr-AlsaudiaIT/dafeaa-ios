@@ -39,7 +39,6 @@ struct OrderData: Codable, Identifiable {
    
     let paymentStatus: Int?
     let address: String?
-    let addressDetails: AddressDetails?
     let commissionRatio: String?
     let maxCommissionValue: String?
     let taxPrice: Double?
@@ -51,7 +50,41 @@ struct OrderData: Codable, Identifiable {
     let buildingNum: String?
     let area: String?
     let floatNum: String?
-    // Custom initializer with default nil values
+
+    let countryCode: String?
+    let cityName: String?
+    let postalCode: String?
+    let provinceCode: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case clientImage = "client_image"
+        case clientName = "client_name"
+        case orderStatus = "order_status"
+        case clientPhone = "client_phone"
+        case clientEmail = "client_email"
+        case qrCode = "qr_code"
+        case name = "name"
+        case products = "products"
+        case paymentStatus = "payment_status"
+        case address = "address"
+        case commissionRatio = "commission_ratio"
+        case maxCommissionValue = "max_commission_value"
+        case taxPrice = "tax_price"
+        case commissionValue = "commission_value"
+        case orderPrice = "order_price"
+        case deliveryPrice = "delivery_price"
+        case totalPrice = "total_price"
+        case streetName = "street_name"
+        case buildingNum = "building_num"
+        case area = "area"
+        case floatNum = "float_num"
+        case countryCode = "countryCode"
+        case cityName = "cityName"
+        case postalCode = "postalCode"
+        case provinceCode = "provinceCode"
+    }
+
     init(
         id: Int? = nil,
         clientImage: String? = nil,
@@ -69,13 +102,16 @@ struct OrderData: Codable, Identifiable {
         address: String? = nil,
         taxPrice: Double? = nil,
         totalPrice: Double? = nil,
-        addressDetails: AddressDetails? = nil,
         commissionRatio: String? = nil,
         maxCommissionValue: String? = nil,
-         streetName: String? = nil,
-         buildingNum: String? = nil,
-         area: String? = nil,
-         floatNum: String? = nil
+        streetName: String? = nil,
+        buildingNum: String? = nil,
+        area: String? = nil,
+        floatNum: String? = nil,
+        countryCode: String? = nil,
+        cityName: String? = nil,
+        postalCode: String? = nil,
+        provinceCode: String? = nil
     ) {
         self.id = id
         self.clientImage = clientImage
@@ -88,18 +124,21 @@ struct OrderData: Codable, Identifiable {
         self.products = products
         self.orderPrice = orderPrice
         self.deliveryPrice = deliveryPrice
+        self.commissionValue = commissionValue
         self.paymentStatus = paymentStatus
         self.address = address
         self.taxPrice = taxPrice
         self.totalPrice = totalPrice
-        self.addressDetails = addressDetails
         self.commissionRatio = commissionRatio
         self.maxCommissionValue = maxCommissionValue
         self.streetName = streetName
         self.buildingNum = buildingNum
         self.area = area
         self.floatNum = floatNum
-        self.commissionValue = commissionValue
+        self.countryCode = countryCode
+        self.cityName = cityName
+        self.postalCode = postalCode
+        self.provinceCode = provinceCode
     }
 }
 
@@ -126,14 +165,12 @@ struct PaymentDetails: Codable {
 
 struct AddressDetails: Codable {
     let id                  : Int?
-    let adress              : String?
+    let address             : String?
     let name,phone          : String?
-    let countryId           : Int?
-    let countryName         : String?
-    let cityId              : Int?
-    let city                : String?
-    let districtName        : String?
-    let streetName          : String?
+    let countryCode         : String?
+    let cityName            : String?
+    let postalCode          : String?
+    let provinceCode        : String?
     let lat                 : String?
     let lng                 : String?
 }
@@ -157,9 +194,9 @@ struct OrdersDataV3: Codable {
     let paymentStatus: Int?
     let qrCode: String?
     let countryId: Int?
-    let countryName: String?
+    let countryCode: String?
     let cityId: Int?
-    let city, districtName, streetName, address: String?
+    let cityName, postalCode, provinceCode, address: String?
     let lat, lng: String?
     let orderPrice, deliveryPrice, commission: Double?
     let totalPrice: Double?
@@ -227,27 +264,13 @@ struct ShowOfferData: Codable, Equatable {
     var status                              : Int?
     let commissionRatio                     : String?
     let maxCommissionValue                  : String?
+    let shippingCompanies                   : [String]?
+    let address                             : AddressModel?
 }
 
-// MARK: - ShowOfferModelV3
-struct ShowOfferModelV3: Codable {
-    let status: Bool?
-    let message: String?
-    let data: ShowOfferDataV3?
-}
 
-// MARK: - ShowOfferDataV3
-struct ShowOfferDataV3: Codable {
-    let id: Int?
-    let name, code: String?
-    var status: Int?
-    let description: String?
-    let clientId: Int?
-    let offerPrice, price: Double?
-    let images: [ImageModel]?
-    let commissionRatio, maxCommissionValue: String?
 
-}
+
 
 
 
@@ -275,4 +298,105 @@ struct CreateOrderPostModel: Codable {
 }
 
 
+// MARK: - ShowOfferModelV3
+struct ShowOfferModelV3: Codable {
+    let status: Bool?
+    let message: String?
+    let data: ShowOfferDataV3?
+}
 
+// MARK: - AddressModel
+struct AddressModel: Codable, Equatable {
+    let id: Int?
+    let countryId: Int?
+    let countryName: String?
+    let cityId: Int?
+    let cityName: String?
+    let districtName: String?
+    let streetName: String?
+    let address: String?
+    let lat: Double?
+    let lng: Double?
+}
+
+// MARK: - ShowOfferDataV3
+struct ShowOfferDataV3: Codable {
+    let id: Int?
+    let name, code: String?
+    var status: Int?
+    let description: String?
+    let productId: Int?
+    let clientId: Int?
+    let price: Double?
+    let offerPrice: Double?
+    let width, height, length, weight: Double?
+    let plannedShippingDateAndTime: Int?
+    let shippingCompanies: [String]?
+    let images: [ImageModel]?
+    let commissionRatio, maxCommissionValue: String?
+    let commission: Double?
+    let vatRatio: String?
+    let vatValue: Double?
+    let totalCommissionWithVat: Double?
+    let address: AddressModel?
+}
+
+// MARK: - Updated Mapping Function
+extension ShowOfferModelV3 {
+    func mapToShowOfferModel() -> ShowOfferModel? {
+        guard let v3Data = data else { return nil }
+        
+        // Create a single product from V3 data
+        let product = productList(
+            id: v3Data.productId,
+            images: v3Data.images,
+            name: v3Data.name,
+            description: v3Data.description,
+            price: v3Data.price,
+            amount: nil,
+            offerPrice: v3Data.offerPrice,
+            totalQuantity: nil,
+            paiedQuantity: nil,
+            remainingQuantity: nil
+        )
+        
+        let showOfferData = ShowOfferData(
+            id: v3Data.id,
+            name: v3Data.name,
+            code: v3Data.code,
+            description: v3Data.description,
+            clientId: v3Data.clientId,
+            deliveryPrice: nil,
+            taxPrice: v3Data.vatValue,
+            products: [product],
+            status: v3Data.status,
+            commissionRatio: v3Data.commissionRatio,
+            maxCommissionValue: v3Data.maxCommissionValue,
+            shippingCompanies: v3Data.shippingCompanies,
+            address: v3Data.address
+        )
+        
+        return ShowOfferModel(
+            status: status,
+            message: message,
+            data: showOfferData
+        )
+    }
+    
+    
+    
+}
+
+
+// MARK: - ShippingRatesModel
+struct ShippingRatesModel: Codable {
+    let status: Bool?
+    let message: String?
+    let data: ShippingRatesData?
+}
+
+// MARK: - ShippingRatesData
+struct ShippingRatesData: Codable {
+    let currencyType, priceCurrency: String?
+    let price: Double?
+}

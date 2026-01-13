@@ -17,7 +17,6 @@ protocol OrdersAPIProtocol {
     func deleteDynamicLinks(id: Int, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func activateStopLink(code: String,status:Int, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func updateQuantity(productId: Int,quantity:Int, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
-
 }
 
 class OrdersAPI: BaseAPI<OrdersNetwork>, OrdersAPIProtocol
@@ -98,7 +97,7 @@ protocol OrdersAPIProtocolV3 {
     
     func showDynamicLinks(code: String, Completion: @escaping (Result<ShowOfferModelV3?, NSError>) -> Void)
   
-
+    func shippingRates(company: String,params: [String: Any], Completion: @escaping (Result<ShippingRatesModel?, NSError>) -> Void)
 }
 
 class OrdersAPIV3: BaseAPI<OrdersNetworkV3>, OrdersAPIProtocolV3
@@ -141,6 +140,10 @@ class OrdersAPIV3: BaseAPI<OrdersNetworkV3>, OrdersAPIProtocolV3
         }
     }
     
+    func shippingRates(company: String,params: [String: Any], Completion: @escaping (Result<ShippingRatesModel?, NSError>) -> Void){
+        self.fetchData(target: .shippingRates(company: company, parm: params), responseClass: ShippingRatesModel.self) { (result) in
+            Completion(result)
+        }
+    }
 
-    
 }

@@ -13,6 +13,9 @@
 "chooseUploadImage" =  "Choose an image to upload from";
 "PhotoLibrary" = "Photo Library";
 "cameraUpload" = "Camera";
+"cm" = "cm";
+"days" = "days";
+"kg" = "kg";
 
 //MARK: - Onboarding
 "Change Language" = "Change Language";
@@ -269,6 +272,10 @@
 "Save" = "Save";
 "addNewAddress" = "Add a New Address";
 "editAddress" = "Edit Address";
+"search_location" = "Search location or address";
+"governorate" = "Governorate";
+"postal_code" = "Postal Code";
+"full_address" = "Full Address";
 "areaValidation" = "Please enter the area field";
 "cityValidation" = "Please enter the city field";
 "neighborhoodName" =  "Neighborhood Name";
@@ -346,6 +353,8 @@
 "availableBalance:" = "Available Balance:";
 "userNotExist" = "This number not connected to any account";
 "amount_validation" = "Please enter amount to transfer";
+"number_days" = "Number of days to Pickup";
+
 //MARK: - Withdraws
 "withdrawsProcess" = "Withdrawal Transactions";
 "withdrawProcess" = "Withdrawal Process";
@@ -450,4 +459,37 @@
 "Pay with" = "Pay with";
 "5 minutes during business hours, otherwise the next business day" = "5 minutes during business hours, otherwise the next business day";
 "SARIE transfer – for amounts over" = "SARIE transfer – for amounts over";
+"location_outside_saudi" = "You can’t choose locations outside Saudi Arabia.";
+
+/* Network / API errors */
+"Something went wrong, Please try again later." = "Something went wrong, Please try again later.";
+"The Internet connection appears to be offline." = "The Internet connection appears to be offline.";
+"Request Timeout, Please try again later." = "Request Timeout, Please try again later.";
+"Bad Server Response, Please try again later." = "Bad Server Response, Please try again later.";
+"There is something Wrong with Url" = "There is something Wrong with Url";
+"Couldn't decode Json response" = "Couldn't decode Json response";
+
+//ADD offer
+"Weight" = "Weight";
+"Length" = "Length";
+"Width"  = "Width";
+"Height" = "Height";
+"shipping_companies_required" = "* Shipping companies";
+"shippingCompany" = "Shipping Company";
+"notAvailable" = "Not Available";
+"deliveryPrice" = "Shipping price";
+
+// Validation messages
+"validation_offer_name" = "Please enter the offer name";
+"validation_offer_description" = "Please enter the offer description";
+"validation_offer_price" = "Please enter a valid price";
+"validation_offer_images" = "Please select at least one image";
+"validation_weight" = "Please enter the product weight";
+"validation_length" = "Please enter the product length";
+"validation_width" = "Please enter the product width";
+"validation_height" = "Please enter the product height";
+"validation_shipping_companies" = "Please select at least one shipping company";
+"validation_planned_shipping" = "Please enter the number of days for shipping";
+
+"select_shipping_companies" = "Select shipping companies";
 

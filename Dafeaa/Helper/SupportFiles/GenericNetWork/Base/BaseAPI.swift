@@ -21,8 +21,10 @@ class BaseAPI<T: TargetType> {
         let method = Alamofire.HTTPMethod(rawValue: target.methods.rawValue)
         let headers = Alamofire.HTTPHeaders(target.headers ?? [:])
         let params = buildParams(task: target.task)
-        
-        AF.request(target.baseURL + target.path, method: method, parameters: params.0, encoding:  params.1, headers:  headers).responseJSON { (response) in
+     
+
+        AF.request(target.baseURL + target.path, method: method, parameters: params.0, encoding:  params.1, headers:  headers,
+                   requestModifier: { $0.timeoutInterval = 30 }).responseJSON { (response) in
             print("status is -----------:> \(response.response?.statusCode ?? 0)")
             print("url is -----------:> \(target.path)")
             print("parameters is -----------:> \(params)")
@@ -146,48 +148,88 @@ class BaseAPI<T: TargetType> {
             }
         }
         
-        private func handleUrlError(_ target:T, error:Error?,completion:@escaping networkCompletionError){
-            guard let error = error as? URLError else {
-                print("there is url error")
-                let error = NSError(domain: target.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().noInternetConnection])
-                completion(error)
-                return
-            }
-            
-            switch error.code {
-            case .networkConnectionLost:
-                let error = NSError(domain: target.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().noInternetConnection])
-                completion(error)
-                return
-            case .timedOut:
-                let error = NSError(domain: target.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().requestTimeOut])
-                completion(error)
-                return
-                
-            case .notConnectedToInternet:
-                let error = NSError(domain: target.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().noInternetConnection])
-                completion(error)
-                return
-                
-            case .badServerResponse:
-                let error = NSError(domain: target.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().badServerResponse])
-                completion(error)
-                return
-                
-            case .badURL:
-                let error = NSError(domain: target.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().badUrl])
-                completion(error)
-                return
-                
+    private func handleUrlError(
+        _ target: T,
+        error: Error?,
+        completion: @escaping networkCompletionError
+    ) {
+        var urlError: URLError?
+
+        if let afError = error?.asAFError {
+            switch afError {
+            case .sessionTaskFailed(let sessionError):
+                if let e = sessionError as? URLError {
+                    urlError = e
+                } else {
+                    let ns = sessionError as NSError
+                    if ns.domain == NSURLErrorDomain {
+                        urlError = URLError(URLError.Code(rawValue: ns.code))
+                    }
+                }
             default:
-                let error = NSError(domain: target.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey:NetworkErrorMessage().genericError])
-                completion(error)
-                return
+                break
             }
-            
-            
         }
+
+        if urlError == nil, let e = error as? URLError {
+            urlError = e
+        }
+
+        if urlError == nil, let ns = error as NSError?, ns.domain == NSURLErrorDomain {
+            urlError = URLError(URLError.Code(rawValue: ns.code))
+        }
+
+        guard let finalUrlError = urlError else {
+            let err = NSError(
+                domain: target.baseURL,
+                code: 0,
+                userInfo: [NSLocalizedDescriptionKey: error?.localizedDescription ?? NetworkErrorMessage().genericError]
+            )
+            completion(err)
+            return
+        }
+
+        switch finalUrlError.code {
+        case .networkConnectionLost, .notConnectedToInternet:
+            completion(NSError(domain: target.baseURL, code: 0,
+                               userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().noInternetConnection]))
+        case .timedOut:
+            completion(NSError(domain: target.baseURL, code: 0,
+                               userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().requestTimeOut]))
+        case .badServerResponse:
+            completion(NSError(domain: target.baseURL, code: 0,
+                               userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().badServerResponse]))
+        case .badURL:
+            completion(NSError(domain: target.baseURL, code: 0,
+                               userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().badUrl]))
         
+            
+        default:
+            completion(NSError(domain: target.baseURL, code: 0,
+                               userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().genericError]))
+        }
+    }
+
+    private func handleURLError(_ target: T, urlError: URLError, completion: @escaping networkCompletionError) {
+        switch urlError.code {
+        case .networkConnectionLost, .notConnectedToInternet:
+            completion(NSError(domain: target.baseURL, code: 0,
+                               userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().noInternetConnection]))
+        case .timedOut:
+            completion(NSError(domain: target.baseURL, code: 0,
+                               userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().requestTimeOut]))
+        case .badServerResponse:
+            completion(NSError(domain: target.baseURL, code: 0,
+                               userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().badServerResponse]))
+        case .badURL:
+            completion(NSError(domain: target.baseURL, code: 0,
+                               userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().badUrl]))
+        default:
+            completion(NSError(domain: target.baseURL, code: 0,
+                               userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().genericError]))
+        }
+    }
+
         private func decode<M:Codable>(fromData data:Data,
                                        toObject responseClass: M.Type, completion:@escaping decodingCompletion<M>){
             
@@ -221,7 +263,7 @@ struct NetworkErrorMessage {
     
     let badUrl = "There is something Wrong with Url".localized()
     
-    let decodingError = "Couldn't decode Json response"
+    let decodingError = "Couldn't decode Json response".localized()
     
 }
 struct BaseNetworkResponseErrorModel: Codable {

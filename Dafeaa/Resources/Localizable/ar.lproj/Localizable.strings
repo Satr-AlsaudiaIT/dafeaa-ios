@@ -13,6 +13,9 @@
 "chooseUploadImage" =  "رفع صورة باستخدام";
 "PhotoLibrary" = "معرض الصور";
 "cameraUpload" = "الكاميرا";
+"cm" = "سم";
+"days" = "يوم";
+"kg" = "كجم";
 
 //MARK: - Onboarding
 "Change Language" = "تغيير اللغة";
@@ -267,6 +270,11 @@
 "Save" = "حفظ";
 "addNewAddress" = "إضافة عنوان جديد";
 "editAddress" = "تعديل العنوان";
+"search_location" = "ابحث عن موقع أو عنوان";
+"governorate" = "المحافظة";
+"CityField" = "المدينة";
+"postal_code" = "الرمز البريدي";
+"full_address" = "العنوان الكامل";
 "areaValidation" = "برجاء ادخال حقل المنطقة";
 "cityValidation" = "برجاء اختيار حقل المدينة";
 "neighborhoodName" = "اسم الحي";
@@ -344,13 +352,14 @@
 "availableBalance:" = "الرصيد المتاح:";
 "userNotExist" = "هذا الرقم غير مرتبط باي حساب";
 "amount_validation" = "برجاء إدخال المبلغ المراد تحويله";
+"number_days" = "عدد ايام التوصيل";
+
 //MARK: - Withdraws
 "withdrawsProcess" = "عمليات سحب الرصيد";
 "withdrawProcess" = "عملية سحب";
 "done" = "مكتملة";
 "progress" = "قيد التنفيذ";
 "pending"  = "معلقة";
-
 
 //MARK: - subscription
 "choose_plane_title" = "اختر خطة الإشتراك المناسبة لك";
@@ -442,10 +451,43 @@
 "The amount will be charged to your wallet via Dafea" = "سيتم تحصيل المبلغ على محفظتك عبر دافع";
 "Success" = "نجح";
 "Failed" = "فشل";
-"The balance has been successfully recharged." = "تم إعادة شحن الرصيد بنجاح.";
+"The balance has been successfully recharged." = "تم شحن الرصيد بنجاح.";
 "Payment failed. Please try again." = "فشل الدفع. يرجى المحاولة مرة أخرى.";
 "The balance has been successfully withdrawn." = "تم سحب الرصيد بنجاح.";
 "Total Amount" = "اجمالي المبلغ";
 "Pay with" = "الدفع عن طريق";
 "5 minutes during business hours, otherwise the next business day" = "5 دقائق خلال ساعات العمل، وإلا في يوم العمل التالي";
 "SARIE transfer – for amounts over" = "تحويل سريع – للمبالغ التي تزيد عن";
+"location_outside_saudi" = "لا يمكنك اختيار موقع خارج المملكة العربية السعودية.";
+
+/* Network / API errors */
+"Something went wrong, Please try again later." = "حدث خطأ ما، يرجى المحاولة مرة أخرى لاحقًا.";
+"The Internet connection appears to be offline." = "يبدو أن اتصال الإنترنت غير متوفر.";
+"Request Timeout, Please try again later." = "انتهت مهلة الطلب، يرجى المحاولة مرة أخرى لاحقًا.";
+"Bad Server Response, Please try again later." = "استجابة غير صالحة من الخادم، يرجى المحاولة مرة أخرى لاحقًا.";
+"There is something Wrong with Url" = "يوجد خطأ في الرابط.";
+"Couldn't decode Json response" = "تعذر قراءة بيانات الاستجابة.";
+
+//ADD offer
+"Weight" = "الوزن";
+"Length" = "الطول";
+"Width"  = "العرض";
+"Height" = "الارتفاع";
+"shipping_companies_required" = "* شركات الشحن";
+"shippingCompany" = "شركات الشحن";
+"notAvailable" = "غير متاحة";
+"deliveryPrice" = "سعر التوصيل";
+
+// Validation messages
+"validation_offer_name" = "يرجى إدخال اسم العرض";
+"validation_offer_description" = "يرجى إدخال وصف العرض";
+"validation_offer_price" = "يرجى إدخال سعر صحيح";
+"validation_offer_images" = "يرجى اختيار صورة واحدة على الأقل";
+"validation_weight" = "يرجى إدخال وزن المنتج";
+"validation_length" = "يرجى إدخال طول المنتج";
+"validation_width" = "يرجى إدخال عرض المنتج";
+"validation_height" = "يرجى إدخال ارتفاع المنتج";
+"validation_shipping_companies" = "يرجى اختيار شركة شحن واحدة على الأقل";
+"validation_planned_shipping" = "يرجى إدخال عدد أيام الشحن";
+
+"select_shipping_companies" = "اختر شركات الشحن";

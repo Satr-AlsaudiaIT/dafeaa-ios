@@ -106,7 +106,7 @@ struct OrderClientDetailsView: View {
                                             AddressView(
                                                 name: Constants.userName,
                                                 phone: Constants.phone,
-                                                addressDetails: viewModel.orderData?.addressDetails
+                                                addressDetails: viewModel.orderData
                                             )
                                         }
                                     }

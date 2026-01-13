@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension String {
     var isValidSaudiIBAN: Bool {
@@ -81,5 +82,74 @@ extension String {
             formatted.append(character)
         }
         return formatted
+    }
+}
+
+extension NSAttributedString {
+    func toHTML() -> String {
+        let fullString = self.string
+        var html = ""
+        var paragraphs: [String] = []
+        var currentParagraph = ""
+        
+        self.enumerateAttributes(in: NSRange(location: 0, length: self.length), options: []) { attributes, range, _ in
+            let substring = (fullString as NSString).substring(with: range)
+            var wrappedText = substring
+            
+            // Check for underline first (innermost tag)
+            if let underlineStyle = attributes[.underlineStyle] as? NSNumber, underlineStyle.intValue != 0 {
+                wrappedText = "<u>\(wrappedText)</u>"
+            }
+            
+            // Check for strikethrough
+            if let strikethroughStyle = attributes[.strikethroughStyle] as? NSNumber, strikethroughStyle.intValue != 0 {
+                wrappedText = "<s>\(wrappedText)</s>"
+            }
+            
+            // Check for italic
+            if let font = attributes[.font] as? UIFont {
+                if font.fontDescriptor.symbolicTraits.contains(.traitItalic) {
+                    wrappedText = "<i>\(wrappedText)</i>"
+                }
+                // Check for bold (outermost tag)
+                if font.fontDescriptor.symbolicTraits.contains(.traitBold) {
+                    wrappedText = "<b>\(wrappedText)</b>"
+                }
+            }
+            
+            // Handle line breaks
+            let lines = wrappedText.components(separatedBy: "\n")
+            for (index, line) in lines.enumerated() {
+                if index > 0 {
+                    if line.isEmpty && currentParagraph.isEmpty {
+                        // Double line break - new paragraph
+                        if !currentParagraph.trimmingCharacters(in: .whitespaces).isEmpty {
+                            paragraphs.append(currentParagraph)
+                            currentParagraph = ""
+                        }
+                    } else {
+                        // Single line break - add <br>
+                        currentParagraph += "<br>"
+                    }
+                }
+                currentParagraph += line
+            }
+        }
+        
+        // Add the last paragraph
+        if !currentParagraph.trimmingCharacters(in: .whitespaces).isEmpty {
+            paragraphs.append(currentParagraph)
+        }
+        
+        // Wrap each paragraph in <p> tags
+        if paragraphs.isEmpty {
+            html = "<p>\(currentParagraph)</p>"
+        } else {
+            html = paragraphs.map { "<p>\($0)</p>" }.joined()
+        }
+        
+        print("✅ HTML with proper line breaks: \(html)")
+        
+        return html.isEmpty ? self.string : html
     }
 }

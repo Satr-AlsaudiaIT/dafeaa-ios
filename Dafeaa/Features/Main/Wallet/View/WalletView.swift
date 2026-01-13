@@ -10,7 +10,7 @@ import SwiftUI
 struct WalletView: View {
     @StateObject var viewModel = WalletVM()
     @StateObject var homeViewModel = HomeVM()
-
+    
     @Binding var selectedTab : TabBarView.Tab
     @State var isSheetPresented: Bool = false
     @State var amount:Double = 0.0
@@ -20,7 +20,8 @@ struct WalletView: View {
     @State private var isViewAppeared: Bool = false
     @State var navigateToWithDrawView: Bool = false
     @State var navigateToAddBalance: Bool = false
-
+    @State private var popupMessage: PopupMessage? = nil
+    
     var body: some View {
         NavigationStack {
             //MARK: - upperView
@@ -36,15 +37,15 @@ struct WalletView: View {
                                 Text(String(format: "%.1f",viewModel.walletData?.availableBalance ?? 0))
                                     .textModifier(.extraBold, 36, .black030319)
                                 Image(.riyal)
-                                     .resizable()
-                                     .aspectRatio(contentMode: .fit)
-                                     .foregroundColor(.black010202)
-                                     .frame(width: 30)
-                                     .padding(.trailing, 10)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(.black010202)
+                                    .frame(width: 30)
+                                    .padding(.trailing, 10)
                             }
                             .environment(\.layoutDirection, .rightToLeft)
                         }
-//                        .padding(.top)
+                        //                        .padding(.top)
                         //MARK: - Wallet View
                         ZStack{
                             Color.white
@@ -84,8 +85,8 @@ struct WalletView: View {
                                 Spacer()
                                 HStack {
                                     WalletButton(buttonText: "transferBalance".localized(), image: .transferBalance) {
-//                                        balanceActionType = .withDraw
-//                                        isSheetPresented = true
+                                        //                                        balanceActionType = .withDraw
+                                        //                                        isSheetPresented = true
                                     }
                                     
                                 }
@@ -100,7 +101,7 @@ struct WalletView: View {
                         
                         //MARK: - lowerView
                         VStack(spacing: 17) {
-//                            LastProcessNavView(title: "lastTransactions".localized(), selectedTab: $selectedTab)
+                            //                            LastProcessNavView(title: "lastTransactions".localized(), selectedTab: $selectedTab)
                             if viewModel.processList.isEmpty {
                                 EmptyCostumeView()
                             }else {
@@ -148,6 +149,7 @@ struct WalletView: View {
                 
             })
             .toastView(toast: $viewModel.toast)
+            .popupView(popup: $popupMessage)
             .navigationBarHidden(true)
             .onAppear(){
                 isViewAppeared = true
@@ -174,6 +176,7 @@ struct WalletView: View {
                     addAmount: amount
                 )
             }
+            
         }
     }
     
@@ -187,20 +190,21 @@ struct WalletView: View {
         if Constants.shouldNavigateToWallet {
             let status = Constants.lastPaymentStatus
             let payOutStatus = Constants.lastPayoutStatus
+            
             if status.lowercased() == "paid" {
-                viewModel.toast = FancyToast(
+                popupMessage = PopupMessage(
                     type: .success,
                     title: "Success".localized(),
                     message: "The balance has been successfully recharged.".localized()
                 )
             } else if status.lowercased() == "failed" {
-                viewModel.toast = FancyToast(
-                    type: .error,
+                popupMessage = PopupMessage(
+                    type: .failure,
                     title: "Failed".localized(),
                     message: "Payment failed. Please try again.".localized()
                 )
-            }else if payOutStatus == "done" {
-                viewModel.toast = FancyToast(
+            } else if payOutStatus == "done" {
+                popupMessage = PopupMessage(
                     type: .success,
                     title: "Success".localized(),
                     message: "The balance has been successfully withdrawn.".localized()
@@ -209,13 +213,11 @@ struct WalletView: View {
             
             Constants.shouldNavigateToWallet = false
             Constants.lastPaymentStatus = ""
-            Constants.lastPayoutStatus  = ""
+            Constants.lastPayoutStatus = ""
             viewModel.wallet(skip: 0)
         }
     }
-    
 }
-
 
 
 #Preview {

@@ -112,42 +112,50 @@ final class MoreVM : ObservableObject {
         }
     }
 
-    func validateCreateAddress(id:Int?,areaId:Int, cityId: Int,streetName: String, neighborhoodName:String, address:String ,lat: Double? = nil, lng: Double? = nil){
-        if areaId == 0 {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: "areaValidation".localized())
+    func validateCreateAddress(countyCode: String,governorate: String, city: String, postalCode: String, address: String, lat: Double?, lng: Double?, addressId: Int? = nil) {
+        
+//        if lat == nil || lng == nil || (lat == 0 && lng == 0) {
+//            toast = FancyToast(type: .error, title: "Error".localized(), message: "please_select_location_from_map".localized())
+//            return
+//        }
+        
+        if governorate.isBlank {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "governorate_validation".localized())
+            return
         }
-        else if cityId == 0 {
+        
+        if city.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "cityValidation".localized())
+            return
         }
-//        else if streetName.isBlank {
-//            toast = FancyToast(type: .error, title: "Error".localized(), message: "streetValidation".localized())
-//        }
-        else if neighborhoodName.isBlank {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: "neighborhoodValidation".localized())
+        
+        if address.isBlank {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "addressNumValidation".localized())
+            return
         }
-//        else if address.isBlank {
-//            toast = FancyToast(type: .error, title: "Error".localized(), message: "addressNumValidation".localized())
-//        }
-        else {
-            var  dic : [String: Any] = [
-                "address"       : address,
-                "street_name"   :streetName,
-                "district_name"  :neighborhoodName,
-                "area_id"          :areaId,
-                "city_id"       :cityId
-//                "float_num"     :floatNum.convertDigitsToEng
-            ]
-            if  lat != nil && lng != nil {
-                dic.updateValue(lat ?? 0.0, forKey: "lat")
-                dic.updateValue(lng ?? 0.0, forKey: "lng")
-            }
-            if id != nil {
-                dic.updateValue("put", forKey: "_method")
-                self.address(id: id ?? 0, method: .post, dic: dic)
-            } else {  createAddress(dic: dic)              }
+        
+        
+        var dic: [String: Any] = [
+            "address": address,
+            "cityName": city,
+            "provinceCode": governorate,
+            "countryCode": countyCode,
+            "lat": lat ?? 0.0,
+            "lng": lng ?? 0.0
+        ]
+        
+        if !postalCode.isBlank {
+            dic.updateValue(postalCode, forKey: "postalCode")
+        }
+        
+        if let id = addressId {
+            dic.updateValue("put", forKey: "_method")
+            self.address(id: id, method: .post, dic: dic)
+        } else {
+            createAddress(dic: dic)
         }
     }
- 
+
     func updateMainAddress(id:Int? = nil, isShowSuccess: Bool = true){
         var  dic : [String: Any] = [
                 "is_main" :1

@@ -512,3 +512,109 @@ private func handleUrlStatusCode(targetPath: String ,responseData:Data?,code:Int
     
     
 }
+
+
+import Alamofire
+import UIKit
+
+extension MultipartUploadImageWithModel {
+
+    func uploadOfferLinkV3<M: Codable>(
+        path: String,
+        parameterS: [String: Any],
+        images: [UIImage],
+        shippingCompanies: [String],
+        responseClass: M.Type,
+        completion: @escaping (Result<M?, NSError>) -> Void
+    ) {
+        let token = GenericUserDefault.shared.getValue(Constants.shared.token)
+        let toLanguage = MOLHLanguage.currentAppleLanguage()
+
+        AF.upload(multipartFormData: { (form: MultipartFormData) in
+
+            for (key, value) in parameterS {
+                if let temp = value as? String {
+                    form.append(temp.data(using: .utf8)!, withName: key)
+                } else if let temp = value as? Int {
+                    form.append("\(temp)".data(using: .utf8)!, withName: key)
+                } else if let temp = value as? Double {
+                    form.append("\(temp)".data(using: .utf8)!, withName: key)
+                } else if let temp = value as? Float {
+                    form.append("\(temp)".data(using: .utf8)!, withName: key)
+                }
+            }
+
+            for (index, image) in images.enumerated() {
+                let keyObj = "images[\(index)]"
+                if let data = image.jpegData(compressionQuality: 0.5) {
+                    form.append(
+                        data,
+                        withName: keyObj,
+                        fileName: "image_\(index).jpeg",
+                        mimeType: "image/jpeg"
+                    )
+                }
+            }
+
+            // 3) shipping_companies[i]
+            for (index, company) in shippingCompanies.enumerated() {
+                let keyObj = "shipping_companies[\(index)]"
+                form.append(company.data(using: .utf8)!, withName: keyObj)
+            }
+
+        }, to: "\(Constants.shared.basURLV3)\(path)", method: .post, headers: [
+            "Authorization": "Bearer \(token ?? "")",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-Language": "\(toLanguage)",
+            "Connection": "keep-alive",
+            "x-source": "ios"
+        ])
+        .responseJSON { response in
+            print(response.response?.statusCode ?? 0)
+            print("\(Constants.shared.baseURL)\(path) \(parameterS)")
+            debugPrint(response)
+
+            guard response.error == nil else {
+                self.handleUrlError(Constants.shared.baseURL, error: response.error) { err in
+                    completion(.failure(err))
+                }
+                return
+            }
+
+            self.handleUrlStatusCode(
+                targetPath: path,
+                responseData: response.data,
+                code: response.response?.statusCode
+            ) { isSuccess, error in
+
+                guard isSuccess else {
+                    if error == "Unauthenticated." {
+                        completion(.failure(NSError(
+                            domain: Constants.shared.baseURL,
+                            code: 401,
+                            userInfo: [NSLocalizedDescriptionKey: error ?? ""]
+                        )))
+                        return
+                    }
+                    completion(.failure(NSError(
+                        domain: Constants.shared.baseURL,
+                        code: 0,
+                        userInfo: [NSLocalizedDescriptionKey: error ?? ""]
+                    )))
+                    return
+                }
+
+                guard let data = response.data else { return }
+
+                self.decode(fromData: data, toObject: responseClass) { object, decodeError in
+                    guard let object, decodeError == nil else {
+                        completion(.failure(decodeError!))
+                        return
+                    }
+                    completion(.success(object))
+                }
+            }
+        }
+    }
+}

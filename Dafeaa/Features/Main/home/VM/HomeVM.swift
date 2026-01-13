@@ -263,14 +263,14 @@ class HomeVM: ObservableObject {
         }
         else {
             _isLoading = true
-            let api: OrdersAPIProtocol = OrdersAPI()
+            let api: OrdersAPIProtocolV3 = OrdersAPIV3()
             api.showDynamicLinks(code: code) { [weak self] (Result) in
                 guard let self = self else { return }
                 _isLoading = false
                 switch Result {
                 case .success(let response):
-                    guard let data = response?.data else { return }
-                    self._offerData = data
+                    guard let data = response?.mapToShowOfferModel() else { return }
+                    self._offerData = data.data
                     self.showOfferSuccess = true
                 case .failure(_):
                         self.toast = FancyToast(type: .error, title: "Error".localized(), message: "order_not_found".localized())

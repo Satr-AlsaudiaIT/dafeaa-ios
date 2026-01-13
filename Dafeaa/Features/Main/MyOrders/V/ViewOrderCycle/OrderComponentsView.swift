@@ -139,7 +139,7 @@ struct PaymentInfoView: View {
                 if deliveryPrice != 0  {
                     PriceRowView(title: "deliveryPrice".localized(), price: deliveryPrice)
                 }
-//                PriceRowView(title: "totalBeforeTax".localized(), price: ( (itemsCommissionValue) + (itemsPrice)))
+
 
                     Divider()
                         .foregroundColor( Color(.black).opacity(0.10))
@@ -213,7 +213,7 @@ struct PriceRowView: View {
 struct AddressView: View {
     var name: String
     var phone: String
-    var addressDetails: AddressDetails?
+    var addressDetails: OrderData?
     @State var concatenatedAddress: String = ""
     
     var body: some View {
@@ -244,30 +244,21 @@ struct AddressView: View {
         }
         
         var addressComponents: [String] = []
+
+        if let countryCode = addressDetails.countryCode, !countryCode.isBlank {
+            addressComponents.append(countryCode)
+        }
         
-        // Add main address
-        if let address = addressDetails.adress, !address.isBlank {
+        if let cityName = addressDetails.cityName, !cityName.isBlank {
+            addressComponents.append(cityName)
+        }
+        
+        if let address = addressDetails.address, !address.isBlank {
             addressComponents.append(address)
         }
         
-        // Add street name
-        if let streetName = addressDetails.streetName, !streetName.isBlank {
-            addressComponents.append("streetName".localized() + ": " + streetName)
-        }
-        
-        // Add district name
-        if let districtName = addressDetails.districtName, !districtName.isBlank {
-            addressComponents.append("districtName".localized() + ": " + districtName)
-        }
-        
-        // Add city
-        if let city = addressDetails.city, !city.isBlank {
-            addressComponents.append("city".localized() + ": " + city)
-        }
-        
-        // Add country name
-        if let countryName = addressDetails.countryName, !countryName.isBlank {
-            addressComponents.append("countryName".localized() + ": " + countryName)
+        if let postalCode = addressDetails.postalCode, !postalCode.isBlank {
+            addressComponents.append(postalCode)
         }
         
         concatenatedAddress = addressComponents.joined(separator: ", ")

@@ -122,8 +122,7 @@ struct SavedAddressesView: View {
                 Button(action: {
                     withAnimation {
                         selectedAddressId = address.id ?? 0
-                        selectedAddress   = "address".localized() + ": \(address.countryName ?? "")," + " \(address.cityName ?? "")" + ", " + " \(address.address ?? "")" + ", " + " \(address.districtName ?? "")"
-                        
+                        selectedAddress   = "address".localized() + ": " + buildConcatenatedAddress(model:address)
                     }
                 }) {
                     HStack(alignment: .top) {
@@ -162,14 +161,8 @@ struct SavedAddressesView: View {
                             }
                             Text("phoneNumber".localized() + " : " + Constants.phone )
                                 .textModifier(.plain, 12, .gray979797)
-                            
-                            let country = address.countryName != "" ? ("area".localized() + ": \(address.countryName ?? "")") : ""
-                            let city = address.cityName != "" ? ( ", " + "CityField".localized() + ": \(address.cityName ?? "")") : ""
-                            let naiborhood = address.districtName != "" ? (", " + "neighborhoodName".localized() + ": \(address.districtName ?? "")") : ""
-                            let streetName = address.districtName != "" ? ( ", " + "streetName".localized() + ": \(address.streetName ?? "")") : ""
-                            let addressShort = address.address != "" ? ( "," + "shortAddress".localized() + ": \(address.address ?? "")") : ""
-                            let fullAddress = "\(country)" + "\(city)" + "\(naiborhood)" + "\(streetName)" + "\(addressShort)"
-                            Text(fullAddress)
+
+                            Text(buildConcatenatedAddress(model:address))
                                 .textModifier(.plain, 12, .gray979797)
                                 .multilineTextAlignment(.leading)
                         }
@@ -189,4 +182,32 @@ struct SavedAddressesView: View {
     private func deleteAddress(_ address: AddressesData) {
         viewModel.address(id: address.id ?? 0, method: .delete, dic: [:])
     }
+    
+    private func buildConcatenatedAddress(model: AddressesData?) -> String {
+        guard let addressDetails = model else {
+            return ""
+        }
+        
+        var addressComponents: [String] = []
+
+        if let countryCode = addressDetails.countryCode, !countryCode.isBlank {
+            addressComponents.append(countryCode)
+        }
+        
+        if let cityName = addressDetails.cityName, !cityName.isBlank {
+            addressComponents.append(cityName)
+        }
+        
+        if let address = addressDetails.address, !address.isBlank {
+            addressComponents.append(address)
+        }
+        
+        if let postalCode = addressDetails.postalCode, !postalCode.isBlank {
+            addressComponents.append(postalCode)
+        }
+        
+        
+        return addressComponents.joined(separator: ", ")
+    }
+
 }

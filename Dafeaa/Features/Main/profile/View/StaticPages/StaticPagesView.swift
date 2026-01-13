@@ -98,7 +98,6 @@ struct HTMLTextView: UIViewRepresentable {
     
     func updateUIView(_ uiView: UITextView, context: Context) {
          if let attributedString = htmlText.attributedStringFromHTML {
-             // Apply the custom font
              let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
              mutableAttributedString.addAttributes(
                  [.font: font],
@@ -137,5 +136,93 @@ extension String {
             print("Error creating attributed string from HTML: \(error)")
             return nil
         }
+    }
+}
+
+
+import Foundation
+import UIKit
+
+
+func attributedStringFromHTML(_ html: String,
+                              baseFont: UIFont = .systemFont(ofSize: 13),
+                              textColor: UIColor = .black,
+                              isRTL: Bool) -> NSAttributedString {
+
+    let data = Data(html.utf8)
+    let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+        .documentType: NSAttributedString.DocumentType.html,
+        .characterEncoding: String.Encoding.utf8.rawValue
+    ]
+
+    let mutable = (try? NSMutableAttributedString(data: data, options: options, documentAttributes: nil))
+        ?? NSMutableAttributedString(string: html)
+
+    while mutable.length > 0 {
+          let last = mutable.attributedSubstring(from: NSRange(location: mutable.length - 1, length: 1)).string
+          if last == "\n" || last == "\r" || last == " " || last == "\t" {
+              mutable.deleteCharacters(in: NSRange(location: mutable.length - 1, length: 1))
+          } else { break }
+      }
+    
+    let ps = NSMutableParagraphStyle()
+    ps.alignment = isRTL ? .right : .left
+    ps.baseWritingDirection = isRTL ? .rightToLeft : .leftToRight
+    ps.paragraphSpacing = 0
+    ps.paragraphSpacingBefore = 0
+
+    let range = NSRange(location: 0, length: mutable.length)
+    mutable.addAttributes([
+        .font: baseFont,
+        .paragraphStyle: ps,
+        .foregroundColor: textColor
+    ], range: range)
+
+    return mutable
+}
+
+
+
+import SwiftUI
+import UIKit
+
+
+
+struct HTMLDescriptionView: UIViewRepresentable {
+    let html: String
+    var size: CGFloat = 13
+    
+    func makeUIView(context: Context) -> UITextView {
+        let tv = UITextView()
+        tv.isEditable = false
+        tv.isScrollEnabled = false
+        tv.isSelectable = true
+        tv.backgroundColor = .clear
+        tv.textContainerInset = .zero
+        tv.textContainer.lineFragmentPadding = 0
+
+        // Alignment based on language
+        let isArabic = MOLHLanguage.currentAppleLanguage().hasPrefix("ar")
+        tv.semanticContentAttribute = isArabic ? .forceRightToLeft : .forceLeftToRight
+        tv.textAlignment = isArabic ? .right : .left
+
+        return tv
+    }
+    
+
+    func updateUIView(_ uiView: UITextView, context: Context) {
+        let isArabic = MOLHLanguage.currentAppleLanguage().hasPrefix("ar")
+        let customUIFont = UIFont(
+            name: AppFonts.shared.name(.plain),
+            size: size
+        ) ?? .systemFont(ofSize: size)
+
+        uiView.attributedText = attributedStringFromHTML(
+            html,
+            baseFont: customUIFont,
+            textColor: UIColor.gray919191,
+            isRTL: isArabic
+        )
+      
     }
 }

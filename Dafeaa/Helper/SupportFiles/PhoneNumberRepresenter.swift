@@ -131,74 +131,108 @@ struct CustomMainTextField: View {
     @FocusState private var isFocused: Bool
     @State var keyBoardType: UIKeyboardType = .default
     @State var fieldType: FieldType = .none
-    
+    @State var showHeader: Bool = false
     var body: some View {
-        HStack {
-            if let image = image {
-                Image(image)
-                    .resizable()
-                    .foregroundColor(Color.yellow)
-                    .frame(width: 20, height: 20)
+        VStack(alignment: .leading, spacing: 4) {
+            if showHeader == true {
+                Text(placeHolder.localized())
+                    .textModifier(.plain, 14, .black)
             }
-            ZStack {
-                
-                if text.isEmpty {
-                    HStack {
-                        Text(placeHolder.localized())
-                            .textModifier(.plain, 15, .grayB5B5B5)
-                        Spacer()
-                    }
+            HStack {
+                if let image = image {
+                    Image(image)
+                        .resizable()
+                        .foregroundColor(Color.yellow)
+                        .frame(width: 20, height: 20)
                 }
-               
-                    TextField("", text: $text)
-                    .textModifier(.plain, 15, .black010202)
-                        .focused($isFocused) // Track whether the text field is focused
-                        .keyboardType(keyBoardType)
-                        .onChange(of: text) { newValue,oldValue in
-                            if fieldType == .arabicOnly || fieldType == .englishOnly {
-                                validateInput(for: fieldType)
+                VStack {
+                    ZStack {
+                        
+                        if text.isEmpty {
+                            HStack {
+                                Text(placeHolder.localized())
+                                    .textModifier(.plain, 15, .grayB5B5B5)
+                                Spacer()
                             }
                         }
-                
-                if fieldType == .price || fieldType == .percentage {
-                    HStack {
-                        Spacer()
-                        if fieldType == .price {
-                           Image(.riyal)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .foregroundColor(.gray8B8C86)
-                                .frame(width: 15)
-                                .padding(.trailing, 10)
+                        
+                        TextField("", text: $text)
+                            .textModifier(.plain, 15, .black010202)
+                            .focused($isFocused)
+                            .keyboardType(keyBoardType)
+                            .onChange(of: text) { newValue,oldValue in
+                                if fieldType == .arabicOnly || fieldType == .englishOnly {
+                                    validateInput(for: fieldType)
+                                }
+                            }
+                        
+                        switch fieldType {
+                        case .price:
+                            HStack {
+                                Spacer()
+                                Image(.riyal)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(.gray8B8C86)
+                                    .frame(width: 15)
+                                //                            .padding(.trailing, 10)
+                            }
+                        case .percentage:
+                            HStack {
+                                Spacer()
+                                Text("%")
+                                    .textModifier(.plain,  13, .gray616161)
+                                    .padding(.trailing, 10)
+                            }
+                            
+                        case .optional:
+                            HStack {
+                                Spacer()
+                                Text("optional".localized())
+                                    .textModifier(.plain,  13, .gray616161)
+                                //                            .padding(.trailing, 10)
+                            }
+                        case .dimensional:
+                            HStack {
+                                Spacer()
+                                Text("cm".localized())
+                                    .textModifier(.plain,  13, .gray616161)
+                                //                            .padding(.trailing, 10)
+                            }
+                        case .weight:
+                            HStack {
+                                Spacer()
+                                Text("kg".localized())
+                                    .textModifier(.plain,  13, .gray616161)
+                                //                            .padding(.trailing, 10)
+                            }
+                        case .daysNumber :
+                            HStack {
+                                Spacer()
+                                Text("days".localized())
+                                    .textModifier(.plain,  13, .gray616161)
+                                //                            .padding(.trailing, 10)
+                            }
+                        default:
+                            Text("")
+                            
                         }
-                        else {
-                            Text("%")
-                                .textModifier(.plain,  13, .gray616161)
-                                .padding(.trailing, 10)
-                        }
+                        
+                        
                     }
                 }
-                if fieldType == .optional {
-                    HStack {
-                        Spacer()
-                        Text("optional".localized())
-                            .textModifier(.plain,  13, .gray616161)
-                            .padding(.trailing, 10)
-                    }
-                }
-                
             }
-        }
-        .frame(height: 48)
-        .padding(.horizontal, 20)
-        .background(Color(.grayF6F6F6))
-        .cornerRadius(5)
-        .overlay(
-            RoundedRectangle(cornerRadius: 5)
-                .stroke(isFocused ? Color(.primary) : Color.clear, lineWidth: 1)
-        )
-        .onTapGesture {
-            isFocused = true // Set the focus when the user taps on the text field
+            .frame(height: 48)
+            .padding(.horizontal, 20)
+            .background(Color(.grayF6F6F6))
+            .cornerRadius(5)
+            .overlay(
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(isFocused ? Color(.primary) : Color.clear, lineWidth: 1)
+            )
+            .onTapGesture {
+                isFocused = true // Set the focus when the user taps on the text field
+            }
         }
     }
     private func validateInput(for fieldType: FieldType) {
@@ -369,4 +403,7 @@ enum FieldType{
     case arabicOnly
     case englishOnly
     case optional
+    case dimensional
+    case daysNumber
+    case weight
 }

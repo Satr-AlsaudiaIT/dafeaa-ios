@@ -19,9 +19,11 @@ struct OrderLinkDetailsViewNew: View {
     @State var address: String = Constants.selectedAddress
     @State var isNavigateToAddress: Bool = false
     @State var showingProductDetails: Bool = false
+    @State var selectedShippingCompany: String?
+
     @State var selectedProduct: productList = productList(id: 3, images: [ImageModel(file: "ww")], name: "phone", description: "good phones and very helpful ones that is very harm full", price: 1000, amount: 1, offerPrice: 950, totalQuantity: 1, paiedQuantity: 1, remainingQuantity: 1)
     var linkDetails: ShowOfferData  {
-        return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [], status: 0,commissionRatio: "",maxCommissionValue: "")
+        return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [], status: 0,commissionRatio: "",maxCommissionValue: "", shippingCompanies: [], address: nil)
     }
     @State var status: Int = 0
     @State var toast: FancyToast? = nil
@@ -33,7 +35,7 @@ struct OrderLinkDetailsViewNew: View {
      var isAbleToEdit : Bool = false
      var isMerchant : Bool = false
     var offerDataView: ShowOfferData {
-        return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [], status: 0,commissionRatio: "",maxCommissionValue: "")
+        return viewModel.offersData ?? ShowOfferData(id: 0, name: "", code: "", description: "", clientId: 1, deliveryPrice: 1, taxPrice: 1, products: [], status: 0,commissionRatio: "",maxCommissionValue: "", shippingCompanies: [], address: nil)
     }
     
     var body: some View {
@@ -124,8 +126,7 @@ struct OrderLinkDetailsViewNew: View {
                                                     }
                                                     VStack(alignment: .leading, spacing: 10) {
                                                         HStack {
-                                                            Text(product.description ?? "")
-                                                                .textModifier(.plain, 15, .gray565656)
+                                                            HTMLDescriptionView(html: product.description ?? "",size: 15)
                                                             Spacer()
                                                         }
                                                     }
@@ -137,6 +138,15 @@ struct OrderLinkDetailsViewNew: View {
                                     
 
                                 }
+                                if let shippingCompanies = linkDetails.shippingCompanies, !shippingCompanies.isEmpty {
+                                    ShippingCompanySelectionView(
+                                        selectedCompany: $selectedShippingCompany,
+                                        availableCompanies: shippingCompanies,
+                                        showRadioButtons: false
+                                    )
+                                    .padding(.top, 8)
+                                }
+                                
                                 PaymentInfoView(breakdown: PaymentDetails(commission: Double(linkDetails.commissionRatio ?? "0" ) ?? 0, commissionMaxPrice: Double(linkDetails.maxCommissionValue ?? "0") ?? 0),isMerchantOfferDetails: true, itemsPrice: $totalPrice)
                             
                             }
@@ -210,7 +220,6 @@ struct OrderLinkDetailsViewNew: View {
                 .navigationBarHidden(true)
                 .onAppear{
                     if let offerData {
-//                        status = offerData.status ?? 0
                         viewModel.offersData = offerData
                     } else {
                         viewModel.showOffer(code: code)

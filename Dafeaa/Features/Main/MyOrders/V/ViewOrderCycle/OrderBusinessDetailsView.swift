@@ -101,13 +101,13 @@ struct OrderBusinessDetailsView: View {
                                         VStack(spacing: 8) {
 //                                            AddressView(name: orderData.clientName ?? "", address: orderData.address ?? "", streetName: orderData.streetName ?? "", buildingNum: orderData.buildingNum ?? "", area: orderData.area ?? "", floatNum: orderData.floatNum ?? "", phone: orderData.clientPhone ?? "")
 //
-                                            if orderData.addressDetails != nil {
+                                            
                                                 AddressView(
                                                     name: orderData.clientName ?? "",
                                                     phone:orderData.clientPhone ?? "",
-                                                    addressDetails: orderData.addressDetails
+                                                    addressDetails: orderData
                                                 )
-                                            }
+                                            
                                         }
                                     }
                                 }

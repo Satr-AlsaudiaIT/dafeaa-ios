@@ -147,17 +147,30 @@
 		188FF2462CC38CF00070CC57 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FF2452CC38CF00070CC57 /* ChangePasswordView.swift */; };
 		188FF2492CC509B40070CC57 /* ChangePhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FF2482CC509B40070CC57 /* ChangePhoneView.swift */; };
 		188FF24F2CC6D49D0070CC57 /* SubscribtionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FF24E2CC6D49D0070CC57 /* SubscribtionView.swift */; };
+		1891B91F2F0D3DD300A6FF08 /* LocationSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1891B91E2F0D3DD300A6FF08 /* LocationSearchService.swift */; };
+		1891B9212F0D3DE600A6FF08 /* MapSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1891B9202F0D3DE600A6FF08 /* MapSearchView.swift */; };
+		1891B9242F0D5C6900A6FF08 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 1891B9232F0D5C6900A6FF08 /* GoogleMaps */; };
+		1891B9272F0D5CBE00A6FF08 /* GoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1891B9262F0D5CBE00A6FF08 /* GoogleMapView.swift */; };
+		1891B92C2F0D601500A6FF08 /* GooglePlaces in Frameworks */ = {isa = PBXBuildFile; productRef = 1891B92B2F0D601500A6FF08 /* GooglePlaces */; };
+		1891B92E2F0D601500A6FF08 /* GooglePlacesSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1891B92D2F0D601500A6FF08 /* GooglePlacesSwift */; };
 		189437DC2CE0CA0900CA5D96 /* OrderLinkDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189437DB2CE0CA0900CA5D96 /* OrderLinkDetailsView.swift */; };
 		189437DF2CE0F74D00CA5D96 /* AddProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189437DE2CE0F74D00CA5D96 /* AddProductView.swift */; };
 		189962E12F0A6775005E833C /* WithdrawDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189962E02F0A6775005E833C /* WithdrawDetailsView.swift */; };
 		189962E32F0A9A37005E833C /* AddBalanceCardDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189962E22F0A9A37005E833C /* AddBalanceCardDetailsView.swift */; };
 		189CD7452CDBE19E00E929DE /* PopUpComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189CD7442CDBE19E00E929DE /* PopUpComponent.swift */; };
 		189CD7492CDC83D500E929DE /* ClientLinkDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189CD7482CDC83D500E929DE /* ClientLinkDetails.swift */; };
+		18A1C61F2F0E7BB0000C61D6 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A1C61E2F0E7BB0000C61D6 /* LocationManager.swift */; };
+		18A1C6212F0F96AD000C61D6 /* RichTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A1C6202F0F96AD000C61D6 /* RichTextEditorView.swift */; };
+		18AD22D82F139A2A00B32FD9 /* ShippingCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AD22D72F139A2A00B32FD9 /* ShippingCompany.swift */; };
+		18AD22DA2F139A4300B32FD9 /* ShippingCompanyDropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AD22D92F139A4300B32FD9 /* ShippingCompanyDropdown.swift */; };
+		18AD22DC2F14F05B00B32FD9 /* ShippingCompanySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AD22DB2F14F05B00B32FD9 /* ShippingCompanySelectionView.swift */; };
 		18AF0DEF2CB114F80061F07E /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AF0DEE2CB114F80061F07E /* OnBoardingView.swift */; };
 		18AF59442DB42855000DF15F /* ImageSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AF59432DB42847000DF15F /* ImageSlider.swift */; };
 		18B8D56E2CC02C8D00C2676C /* PendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8D56D2CC02C8D00C2676C /* PendingView.swift */; };
 		18B8D5702CC02E6200C2676C /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8D56F2CC02E6200C2676C /* LottieAnimationView.swift */; };
 		18B8D5722CC0333500C2676C /* pending.json in Resources */ = {isa = PBXBuildFile; fileRef = 18B8D5712CC0333500C2676C /* pending.json */; };
+		18C065492F16E08D00128EE3 /* PaymentInfoViewWithShipping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C065482F16E08D00128EE3 /* PaymentInfoViewWithShipping.swift */; };
+		18C0654B2F16EC6F00128EE3 /* PopupMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C0654A2F16EC6F00128EE3 /* PopupMessage.swift */; };
 		18C8A9C52DBE4B0D00A2AB42 /* DeveloperKeyBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C8A9C42DBE4B0D00A2AB42 /* DeveloperKeyBottomSheet.swift */; };
 		18C8A9C82DBE75AB00A2AB42 /* ConfirmTransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C8A9C72DBE75AB00A2AB42 /* ConfirmTransferView.swift */; };
 		18D3655B2CD27CF000D50A34 /* AddEditAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D3655A2CD27CF000D50A34 /* AddEditAddressView.swift */; };
@@ -354,17 +367,27 @@
 		188FF2452CC38CF00070CC57 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		188FF2482CC509B40070CC57 /* ChangePhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePhoneView.swift; sourceTree = "<group>"; };
 		188FF24E2CC6D49D0070CC57 /* SubscribtionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribtionView.swift; sourceTree = "<group>"; };
+		1891B91E2F0D3DD300A6FF08 /* LocationSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchService.swift; sourceTree = "<group>"; };
+		1891B9202F0D3DE600A6FF08 /* MapSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchView.swift; sourceTree = "<group>"; };
+		1891B9262F0D5CBE00A6FF08 /* GoogleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
 		189437DB2CE0CA0900CA5D96 /* OrderLinkDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderLinkDetailsView.swift; sourceTree = "<group>"; };
 		189437DE2CE0F74D00CA5D96 /* AddProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductView.swift; sourceTree = "<group>"; };
 		189962E02F0A6775005E833C /* WithdrawDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawDetailsView.swift; sourceTree = "<group>"; };
 		189962E22F0A9A37005E833C /* AddBalanceCardDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBalanceCardDetailsView.swift; sourceTree = "<group>"; };
 		189CD7442CDBE19E00E929DE /* PopUpComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpComponent.swift; sourceTree = "<group>"; };
 		189CD7482CDC83D500E929DE /* ClientLinkDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientLinkDetails.swift; sourceTree = "<group>"; };
+		18A1C61E2F0E7BB0000C61D6 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		18A1C6202F0F96AD000C61D6 /* RichTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditorView.swift; sourceTree = "<group>"; };
+		18AD22D72F139A2A00B32FD9 /* ShippingCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingCompany.swift; sourceTree = "<group>"; };
+		18AD22D92F139A4300B32FD9 /* ShippingCompanyDropdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingCompanyDropdown.swift; sourceTree = "<group>"; };
+		18AD22DB2F14F05B00B32FD9 /* ShippingCompanySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingCompanySelectionView.swift; sourceTree = "<group>"; };
 		18AF0DEE2CB114F80061F07E /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		18AF59432DB42847000DF15F /* ImageSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSlider.swift; sourceTree = "<group>"; };
 		18B8D56D2CC02C8D00C2676C /* PendingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingView.swift; sourceTree = "<group>"; };
 		18B8D56F2CC02E6200C2676C /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
 		18B8D5712CC0333500C2676C /* pending.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pending.json; sourceTree = "<group>"; };
+		18C065482F16E08D00128EE3 /* PaymentInfoViewWithShipping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentInfoViewWithShipping.swift; sourceTree = "<group>"; };
+		18C0654A2F16EC6F00128EE3 /* PopupMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupMessage.swift; sourceTree = "<group>"; };
 		18C8A9C42DBE4B0D00A2AB42 /* DeveloperKeyBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperKeyBottomSheet.swift; sourceTree = "<group>"; };
 		18C8A9C72DBE75AB00A2AB42 /* ConfirmTransferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmTransferView.swift; sourceTree = "<group>"; };
 		18D3655A2CD27CF000D50A34 /* AddEditAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditAddressView.swift; sourceTree = "<group>"; };
@@ -403,7 +426,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				77A5DD200D504A0C538AF47E /* Pods_Dafeaa.framework in Frameworks */,
+				1891B92E2F0D601500A6FF08 /* GooglePlacesSwift in Frameworks */,
+				1891B92C2F0D601500A6FF08 /* GooglePlaces in Frameworks */,
 				18277EB92CB2B3900020A647 /* PhoneNumberKit in Frameworks */,
+				1891B9242F0D5C6900A6FF08 /* GoogleMaps in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1041,7 +1067,11 @@
 		1820E2C52CBAAC3400627DF9 /* SavedAddresses */ = {
 			isa = PBXGroup;
 			children = (
+				18A1C61E2F0E7BB0000C61D6 /* LocationManager.swift */,
+				1891B9202F0D3DE600A6FF08 /* MapSearchView.swift */,
+				1891B91E2F0D3DD300A6FF08 /* LocationSearchService.swift */,
 				1820E2C82CBAAC6600627DF9 /* SavedAddressesView.swift */,
+				1891B9262F0D5CBE00A6FF08 /* GoogleMapView.swift */,
 				18D3655A2CD27CF000D50A34 /* AddEditAddressView.swift */,
 			);
 			path = SavedAddresses;
@@ -1177,6 +1207,9 @@
 		1878513E2E0066C900E9BD79 /* CreateNew */ = {
 			isa = PBXGroup;
 			children = (
+				18AD22D72F139A2A00B32FD9 /* ShippingCompany.swift */,
+				18AD22D92F139A4300B32FD9 /* ShippingCompanyDropdown.swift */,
+				18A1C6202F0F96AD000C61D6 /* RichTextEditorView.swift */,
 				1878513F2E0066DC00E9BD79 /* AddOfferViewNew.swift */,
 			);
 			path = CreateNew;
@@ -1219,6 +1252,7 @@
 		189437E02CE1267600CA5D96 /* ShowOffer */ = {
 			isa = PBXGroup;
 			children = (
+				18AD22DB2F14F05B00B32FD9 /* ShippingCompanySelectionView.swift */,
 				187607B02CDF468200F4D261 /* OrdersLinksView.swift */,
 				18F81CE62D907B6F00B732D7 /* BottomSheetLinkActionsView.swift */,
 				189437DB2CE0CA0900CA5D96 /* OrderLinkDetailsView.swift */,
@@ -1239,6 +1273,7 @@
 		189CD7462CDC838F00E929DE /* ClientOrderCycle */ = {
 			isa = PBXGroup;
 			children = (
+				18C065482F16E08D00128EE3 /* PaymentInfoViewWithShipping.swift */,
 				187607B52CDFCA1700F4D261 /* ClientLinkCellIView.swift */,
 				189CD7482CDC83D500E929DE /* ClientLinkDetails.swift */,
 				187851432E00946700E9BD79 /* ClientLinkDetailsNew.swift */,
@@ -1319,6 +1354,7 @@
 		18F54E832CCD1C0300462383 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				18C0654A2F16EC6F00128EE3 /* PopupMessage.swift */,
 				1820E2BB2CBA988C00627DF9 /* WalletView.swift */,
 			);
 			path = View;
@@ -1495,6 +1531,8 @@
 			mainGroup = 14E67A222CAC5CCA00C10AB5;
 			packageReferences = (
 				1873BBCC2D8C840000B674F1 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */,
+				1891B9222F0D5C6900A6FF08 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */,
+				1891B92A2F0D601500A6FF08 /* XCRemoteSwiftPackageReference "ios-places-sdk" */,
 			);
 			productRefGroup = 14E67A2C2CAC5CCA00C10AB5 /* Products */;
 			projectDirPath = "";
@@ -1702,11 +1740,14 @@
 				1820E2C72CBAAC4E00627DF9 /* ProfileDetailView.swift in Sources */,
 				18FAE1912F06608500DE9128 /* IBANVM.swift in Sources */,
 				18086A712CCBF23700F5C2F8 /* ProcessComponent.swift in Sources */,
+				18AD22DA2F139A4300B32FD9 /* ShippingCompanyDropdown.swift in Sources */,
 				18086A722CCBF23700F5C2F8 /* HomeModel.swift in Sources */,
+				18A1C61F2F0E7BB0000C61D6 /* LocationManager.swift in Sources */,
 				14D124A82CC56A46005F0084 /* SubscribtionModel.swift in Sources */,
 				187607BA2CDFD74800F4D261 /* LinksVM.swift in Sources */,
 				1835ECF42CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift in Sources */,
 				18277EBF2CB2B9BA0020A647 /* PhoneNumberRepresenter.swift in Sources */,
+				18AD22DC2F14F05B00B32FD9 /* ShippingCompanySelectionView.swift in Sources */,
 				189962E32F0A9A37005E833C /* AddBalanceCardDetailsView.swift in Sources */,
 				18E676872DBD63F20043B84B /* BuyProductBottomSheet.swift in Sources */,
 				1820E2C92CBAAC6600627DF9 /* SavedAddressesView.swift in Sources */,
@@ -1720,13 +1761,16 @@
 				14E67AC62CAC643B00C10AB5 /* SliderView.swift in Sources */,
 				189CD7452CDBE19E00E929DE /* PopUpComponent.swift in Sources */,
 				1820E2D52CBAACED00627DF9 /* StaticPagesView.swift in Sources */,
+				1891B9272F0D5CBE00A6FF08 /* GoogleMapView.swift in Sources */,
 				189962E12F0A6775005E833C /* WithdrawDetailsView.swift in Sources */,
 				14E67A6B2CAC5E3400C10AB5 /* MOLHLanguage.swift in Sources */,
 				1820E2AB2CB9066D00627DF9 /* AuthModels.swift in Sources */,
 				1820E2A72CB905F800627DF9 /* AuthAppAPI.swift in Sources */,
+				1891B9212F0D3DE600A6FF08 /* MapSearchView.swift in Sources */,
 				1820E2DC2CBBB26F00627DF9 /* MoreAppNetwork.swift in Sources */,
 				1820E2DD2CBBB26F00627DF9 /* MoreAppAPI.swift in Sources */,
 				1820E2A82CB905F800627DF9 /* AuthAppNetwork.swift in Sources */,
+				18A1C6212F0F96AD000C61D6 /* RichTextEditorView.swift in Sources */,
 				187851442E00946700E9BD79 /* ClientLinkDetailsNew.swift in Sources */,
 				14E67AD92CAC643B00C10AB5 /* ProgressView.swift in Sources */,
 				14E67AD22CAC643B00C10AB5 /* NotificationLoggerVC.swift in Sources */,
@@ -1752,6 +1796,7 @@
 				189437DC2CE0CA0900CA5D96 /* OrderLinkDetailsView.swift in Sources */,
 				18EF4D912CB4F9C300599D03 /* ResetPasswordView.swift in Sources */,
 				14E67AC42CAC643B00C10AB5 /* uiview+exSwiftUI.swift in Sources */,
+				1891B91F2F0D3DD300A6FF08 /* LocationSearchService.swift in Sources */,
 				14E67AD52CAC643B00C10AB5 /* MainButtonView.swift in Sources */,
 				18B8D5702CC02E6200C2676C /* LottieAnimationView.swift in Sources */,
 				14E67AD02CAC643B00C10AB5 /* NotificationLoggerCell.swift in Sources */,
@@ -1766,6 +1811,7 @@
 				18277EB22CB2AF7E0020A647 /* LoginView.swift in Sources */,
 				1820E2BC2CBA988C00627DF9 /* WalletView.swift in Sources */,
 				1820E2C02CBA98B700627DF9 /* ProcessesView.swift in Sources */,
+				18C065492F16E08D00128EE3 /* PaymentInfoViewWithShipping.swift in Sources */,
 				14E67AE12CAC643B00C10AB5 /* PopUpTitleView.swift in Sources */,
 				18EF4D8F2CB4F98300599D03 /* OTPConfirmationView.swift in Sources */,
 				18EF4D8D2CB4F92F00599D03 /* ForgotPasswordView.swift in Sources */,
@@ -1805,6 +1851,7 @@
 				18AF59442DB42855000DF15F /* ImageSlider.swift in Sources */,
 				14E67ABE2CAC643B00C10AB5 /* Calender.swift in Sources */,
 				14E67AC12CAC643B00C10AB5 /* FileManger+ext.swift in Sources */,
+				18C0654B2F16EC6F00128EE3 /* PopupMessage.swift in Sources */,
 				1859135F2DBFDBEC0035D6EF /* FailedView.swift in Sources */,
 				1820E2D12CBAACCD00627DF9 /* HelpAndSupportView.swift in Sources */,
 				14E67AD42CAC643B00C10AB5 /* KeyboardResponsiveModifier.swift in Sources */,
@@ -1817,6 +1864,7 @@
 				14E67ADF2CAC643B00C10AB5 /* LogoView.swift in Sources */,
 				180DDD012CDA91540002F6F1 /* ScanQRCodeView.swift in Sources */,
 				187607B82CDFCA3A00F4D261 /* ProductDetailsPopUp.swift in Sources */,
+				18AD22D82F139A2A00B32FD9 /* ShippingCompany.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2213,6 +2261,22 @@
 				minimumVersion = 0.10.4;
 			};
 		};
+		1891B9222F0D5C6900A6FF08 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-maps-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.7.0;
+			};
+		};
+		1891B92A2F0D601500A6FF08 /* XCRemoteSwiftPackageReference "ios-places-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-places-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.6.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2220,6 +2284,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 18277EB32CB2B17A0020A647 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */;
 			productName = PhoneNumberKit;
+		};
+		1891B9232F0D5C6900A6FF08 /* GoogleMaps */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1891B9222F0D5C6900A6FF08 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMaps;
+		};
+		1891B92B2F0D601500A6FF08 /* GooglePlaces */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1891B92A2F0D601500A6FF08 /* XCRemoteSwiftPackageReference "ios-places-sdk" */;
+			productName = GooglePlaces;
+		};
+		1891B92D2F0D601500A6FF08 /* GooglePlacesSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1891B92A2F0D601500A6FF08 /* XCRemoteSwiftPackageReference "ios-places-sdk" */;
+			productName = GooglePlacesSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -26,6 +26,7 @@ struct AddWithdrawBottomSheet: View {
     @Binding var paymentURL : String
     @Binding var navigateToWithDrawView: Bool
     @Binding var navigateToAddBalance: Bool
+    
     var body: some View {
         ZStack {
             Color.clear
@@ -56,7 +57,7 @@ struct AddWithdrawBottomSheet: View {
                     .textModifier(.plain, 43, .black2B2D33)
                     .frame(minHeight: 50) // Explicit height for text field
                 
-                Text(actionType == .addBalance ? "noExtraFees".localized() : "weWillContactYou".localized())
+                Text(actionType == .addBalance ? "noExtraFees".localized() : "")
                     .textModifier(.plain, 17, actionType == .addBalance ? .gray919191 : Color(.redD73D24))
                     .multilineTextAlignment(.center)
                     .padding(.bottom)
