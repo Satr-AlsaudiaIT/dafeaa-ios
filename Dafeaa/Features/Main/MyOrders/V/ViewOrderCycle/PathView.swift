@@ -28,7 +28,7 @@ struct PathViewChoice: View {
                             Spacer()
                             HStack {
                                 Text(orderStatus.title)
-                                    .textModifier(.plain, 12, .green026C34)
+                                    .textModifier(.plain, 11, .green026C34)
                                     .padding(.leading,4)
                                 Spacer()
 
@@ -57,7 +57,7 @@ struct PathViewChoice: View {
                         HStack {
                             Spacer()
                             Text(orderStatus.title)
-                                .textModifier(.plain, 12, .green026C34)
+                                .textModifier(.plain, 11, .green026C34)
                                 
                             Spacer()
                             Spacer()
@@ -70,7 +70,7 @@ struct PathViewChoice: View {
                 
                 .frame(height: 85)
             }
-            else if orderStatus == .away {
+            else if orderStatus == .away  || orderStatus == .pickup {
                 ZStack {
                     HStack (spacing: 0) {
                         CircleView(statusPreviewType: .checked)
@@ -88,7 +88,7 @@ struct PathViewChoice: View {
                             Spacer()
                             Spacer()
                             Text(orderStatus.title)
-                                .textModifier(.plain, 12, .green026C34)
+                                .textModifier(.plain, 11, .green026C34)
                             Spacer()
 
                         }
@@ -117,7 +117,7 @@ struct PathViewChoice: View {
                             Spacer()
                             
                             Text(orderStatus.title)
-                                .textModifier(.plain, 12, .redEE002B)
+                                .textModifier(.plain, 11, .redEE002B)
                                 .padding(.trailing,5)
                             Spacer()
                             Spacer()
@@ -147,7 +147,7 @@ struct PathViewChoice: View {
                         HStack {
                             Spacer()
                             Text(orderStatus.title)
-                                .textModifier(.plain, 12, .redEE002B)
+                                .textModifier(.plain, 11, .redEE002B)
                                 .padding(.trailing,5)
                             Spacer()
                             Spacer()
@@ -177,7 +177,7 @@ struct PathViewChoice: View {
                         HStack {
                             Spacer()
                             Text(orderStatus.title)
-                                .textModifier(.plain, 12, .green026C34)
+                                .textModifier(.plain, 11, .green026C34)
                                 .padding(.trailing,3)
                             
 
@@ -189,6 +189,38 @@ struct PathViewChoice: View {
                 
                 .frame(height: 85)
             }
+            else if orderStatus == .shipmentField{
+                ZStack {
+                    HStack (spacing: 0) {
+                        CircleView(statusPreviewType: .checked)
+                        ConnectorView(statusPreviewType: .checked)
+                        CircleView(statusPreviewType: .checked)
+                        ConnectorView(statusPreviewType: .checked)
+                        CircleView(statusPreviewType: .checked)
+                        ConnectorView(statusPreviewType: .checked)
+                        CircleView(statusPreviewType: .rejected)
+                    }
+                    .padding(.horizontal,10)
+                    VStack(alignment: .leading) {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            Spacer()
+                            Spacer()
+                            Text(orderStatus.title)
+                                .textModifier(.plain, 11, .red)
+                            
+
+                        }
+                    }
+                    .padding(.top , 10)
+
+                }
+                
+                .frame(height: 85)
+            }
+
+            
         }
         
         .padding()
@@ -202,15 +234,19 @@ enum orderStatusEnum: Int {
     case rejected = 4
     case cancelled = 5
     case done = 6
+     case pickup = 8
+     case shipmentField = 9
     
     var pathview: PathViewChoice {
         switch self {
         case .pending: return PathViewChoice(orderStatus: .constant(.pending))
         case .accepted: return PathViewChoice(orderStatus: .constant(.accepted))
         case .away: return PathViewChoice(orderStatus: .constant(.away))
-        case .rejected: return PathViewChoice(orderStatus: .constant(.rejected))
+        case .rejected: return PathViewChoice(orderStatus: .constant(.cancelled))
         case .cancelled: return PathViewChoice(orderStatus: .constant(.cancelled))
         case .done: return PathViewChoice(orderStatus: .constant(.done))
+        case .pickup: return PathViewChoice(orderStatus: .constant(.pickup))
+        case .shipmentField: return PathViewChoice(orderStatus: .constant(.shipmentField))
         }
     }
     var title : String {
@@ -221,8 +257,11 @@ enum orderStatusEnum: Int {
         case .rejected: return "rejectedState".localized()
         case .cancelled: return "cancelledState".localized()
         case .done: return "doneState".localized()
+        case .pickup: return "awayState".localized()
+        case .shipmentField: return "shipmentFailedState".localized()
         }
     }
+    
 }
 
 enum statusPreviewTypes {

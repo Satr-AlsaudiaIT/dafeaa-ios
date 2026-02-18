@@ -178,7 +178,7 @@ struct ProfileView: View {
                 }
                        }
             .navigationDestination(isPresented: $navigateToCompleteProfileView, destination: {
-                CompleteDataView(phone:phone)
+                CompleteDataView(phone:phone.normalizePhoneNumber)
             })
             .navigationDestination(isPresented: $navigateToPendingView) {
                 PendingView()

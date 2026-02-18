@@ -116,7 +116,7 @@ struct FailedView: View {
                         borderColor: .black222222,
                         textColor: .black222222
                     ) {
-                        viewModel.confirmTransfer(phone: phoneNumber, amount: Double(amount) ?? 0)
+                        viewModel.confirmTransfer(phone: phoneNumber.normalizePhoneNumber, amount: Double(amount) ?? 0)
                     }
                     
                     ReusableButton(buttonText: "O.K") {

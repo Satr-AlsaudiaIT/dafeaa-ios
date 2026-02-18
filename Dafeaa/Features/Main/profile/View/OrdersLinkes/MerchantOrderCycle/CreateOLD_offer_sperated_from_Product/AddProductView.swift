@@ -49,13 +49,13 @@ struct AddProductView: View {
                             CustomMainTextField(text: $quantity, placeHolder: "quantity", keyBoardType:.numberPad,fieldType: .none)
                                 .focused($focusedField, equals: .quantity)
                                 .id(FormField.quantity)
-                                CustomMainTextField(text: $price, placeHolder: "productPrice",keyBoardType: .numberPad,fieldType: .price)
+                                CustomMainTextField(text: $price, placeHolder: "productPrice",keyBoardType: .decimalPad,fieldType: .price)
                                     .focused($focusedField, equals: .price)
                                     .id(FormField.price)
                             if showOfferPriceTextField {
                                 CustomMainTextField(text: $offerPrice,
                                                    placeHolder: "offerPrice",
-                                                   keyBoardType: .numberPad,
+                                                   keyBoardType: .decimalPad,
                                                    fieldType: .price)
                                     .focused($focusedField, equals: .offerPrice)
                                     .id(FormField.offerPrice)

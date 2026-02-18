@@ -16,6 +16,7 @@
 "cm" = "cm";
 "days" = "days";
 "kg" = "kg";
+"Dafeaa" = "Dafeaa";
 
 //MARK: - Onboarding
 "Change Language" = "Change Language";
@@ -210,6 +211,7 @@
 "search_by_QR_code" = "Search by QR Code";
 "search_by_Scan_Image_QR_code" = "Scan QR Code from Image";
 "or" = "OR";
+"not valid code" = "Not valid code";
 "search" = "Search";
 "buy_product" = "Buy a Product";
 "buy_product_details" = "You can search for offers through DAFEA from here";
@@ -233,7 +235,7 @@
 "buyWithDafea"="Pay through DAFEA";
 "product"="Product:";
 "delaviryAndRecive"="Delivery and Receipt:";
-"commissionVal" = "Additional Fees:";
+"commissionVal" = "Total commission with vat:";
 "totalBeforeTax"="Total Before Tax:";
 "tax"="Estimated Tax:";
 "total"="Total:";
@@ -247,6 +249,7 @@
 "rejectedState" = "Order Rejected";
 "cancelledState" = "Order Cancelled";
 "doneState" = "Order Completed";
+"shipmentFailedState" = "Shipment Failed";
 "completeSuccessful" = "Order successfully completed";
 "Confirm" = "Confirm";
 "cancelOrder" = "Confirm Order Cancellation";
@@ -256,6 +259,8 @@
 "clientName:" = "Client Name: ";
 "clientPhone:" = "Client Phone: ";
 "amount: " = "Amount: ";
+"amount" = "Amount";
+"fees" = "Fees";
 
 //MARK: - addresses
 "address"="Address";
@@ -345,7 +350,11 @@
 "copied successfully"="Copied successfully";
 "offerDetails"="Offer Details";
 "thereIsNoData"="No data available";
-"code" = "Share Code";
+"copy_link_offer" = "Copy offer";
+"share_offer" = "Share offer";
+"link_offer" = "link";
+"code_offer" = "Offer Code";
+"code" = "Code";
 "copy" = "Copy";
 "share" = "Share Link";
 "delete" = "Delete";
@@ -446,9 +455,14 @@
 "Month required" = "Month required";
 "Invalid month (01-12)" = "Invalid month (01-12)";
 "Year required" = "Year required";
-"Invalid year (YYYY)" = "Invalid year";
+"Invalid year (YYYY)" = "Invalid year (YYYY)";
+"Expired year" = "Expired year";
 "CVV required" = "CVV required";
+"* CVV" = "* CVV";
+"cvv" = "CVV";
 "Invalid CVV (3-4 digits)" = "Invalid CVV";
+"Cardholder name cannot contain numbers" = "Cardholder name cannot contain numbers";
+"Invalid cardholder name" = "Invalid cardholder name";
 "The amount will be charged to your wallet via Dafea" = "The amount will be charged to your wallet via Dafea";
 "Success" = "Success";
 "Failed" = "Failed";
@@ -483,6 +497,7 @@
 "validation_offer_name" = "Please enter the offer name";
 "validation_offer_description" = "Please enter the offer description";
 "validation_offer_price" = "Please enter a valid price";
+"validation_offer_discount_price" = "Please enter a valid discount price";
 "validation_offer_images" = "Please select at least one image";
 "validation_weight" = "Please enter the product weight";
 "validation_length" = "Please enter the product length";
@@ -493,3 +508,39 @@
 
 "select_shipping_companies" = "Select shipping companies";
 
+//Transfer New Views
+"Transfer using IBAN" = "Transfer using IBAN";
+"Transfer to bank account" = "Transfer to bank account";
+"Transfer using phone number" = "Transfer using phone number";
+"Transfer to Dafea user" = "Transfer to Dafea user";
+"Transfer Amount" = "Transfer Amount";
+"Transfers are processed instantly or within 5 minutes." = "Transfers are processed instantly or within 5 minutes.";
+"Select Contact" = "Select Contact";
+"Transfer to unsaved number" = "Transfer to unsaved number";
+"Search contacts" = "Search contacts";
+"Transfer Details" = "Transfer Details";
+"Account Holder Name" = "Account Holder Name";
+"Choose transfer method" = "Choose transfer method";
+"Phone Number" = "Phone Number";
+"Confirm Transfer" = "Confirm Transfer";
+"Transfer" = "Transfer";
+"can'tTransferToYourAccount" = "You Can't not Transfer to your Phone Number";
+
+/* Payment Screen */
+"Add Balance" = "Add Balance";
+"Pay with Apple Pay" = "Pay with Apple Pay";
+"Powered by App Clip" = "Powered by App Clip";
+
+/* Alerts */
+"Payment Successful!" = "Payment Successful!";
+"Done" = "Done";
+"Your balance has been added successfully." = "Your balance has been added successfully.";
+"Payment Failed" = "Payment Failed";
+"OK" = "OK";
+"Payment was cancelled or failed." = "Payment was cancelled or failed.";
+"Network error. Please try again." = "Network error. Please try again.";
+"discount" = "discount";
+
+//MARK: -
+// tracking events
+"tracking_events" = "Tracking events";

@@ -105,7 +105,7 @@ struct CompleteDataView: View {
                     }
                     ReusableButton(buttonText: "sendData", isEnabled: true) {
                         
-                        viewModel.validateBusiness(phone: phone, commLecs: selectedCommercialLicense, name: commercialName, country: selectedCountryName, city: selectedCityName, area: area, taxNum: taxNumber, endDate: endDateString)
+                        viewModel.validateBusiness(phone: phone.normalizePhoneNumber, commLecs: selectedCommercialLicense, name: commercialName, country: selectedCountryName, city: selectedCityName, area: area, taxNum: taxNumber, endDate: endDateString)
                     }.navigationDestination(isPresented: $viewModel._isSignUpSuccess) {
                         PendingView()
                     }

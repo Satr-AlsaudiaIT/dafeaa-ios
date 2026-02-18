@@ -46,7 +46,7 @@ struct ResetPasswordView: View {
                             .focused($focusedField, equals: .confirmPassword)
                         
                         ReusableButton(buttonText: "saveBtn"){
-                            viewModel.validateForgetPassword(phone: phone, code: code, password: password, confirmPassword: confirmPassword)
+                            viewModel.validateForgetPassword(phone: phone.normalizePhoneNumber, code: code, password: password, confirmPassword: confirmPassword)
                             
                         } .padding(.top,16)
                         

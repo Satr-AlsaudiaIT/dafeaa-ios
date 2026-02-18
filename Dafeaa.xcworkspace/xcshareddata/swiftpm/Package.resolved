@@ -1,5 +1,5 @@
 {
-  "originHash" : "281d937153675d8124c9c06464a9e7a0d2e85dd40141c7f66c5f40e25d5cc3b7",
+  "originHash" : "b15a05a17d13eda9fc2be86359e6743d4188210d31397235a094021fd25efc87",
   "pins" : [
     {
       "identity" : "ios-maps-sdk",
@@ -29,12 +29,39 @@
       }
     },
     {
+      "identity" : "lrucache",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nicklockwood/LRUCache.git",
+      "state" : {
+        "revision" : "cb5b2bd0da83ad29c0bec762d39f41c8ad0eaf3e",
+        "version" : "1.2.1"
+      }
+    },
+    {
       "identity" : "phonenumberkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/marmelroy/PhoneNumberKit",
       "state" : {
         "revision" : "c107075aa8d394be7aced273a46e944afe8b321b",
         "version" : "3.8.0"
+      }
+    },
+    {
+      "identity" : "swift-atomics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-atomics.git",
+      "state" : {
+        "revision" : "b601256eab081c0f92f059e12818ac1d4f178ff7",
+        "version" : "1.3.0"
+      }
+    },
+    {
+      "identity" : "swiftsoup",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/scinfu/SwiftSoup.git",
+      "state" : {
+        "revision" : "d86f244ed497d48012782e2f59c985a55e77b3f5",
+        "version" : "2.11.3"
       }
     }
   ],

@@ -36,6 +36,7 @@ struct ProductDetailsPopUp: View {
                         HStack {
                             Text(product.name ?? "")
                                 .textModifier(.plain, 15, .black222222)
+                                .padding(.bottom,15)
                             Spacer()
                             
                                 HStack {
@@ -70,8 +71,8 @@ struct ProductDetailsPopUp: View {
                         }
                         VStack(alignment: .leading, spacing: 10) {
                             HStack {
-                                Text(product.description ?? "")
-                                    .textModifier(.plain, 15, .gray565656)
+                                HTMLDescriptionView(html: product.description ?? "")
+                               
                                 Spacer()
                             }
                             

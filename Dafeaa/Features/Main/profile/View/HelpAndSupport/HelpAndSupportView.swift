@@ -1,61 +1,91 @@
 import SwiftUI
+import UIKit
 
 struct HelpAndSupportView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel = MoreVM()
-    
+
     var body: some View {
-        
-        ZStack {
-            VStack(spacing: 20) {
-                
-                NavigationBarView(title: "Help and Support") {
-                    self.presentationMode.wrappedValue.dismiss()
-                }
-                
-                VStack(alignment: .leading, spacing: 24) {
-                    
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("helpTitle".localized())
-                            .textModifier(.plain, 14, .black292D32)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        Text("helpSubTitle".localized())
-                            .textModifier(.plain, 14, .gray919191)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("keepContactWithUs".localized())
-                            .textModifier(.plain, 14, .black292D32)
-                            .frame(height: 23)
-                        
-                        // Button to make a phone call
-                        ButtonWithImageView(imageName: .callCalling, text: "contactClientsServices".localized()) {
-                            let phoneNumber = "tel://\(viewModel.contactData?.contactPhone ?? "")"
-                            if let url = URL(string: phoneNumber) {
-                                UIApplication.shared.open(url)
-                            }
-                        }
-                        
-                        // Button to open Keybase chat
-                        ButtonWithImageView(imageName: .chat, text: "chatClientsServices".localized()) {
-                            openKeybaseChat("nTest")
-                        }
-                        
-                        // Button to send an email
-                        ButtonWithImageView(imageName: .email, text: "contactWithEmail".localized()) {
-                            let email = "mailto:\(viewModel.contactData?.contactEmail ?? "")"
-                            if let url = URL(string: email) {
-                                UIApplication.shared.open(url)
-                            }
-                        }
-                    }
-                }
-                .padding(.horizontal, 24)
-                
-                Spacer()
-                
+
+        VStack(spacing: 20) {
+
+            NavigationBarView(title: "Help and Support") {
+                self.presentationMode.wrappedValue.dismiss()
             }
+
+            VStack(alignment: .leading, spacing: 24) {
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("helpTitle".localized())
+                        .textModifier(.plain, 14, .black292D32)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    Text("helpSubTitle".localized())
+                        .textModifier(.plain, 14, .gray919191)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("keepContactWithUs".localized())
+                        .textModifier(.plain, 14, .black292D32)
+                        .frame(height: 23)
+
+                    // Phone call
+                    ButtonWithImageView(
+                        imageName: .callCalling,
+                        text: "contactClientsServices".localized(),
+                        details: viewModel.contactData?.contactPhone ?? "",
+                        showCopyIcon: true
+                    ) {
+                        let raw = viewModel.contactData?.contactPhone ?? ""
+                        let phoneNumber = "tel://\(raw)"
+                        if let url = URL(string: phoneNumber) {
+                            UIApplication.shared.open(url)
+                        }
+                    } onCopy: {
+                        let phone = viewModel.contactData?.contactPhone ?? ""
+                        UIPasteboard.general.string = phone
+                        // Optional: Show toast
+                        viewModel.toast = FancyToast(type: .success, title: "", message: "Phone number copied".localized())
+                    }
+
+                    // WhatsApp
+                    ButtonWithImageView(
+                        imageName: .chat,
+                        text: "WhatsApp".localized(),
+                        details: viewModel.contactData?.contactPhone ?? "",
+                        showCopyIcon: true
+                    ) {
+                        let raw = viewModel.contactData?.contactPhone ?? ""
+                        openWhatsApp(phoneRaw: raw, message: "Hello".localized())
+                    } onCopy: {
+                        let phone = viewModel.contactData?.contactPhone ?? ""
+                        UIPasteboard.general.string = phone
+                        viewModel.toast = FancyToast(type: .success, title: "", message: "Phone number copied".localized())
+                    }
+
+                    // Email
+                    ButtonWithImageView(
+                        imageName: .email,
+                        text: "contactWithEmail".localized(),
+                        details: viewModel.contactData?.contactEmail ?? "",
+                        showCopyIcon: true
+                    ) {
+                        let raw = viewModel.contactData?.contactEmail ?? ""
+                        let email = "mailto:\(raw)"
+                        if let url = URL(string: email) {
+                            UIApplication.shared.open(url)
+                        }
+                    } onCopy: {
+                        let email = viewModel.contactData?.contactEmail ?? ""
+                        UIPasteboard.general.string = email
+                        viewModel.toast = FancyToast(type: .success, title: "", message: "Email copied".localized())
+                    }
+                }
+            }
+            .padding(.horizontal, 24)
+
+            Spacer()
         }
         .toastView(toast: $viewModel.toast)
         .navigationBarHidden(true)
@@ -65,28 +95,32 @@ struct HelpAndSupportView: View {
         }
     }
     
-    /// Open Keybase chat with the given username
-    func openKeybaseChat(_ username: String) {
-        let keybaseURLScheme = "keybase://chat?username=\(username)"
-        let keybaseWebURL = "https://keybase.io/\(username)" // Web URL for fallback
+    private func cleanedInternationalNumber(_ raw: String) -> String {
+        raw
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: "+", with: "")
+            .replacingOccurrences(of: " ", with: "")
+            .replacingOccurrences(of: "(", with: "")
+            .replacingOccurrences(of: ")", with: "")
+            .replacingOccurrences(of: "-", with: "")
+    }
 
-        if let url = URL(string: keybaseURLScheme), UIApplication.shared.canOpenURL(url) {
-            // Open Keybase if installed
+    private func openWhatsApp(phoneRaw: String, message: String? = nil) {
+        let phone = cleanedInternationalNumber(phoneRaw)
+
+        var urlString = "https://wa.me/\(phone)"
+        if let message, !message.isEmpty {
+            let encoded = message.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            urlString += "?text=\(encoded)"
+        }
+
+        if let url = URL(string: urlString) {
             UIApplication.shared.open(url)
         }
-                 else if let url = URL(string: keybaseWebURL) {
-                    // Open Keybase website if app is not installed
-                    UIApplication.shared.open(url)
-                }
-        /*else {
-         // Redirect to App Store if Keybase is not installed
-         if let appStoreURL = URL(string: "https://apps.apple.com/app/keybase-crypto-for-everyone/id1044461770") {
-             UIApplication.shared.open(appStoreURL)
-         }
-     }*/
     }
 }
 
 #Preview {
     HelpAndSupportView()
 }
+

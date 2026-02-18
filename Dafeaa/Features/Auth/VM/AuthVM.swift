@@ -66,7 +66,7 @@ class AuthVM: ObservableObject {
     func validateLogin(phone: String, password: String) {
         if phone.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPhone".localized())
-        } else if !phone.isValidPhoneNumber {
+        } else if !phone.isValidPhone() {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidPhone".localized())
         } else if password.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPassword".localized())
@@ -77,12 +77,13 @@ class AuthVM: ObservableObject {
     }
     
     func validateRegister(photo: UIImage?, name: String, email: String, phone: String, accountType: AccountTypeOption, password: String, confirmPassword: String, isAgreeChecked:Bool) {
-        if photo == nil {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: "EnterUserPhoto".localized())
-        } else if name.isBlank {
+//        if photo == nil {
+//            toast = FancyToast(type: .error, title: "Error".localized(), message: "EnterUserPhoto".localized())
+//        } else
+        if name.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterUserName".localized())
-        } else if !name.isValidName {
-        } else if !name.isValidName {
+        }
+        else if !name.isValidName {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidUserName".localized())
         } else if email.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterEmail".localized())
@@ -90,7 +91,7 @@ class AuthVM: ObservableObject {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidEmail".localized())
         } else if phone.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPhone".localized())
-        } else if !phone.isValidPhoneNumber {
+        } else if !phone.isValidPhone() {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidPhone".localized())
         } else if password.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPassword".localized())
@@ -216,7 +217,7 @@ class AuthVM: ObservableObject {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPassword".localized())
         } else if phone.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPhone".localized())
-        } else if !phone.isValidPhoneNumber{
+        } else if !phone.isValidPhone(){
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidPhone".localized())
         }  else {
             changePhone(for: ["password"     : password,

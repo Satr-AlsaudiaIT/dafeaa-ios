@@ -21,6 +21,10 @@ struct WalletView: View {
     @State var navigateToWithDrawView: Bool = false
     @State var navigateToAddBalance: Bool = false
     @State private var popupMessage: PopupMessage? = nil
+    @State var transferBalanceAmount : String = ""
+    @State var showTransferMethodSheet: Bool = false
+    @State var navigateToIBANTransfer: Bool = false
+    @State var navigateToPhoneTransfer: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -58,39 +62,21 @@ struct WalletView: View {
                             
                             HStack {
                                 HStack {
-                                    WalletButton(buttonText: "addBalance".localized(),image: .addBalance) {
+                                    WalletButton(buttonText: "transferBalance".localized(), image: .transferBalance) {
+                                        showTransferMethodSheet = true
+                                    }
+                                }
+                                Spacer()
+                                Rectangle()
+                                    .fill(.black.opacity(0.1))
+                                    .frame(width: 2, height: 24)
+                                Spacer()
+                                HStack {
+                                    WalletButton(buttonText: "addBalance".localized(), image: .addBalance) {
                                         balanceActionType = .addBalance
                                         isSheetPresented = true
                                     }
-                                    
                                 }
-                                Spacer()
-                                Rectangle()
-                                    .fill(.black.opacity(0.1))
-                                    .frame(width: 2,height: 24)
-                                
-                                Spacer()
-                                HStack {
-                                    WalletButton(buttonText: "withdrawBalance".localized(), image: .withdrawBalance) {
-                                        balanceActionType = .withDraw
-                                        isSheetPresented = true
-                                    }
-                                    
-                                }
-                                Spacer()
-                                Rectangle()
-                                    .fill(.black.opacity(0.1))
-                                    .frame(width: 2,height: 24)
-                                
-                                Spacer()
-                                HStack {
-                                    WalletButton(buttonText: "transferBalance".localized(), image: .transferBalance) {
-                                        //                                        balanceActionType = .withDraw
-                                        //                                        isSheetPresented = true
-                                    }
-                                    
-                                }
-                                
                             }
                             .padding(.horizontal,24)
                         }
@@ -167,16 +153,32 @@ struct WalletView: View {
                 PaymentWebViewContainer(url: paymentURL)
             }
             .navigationDestination(isPresented: $navigateToWithDrawView) {
-                WithdrawDetailsView(
-                    withdrawAmount: amount
-                )
+                WithdrawDetailsView()
             }
             .navigationDestination(isPresented: $navigateToAddBalance) {
                 AddBalanceCardDetailsView(
                     addAmount: amount
                 )
             }
-            
+            .sheet(isPresented: $showTransferMethodSheet) {
+                TransferMethodBottomSheet(
+                    isSheetPresented: $showTransferMethodSheet,
+                    navigateToIBANTransfer: $navigateToIBANTransfer,
+                    navigateToPhoneTransfer: $navigateToPhoneTransfer
+                )
+                .presentationDetents([.fraction(0.45)])
+                .presentationCornerRadius(24)
+                .presentationDragIndicator(.visible)
+            }
+
+            .navigationDestination(isPresented: $navigateToIBANTransfer) {
+                WithdrawDetailsView()
+            }
+
+            .navigationDestination(isPresented: $navigateToPhoneTransfer) {
+                EnterPhoneTransferDetailsView(phoneNumber: "")
+
+            }
         }
     }
     

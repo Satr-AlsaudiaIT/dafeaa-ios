@@ -106,12 +106,17 @@ extension String{
    
     // validate name
     var isValidName: Bool {
-        if(self.count>=2 && self.count<=30){
-            return true
-        }else{
-            return false
-        }
-    }
+           // Length 2–30
+           guard self.count >= 2 && self.count <= 30 else { return false }
+
+           // Only letters and spaces, and at least one letter
+           let allowedSet = CharacterSet.letters.union(.whitespaces)
+           let allAllowed = self.unicodeScalars.allSatisfy { allowedSet.contains($0) }
+           let hasLetter  = self.rangeOfCharacter(from: .letters) != nil
+
+           return allAllowed && hasLetter
+       }
+    
     var isValidReason: Bool {
         if(self.count>=3 && self.count<=30){
             return true
@@ -141,15 +146,41 @@ extension String{
     //Validate Phone
     
     func isValidPhone() -> Bool {
-        let pattern = "^(009665|9665|\\+9665|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$"
+        let pattern = "^(009665|9665|\\+9665|5|05|0096605|96605|\\+96605)(5|0|3|6|4|9|1|8|7)([0-9]{7})$"
         
         // Create a regular expression from the pattern
         let regex = try? NSRegularExpression(pattern: pattern, options: [])
         
         // Check if the string matches the regex pattern
-        let range = NSRange(location: 0, length: self.utf16.count)
-        return regex?.firstMatch(in: self, options: [], range: range) != nil
+        let normalizedPhoneNumber = self.normalizePhoneNumber
+        let range = NSRange(location: 0, length: normalizedPhoneNumber.utf16.count)
+        return regex?.firstMatch(in: normalizedPhoneNumber, options: [], range: range) != nil
     }
+    
+    var westernDigits: String {
+          let map: [Character: Character] = [
+              "٠": "0", "١": "1", "٢": "2", "٣": "3", "٤": "4",
+              "٥": "5", "٦": "6", "٧": "7", "٨": "8", "٩": "9",
+          ]
+
+          return String(self.map { map[$0] ?? $0 })
+      }
+    
+    var normalizePhoneNumber: String {
+        var digitsOnly = self.westernDigits.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
+            
+            // Remove all common prefixes in one shot
+            let prefixes = [ "009660",  "9660", "0"]
+            for prefix in prefixes {
+                if digitsOnly.hasPrefix(prefix) {
+                    digitsOnly.removeFirst(prefix.count)
+                    break
+                }
+            }
+            
+            return digitsOnly
+        }
+
     
     //Validate Email
     var isEmail: Bool {
@@ -179,17 +210,6 @@ extension String{
         }
     }
     
-    var isValidPhoneNumber : Bool {
-           // Define the regex pattern
-           let pattern = "^(009665|9665|\\+9665|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$"
-           
-           // Create a regular expression from the pattern
-           let regex = try? NSRegularExpression(pattern: pattern, options: [])
-           
-           // Check if the string matches the regex pattern
-           let range = NSRange(location: 0, length: self.utf16.count)
-           return regex?.firstMatch(in: self, options: [], range: range) != nil
-       }
     
     
     //validate Password

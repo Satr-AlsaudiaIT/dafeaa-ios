@@ -5,7 +5,7 @@
 //  Created by AMNY on 13/01/2026.
 //
 
-import SwiftUICore
+import SwiftUI
 import SwiftUI
 
 
@@ -41,7 +41,7 @@ struct CustomPopupView: View {
             Image(systemName: popup.type == .success ? "checkmark.circle.fill" : "xmark.circle.fill")
                 .font(.system(size: 50))
                 .foregroundColor(popup.type == .success ? .green : .red)
-            
+                .padding(.bottom,20)
             VStack(spacing: 8) {
                 Text(popup.title)
                     .textModifier(.extraBold, 18, .black222222)
@@ -68,13 +68,7 @@ struct PopupModifier: ViewModifier {
             content
             
             if popup != nil {
-                Color.black.opacity(0.4)
-                    .ignoresSafeArea()
-                    .onTapGesture {
-                        withAnimation(.spring(response: 0.3)) {
-                            popup = nil
-                        }
-                    }
+
                 
                 CustomPopupView(popup: popup!) {
                     withAnimation(.spring(response: 0.3)) {

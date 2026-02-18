@@ -21,34 +21,41 @@ struct WithdrawComponent: View {
                 }
                 .frame(width: 48,height: 48)
                 .cornerRadius(24)
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack (spacing:3){
-                        Text("withdrawProcess".localized())
-                            .textModifier(.plain, 16, .black1E1E1E)
-                      
+                HStack {
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack (spacing:3){
+                            Text("withdrawProcess".localized())
+                                .textModifier(.plain, 14, .black1E1E1E)
+                                .minimumScaleFactor(0.7)
+                                .lineLimit(1)
+                            Spacer(minLength: 1)
                             Text(withdrawsStatusEnum(rawValue: process?.status ?? 0)?.text ?? "")
                                 .textModifier(.plain, 12, withdrawsStatusEnum(rawValue: process?.status ?? 0)?.color ?? .gray919191)
-                    }
-                    HStack {
-                        Text(process?.statusDate ?? "")
-                            .textModifier(.plain, 14, .gray616161)
-                        Spacer()
+                            Spacer()
+                            
+                        }
+                        
+                        //                     Spacer()
+                        HStack {
+                            Text(process?.statusDate ?? "")
+                                .textModifier(.plain, 14, .gray616161)
+                            Spacer()
+                            
+                        }
                         
                     }
-                    //                     Spacer()
-                    
+                    HStack(spacing: 2) {
+                        Text(String(format: "%.1f", process?.amount ?? 0))
+                            .textModifier(.plain, 14, withdrawsStatusEnum(rawValue: process?.status ?? 0)?.color ?? .gray919191)
+                        Image(.riyal)
+                             .resizable()
+                             .aspectRatio(contentMode: .fit)
+                             .foregroundColor(withdrawsStatusEnum(rawValue: process?.status ?? 0)?.color ?? .gray919191)
+                             .frame(width: 15)
+                             .padding(.trailing, 10)
+                    }
+                    .environment(\.layoutDirection, .rightToLeft)
                 }
-                HStack(spacing: 2) {
-                    Text(String(format: "%.1f", process?.amount ?? 0))
-                        .textModifier(.plain, 14, withdrawsStatusEnum(rawValue: process?.status ?? 0)?.color ?? .gray919191)
-                    Image(.riyal)
-                         .resizable()
-                         .aspectRatio(contentMode: .fit)
-                         .foregroundColor(withdrawsStatusEnum(rawValue: process?.status ?? 0)?.color ?? .gray919191)
-                         .frame(width: 15)
-                         .padding(.trailing, 10)
-                }
-                .environment(\.layoutDirection, .rightToLeft)
 
             }
 //            .padding(.all, 16)

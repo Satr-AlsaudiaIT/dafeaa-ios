@@ -54,17 +54,6 @@ struct ClientLinkDetailsNew: View {
                                 Text("orderNotAvailable".localized())
                                     .textModifier(.plain, 15, .redFA4248)
                             }
-//                            ForEach (linkDetails.products ?? []) { product in
-//                                Button(action: {
-//                                    showingProductDetails = true
-//                                    selectedProduct = product
-//                                }) {
-//                                    ClientLinkCellIView(product: product, productAmountDic: $productAmountDic,amountChanged: $amountChanged,isDisabled: $isAmountInCellDisabled)
-//                                        
-//                                        
-//                                      
-//                                }
-//                            }
                             if linkDetails.products?.count ?? 0 > 0, let product = linkDetails.products?.first  {
                                 VStack(alignment: .leading) {
                                         VStack {
@@ -113,7 +102,7 @@ struct ClientLinkDetailsNew: View {
                                                 VStack(alignment: .leading, spacing: 10) {
                                                     HStack {
                                                         
-                                                        HTMLDescriptionView(html: product.description ?? "", size: 15)
+                                                        HTMLDescriptionView(html: product.description ?? "")
                                                         Spacer()
                                                     }
                                                 }
@@ -121,7 +110,6 @@ struct ClientLinkDetailsNew: View {
                                         }
                                       .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft : .leftToRight)
                                 }
-//                                .padding(.horizontal,20)
                                 .onAppear {
                                     let initialAmount = 1
                                     productAmountDic.append(["product_id": product.id ?? 0, "amount": "\(initialAmount)"])
@@ -236,10 +224,10 @@ struct ClientLinkDetailsNew: View {
                 selectedShippingCompany = viewModel.offersData?.shippingCompanies?.first
             }
             .onChange(of: selectedShippingCompany, { _, _ in
-                viewModel.getShippingRates(company: selectedShippingCompany ??  "dhl", for: viewModel.offersData?.products?.first?.id ?? 1, from: viewModel.offersData?.address?.id ?? 1, to: addressId)
+                viewModel.getShippingRates(company: selectedShippingCompany ??  "dhl", for: viewModel.offersData?.products?.first?.id ?? 1,/* from: viewModel.offersData?.address?.id ?? 1,*/ to: addressId)
             })
             .onChange(of: addressId) { _, newValue in
-                viewModel.getShippingRates(company: selectedShippingCompany ?? "dhl", for: viewModel.offersData?.products?.first?.id ?? 1, from: viewModel.offersData?.address?.id ?? 1, to: addressId)
+                viewModel.getShippingRates(company: selectedShippingCompany ?? "dhl", for: viewModel.offersData?.products?.first?.id ?? 1, /*from: viewModel.offersData?.address?.id ?? 1,*/ to: addressId)
             }
             .onChange(of: viewModel.shippingRatePrice) { _, _ in
                 shippingPrice = viewModel.shippingRatePrice ?? 0

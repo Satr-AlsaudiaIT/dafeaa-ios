@@ -57,8 +57,10 @@ struct QRCodeView: View {
 }
 
 
+import SDWebImageSwiftUI
 
 struct OrderItemView: View {
+    var image     : String? = ""
     var itemName  : String
     var price     : Double
     var offerPrice: Double
@@ -68,14 +70,24 @@ struct OrderItemView: View {
     var body: some View {
         VStack(alignment:.leading, spacing: 16){
             HStack {
-                Image(.process)
-                    .resizable()
-                    .frame(width: 48, height: 48)
+                WebImage(url: URL(string: image ?? "")) { image in
+                        
+                        image
+                            .resizable()
+                            .frame(width: 48, height: 48)
+                            .cornerRadius(24)
+                    
+                } placeholder: {
+                    Image(.process)
+                        .resizable()
+                        .frame(width: 48, height: 48)
+                }
+               
                 VStack(alignment: .leading, spacing: 8) {
                     Text(itemName)
                         .textModifier(.plain, 14,  .black222222)
+                        .lineLimit(1)
                     HStack {
-                      
                         HStack(spacing: 5) {
                             Text(String(format: "%.2f", price))
                                 .textModifier(.plain, 12, .gray8B8C86)
@@ -85,7 +97,7 @@ struct OrderItemView: View {
                                  .aspectRatio(contentMode: .fit)
                                  .foregroundColor(.gray8B8C86)
                                  .frame(width: 20)
-                                 .padding(.trailing, 10)
+//                                 .padding(.trailing, 10)
                         }
                         .environment(\.layoutDirection, .rightToLeft)
                         if offerPrice != 0 {
@@ -102,6 +114,10 @@ struct OrderItemView: View {
                             .environment(\.layoutDirection, .rightToLeft)
                         }
                         Spacer()
+                        
+                        Text("productDetails".localized())
+                            .textModifier(.bold, 13, .primaryF9CE29)
+                            .underline()
                         //to do return if needed v2 to v3 changes
 //                        Text("amount: ".localized() + "\(amount)" )
 //                            .textModifier(.plain, 12, .gray8B8C86)

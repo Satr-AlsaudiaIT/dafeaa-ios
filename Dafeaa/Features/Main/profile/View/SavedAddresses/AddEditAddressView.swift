@@ -7,7 +7,6 @@
 import SwiftUI
 import GoogleMaps
 import CoreLocation
-import GooglePlaces
 
 struct AddEditAddressView: View {
 
@@ -26,10 +25,9 @@ struct AddEditAddressView: View {
     @State var editedAddress: AddressesData?
 
     @State private var searchText: String = ""
-    @State private var suggestions: [GMSAutocompleteSuggestion] = []
-    private let placesClient = GMSPlacesClient.shared()
+    @State private var suggestions: [PlaceSuggestion] = []
+    @StateObject private var placesAPI = GooglePlacesAPIService()
     private let allowedCountryCode = "SA"
-    @State private var placesToken = GMSAutocompleteSessionToken()
 
     @StateObject private var locationManager = LocationManager()
     @State private var cameraPosition: GMSCameraPosition = .camera(withLatitude: 24.7136, longitude: 46.6753, zoom: 12)
@@ -40,6 +38,9 @@ struct AddEditAddressView: View {
     @State private var lastSaudiCamera: GMSCameraPosition = .camera(withLatitude: 24.7136, longitude: 46.6753, zoom: 12)
     
     @FocusState private var focusedField: FormField?
+    
+    private let englishLocale = Locale(identifier: "en_US")
+    @State private var isSelectingSuggestion = false
 
     var body: some View {
         ZStack {
@@ -106,8 +107,11 @@ struct AddEditAddressView: View {
             Image(systemName: "magnifyingglass").foregroundColor(.gray)
 
             TextField("search_location".localized(), text: $searchText)
-                .onChange(of: searchText) { _, newValue in
-                    fetchSuggestions(query: newValue)
+                .onChange(of: searchText) { oldValue, newValue in
+                    // Only trigger search if user is typing (not selecting)
+                    if !isSelectingSuggestion {
+                        fetchSuggestions(query: newValue)
+                    }
                 }
 
             if !searchText.isEmpty {
@@ -146,11 +150,12 @@ struct AddEditAddressView: View {
         .cornerRadius(10)
         .shadow(color: Color.black.opacity(0.15), radius: 4)
         .padding(.horizontal, 24)
+        .transition(.opacity.combined(with: .move(edge: .top)))
     }
 
-    private func suggestionRow(_ suggestion: GMSAutocompleteSuggestion) -> some View {
-        let primary = suggestion.placeSuggestion?.attributedPrimaryText.string ?? ""
-        let secondary = suggestion.placeSuggestion?.attributedSecondaryText?.string ?? ""
+    private func suggestionRow(_ suggestion: PlaceSuggestion) -> some View {
+        let primary = suggestion.mainText
+        let secondary = suggestion.secondaryText ?? ""
 
         return VStack(alignment: .leading, spacing: 4) {
             Text(primary)
@@ -212,7 +217,7 @@ struct AddEditAddressView: View {
                 .focused($focusedField, equals: .city)
 
             CustomMainTextField(text: $postalCode, placeHolder: "postal_code")
-                .keyboardType(.numberPad)
+                .keyboardType(.decimalPad)
                 .focused($focusedField, equals: .postalCode)
 
             CustomMainTextField(text: $address, placeHolder: "full_address")
@@ -221,147 +226,110 @@ struct AddEditAddressView: View {
         .padding(.horizontal, 24)
     }
 
-
+    // MARK: - Fetch Suggestions (REST API)
     private func fetchSuggestions(query: String) {
+        // Don't fetch if we're in the middle of selecting a suggestion
+        guard !isSelectingSuggestion else { return }
+        
         let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
 
         guard !q.isEmpty else {
             suggestions = []
-            placesToken = GMSAutocompleteSessionToken()
             return
         }
 
-        let request = GMSAutocompleteRequest(query: q)
-        request.sessionToken = placesToken
-        let filter = GMSAutocompleteFilter()
-           filter.countries = ["SA"]
-           request.filter = filter
-        placesClient.fetchAutocompleteSuggestions(from: request) { results, error in
+        placesAPI.fetchAutocompleteSuggestions(query: q) { apiSuggestions in
             DispatchQueue.main.async {
-                if error != nil {
-                    self.suggestions = []
-                    return
-                }
-                self.suggestions = results ?? []
+                self.suggestions = apiSuggestions
+                
             }
         }
     }
 
-    private func selectSuggestion(_ suggestion: GMSAutocompleteSuggestion) {
-        guard let placeID = suggestion.placeSuggestion?.placeID else { return }
 
-        let cachedPrimary = suggestion.placeSuggestion?.attributedPrimaryText.string ?? ""
-        if !cachedPrimary.isEmpty { searchText = cachedPrimary }
+    // MARK: - Select Suggestion (REST API)
+    // MARK: - Select Suggestion (REST API)
+    private func selectSuggestion(_ suggestion: PlaceSuggestion) {
+        // Set flag to prevent fetchSuggestions from triggering
+        isSelectingSuggestion = true
+        
+        // Clear suggestions immediately
+        suggestions = []
+        
+        // Update search text WITHOUT triggering onChange
+        let tempText = suggestion.mainText
+        
+        hideKeyboard()
 
-        // Fetch ONLY coordinate from Place ID
-        let props = [GMSPlaceProperty.coordinate.rawValue]
-        let request = GMSFetchPlaceRequest(placeID: placeID, placeProperties: props, sessionToken: placesToken)
-
-        placesClient.fetchPlace(with: request) { place, error in
-            DispatchQueue.main.async {
-                self.suggestions = []
-                self.placesToken = GMSAutocompleteSessionToken()
-                hideKeyboard()
-
-                guard error == nil, let c = place?.coordinate else { return }
-
-                self.handleMapTap(c)
-            }
-        }
-    }
-
-    private func apply(place: GMSPlace) {
-        let c = place.coordinate
-
-        var extractedCountry = ""
-
-        if let comps = place.addressComponents {
-            extractedCountry = comps.first(where: { $0.types.contains("country") })?.shortName ?? ""
-        }
-
-        guard validateSaudiOrToast(extractedCountry) else {
-            return
-        }
-
-        if let name = place.name, !name.isEmpty {
-            searchText = name
-        } else if let formatted = place.formattedAddress {
-            searchText = formatted
-        }
-
-        selectedCoordinate = c
-        latitude = c.latitude
-        longitude = c.longitude
-        moveCamera(to: c, zoom: 16)
-
-        if let comps = place.addressComponents {
-            governorate = comps.first(where: { $0.types.contains("administrative_area_level_1") })?.name ?? ""
-            city = comps.first(where: { $0.types.contains("locality") })?.name
-                ?? comps.first(where: { $0.types.contains("administrative_area_level_2") })?.name
-                ?? ""
-            postalCode = comps.first(where: { $0.types.contains("postal_code") })?.name ?? ""
-            countyCode = extractedCountry
-
-            let route = comps.first(where: { $0.types.contains("route") })?.name ?? ""
-            let streetNumber = comps.first(where: { $0.types.contains("street_number") })?.name ?? ""
-            let sublocality = comps.first(where: { $0.types.contains("sublocality") })?.name ?? ""
-
-            let parts = [streetNumber, route, sublocality].filter { !$0.isEmpty }
-            address = parts.isEmpty ? (place.formattedAddress ?? "") : parts.joined(separator: ", ")
-        } else {
-            address = place.formattedAddress ?? ""
-        }
-    }
-
-    private func focusFromSavedTextIfNeeded() {
-        if latitude != 0, longitude != 0 {
-            let c = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            selectedCoordinate = c
-            moveCamera(to: c, zoom: 16)
-            lastSaudiCoordinate = c
-            lastSaudiCamera = cameraPosition
-            return
-        }
-
-        let query = [address, city, governorate, countyCode]
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .filter { !$0.isEmpty }
-            .joined(separator: ", ")
-
-        guard !query.isEmpty else { return }
-
-        CLGeocoder().geocodeAddressString(query) { placemarks, error in
-            guard error == nil, let pm = placemarks?.first,
-                  let c = pm.location?.coordinate else { return }
-
-            let iso = pm.isoCountryCode?.uppercased()
-
-            DispatchQueue.main.async {
-                guard iso == self.allowedCountryCode else {
-                    self.showOutsideSaudiToast()
-                    self.revertToLastSaudiPoint()
-                    return
+        placesAPI.fetchPlaceDetails(placeID: suggestion.placeID) { details in
+            guard let details = details else {
+                DispatchQueue.main.async {
+                    self.searchText = tempText
+                    self.isSelectingSuggestion = false
                 }
-
-                self.latitude = c.latitude
-                self.longitude = c.longitude
-                self.selectedCoordinate = c
-                self.moveCamera(to: c, zoom: 16)
-
-                self.fillFields(from: pm)
-
-                self.lastSaudiCoordinate = c
+                return
+            }
+            
+            // Extract country code
+            let country = details.addressComponents.first { $0.types.contains("country") }?.shortName ?? ""
+            
+            // Validate Saudi Arabia
+            guard self.validateSaudiOrToast(country) else {
+                DispatchQueue.main.async {
+                    self.searchText = tempText
+                    self.isSelectingSuggestion = false
+                }
+                return
+            }
+            
+            let coordinate = CLLocationCoordinate2D(
+                latitude: details.geometry.location.lat,
+                longitude: details.geometry.location.lng
+            )
+            
+            // Extract address components in English
+            let city = details.addressComponents.first { $0.types.contains("locality") }?.longName ?? ""
+            let governorate = details.addressComponents.first { $0.types.contains("administrative_area_level_1") }?.longName ?? ""
+            let postalCode = details.addressComponents.first { $0.types.contains("postal_code") }?.longName ?? ""
+            let route = details.addressComponents.first { $0.types.contains("route") }?.longName ?? ""
+            let streetNumber = details.addressComponents.first { $0.types.contains("street_number") }?.longName ?? ""
+            let sublocality = details.addressComponents.first { $0.types.contains("sublocality") }?.longName ?? ""
+            
+            DispatchQueue.main.async {
+                self.city = city
+                self.governorate = governorate
+                self.postalCode = postalCode
+                self.countyCode = country
+                
+                let parts = [streetNumber, route, sublocality].filter { !$0.isEmpty }
+                self.address = parts.isEmpty ? details.formattedAddress : parts.joined(separator: ", ")
+                
+                // Update search text LAST and keep flag active
+                self.searchText = details.name ?? details.formattedAddress
+                self.latitude = coordinate.latitude
+                self.longitude = coordinate.longitude
+                self.selectedCoordinate = coordinate
+                self.moveCamera(to: coordinate, zoom: 16)
+                
+                self.lastSaudiCoordinate = coordinate
                 self.lastSaudiCamera = self.cameraPosition
+                
+                // Reset flag AFTER a delay to ensure onChange doesn't trigger
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.isSelectingSuggestion = false
+                }
             }
         }
     }
 
     private func clearSearch() {
+        isSelectingSuggestion = false
         searchText = ""
         suggestions = []
-        placesToken = GMSAutocompleteSessionToken()
     }
 
+
+    // MARK: - Handle Map Tap
     private func handleMapTap(_ coordinate: CLLocationCoordinate2D) {
         validateCoordinateIsSaudi(coordinate) { isAllowed, placemark in
             guard isAllowed else {
@@ -389,10 +357,20 @@ struct AddEditAddressView: View {
         completion: @escaping (_ isAllowed: Bool, _ placemark: CLPlacemark?) -> Void
     ) {
         let geocoder = CLGeocoder()
-        geocoder.reverseGeocodeLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)) { placemarks, _ in
-            let pm = placemarks?.first
-            let iso = pm?.isoCountryCode?.uppercased()
-            completion(iso == self.allowedCountryCode, pm)
+        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        
+        if #available(iOS 15.0, *) {
+            geocoder.reverseGeocodeLocation(location, preferredLocale: englishLocale) { placemarks, _ in
+                let pm = placemarks?.first
+                let iso = pm?.isoCountryCode?.uppercased()
+                completion(iso == self.allowedCountryCode, pm)
+            }
+        } else {
+            geocoder.reverseGeocodeLocation(location) { placemarks, _ in
+                let pm = placemarks?.first
+                let iso = pm?.isoCountryCode?.uppercased()
+                completion(iso == self.allowedCountryCode, pm)
+            }
         }
     }
 
@@ -410,12 +388,11 @@ struct AddEditAddressView: View {
         address = parts.joined(separator: ", ")
     }
 
-    
+    // MARK: - Camera Movement
     private func moveCamera(to coordinate: CLLocationCoordinate2D, zoom: Float) {
         currentZoom = zoom
         cameraPosition = GMSCameraPosition.camera(withTarget: coordinate, zoom: zoom)
         lastSaudiCamera = cameraPosition
-
     }
 
     private func zoomIn() {
@@ -432,7 +409,6 @@ struct AddEditAddressView: View {
         let target = selectedCoordinate ?? cameraPosition.target
         cameraPosition = GMSCameraPosition.camera(withTarget: target, zoom: newZoom)
         lastSaudiCamera = cameraPosition
-
     }
 
     private func centerOnUser() {
@@ -441,7 +417,7 @@ struct AddEditAddressView: View {
         lastSaudiCamera = cameraPosition
     }
 
-    
+    // MARK: - Validation & Toasts
     private func showOutsideSaudiToast() {
         viewModel.toast = FancyToast(type: .error, title: "error".localized(), message: "location_outside_saudi".localized())
     }
@@ -453,38 +429,99 @@ struct AddEditAddressView: View {
         cameraPosition = lastSaudiCamera
     }
 
-    
+    private func validateSaudiOrToast(_ country: String?) -> Bool {
+        if country?.uppercased() == allowedCountryCode { return true }
 
-    private func reverseGeocode(_ coordinate: CLLocationCoordinate2D) {
+        viewModel.toast = FancyToast(type: .error, title: "error".localized(), message: "location_outside_saudi".localized())
+        return false
+    }
+
+    // MARK: - Geocoding Fallback
+    private func tryGeocodeWithFallback(queries: [String], index: Int, retryCount: Int = 0) {
+        guard index < queries.count else {
+            print("All geocoding attempts failed")
+            return
+        }
+        
+        let query = queries[index]
+        let maxRetries = 2
+        
         let geocoder = CLGeocoder()
-        geocoder.reverseGeocodeLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)) { placemarks, _ in
-            guard let placemark = placemarks?.first else { return }
-
-            DispatchQueue.main.async {
-                let iso = placemark.isoCountryCode
-                guard validateSaudiOrToast(iso) else {
-                    selectedCoordinate = nil
-                    latitude = 0
-                    longitude = 0
-                    return
-                }
-
-                governorate = placemark.administrativeArea ?? ""
-                city = placemark.locality ?? ""
-                postalCode = placemark.postalCode ?? ""
-                countyCode = iso ?? ""
-
-                let parts = [placemark.subThoroughfare, placemark.thoroughfare, placemark.subLocality]
-                    .compactMap { $0 }
-                    .filter { !$0.isEmpty }
-
-                address = parts.joined(separator: ", ")
+        
+        if #available(iOS 15.0, *) {
+            // FIXED: Correct syntax with preferredLocale
+            geocoder.geocodeAddressString(query, in: nil, preferredLocale: self.englishLocale) { placemarks, error in
+                self.handleGeocodeResult(placemarks: placemarks, error: error, queries: queries, index: index, retryCount: retryCount, maxRetries: maxRetries)
+            }
+        } else {
+            geocoder.geocodeAddressString(query) { placemarks, error in
+                self.handleGeocodeResult(placemarks: placemarks, error: error, queries: queries, index: index, retryCount: retryCount, maxRetries: maxRetries)
             }
         }
     }
 
-    // MARK: - Save
+    private func handleGeocodeResult(placemarks: [CLPlacemark]?, error: Error?, queries: [String], index: Int, retryCount: Int, maxRetries: Int) {
+        let query = queries[index]
+        
+        if let error = error {
+            print("Geocoding failed for '\(query)' (attempt \(retryCount + 1)): \(error.localizedDescription)")
+            
+            if retryCount < maxRetries {
+                DispatchQueue.main.async {
+                    self.tryGeocodeWithFallback(queries: queries, index: index, retryCount: retryCount + 1)
+                }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.tryGeocodeWithFallback(queries: queries, index: index + 1, retryCount: 0)
+            }
+            return
+        }
+        
+        guard let pm = placemarks?.first,
+              let c = pm.location?.coordinate else {
+            print("No placemarks found for '\(query)'")
+            
+            if retryCount < maxRetries {
+                DispatchQueue.main.async {
+                    self.tryGeocodeWithFallback(queries: queries, index: index, retryCount: retryCount + 1)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.tryGeocodeWithFallback(queries: queries, index: index + 1, retryCount: 0)
+                }
+            }
+            return
+        }
 
+        let iso = pm.isoCountryCode?.uppercased()
+
+        DispatchQueue.main.async {
+            guard iso == self.allowedCountryCode else {
+                print("Location outside Saudi Arabia for '\(query)'")
+                self.tryGeocodeWithFallback(queries: queries, index: index + 1, retryCount: 0)
+                return
+            }
+
+            self.latitude = c.latitude
+            self.longitude = c.longitude
+            self.selectedCoordinate = c
+            
+            let zoom: Float = index == 0 ? 16 : (index == 1 ? 13 : (index == 2 ? 12 : 11))
+            self.moveCamera(to: c, zoom: zoom)
+
+            self.fillFields(from: pm)
+
+            self.lastSaudiCoordinate = c
+            self.lastSaudiCamera = self.cameraPosition
+            
+            print("✅ Successfully geocoded '\(query)' to \(c.latitude), \(c.longitude)")
+        }
+    }
+
+
+    // MARK: - Save
     private func saveAddress() {
         viewModel.validateCreateAddress(
             countyCode: countyCode,
@@ -497,16 +534,8 @@ struct AddEditAddressView: View {
             addressId: editedAddress?.id
         )
     }
-    private func validateSaudiOrToast(_ country: String?) -> Bool {
-        if country?.uppercased() == allowedCountryCode { return true }
-
-        viewModel.toast = FancyToast(type: .error, title: "error".localized(), message: "location_outside_saudi".localized())
-    
-        return false
-    }
 
     // MARK: - Lifecycle
-
     private func onAppearSetup() {
         if let editData = editedAddress {
             loadEditData(editData)
@@ -519,19 +548,33 @@ struct AddEditAddressView: View {
         }
     }
 
-
     private func loadEditData(_ data: AddressesData) {
         governorate = data.provinceCode ?? ""
         city = data.cityName ?? ""
         postalCode = data.postalCode ?? ""
         address = data.address ?? ""
-
-
-        focusFromSavedTextIfNeeded()
+        
+        let queries = [
+            [address, city, postalCode, governorate, countyCode]
+                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                .filter { !$0.isEmpty }
+                .joined(separator: ", "),
+            
+            [city, postalCode, governorate, countyCode]
+                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                .filter { !$0.isEmpty }
+                .joined(separator: ", "),
+            
+            [city, governorate, countyCode]
+                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                .filter { !$0.isEmpty }
+                .joined(separator: ", ")
+        ]
+        
+        tryGeocodeWithFallback(queries: queries.filter { !$0.isEmpty }, index: 0)
     }
 
     // MARK: - Keyboard toolbar
-
     private var keyboardToolbar: some ToolbarContent {
         ToolbarItemGroup(placement: .keyboard) {
             Button("Done".localized(), action: hideKeyboard)
@@ -564,7 +607,12 @@ struct AddEditAddressView: View {
     }
 }
 
-
 #Preview {
     AddEditAddressView()
 }
+
+
+
+
+
+

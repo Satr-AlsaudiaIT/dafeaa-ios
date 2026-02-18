@@ -8,5 +8,9 @@
 		<string>applinks:dafeaa-backend.deplanagency.com</string>
 		<string>applinks:dafea.com.sa</string>
 	</array>
+	<key>com.apple.developer.in-app-payments</key>
+	<array>
+		<string>merchant.com.Dafeaa.Plantech.merchent</string>
+	</array>
 </dict>
 </plist>

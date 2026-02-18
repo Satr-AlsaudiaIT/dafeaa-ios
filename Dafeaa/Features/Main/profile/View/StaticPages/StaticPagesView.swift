@@ -183,46 +183,269 @@ func attributedStringFromHTML(_ html: String,
 
 
 
-import SwiftUI
-import UIKit
 
-
-
-struct HTMLDescriptionView: UIViewRepresentable {
+// MARK: - Single Line Preview View
+struct HTMLDescriptionPreviewView: View {
     let html: String
-    var size: CGFloat = 13
+    var baseFontSize: CGFloat = 13
+    var truncationMode: Text.TruncationMode = .tail
     
-    func makeUIView(context: Context) -> UITextView {
-        let tv = UITextView()
-        tv.isEditable = false
-        tv.isScrollEnabled = false
-        tv.isSelectable = true
-        tv.backgroundColor = .clear
-        tv.textContainerInset = .zero
-        tv.textContainer.lineFragmentPadding = 0
-
-        // Alignment based on language
-        let isArabic = MOLHLanguage.currentAppleLanguage().hasPrefix("ar")
-        tv.semanticContentAttribute = isArabic ? .forceRightToLeft : .forceLeftToRight
-        tv.textAlignment = isArabic ? .right : .left
-
-        return tv
+    private var isArabic: Bool {
+        Constants.shared.isAR
     }
     
+    var body: some View {
+        Text(extractPlainText(from: html))
+            .textModifier(.bold, baseFontSize, .black222222)
+            .lineLimit(1)
+            .truncationMode(truncationMode)
+            .environment(\.layoutDirection,  html.isArabic  ? .rightToLeft : .leftToRight)
+    }
+    
+    // MARK: - Plain Text Extraction
+    private func extractPlainText(from html: String) -> String {
+        do {
+            let doc = try SwiftSoup.parse(html)
+            guard let body = doc.body() else { return "" }
+            
+            // Extract text and clean whitespace
+            let text = try body.text()
+            return text.trimmingCharacters(in: .whitespacesAndNewlines)
+                .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
+        } catch {
+            print("SwiftSoup Error: \(error)")
+            return ""
+        }
+    }
+}
 
-    func updateUIView(_ uiView: UITextView, context: Context) {
-        let isArabic = MOLHLanguage.currentAppleLanguage().hasPrefix("ar")
-        let customUIFont = UIFont(
-            name: AppFonts.shared.name(.plain),
-            size: size
-        ) ?? .systemFont(ofSize: size)
 
-        uiView.attributedText = attributedStringFromHTML(
-            html,
-            baseFont: customUIFont,
-            textColor: UIColor.gray919191,
-            isRTL: isArabic
-        )
-      
+
+
+import SwiftUI
+import SwiftSoup
+
+// MARK: - Models
+struct HTMLElement: Identifiable {
+    let id = UUID()
+    let type: ElementType
+}
+
+enum ElementType {
+    case text(AttributedString)
+    case list([ListItem])
+    case table([[String]])
+}
+
+struct ListItem: Identifiable {
+    let id = UUID()
+    let text: String
+}
+
+// MARK: - Main View
+struct HTMLDescriptionView: View {
+    let html: String
+    var baseFontSize: CGFloat = 13
+    
+    
+    
+    private var isArabic: Bool {
+        Constants.shared.isAR
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            ForEach(parseHTML(html)) { element in
+                renderElement(element)
+            }
+        }
+
+    }
+
+    // MARK: - Renderers (Broken down for Compiler efficiency)
+    @ViewBuilder
+    private func renderElement(_ element: HTMLElement) -> some View {
+        switch element.type {
+        case .text(let attrStr):
+            renderTextView(attrStr)
+        case .list(let items):
+            renderListView(items)
+        case .table(let rows):
+            renderTableView(rows)
+        }
+    }
+
+    @ViewBuilder
+    private func renderTextView(_ str: AttributedString) -> some View {
+        Text(str)
+            .textModifier(.extraBold, 16, .black222222)
+            .multilineTextAlignment( (str.isArabic && Constants.shared.isAR ) ? .leading : ((!str.isArabic && !Constants.shared.isAR ) ? .leading: .trailing) )
+    }
+
+    @ViewBuilder
+    private func renderListView(_ items: [ListItem]) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            ForEach(items) { item in
+                HStack(alignment: .top, spacing: 8) {
+                    Text("•")
+                        .textModifier(.extraBold, 14, .black222222)
+                    Text(item.text)
+                        .textModifier(.bold, 13, .black222222)
+                    Spacer(minLength: 0)
+                }
+                .environment(\.layoutDirection,  item.text.isArabic  ? .rightToLeft : .leftToRight)
+                
+            }
+        }
+        .padding(.horizontal, 4)
+    }
+
+    @ViewBuilder
+    private func renderTableView(_ rows: [[String]]) -> some View {
+        VStack(spacing: 0) {
+            ForEach(0..<rows.count, id: \.self) { rowIndex in
+                let rowData = rows[rowIndex]
+                HStack(spacing: 0) {
+                    ForEach(0..<rowData.count, id: \.self) { columnIndex in
+                        let cellText = rowData[columnIndex]
+                        Text(cellText)
+                            .font(.custom(AppFonts.shared.name(rowIndex == 0 ? .bold : .plain), size: baseFontSize - 1))
+                            .padding(10)
+                            .frame(maxWidth: .infinity, minHeight: 40, alignment:  .leading)
+                            .background(rowIndex % 2 == 0 ? Color(hex: "F2F3F7") : Color(hex: "FCFCFD"))
+                            .border(Color.gray.opacity(0.15), width: 0.5)
+                    }
+                }
+            }
+        }
+        .cornerRadius(6)
+        .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.gray.opacity(0.2), lineWidth: 1))
+        .padding(.vertical, 8)
+    }
+
+    // MARK: - HTML Parsing Logic
+    private func parseHTML(_ html: String) -> [HTMLElement] {
+        var parsedElements: [HTMLElement] = []
+        do {
+            let doc = try SwiftSoup.parse(html)
+            guard let body = doc.body() else { return [] }
+
+            for node in body.children() {
+                let tagName = node.tagName()
+
+                if tagName == "table" {
+                    let rows = parseTable(node)
+                    parsedElements.append(HTMLElement(type: .table(rows)))
+                } else if tagName == "ul" || tagName == "ol" {
+                    let items = parseList(node)
+                    parsedElements.append(HTMLElement(type: .list(items)))
+                } else {
+                    let alignment: TextAlignment = .leading
+                    if let attrStr = parseFormattedText(node) {
+                        parsedElements.append(HTMLElement(type: .text(attrStr)))
+                    }
+                }
+            }
+        } catch {
+            print("SwiftSoup Error: \(error)")
+        }
+        return parsedElements
+    }
+
+    private func parseFormattedText(_ element: Element) -> AttributedString? {
+        var combined = AttributedString("")
+        
+        do {
+            let parentIsBold = ["h1", "h2", "h3", "strong", "b"].contains(element.tagName())
+            
+            for node in element.getChildNodes() {
+                var segmentText = ""
+                var isBold = parentIsBold
+                
+                if let textNode = node as? TextNode {
+                    segmentText = textNode.getWholeText()
+                } else if let childElement = node as? Element {
+                    segmentText = try childElement.text()
+                    if ["strong", "b", "h1", "h2", "h3"].contains(childElement.tagName()) {
+                        isBold = true
+                    }
+                }
+                
+                if !segmentText.isEmpty {
+                    var segment = AttributedString(segmentText)
+                    segment.font = .custom(AppFonts.shared.name(isBold ? .bold : .plain), size: parentIsBold ? baseFontSize + 1 : baseFontSize)
+                    segment.foregroundColor = Color(hex: "404553")
+                    combined += segment
+                }
+            }
+        } catch { return nil }
+        
+        return combined.characters.count > 0 ? combined : nil
+    }
+
+    private func parseTable(_ element: Element) -> [[String]] {
+        var tableData: [[String]] = []
+        do {
+            let rows = try element.select("tr")
+            for row in rows {
+                let cols = try row.select("td").map { try $0.text().trimmingCharacters(in: .whitespacesAndNewlines) }
+                if !cols.isEmpty { tableData.append(cols) }
+            }
+        } catch { }
+        return tableData
+    }
+
+    private func parseList(_ element: Element) -> [ListItem] {
+        do {
+            return try element.select("li").map { ListItem(text: try $0.text()) }
+        } catch { return [] }
+    }
+}
+
+// MARK: - Color Extension for Hex
+extension Color {
+    init(hex: String) {
+        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int: UInt64 = 0
+        Scanner(string: hex).scanHexInt64(&int)
+        let a, r, g, b: UInt64
+        switch hex.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (1, 1, 1, 0)
+        }
+        self.init(.sRGB, red: Double(r) / 255, green: Double(g) / 255, blue: Double(b) / 255, opacity: Double(a) / 255)
+    }
+}
+
+
+import NaturalLanguage
+
+extension String {
+    /// Detects if the text is predominantly Arabic
+    var isArabic: Bool {
+        let recognizer = NLLanguageRecognizer()
+        recognizer.processString(self)
+        return recognizer.dominantLanguage == .arabic
+    }
+   
+}
+
+import NaturalLanguage
+
+extension AttributedString {
+    var isArabic: Bool {
+        // 1. Convert the AttributedString content to a standard String
+        let plainText = String(self.characters)
+        
+        // 2. Use NaturalLanguage to check the dominant language
+        let recognizer = NLLanguageRecognizer()
+        recognizer.processString(plainText)
+        return recognizer.dominantLanguage == .arabic
     }
 }

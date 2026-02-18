@@ -108,9 +108,8 @@ struct ClientLinkCellIView: View {
                     }
                     
                     HStack {
-                        Text(product.description ?? "")
-                            .textModifier(.plain, 15, .gray616161)
-                            .lineLimit(2)
+                        HTMLDescriptionPreviewView(html: product.description ?? "")
+                        
                         Spacer()
                         HStack {
                             Button(action: {
@@ -292,9 +291,8 @@ struct BusinessLinkCellIView: View {
                     }
                     
                     HStack {
-                        Text(product.description ?? "")
-                            .textModifier(.plain, 15, .gray616161)
-                            .lineLimit(2)
+                        HTMLDescriptionPreviewView(html: product.description ?? "")
+                        
                         Spacer()
                    
                     }

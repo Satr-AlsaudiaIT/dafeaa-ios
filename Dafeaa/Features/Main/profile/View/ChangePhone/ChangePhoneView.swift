@@ -40,10 +40,10 @@ struct ChangePhoneView: View {
                             .focused($focusedField, equals: .password)
                             .padding(.top,8)
                         ReusableButton(buttonText: "send"){
-                            viewModel.validateChangePhone(password: password, phone: phoneNumber)
+                            viewModel.validateChangePhone(password: password, phone: phoneNumber.normalizePhoneNumber)
                         }.padding(.top,16)
                             .navigationDestination(isPresented: $viewModel._isChangePhoneSuccess) {
-                                OTPConfirmationView(phone:phoneNumber, password: password, isChangePhone: true)
+                                OTPConfirmationView(phone:phoneNumber.normalizePhoneNumber, password: password, isChangePhone: true)
                             }
                         Spacer()
                         

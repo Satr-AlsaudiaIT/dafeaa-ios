@@ -113,13 +113,29 @@ struct BuyProductBottomSheet: View {
         .sheet(isPresented: $isShowingScanner) {
             QRCodeScannerViewHome { code in
                 isShowingScanner = false
-                 let offerCode = String(code)
-                    number = code
-                
+                let offerCode = extractOfferCode(from: code)
+                number = offerCode
             }
         }
+
     }
 
+    private func extractOfferCode(from scannedString: String) -> String {
+        if scannedString.contains("dafea.com.sa/offers/") {
+            if let url = URL(string: scannedString),
+               let lastComponent = url.pathComponents.last {
+                return lastComponent
+            }
+            return scannedString
+        } else {
+            toast = FancyToast(type: .error, title: "error", message: "not valid code".localized())
+            return ""
+        }
+        
+        
+    }
+
+    
     private func scanQRCode(from image: UIImage) {
         guard let ciImage = CIImage(image: image) else {
             print("Failed to convert UIImage to CIImage")

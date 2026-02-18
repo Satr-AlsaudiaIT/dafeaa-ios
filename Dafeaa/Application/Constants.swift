@@ -11,10 +11,23 @@ class Constants {
 
     
     var isAR: Bool { return (MOLHLanguage.currentAppleLanguage() == "ar") }
-    let baseURLV1 =  "https://dafeaa-backend.deplanagency.com/api/"  // develop instance
-    let baseURL =  "https://dafeaa-backend.deplanagency.com/api/v2/"  // develop instance
+//    let baseURLV1 =  "https://dafeaa-backend.deplanagency.com/api/"  // develop instance
+    //BaseURL v1 backup
+    let baseURLV1 =  "https://backend.dafea.com.sa/api/"
+    
+    
+//    let baseURL =  "https://dafeaa-backend.deplanagency.com/api/v2/"  // develop instance
+    //BaseURL backup
+    let baseURL = "https://backend.dafea.com.sa/api/v2/"
+    
+    
+    
     //To do
-    let basURLV3 = "https://dafeaa-backend.deplanagency.com/api/v3/"  //develop for links and orders V3
+//    let basURLV3 = "https://dafeaa-backend.deplanagency.com/api/v3/"  //develop for links and orders V3
+        //BaseURL v3 backup
+    
+    
+    let basURLV3 = "https://backend.dafea.com.sa/api/v3/"
     // possible to get back to V2
     
 //    let baseURL =   "" // live
@@ -39,7 +52,8 @@ class Constants {
     let businessInformationStatus = "businessInformationStatus"
     let subPlanId = "subPlanId"
     let activeNotification = "activeNotification"
-    
+
+
     static let ARAB_NATIONAL_BANK_CODE = "30"  // البنك العربي الوطني
     static let WITHDRAW_THRESHOLD: Double = 20000.0  // SAR
     
@@ -65,6 +79,17 @@ class Constants {
         }
     }
     
+    static var availableAmount: Double {
+        get {
+            let ud = UserDefaults.standard
+            return ud.value(forKey: "availableAmount") as? Double ?? 0
+        }
+        set(token) {
+            let ud = UserDefaults.standard
+            ud.set(token, forKey: "availableAmount")
+        }
+    }
+
     static var phone: String {
         get {
             let ud = UserDefaults.standard

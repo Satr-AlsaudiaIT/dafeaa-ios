@@ -33,7 +33,7 @@ struct OrderBusinessDetailsViewNew: View {
                 NavigationBarView(title: "orderDetails".localized()) {
                     self.presentationMode.wrappedValue.dismiss()
                 }
-                
+                if !viewModel.isLoading && !viewModel.isFailed {
                     VStack(alignment: .leading, spacing: 24) {
                         ScrollView(showsIndicators: false) {
                             VStack(spacing: 24) {
@@ -42,9 +42,9 @@ struct OrderBusinessDetailsViewNew: View {
                                         .padding(.horizontal,-10)
                                         .padding(.vertical,-10)
                                 }
-                                if orderData.qrCode != nil {
-                                    QRCodeView(text: orderData.qrCode ?? "")
-                                }
+                                //                                if orderData.qrCode != nil {
+                                //                                    QRCodeView(text: orderData.qrCode ?? "")
+                                //                                }
                                 //  Order Items Section
                                 VStack(spacing: 8) {
                                     Text("showOrderDetails".localized())
@@ -82,7 +82,7 @@ struct OrderBusinessDetailsViewNew: View {
                                     
                                     if orderData.orderPrice != nil {
                                         
-                                        PaymentInfoView(breakdown: PaymentDetails(commission: Double(orderData.commissionValue ?? 0), commissionMaxPrice: Double(orderData.maxCommissionValue ?? "0") ?? 0),itemsPrice: $itemsPrice,totalPrice: orderData.totalPrice ?? 0, deliveryPrice: orderData.deliveryPrice ?? 0, isShowDetails: true,isCalculateCommission: false)
+                                        PaymentInfoView(breakdown: PaymentDetails(commission: Double(orderData.totalVatWithCommission ?? 0), commissionMaxPrice: Double(orderData.maxCommissionValue ?? "0") ?? 0),itemsPrice: $itemsPrice,totalPrice: orderData.totalPrice ?? 0, deliveryPrice: orderData.deliveryPrice ?? 0, isShowDetails: true,isCalculateCommission: false)
                                     }
                                     
                                     
@@ -102,15 +102,15 @@ struct OrderBusinessDetailsViewNew: View {
                                                 .fill(Color.clear))
                                         
                                         VStack(spacing: 8) {
-//                                            AddressView(name: orderData.clientName ?? "", address: orderData.address ?? "", streetName: orderData.streetName ?? "", buildingNum: orderData.buildingNum ?? "", area: orderData.area ?? "", floatNum: orderData.floatNum ?? "", phone: orderData.clientPhone ?? "")
-//
-
-                                                AddressView(
-                                                    name: orderData.clientName ?? "",
-                                                    phone:orderData.clientPhone ?? "",
-                                                    addressDetails: orderData
-                                                )
-                                            }
+                                            //                                            AddressView(name: orderData.clientName ?? "", address: orderData.address ?? "", streetName: orderData.streetName ?? "", buildingNum: orderData.buildingNum ?? "", area: orderData.area ?? "", floatNum: orderData.floatNum ?? "", phone: orderData.clientPhone ?? "")
+                                            //
+                                            
+                                            AddressView(
+                                                name: orderData.clientName ?? "",
+                                                phone:orderData.clientPhone ?? "",
+                                                addressDetails: orderData
+                                            )
+                                        }
                                     }
                                 }
                                 
@@ -144,15 +144,16 @@ struct OrderBusinessDetailsViewNew: View {
                                     ReusableButton(buttonText: "Cancel".localized(),isEnabled: true){
                                         isCancelTapped = true
                                     }
-                                    ReusableButton(buttonText: "onWay".localized(),isEnabled: true,buttonColor: .yellow){
-                                        viewModel.changeOrderStatus(id: orderID ?? 0, status: 3)
-                                    }
+                                    //                                    ReusableButton(buttonText: "onWay".localized(),isEnabled: true,buttonColor: .yellow){
+                                    //                                        viewModel.changeOrderStatus(id: orderID ?? 0, status: 3)
+                                    //                                    }
                                 }
                             }
                         }
                     }
                     .padding(24)
-                
+                    Spacer()
+                }
             }
             if isRejectTapped {
                 PopUpComponent(title: "rejectOrder", question: "rejectOrderQuestion",isShowing: $isRejectTapped){

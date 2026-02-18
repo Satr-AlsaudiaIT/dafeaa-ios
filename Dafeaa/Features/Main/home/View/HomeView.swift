@@ -39,6 +39,11 @@ struct HomeView: View {
     @State var navigateToAddBalance: Bool = false
 
     @State var transferBalanceAmount : String = ""
+    @State var showTransferMethodSheet: Bool = false
+    @State var navigateToIBANTransfer: Bool = false
+    @State var navigateToPhoneTransfer: Bool = false
+    
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -120,40 +125,24 @@ struct HomeView: View {
                             VStack(spacing: 17) {
                                 Rectangle().fill(.white)
                                     .frame(height: 32)
-                                HStack {
-                                    
-                                    
+                                
+                                VStack(spacing:20) {
                                     Button {
                                         isPresentBuySheet = true
                                     } label: {
                                         ZStack {
-                                            VStack(alignment: .leading, spacing: 5) {
                                                 HStack {
                                                     Text("buy_product".localized())
                                                         .textModifier(.plain, 16, .black222222)
-                                                        .padding([.top],10)
                                                     Spacer()
-                                                }
-                                                Text("buy_product_details".localized())
-                                                    .textModifier(.plain, 14, .gray8B8C86)
-                                                    .multilineTextAlignment(.leading)
-                                                Spacer()
-                                            }
-                                            .frame(width: (UIScreen.main.bounds.width / 2) - 50)
-                                            .padding()
-                                            
-                                        }
-                                        .frame( height: 170)
-                                        .fixedSize()
-                                        .overlay(
-                                            ZStack {
-                                                VStack {
                                                     Image(.buyProduct)
                                                         .resizable()
                                                         .frame(width: 28.05, height: 28)
-                                                    Spacer()
                                                 }
-                                                .padding(.top,-10)
+                                                .padding(15)
+                                        }
+                                        .overlay(
+                                            ZStack {
                                                 RoundedRectangle(cornerRadius: 10)
                                                     .stroke(LinearGradient(colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)], startPoint: .top, endPoint: .bottom), lineWidth: 1)
                                             }
@@ -178,34 +167,21 @@ struct HomeView: View {
                                         }
                                     } label: {
                                         ZStack {
-                                            VStack(alignment: .leading, spacing: 5) {
                                                 HStack {
                                                     Text("sell_product".localized())
                                                         .textModifier(.plain, 16, .black222222)
-                                                        .padding([.top],10)
                                                         .lineLimit(nil)
-                                                    Spacer(minLength: 0)
-                                                }
-                                                Text("sell_product_details".localized())
-                                                    .textModifier(.plain, 14, .gray8B8C86)
-                                                    .multilineTextAlignment(.leading)
-                                                Spacer(minLength: 0)
-                                            }
-                                            .frame(width: (UIScreen.main.bounds.width / 2) - 50)
-                                            .padding()
-                                            
-                                        }
-                                        .frame( height: 170)
-                                        .fixedSize()
-                                        .overlay(
-                                            ZStack {
-                                                VStack {
+                                                    Spacer()
                                                     Image(.sellProduct)
                                                         .resizable()
                                                         .frame(width: 28.05, height: 28)
-                                                    Spacer()
                                                 }
-                                                .padding(.top,-10)
+                                            .padding(15)
+                                            
+                                        }
+                                        .overlay(
+                                            ZStack {
+                                                
                                                 RoundedRectangle(cornerRadius: 10)
                                                     .stroke(LinearGradient(colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)], startPoint: .top, endPoint: .bottom), lineWidth: 1)
                                             }
@@ -221,6 +197,7 @@ struct HomeView: View {
                                    
                                     
                                 }
+                                .padding(.horizontal,20).padding(.top,15)
                                 Spacer()
                               
                             }
@@ -235,51 +212,31 @@ struct HomeView: View {
                                 Color(.white)
                                 HStack {
                                     HStack {
-                                        WalletButton(buttonText: "addBalance".localized(),image: .addBalance) {
+                                        WalletButton(buttonText: "transferBalance".localized(), image: .transferBalance) {
+                                            showTransferMethodSheet = true
+                                        }
+                                    }
+                                    Spacer()
+                                    Rectangle()
+                                        .fill(.black.opacity(0.1))
+                                        .frame(width: 2, height: 24)
+                                    Spacer()
+                                    HStack {
+                                        WalletButton(buttonText: "addBalance".localized(), image: .addBalance) {
                                             balanceActionType = .addBalance
                                             isSheetPresented = true
                                         }
-                                        
                                     }
-                                    Spacer()
-                                    Rectangle()
-                                        .fill(.black.opacity(0.1))
-                                        .frame(width: 2,height: 24)
-                                    
-                                    Spacer()
-                                    HStack {
-                                        WalletButton(buttonText: "withdrawBalance".localized(), image: .withdrawBalance) {
-                                            balanceActionType = .withDraw
-                                            isSheetPresented = true
-                                        }
-                                        
-                                    }
-                                    Spacer()
-                                    Rectangle()
-                                        .fill(.black.opacity(0.1))
-                                        .frame(width: 2,height: 24)
-                                    
-                                    Spacer()
-                                    HStack {
-                                        WalletButton(buttonText: "transferBalance".localized(), image: .transferBalance) {
-                                            showTransferBottomSheet = true
-                                        }
-                                        
-                                    }
-                                    
                                 }
-                                .padding(.horizontal,24)
-                                .padding(.vertical,10)
+                                .padding(.horizontal, 24)
+                                .padding(.vertical, 10)
                             }
                             .frame(maxWidth: .infinity)
                             .frame(height: 72)
                             .cornerRadius(16)
-                            .padding(.horizontal,24)
+                            .padding(.horizontal, 24)
                             .shadow(color: Color(.dropShadow2B2D3333).opacity(0.2), radius: 5, x: 0, y: 6)
-                            
-                            
-                            
-                        }.padding(.top,-39)
+                        }.padding(.top, -39)
                     }
                 }.edgesIgnoringSafeArea(.top)
                 
@@ -392,32 +349,50 @@ struct HomeView: View {
                     .presentationCornerRadius(24)
                     .presentationDragIndicator(.visible)
             })
-            .sheet(isPresented: $showTransferBottomSheet, content: {
-                TransferBottomSheet(isSheetPresented: $showTransferBottomSheet,amount: $transferBalanceAmount,phoneNumber: $transferBalancePhone, name: $transferBalanceName,isNavigateToTransferView: $isNavigateToTransferView)
-                    .presentationDetents([.fraction(0.4)])
-                    .presentationCornerRadius(24)
-                    .presentationDragIndicator(.visible)
-                    .onAppear{
-                        transferBalancePhone = ""
-                        transferBalanceAmount = ""
-                        transferBalanceName = ""
-                    }
-            })
-            .navigationDestination(isPresented: $isNavigateToTransferView, destination: {
-                ConfirmTransferView( balance: String(viewModel.walletAmount),phoneNumber: transferBalancePhone, amount: transferBalanceAmount, name: transferBalanceName)
-            })
+//            .sheet(isPresented: $showTransferBottomSheet, content: {
+//                TransferBottomSheet(isSheetPresented: $showTransferBottomSheet,amount: $transferBalanceAmount,phoneNumber: $transferBalancePhone, name: $transferBalanceName,isNavigateToTransferView: $isNavigateToTransferView)
+//                    .presentationDetents([.fraction(0.4)])
+//                    .presentationCornerRadius(24)
+//                    .presentationDragIndicator(.visible)
+//                    .onAppear{
+//                        transferBalancePhone = ""
+//                        transferBalanceAmount = ""
+//                        transferBalanceName = ""
+//                    }
+//            })
+//            .navigationDestination(isPresented: $isNavigateToTransferView, destination: {
+//                ConfirmTransferView( balance: String(viewModel.walletAmount),phoneNumber: transferBalancePhone, amount: transferBalanceAmount, name: transferBalanceName)
+//            })
             .navigationDestination(isPresented: $navigateToWebView) {
                 PaymentWebViewContainer(url: paymentURL)
             }
-            .navigationDestination(isPresented: $navigateToWithDrawView) {
-                WithdrawDetailsView(
-                    withdrawAmount: amount
-                )
-            }
+//            .navigationDestination(isPresented: $navigateToWithDrawView) {
+//                WithdrawDetailsView(
+//                    withdrawAmount: amount
+//                )
+//            }
             .navigationDestination(isPresented: $navigateToAddBalance) {
                 AddBalanceCardDetailsView(
                     addAmount: amount
                 )
+            }
+            .sheet(isPresented: $showTransferMethodSheet) {
+                TransferMethodBottomSheet(
+                    isSheetPresented: $showTransferMethodSheet,
+                    navigateToIBANTransfer: $navigateToIBANTransfer,
+                    navigateToPhoneTransfer: $navigateToPhoneTransfer
+                )
+                .presentationDetents([.fraction(0.45)])
+                .presentationCornerRadius(24)
+                .presentationDragIndicator(.visible)
+            }
+
+            .navigationDestination(isPresented: $navigateToIBANTransfer) {
+                                WithdrawDetailsView()
+            }
+
+            .navigationDestination(isPresented: $navigateToPhoneTransfer) {
+                EnterPhoneTransferDetailsView(phoneNumber: "")
             }
         }
     }

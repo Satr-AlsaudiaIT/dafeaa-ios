@@ -58,7 +58,7 @@ class HomeVM: ObservableObject {
             switch Result {
             case .success(let Result):
                 self.walletAmount = Double(Result?.availableBalance ?? 0)
-    
+                Constants.availableAmount = self.walletAmount
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
@@ -282,13 +282,15 @@ class HomeVM: ObservableObject {
     func validateTransferAmount(phone:String,amount: String) {
         if phone.isBlank {
             transferToast = FancyToast(type: .error, title: "Error".localized(), message: "enterPhone".localized())
-        } else if !phone.isValidPhoneNumber {
+        } else if !phone.isValidPhone() {
             transferToast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidPhone".localized())
+        } else if phone == Constants.phone {
+            transferToast = FancyToast(type: .error, title: "Error".localized(), message: "can'tTransferToYourAccount".localized())
         } else if amount == "" {
             self.transferToast = FancyToast(type: .error, title: "Error".localized(), message: "amount_validation".localized())
             
         }else {
-            checkPhoneNumber(phone: phone)
+            checkPhoneNumber(phone: phone.normalizePhoneNumber)
         }
     }
     
@@ -304,10 +306,10 @@ class HomeVM: ObservableObject {
                 userNameOfPhone = data.data ?? ""
                 isUserFound = true
             case .failure(let error):
-                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "userNotExist".localized())"
                 self._isLoading = false
                 self._isFailed = true
-                self.transferToast = FancyToast(type: .error, title: "Error".localized(), message: "userNotExist".localized())
+                self.transferToast = FancyToast(type: .error, title: "Error".localized(), message:self._message )
             }
         }
     }
@@ -317,7 +319,7 @@ class HomeVM: ObservableObject {
     func confirmTransfer(phone:String,amount:Double) {
         self._isLoading = true
         isUserFound = false
-        api2.confirmTransfer(phone: phone, amount: amount) { [weak self] (Result) in
+        api2.confirmTransfer(phone: phone.normalizePhoneNumber, amount: amount) { [weak self] (Result) in
             guard let self = self else { return }
             self._isLoading = false
             switch Result {
@@ -333,12 +335,13 @@ class HomeVM: ObservableObject {
                     isTransferSuccess = false
                     transferData = data.errors ?? ConfirmTransferData()
                 }
+                self.transferToast = FancyToast(type: .success, title: "Success".localized(), message: data.message ?? "")
             case .failure(let error):
-                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "userNotExist".localized())"
                 self._isLoading = false
                 self._isFailed = true
                 isTransferFailed =  true
-                self.transferToast = FancyToast(type: .error, title: "Error".localized(), message: "userNotExist".localized())
+                self.transferToast = FancyToast(type: .error, title: "Error".localized(), message:self._message )
             }
         }
     }

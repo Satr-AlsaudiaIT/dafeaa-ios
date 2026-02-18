@@ -106,17 +106,17 @@ struct OTPConfirmationView: View {
                             }
                             print("OTP Code: \(code)")
                             if isChangePhone {
-                                viewModel.validateChangePhoneCode(phone: phone, password: password, code: code, expireAuth: isLogoutFromDevices ?  1 : 0)
+                                viewModel.validateChangePhoneCode(phone: phone.normalizePhoneNumber, password: password, code: code, expireAuth: isLogoutFromDevices ?  1 : 0)
                             } else {
-                                viewModel.validateVerify(phone: phone, code: code, isForgetPassword: isForgetPassword)
+                                viewModel.validateVerify(phone: phone.normalizePhoneNumber, code: code, isForgetPassword: isForgetPassword)
                             }
                         }
                         .padding(.top, 16)
                         .navigationDestination(isPresented: $viewModel._isVerifyCodeSuccess) {
-                            ResetPasswordView(phone: phone, code: code)
+                            ResetPasswordView(phone: phone.normalizePhoneNumber, code: code)
                         }
                         .navigationDestination(isPresented: $viewModel._hasUnCompletedData) {
-                            CompleteDataView(phone: phone)
+                            CompleteDataView(phone: phone.normalizePhoneNumber)
                         }
                         
                         HStack {

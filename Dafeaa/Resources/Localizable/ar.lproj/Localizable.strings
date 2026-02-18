@@ -1,6 +1,6 @@
 /*
  Localizable.strings
- //ArAbic
+ //Arabic
  //
  //  Created by M.Magdy on 01/10/2024.
  //
@@ -16,17 +16,18 @@
 "cm" = "سم";
 "days" = "يوم";
 "kg" = "كجم";
+"Dafeaa" = "دافع";
 
 //MARK: - Onboarding
 "Change Language" = "تغيير اللغة";
-"Start Now" = "ابدأ الان";
+"Start Now" = "ابدأ الآن";
 "Next" = "التالي";
-"onboardingTitle1"="دافع هي منصة دفع الكترونية";
+"onboardingTitle1"="دافع هي منصة دفع إلكترونية";
 "onboardingTitle2"="ادفع كل مشترياتك عبر دافع";
-"onboardingTitle3"="معلوماتك في امان مع دافع";
+"onboardingTitle3"="معلوماتك في أمان مع دافع";
 "onboardingDesc1"="تتيح دافع للمستخدمين إدارة عملياتهم المالية بكل سهولة وأمان. توفر دافع مجموعة من خدمات الدفع والحلول للأفراد والشركات على حد سواء.";
-"onboardingDesc2"="إن منصة دافع الرقمية تتيح لك إتمام جميع المعاملات المالية على الصعيد المحلي والدولي بك سهولة وامان تام دون الحاجة إلى البنك أو النقد.";
-"onboardingDesc3"="شارك معلوماتك وحساباتك معنا بكل امان وثقة، لن نستخدمها إلا لتقديم الخدمات لك. حيث نقوم بالربط بين حساباتك المالية بشكل آمن وسري.";
+"onboardingDesc2"="إن منصة دافع الرقمية تتيح لك إتمام جميع المعاملات المالية على الصعيد المحلي والدولي بكل سهولة وأمان تام دون الحاجة إلى البنك أو النقد.";
+"onboardingDesc3"="شارك معلوماتك وحساباتك معنا بكل أمان وثقة، لن نستخدمها إلا لتقديم الخدمات لك. حيث نقوم بالربط بين حساباتك المالية بشكل آمن وسري.";
 
 //MARK: - Login
 "loginWelcome"="مرحبًا بعودتك، سجل دخولك الآن! 👋";
@@ -34,49 +35,50 @@
 "login"="تسجيل الدخول";
 "forgetPassword"="نسيت كلمة المرور؟";
 "haventAccount"="ليس لديك حساب؟";
-"openAccount"="افتح حساب جديد";
+"openAccount"="افتح حسابًا جديدًا";
 "phoneNumber"="رقم الهاتف";
 "date" = "التاريخ";
 "loginWelcomeSubtitle"="اكتب معلوماتك لتسجيل الدخول لحسابك ...";
 
 //MARK: - step1
 "selectAccountType"="اختر نوع الحساب الخاص بك";
-"selectAccountTypeSubtitle"="لإنشاء حساب جديد معنا برجاء اضافة بعض معلوماتك ليتم التعرف اليكم.";
+"selectAccountTypeSubtitle"="لإنشاء حساب جديد معنا برجاء إضافة بعض معلوماتك ليتم التعرف عليكم.";
 "continue"="الاستمرار";
-"companyOrMerchant"="شركة او تاجر";
+"companyOrMerchant"="شركة أو تاجر";
 "individual"="أفراد";
-"companyOrMerchantDesc"="سجل في دافع كشركة او كتاجر واحصل على مميزات إضافية.";
-"individualDesc"="سجل في دافع كفرد واحصل على مميزات الافراد في الدفع الالكتروني.";
+"companyOrMerchantDesc"="سجل في دافع كشركة أو كتاجر واحصل على مميزات إضافية.";
+"individualDesc"="سجل في دافع كفرد واحصل على مميزات الأفراد في الدفع الإلكتروني.";
 
 //MARK: - step2
 "selectAccountInfo"="أضف بيانات نشاطك التجاري";
-"selectAccountInfoSubtitle"="لإنشاء حساب جديد معنا برجاء اضافة بعض معلومات نشاطك التجاري ليتم التعرف اليكم.";
+"selectAccountInfoSubtitle"="لإنشاء حساب جديد معنا برجاء إضافة بعض معلومات نشاطك التجاري ليتم التعرف عليكم.";
 "addSomeData"="أضف بياناتك لإنشاء حساب جديد";
 "PhoneIsTheMainActor" = "*رقم هاتفك هو الكود التعريفي للدفع عبر المواقع";
 "Name" = "الاسم";
-"Email" = "البريد الالكتروني";
-"AgreeToTermsAndConditionsCheckText" = "بمجرد متابعتك وانشاء حسابك لدينا فإنك توافق على شروط الاستخدام";
+"Email" = "البريد الإلكتروني";
+"AgreeToTermsAndConditionsCheckText" = "بمجرد متابعتك وإنشاء حسابك لدينا فإنك توافق على شروط الاستخدام";
 "Terms&Conditions" = " شروط الاستخدام";
-"privacy" = "سياسة الخصوصة";
-"AgreeTo" = "اوافق على ";
+"privacy" = "سياسة الخصوصية";
+"AgreeTo" = "أوافق على ";
 "createAccount" = "إنشاء حساب جديد ";
 "haveAccount?" = "لديك حساب بالفعل؟";
 "confirmPasswordPlaceholder" = "تأكيد كلمة المرور";
+
 //MARK: - ForgetPassword
 "ForgotPasswordNavTitle" = "نسيت كلمة المرور؟";
 "resetPasswordTitle" = "إعادة تعيين كلمة المرور";
-"resetPasswordSubTitle" = "برجاء إدخال رقم الموبايل الخاص بكم لارسال رمز اعادة تعيين كلمة المرور الجديدة.";
-"send" = "ارسال";
+"resetPasswordSubTitle" = "برجاء إدخال رقم الموبايل الخاص بكم لإرسال رمز إعادة تعيين كلمة المرور الجديدة.";
+"send" = "إرسال";
 
 //MARK: - Confirm Phone
 "ConfirmPhoneNavTitle" = "تأكيد رقم الهاتف";
 "confirmPhone" = "تأكيد رقم الهاتف";
-"confirmPhoneSubTitle" = "برجاء إدخال الرقم المرسل اليكم عبر الهاتف المحمول لتأكيد رقم الهاتف والدخول الى حسابك." ;
+"confirmPhoneSubTitle" = "برجاء إدخال الرمز المرسل إليكم عبر الهاتف المحمول لتأكيد رقم الهاتف والدخول إلى حسابك." ;
 "confirm" = "تأكيد";
-"logOutFromDevicesMessage" = "الخروج من كل الاجهزة الاخري";
+"logOutFromDevicesMessage" = "الخروج من كل الأجهزة الأخرى";
 
 //MARK: - ResetPasswordView
-"didn’tReceiveCode?" = "لم يصلك الرمز بعد؟ ?";
+"didn'tReceiveCode?" = "لم يصلك الرمز بعد؟";
 "resendCode" = " إعادة إرسال الرمز";
 "resetPasswordNavTitle" = "إعادة تعيين كلمة المرور";
 "resetPassword" = "إعادة تعيين كلمة المرور";
@@ -92,7 +94,7 @@
 "home"="الرئيسية";
 
 //MARK: -Profile
-"Hello,"="أهلا بك,";
+"Hello,"="أهلًا بك,";
 "profile"="الملف الشخصي";
 "Subscription Management"="إدارة الاشتراكات";
 "Saved Addresses"="العناوين المحفوظة";
@@ -100,15 +102,15 @@
 "FAQ"="أسئلة متكررة";
 "FAQNavTitle"="الأسئلة الشائعة";
 "Help and Support"="المساعدة والدعم";
-"Settings"="الاعدادات";
+"Settings"="الإعدادات";
 "helpTitle"="كيف يمكننا مساعدتك؟";
 "helpSubTitle"="هل تواجه مشكلة أو تحتاج إلى مساعدة؟ إليك بعض الطرق التي يمكنك من خلالها الحصول على الدعم";
 "keepContactWithUs"="كن على تواصل معنا";
 "contactClientsServices"="تواصل مع خدمة العملاء";
 "chatClientsServices"="دردشة مع أحد أفراد خدمة العملاء";
-"contactWithEmail"="تواصل عبر البريد الالكتروني";
+"contactWithEmail"="تواصل عبر البريد الإلكتروني";
 "languageApp"="لغة التطبيق";
-"notifications"="الاشعارات";
+"notifications"="الإشعارات";
 "Select your preferred language"="اختر اللغة المفضلة لديك";
 "logout"="تسجيل الخروج";
 "logOutAlert"="هل أنت متأكد أنك تريد تسجيل الخروج من حسابك؟!";
@@ -116,24 +118,26 @@
 "deleteAccountAlert"="هل أنت متأكد أنك تريد حذف حسابك؟!";
 "changePhone"="تغيير رقم الهاتف";
 "changePhoneTitle" = "تغيير رقم الهاتف";
-"changePhoneSubTitle" = "برجاء أدخال رقم الهاتف الجديد وكلمة المرور وانتظار كود تفعيل لتأكيد الرقم الجديد";
+"changePhoneSubTitle" = "برجاء إدخال رقم الهاتف الجديد وكلمة المرور وانتظار كود تفعيل لتأكيد الرقم الجديد";
 "ChangePhoneNavTitle" = "تغيير رقم الهاتف";
 "merchants_service_title" = "خدمة خاصة بالتجار";
-"merchants_service_body" = "هذة الخدمة خاصة بالتجار للحصول عليها عليك استكمال البيانات الخاصة بالتاجر";
+"merchants_service_body" = "هذه الخدمة خاصة بالتجار للحصول عليها عليك استكمال البيانات الخاصة بالتاجر";
 "add_data_button" = "أضف البيانات";
 "invite_friend" = "دعوة صديق";
 "orderNotAvailable" = "هذا العرض موقوف بواسطة البائع";
+
 //MARK: - ChangePassword
 "changePassword"="تغيير كلمة المرور";
 "currentPassword"="كلمة المرور الحالية";
 "newPassword"="كلمة المرور الجديدة";
 "confirmNewPassword"="تأكيد كلمة المرور الجديدة";
-"messageEmptyCurrentPassword"="برجاء ادخال كلمة المرور الحالية";
-"messageEmptyNewPassword"="برجاء ادخال كلمة المرور الجديدة";
-"messageValidNewPassword8character"="برجاء ادخال كلمة مرور صحيحة على الأقل ٨ أحرف";
+"messageEmptyCurrentPassword"="برجاء إدخال كلمة المرور الحالية";
+"messageEmptyNewPassword"="برجاء إدخال كلمة المرور الجديدة";
+"messageValidNewPassword8character"="برجاء إدخال كلمة مرور صحيحة على الأقل ٨ أحرف";
 "messageEmptyConfirmPassword"="برجاء تأكيد كلمة المرور";
 "messageMatchPasswordConfirm"="كلمة المرور الجديدة وتأكيد كلمة المرور غير متطابقين";
 "developerKeys" = "مفاتيح المطور";
+
 //MARK: - complete Info
 "uploadFileHere" = "ارفع الملف هنا";
 "CommercialInfo" = "معلومات النشاط التجاري";
@@ -146,30 +150,30 @@
 "sendData" = "إرسال البيانات";
 "PendingViewNavTitle" = "الطلب قيد التنفيذ";
 "pendingViewTitle" = "طلبكم قيد المراجعة";
-"pendingViewSubTitle" = "لقد تم إستلام طلبكم بنجاح, والان الطلب تحت المراجعه والنظر من قبل الفريق, سيتم اشعاركم حين انتهاء المراجعه لاستكمال انشاء الحساب.";
+"pendingViewSubTitle" = "لقد تم استلام طلبكم بنجاح، والآن الطلب تحت المراجعة والنظر من قبل الفريق، سيتم إشعاركم حين انتهاء المراجعة لاستكمال إنشاء الحساب.";
 "taxNumber" = "رقم ضريبة القيمة المضافة";
 "checkAgain" = "جرب مرة ثانية";
+
 //MARK: Validations
-"EnterUserPhoto" = "برجاء ادخال صورة المستخدم";
-"enterUserName" = "برجاء ادخال اسم المستخدم";
-"enterValidUserName" = "برجاء ادخال اسم مستخدم صالح";
-"enterEmail" = "برجاء ادخال البريد الالكتروني";
-"enterValidEmail" = "برجاء ادخال عنوان بريد الكتروني صالح";
-"enterPhone" = "برجاء ادخال رقم الهاتف";
-"enterValidPhone" = "برجاء ادخال رقم هاتف صالح";
-"enterPassword" = "برجاء ادخال كلمة المرور";
-"EnterValidPassword" = "برجاء ادخال كلمة مرور صالحة على الاقل ٨ حروف وارقام";
-"EnterConfirmPassword" = "برجاء ادخال تأكيد كلمة المرور";
-"PasswordConfirmn'tMatch" = "كلمة المرور وتاكيد كلمة المرور غير متطابقتان";
+"EnterUserPhoto" = "برجاء إدخال صورة المستخدم";
+"enterUserName" = "برجاء إدخال اسم المستخدم";
+"enterValidUserName" = "برجاء إدخال اسم مستخدم صالح";
+"enterEmail" = "برجاء إدخال البريد الإلكتروني";
+"enterValidEmail" = "برجاء إدخال عنوان بريد إلكتروني صالح";
+"enterPhone" = "برجاء إدخال رقم الهاتف";
+"enterValidPhone" = "برجاء إدخال رقم هاتف صالح";
+"enterPassword" = "برجاء إدخال كلمة المرور";
+"EnterValidPassword" = "برجاء إدخال كلمة مرور صالحة على الأقل ٨ حروف وأرقام";
+"EnterConfirmPassword" = "برجاء إدخال تأكيد كلمة المرور";
+"PasswordConfirmn'tMatch" = "كلمة المرور وتأكيد كلمة المرور غير متطابقتان";
 "PleaseTermsconditions" = "برجاء الموافقة على شروط الاستخدام";
-"EnterThecode" = "برجاء ادخال الكود";
-"Enter4DigitCode" = "برجاء ادخال الكود";
-"EnterYourPassword" = "برجاء ادخال كلمة المرور الخاصة بك";
-"EnterValidPassword8Character" = "برجاء ادخال كلمة مرور صالحة على الاقل ٨ حروف وارقام";
-"EnterConfirmPassword" = "برجاء ادخال تأكيد كلمة المرور";
+"EnterThecode" = "برجاء إدخال الكود";
+"Enter4DigitCode" = "برجاء إدخال الكود";
+"EnterYourPassword" = "برجاء إدخال كلمة المرور الخاصة بك";
+"EnterValidPassword8Character" = "برجاء إدخال كلمة مرور صالحة على الأقل ٨ حروف وأرقام";
 "Success" = "تم بنجاح";
 "Error" = "خطأ";
-"EnterCommercialName" = "برجاء إدخال الإسم التجاري";
+"EnterCommercialName" = "برجاء إدخال الاسم التجاري";
 "EnterCountry" = "برجاء اختيار الدولة";
 "EnterCity" = "برجاء اختيار المدينة";
 "EnterArea" = "برجاء إدخال المنطقة";
@@ -188,18 +192,18 @@
 //MARK: - Home
 "SAR" = "ر.س ";
 "yourBalance"="الرصيد المتاح لديك";
-"lastProcesses"="اخر العمليات";
-"lastTransactions"="اخر المعاملات";
+"lastProcesses"="آخر العمليات";
+"lastTransactions"="آخر المعاملات";
 "addBalance"="إضافة رصيد";
 "withdrawBalance"="سحب رصيد ";
 "transferBalance" = "تحويل رصيد";
 "transferAmount" = "المبلغ المراد تحويله";
-"lastProcessAndPayment"="اخر العمليات والمدفوعات";
+"lastProcessAndPayment"="آخر العمليات والمدفوعات";
 "withdrawWalletBalance" = "سحب رصيد من المحفظة";
-"addWalletBalance" = "إضافة رصيد الي المحفظة";
+"addWalletBalance" = "إضافة رصيد إلى المحفظة";
 "noExtraFees" = "لا توجد مصروفات إضافية";
-"weWillContactYou" = "*سيتم التواصل معكم خلال يومين عمل لاتمام عملية سحب المبلغ.";
-"notValidBalance" = "رصيدك غير كافي, برجاء إدخال مبلغ ضمن الرصيد المتاح";
+"weWillContactYou" = "*سيتم التواصل معكم خلال يومين عمل لإتمام عملية سحب المبلغ.";
+"notValidBalance" = "رصيدك غير كافٍ، برجاء إدخال مبلغ ضمن الرصيد المتاح";
 "Pending_Purchases_Balance" = "رصيد المشتريات المعلق";
 "Pending_Sales_Balance" = "رصيد المبيعات المعلق";
 "search_offer" = "قم بشراء منتج";
@@ -208,15 +212,16 @@
 "search_by_Scan_Image_QR_code" = "مسح الرمز من صورة";
 "or" = "أو";
 "search" = "البحث";
-"buy_product" = "قم بشراء منتج";
+"buy_product" = "شراء منتج";
 "buy_product_details" = "يمكنك البحث عن العروض من خلال دافع من هنا";
-"buy_product_btn" = "شراء الأن" ;
-"sell_product" = "قم ببيع منتج";
+"buy_product_btn" = "شراء الآن" ;
+"sell_product" = "بيع منتج";
 "sell_product_details" = "يمكنك بيع المنتجات من خلال دافع من هنا";
-"sell_product_btn" = "بيع الأن" ;
+"sell_product_btn" = "بيع الآن" ;
 "exceedQuantity" = "الكمية المتبقية هي فقط";
+
 //MARK: - NOTIFICATIONS
-"emptyNotifications"="لا توجد اشعارات لديك بعد, سيتم تنبيهك في حال وصول اي اشعار لك";
+"emptyNotifications"="لا توجد إشعارات لديك بعد، سيتم تنبيهك في حال وصول أي إشعار لك";
 
 //MARK: - orderDetails
 "orderDetails"="تفاصيل الطلب";
@@ -230,7 +235,7 @@
 "buyWithDafea"="الدفع عن طريق تطبيق دافع";
 "product"="المنتج:";
 "delaviryAndRecive"="الشحن والتسليم:";
-"commissionVal" = "رسوم إضافية:";
+"commissionVal" = "إجمالي العمولة شامل الضريبة:";
 "totalBeforeTax"="الإجمالي قبل الضريبة:";
 "tax"="قيمة الضريبة المقدرة:";
 "total"="الإجمالي:";
@@ -240,31 +245,32 @@
 "statusChanges" = "تم تغيير حالة الطلبية بنجاح";
 "pendingState" ="الطلبية معلقة";
 "acceptedState" = "الطلبية مقبولة";
-"acceptedState" = "الطلبية مقبولة";
 "awayState" = "في الطريق";
 "rejectedState" = "الطلبية مرفوضة";
 "cancelledState" = "الطلبية ملغاة";
 "doneState" = "الطلبية مكتملة";
-"completeSuccessful" = "تم اكمال الطلب بنجاح";
+"shipmentFailedState" = "فشل التوصيل";
+"completeSuccessful" = "تم إكمال الطلب بنجاح";
 "Confirm" = "تأكيد";
-"cancelOrder" = "تأكيد الغاء الطلب";
-"cancelOrderQuestion" = "هل انت متأكد انك تريد إلغاء الطلب؟";
+"cancelOrder" = "تأكيد إلغاء الطلب";
+"cancelOrderQuestion" = "هل أنت متأكد أنك تريد إلغاء الطلب؟";
 "rejectOrder" = "تأكيد رفض الطلب";
-"rejectOrderQuestion" = "هل انت متأكد انك تريد رفض الطلب؟";
+"rejectOrderQuestion" = "هل أنت متأكد أنك تريد رفض الطلب؟";
 "clientName:" = "اسم العميل: ";
 "clientPhone:" = "رقم العميل: ";
 "amount: " = "الكمية: ";
+"amount" = "المبلغ";
+"fees" = "رسوم تحويل";
 
 //MARK: - addresses
 "address"="العنوان";
 "shortAddress" = "العنوان المختصر";
 "AddAddress" = "إضافة عنوان جديد +";
-"streetName" = "إسم الشارع";
+"streetName" = "اسم الشارع";
 "buildingNum" = "رقم المبنى";
 "districtName" = "اسم المقاطعة";
 "city" = "المدينة";
-"countryName" = "Country Name";
-
+"countryName" = "اسم الدولة";
 "FloatNum" = "رقم الطابق";
 "Add" = "إضافة";
 "Save" = "حفظ";
@@ -272,10 +278,9 @@
 "editAddress" = "تعديل العنوان";
 "search_location" = "ابحث عن موقع أو عنوان";
 "governorate" = "المحافظة";
-"CityField" = "المدينة";
 "postal_code" = "الرمز البريدي";
 "full_address" = "العنوان الكامل";
-"areaValidation" = "برجاء ادخال حقل المنطقة";
+"areaValidation" = "برجاء إدخال حقل المنطقة";
 "cityValidation" = "برجاء اختيار حقل المدينة";
 "neighborhoodName" = "اسم الحي";
 "neighborhoodValidation" = "برجاء إدخال حقل اسم الحي";
@@ -292,11 +297,12 @@
 "edit" = "تغيير";
 "saveSelectedAddress" = "حفظ العنوان";
 "optional" = "(اختياري)";
+
 //MARK: - Add Order cycle
 "offerDetails" = "تفاصيل العرض";
 "offers"="عروض";
-"addOffer"="أضف عرض";
-"offerContent"= "أضف عرض";
+"addOffer"="أضف عرضًا";
+"offerContent"= "أضف عرضًا";
 "description"="الوصف";
 "productDetails" = "تفاصيل المنتج";
 "totalQuantity" = "إجمالي الكمية";
@@ -314,45 +320,49 @@
 "activateOffer" = "تفعيل العرض";
 "deliveryPriceTitle" = "سعر التوصيل";
 "taxPriceTitle" = "ضريبة القيمة";
-"addProductTitle" = "اضف منتج";
+"addProductTitle" = "أضف منتجًا";
 "productName" = "اسم المنتج";
-"nameEn" = "اسم المنتج انجليزي";
+"nameEn" = "اسم المنتج إنجليزي";
 "productDescription" = "وصف المنتج";
-"descriptionEn" = "وصف المنتج انجليزي";
+"descriptionEn" = "وصف المنتج إنجليزي";
 "quantity" = "الكمية المتاحة";
 "productPrice" = "سعر المنتج";
 "offerPrice" =  "السعر بعد الخصم";
 "apply_discount?" = "تطبيق خصم؟";
 "hide_discount?" = "إخفاء الخصم؟";
-"offerPriceMustBeLessThanPrice" = "السعر بعد الخصم يجب ان يكون أقل من السعر قبل الخصم";
-
+"offerPriceMustBeLessThanPrice" = "السعر بعد الخصم يجب أن يكون أقل من السعر قبل الخصم";
 "chooseProductImage" = "برجاء اختيار صورة المنتج";
-"enterOfferPrice" = "برجاء إدخال السعر بعد الخصم او اخفاء هذا الإختيار";
+"enterOfferPrice" = "برجاء إدخال السعر بعد الخصم أو إخفاء هذا الاختيار";
 "Choose the file type you want to upload" = "برجاء اختيار الملف الذي ترغب في رفعه";
-"enterName" = "برجاء ادخال اسم المنتج";
-"enterNameEn" = "برجاء ادخال اسم المنتج انجليزي";
-"enterDescription" = "برجاء ادخال وصف المنج";
-"enterDescriptionEn" = "برجاء ادخال وصف المنتج انجليزي";
-"enterQuantity" = "برجاء ادخال الكمية المتاحة من المنتج";
-"enterPrice" = "برجاء ادخال سعر المنتج";
-"addProductSuccess" = "تم اضافة المنتج بنجاح";
-"enterOfferName" = "برجاء ادخال اسم العرض";
-"enterOfferDescription" = "برجاء ادخال وصف العرض";
-"enterDeliveryPrice" = "برجاء ادخال سعر التوصيل";
-"enterTax" = "برجاء ادخال نسبة الضريبة";
-"pleaseAddProducts" = "برجاء اضافة منتجات";
+"enterName" = "برجاء إدخال اسم المنتج";
+"enterNameEn" = "برجاء إدخال اسم المنتج إنجليزي";
+"enterDescription" = "برجاء إدخال وصف المنتج";
+"enterDescriptionEn" = "برجاء إدخال وصف المنتج إنجليزي";
+"enterQuantity" = "برجاء إدخال الكمية المتاحة من المنتج";
+"enterPrice" = "برجاء إدخال سعر المنتج";
+"addProductSuccess" = "تم إضافة المنتج بنجاح";
+"enterOfferName" = "برجاء إدخال اسم العرض";
+"enterOfferDescription" = "برجاء إدخال وصف العرض";
+"enterDeliveryPrice" = "برجاء إدخال سعر التوصيل";
+"enterTax" = "برجاء إدخال نسبة الضريبة";
+"pleaseAddProducts" = "برجاء إضافة منتجات";
 "copied successfully"="تم النسخ";
-"offerDetails"="تفاصيل العرض";
 "thereIsNoData"="لا توجد بيانات";
 "code" = "مشاركة كود";
+"copy_link_offer" = "نسخ العرض";
+"share_offer" = "مشاركة العرض";
+"link_offer" = "رابط";
+"code_offer" = "كود العرض";
+"code" = "كود";
 "copy" = "نسخ";
+"not valid code" = "كود غير صالح";
 "share" = "مشاركة رابط";
 "delete" = "مسح";
-"noOffers" = "ليس ليدك عروض حتى الأن";
+"noOffers" = "ليس لديك عروض حتى الآن";
 "availableBalance:" = "الرصيد المتاح:";
-"userNotExist" = "هذا الرقم غير مرتبط باي حساب";
+"userNotExist" = "هذا الرقم غير مرتبط بأي حساب";
 "amount_validation" = "برجاء إدخال المبلغ المراد تحويله";
-"number_days" = "عدد ايام التوصيل";
+"number_days" = "عدد أيام التوصيل";
 
 //MARK: - Withdraws
 "withdrawsProcess" = "عمليات سحب الرصيد";
@@ -362,37 +372,36 @@
 "pending"  = "معلقة";
 
 //MARK: - subscription
-"choose_plane_title" = "اختر خطة الإشتراك المناسبة لك";
+"choose_plane_title" = "اختر خطة الاشتراك المناسبة لك";
 "subscription_plans_features_title" = "جميع خطط الاشتراك في دافع تتضمن خصائص هائلة مخصصة لاحتياجاتك اليومية";
-"dashboard_title" = "لوحة تحكم كامله لنشاطك التجاري";
+"dashboard_title" = "لوحة تحكم كاملة لنشاطك التجاري";
 "transactions_list_title" = "قائمة بكل عمليات البيع والشراء";
 "profit_reports_title" = "تقارير المكاسب والربح";
-"start_now_button" = "ابدأ الان";
+"start_now_button" = "ابدأ الآن";
 "no_subscription_found_message" = "لا يوجد خطط اشتراك";
-
-"subscription_popup_title" = "تأكيد الإشتراك";
-"subscription_popup_body" = "هل أنت متأكد أنك تريد الإشتراك في هذة الباقة؟";
+"subscription_popup_title" = "تأكيد الاشتراك";
+"subscription_popup_body" = "هل أنت متأكد أنك تريد الاشتراك في هذه الباقة؟";
 "subscription_confirmation_button" = "تأكيد";
-"sub_plan_success_message" = "تم الاشتراك في هذة الخطة بنجاح";
+"sub_plan_success_message" = "تم الاشتراك في هذه الخطة بنجاح";
 "payment" = "الدفع";
-"stop_message" = "تم ايقاف تفعيل العرض بنجاح";
+"stop_message" = "تم إيقاف تفعيل العرض بنجاح";
 "active_message" = "تم تفعيل العرض بنجاح";
 
 //MARK: - developerKeys
 "profile_id"="معرف الملف الشخصي";
 "secret_key"="المفتاح السري";
 "reset_codes"="إعادة ضبط الأكواد";
-"hide_code"="اخفاء الكود";
+"hide_code"="إخفاء الكود";
 "show_code"="عرض الكود";
 "transferSuccess" = "تم التحويل بنجاح";
 "referenceNumber" = "الرقم المرجعي";
 "confirmTransfer" = "تأكيد التحويل";
-"O.K" = "حسنا";
+"O.K" = "حسنًا";
 "transferTo" = "تم التحويل إلى:";
 "transferFrom" = "تم التحويل من:";
 "createDeveloperKeyToGetCodes" ="يمكنك إنشاء مفتاح المطور بالنقر على الزر أدناه";
-"generate_codes" = "إنشاء الاكواد";
-"createDeveloperKeyToGetSecretKeyCodes" = "لانشاء المفتاح السري يجب الضغط على الزر أدناه";
+"generate_codes" = "إنشاء الأكواد";
+"createDeveloperKeyToGetSecretKeyCodes" = "لإنشاء المفتاح السري يجب الضغط على الزر أدناه";
 
 //MARK: - saved IBAN View
 "Saved IBANs" = "الحسابات البنكية المحفوظة";
@@ -401,7 +410,6 @@
 "Edit IBAN" = "تعديل الحساب البنكي";
 "IBAN Number" = "رقم IBAN";
 "Account Name" = "اسم الحساب";
-"Confirm" = "تأكيد";
 "ibanValidation" = "يرجى إدخال رقم IBAN";
 "accountNameValidation" = "يرجى إدخال اسم الحساب";
 "invalidSaudiIBAN" = "يرجى إدخال رقم IBAN سعودي صحيح (24 حرف يبدأ بـ SA)";
@@ -410,7 +418,7 @@
 "Payout" = "الدفع";
 "Withdrawal Amount" = "مبلغ السحب";
 "Notice" = "ملاحظة";
-"Withdrawals are processed instantly or within 5 minutes." = "يتم معالجة السحوبات فوراً أو خلال 5 دقائق.";
+"Withdrawals are processed instantly or within 5 minutes." = "يتم معالجة السحوبات فورًا أو خلال 5 دقائق.";
 "ACCOUNT HOLDER NAME" = "اسم صاحب الحساب";
 "Account Holder Name" = "اسم صاحب الحساب";
 "Select IBAN" = "اختر رقم IBAN";
@@ -423,7 +431,6 @@
 "ibanSelectionValidation" = "يرجى اختيار رقم IBAN";
 "mobileValidation" = "يرجى إدخال رقم الجوال";
 "invalidMobileValidation" = "يرجى إدخال رقم جوال سعودي صحيح";
-"cityValidation" = "يرجى إدخال المدينة";
 "Device ID not found" = "لم يتم العثور على معرف الجهاز";
 "IBAN not found" = "لم يتم العثور على رقم IBAN";
 "Withdrawal request submitted" = "تم إرسال طلب السحب";
@@ -445,16 +452,20 @@
 "Month required" = "الشهر مطلوب";
 "Invalid month (01-12)" = "شهر غير صحيح (01-12)";
 "Year required" = "السنة مطلوبة";
-"Invalid year (YYYY)" = "سنة غير صحيحة";
+"Invalid year (YYYY)" = "سنة غير صالحة (YYYY)";
+"Expired year" = "سنة منتهية الصلاحية";
 "CVV required" = "CVV مطلوب";
 "Invalid CVV (3-4 digits)" = "CVV غير صحيح ";
+"* CVV" = "* رقم الأمان";
+"cvv" = "رقم الأمان";
 "The amount will be charged to your wallet via Dafea" = "سيتم تحصيل المبلغ على محفظتك عبر دافع";
-"Success" = "نجح";
+"Cardholder name cannot contain numbers" = "اسم حامل البطاقة لا يمكن أن يحتوي على أرقام";
+"Invalid cardholder name" = "اسم حامل البطاقة غير صالح";
 "Failed" = "فشل";
 "The balance has been successfully recharged." = "تم شحن الرصيد بنجاح.";
 "Payment failed. Please try again." = "فشل الدفع. يرجى المحاولة مرة أخرى.";
-"The balance has been successfully withdrawn." = "تم سحب الرصيد بنجاح.";
-"Total Amount" = "اجمالي المبلغ";
+"The balance has been successfully withdrawn." = "تم تحويل الرصيد بنجاح.";
+"Total Amount" = "إجمالي المبلغ";
 "Pay with" = "الدفع عن طريق";
 "5 minutes during business hours, otherwise the next business day" = "5 دقائق خلال ساعات العمل، وإلا في يوم العمل التالي";
 "SARIE transfer – for amounts over" = "تحويل سريع – للمبالغ التي تزيد عن";
@@ -482,6 +493,7 @@
 "validation_offer_name" = "يرجى إدخال اسم العرض";
 "validation_offer_description" = "يرجى إدخال وصف العرض";
 "validation_offer_price" = "يرجى إدخال سعر صحيح";
+"validation_offer_discount_price" = "يرجى إدخال سعر خصم صحيح";
 "validation_offer_images" = "يرجى اختيار صورة واحدة على الأقل";
 "validation_weight" = "يرجى إدخال وزن المنتج";
 "validation_length" = "يرجى إدخال طول المنتج";
@@ -489,5 +501,39 @@
 "validation_height" = "يرجى إدخال ارتفاع المنتج";
 "validation_shipping_companies" = "يرجى اختيار شركة شحن واحدة على الأقل";
 "validation_planned_shipping" = "يرجى إدخال عدد أيام الشحن";
-
 "select_shipping_companies" = "اختر شركات الشحن";
+
+//Transfer New Views
+"Transfer using IBAN" = "التحويل باستخدام رقم الآيبان";
+"Transfer to bank account" = "التحويل إلى حساب بنكي";
+"Transfer using phone number" = "التحويل باستخدام رقم الهاتف";
+"Transfer to Dafea user" = "التحويل لمستخدم دافع";
+"Transfer Amount" = "أدخل مبلغ التحويل";
+"Transfers are processed instantly or within 5 minutes." = "يتم معالجة التحويلات فورًا أو خلال 5 دقائق.";
+"Select Contact" = "اختر جهة اتصال";
+"Transfer to unsaved number" = "التحويل لرقم غير محفوظ";
+"Search contacts" = "البحث في جهات الاتصال";
+"Transfer Details" = "تفاصيل التحويل";
+"Choose transfer method" = "كيف تريد أن تحوّل المبلغ؟";
+"Phone Number" = "رقم الجوال";
+"Confirm Transfer" = "تأكيد التحويل";
+"Transfer" = "تحويل";
+"can'tTransferToYourAccount" = "لا يمكنك التحويل إلى رقمك";
+
+/* Payment Screen */
+"Add Balance" = "إضافة رصيد";
+"Pay with Apple Pay" = "الدفع بواسطة Apple Pay";
+"Powered by App Clip" = "مدعوم بواسطة App Clip";
+
+/* Alerts */
+"Payment Successful!" = "!تمت عملية الدفع بنجاح";
+"Your balance has been added successfully." = "تمت إضافة رصيدك بنجاح";
+"Payment Failed" = "فشلت عملية الدفع";
+"OK" = "حسنًا";
+"Payment was cancelled or failed." = "تم إلغاء الدفع أو فشل";
+"Network error. Please try again." = "خطأ في الشبكة. يرجى المحاولة مرة أخرى";
+"discount" = "خصم";
+
+//MARK: -
+// tracking events
+"tracking_events" = "متابعة الطلب";

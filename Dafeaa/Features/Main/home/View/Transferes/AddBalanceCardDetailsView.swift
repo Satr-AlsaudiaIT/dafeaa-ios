@@ -71,22 +71,22 @@ struct AddBalanceCardDetailsView: View {
                             }
                             .environment(\.layoutDirection, .rightToLeft)
                         }
-                        
+                                             
                         // MARK: - Apple Pay Button
-                        Button(action: {
-                            // Handle Apple Pay
-                        }) {
-                            HStack {
-                                Text("Pay with".localized())
-                                    .foregroundColor(.white)
-                                Image(systemName: "apple.logo")
-                                    .foregroundColor(.white)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 56)
-                            .background(Color.black)
-                            .cornerRadius(12)
+                        ApplyPayButton(
+                            amount: addAmount,
+                            currency: "SAR",
+                            countryCode: "SA"
+                        ) { token in
+                            // Send token to your backend (Moyasar API)
+                            print("Received Apple Pay token: \(token)")
+                            // You can call your viewModel method here to process the token
                         }
+
+                               
+                            
+                            
+                        
                         
                         // MARK: - Or Divider
                         HStack(spacing: 16) {
@@ -233,25 +233,21 @@ struct AddBalanceCardDetailsView: View {
                                         
                                         // CVV (Smaller)
                                         VStack(alignment: .leading, spacing: 4) {
-                                            Text("* CVV".localized())
+                                            Text("* CVV")
                                                 .textModifier(.plain, 14, .black1E1E1E)
+                                            MaskedTextField(
+                                                   text: $cvv,
+                                                   placeHolder: "•••".localized(),
+                                                   maxLength: 3
+                                               )
+                                               .onChange(of: cvv) { _, newValue in
+//                                                   if newValue.count > 3 {
+//                                                       cvv = String(newValue.prefix(4))
+//                                                   }
+                                                   validateCVVLive(cvv)
+                                               }
                                             
-                                            CustomMainTextField(
-                                                text: $cvv,
-                                                placeHolder: "•••",
-                                                image: nil,
-                                                keyBoardType: .numberPad
-                                            )
-                                            .keyboardType(.numberPad)
-                                            .focused($focusedField, equals: .cvv)
-                                            .onChange(of: cvv) { _, newValue in
-                                                if newValue.count > 4 {
-                                                    cvv = String(newValue.prefix(4))
-                                                }
-                                                validateCVVLive(cvv)
-                                            }
                                             
-                                            // Fixed height error row
                                             HStack {
                                                 if !cvvError.isEmpty {
                                                     Text(cvvError)
@@ -358,9 +354,18 @@ struct AddBalanceCardDetailsView: View {
     // MARK: - Live Validation
     private func validateNameLive(_ value: String) {
         if hasAttemptedSubmit || !value.isEmpty {
-            nameError = value.isEmpty ? "Cardholder name required".localized() : ""
+            if value.isEmpty {
+                nameError = "Cardholder name required".localized()
+            } else if value.containsNumbers {
+                nameError = "Cardholder name cannot contain numbers".localized()
+            } else if !value.hasMultipleWords {
+                nameError = "Invalid cardholder name".localized()
+            } else {
+                nameError = ""
+            }
         }
     }
+
     
     private func validateCardNumberLive(_ value: String) {
         if hasAttemptedSubmit || !value.isEmpty {
@@ -388,16 +393,24 @@ struct AddBalanceCardDetailsView: View {
     
     private func validateYearLive(_ value: String) {
         if hasAttemptedSubmit || !value.isEmpty {
+            let currentYear = Calendar.current.component(.year, from: Date())
+            let maxYear = currentYear + 10
+            
             if value.isEmpty {
                 yearError = "Year required".localized()
-            } else if !value.isValidYear {
-                yearError = "Invalid year (YYYY)".localized()
             } else {
-                yearError = ""
+                switch value.yearValidationStatus {
+                case .invalidFormat:
+                    yearError = "Invalid year (YYYY)".localized()
+                case .expired:
+                    yearError = String(format: "Expired year".localized(), currentYear, maxYear)
+                case .valid:
+                    yearError = ""
+                }
             }
         }
     }
-    
+
     private func validateCVVLive(_ value: String) {
         if hasAttemptedSubmit || !value.isEmpty {
             if value.isEmpty {

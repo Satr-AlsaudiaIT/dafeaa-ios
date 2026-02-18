@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
                 FirebaseApp.configure()
         GMSServices.provideAPIKey("AIzaSyAsii5qK2U6xsP39ahyNOoDjXDfHIzH9yU")
         GMSPlacesClient.provideAPIKey("AIzaSyAsii5qK2U6xsP39ahyNOoDjXDfHIzH9yU")
+        GoogleMapsLanguageManager.shared.forceEnglish()
+
         setUpDidFinishLaunch()
         
         return true
@@ -248,5 +250,49 @@ struct DafeaaApp: App {
                 .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft: .leftToRight)
             
         }
+    }
+}
+
+
+import Foundation
+import GoogleMaps
+
+class GoogleMapsLanguageManager {
+    static let shared = GoogleMapsLanguageManager()
+    private var originalBundle: Bundle?
+    
+    func forceEnglish() {
+        // Swizzle the main bundle's localizedString method
+        swizzleLocalizationMethod()
+    }
+    
+    private func swizzleLocalizationMethod() {
+        let originalSelector = #selector(Bundle.localizedString(forKey:value:table:))
+        let swizzledSelector = #selector(Bundle.swizzled_localizedString(forKey:value:table:))
+        
+        guard let originalMethod = class_getInstanceMethod(Bundle.self, originalSelector),
+              let swizzledMethod = class_getInstanceMethod(Bundle.self, swizzledSelector) else {
+            return
+        }
+        
+        method_exchangeImplementations(originalMethod, swizzledMethod)
+    }
+}
+
+extension Bundle {
+    @objc dynamic func swizzled_localizedString(forKey key: String, value: String?, table tableName: String?) -> String {
+        // Check if this is a Google Maps related string
+        if tableName?.contains("GoogleMaps") == true ||
+           key.contains("GMSCore") ||
+           key.contains("GoogleMaps") {
+            // Use English bundle
+            if let path = Bundle.main.path(forResource: "en", ofType: "lproj"),
+               let enBundle = Bundle(path: path) {
+                return enBundle.swizzled_localizedString(forKey: key, value: value, table: tableName)
+            }
+        }
+        
+        // For non-Google Maps strings, use normal localization
+        return self.swizzled_localizedString(forKey: key, value: value, table: tableName)
     }
 }

@@ -12,7 +12,7 @@ struct WithdrawDetailsView: View {
     @StateObject var withdrawViewModel = HomeVM()
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    @State var withdrawAmount: Double
+    @State var withdrawAmount: String = ""
     @State var accountHolderName: String = Constants.userName
     @State var selectedIBAN: String = ""
     @State var selectedIBANId: Int = 0
@@ -20,6 +20,7 @@ struct WithdrawDetailsView: View {
     @State var city: String = ""
     @State var ibanDisplayList: [String] = []
     
+    @State private var amountError: String = ""
     @State private var nameError: String = ""
     @State private var ibanError: String = ""
     @State private var mobileError: String = ""
@@ -31,11 +32,18 @@ struct WithdrawDetailsView: View {
     @State private var showSARIEAlert: Bool = false
 
     var isFormValid: Bool {
+        let amount = Double(withdrawAmount.convertDigitsToEng) ?? 0
+        return amount > 0 &&
         !accountHolderName.isEmpty &&
         selectedIBANId != 0 &&
         !mobileNumber.isEmpty &&
         mobileNumber.isValidPhone() &&
-        !city.isEmpty
+        !city.isEmpty &&
+        amountError.isEmpty &&
+        nameError.isEmpty &&
+        ibanError.isEmpty &&
+        mobileError.isEmpty &&
+        cityError.isEmpty
     }
     
     var body: some View {
@@ -48,25 +56,46 @@ struct WithdrawDetailsView: View {
                 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 24) {
-                        // MARK: - Withdrawal Amount
+                        // MARK: - Withdrawal Amount Input
                         VStack(spacing: 8) {
                             Text("Withdrawal Amount".localized())
-                                .textModifier(.plain, 16, .gray979797)
-                            HStack(spacing: 5) {
-                                Text(String(format: "%.1f",withdrawAmount))
-                                    .textModifier(.plain, 36, .black030319)
-                                Image(.riyal)
-                                     .resizable()
-                                     .aspectRatio(contentMode: .fit)
-                                     .foregroundColor(.black010202)
-                                     .frame(width: 30)
-                                     .padding(.trailing, 10)
+                                .textModifier(.bold, 17, .black000000)
+                            
+                            VStack(alignment: .center, spacing: 8) {
+                                HStack {
+                                    Image(.riyal)
+                                        .resizable()
+                                        .renderingMode(.template)
+                                        .foregroundColor(.black)
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 30)
+                                }
+                                .padding(.horizontal)
+                                .environment(\.layoutDirection, .rightToLeft)
+                                
+                                TextField("0", text: $withdrawAmount)
+                                    .keyboardType(.decimalPad)
+                                    .multilineTextAlignment(.center)
+                                    .textModifier(.plain, 43, .black2B2D33)
+                                    .frame(minHeight: 50)
+                                    .focused($focusedField, equals: .amount)
+                                    .onChange(of: withdrawAmount) { _, newValue in
+                                        validateAmountLive(newValue)
+                                        // Check SARIE alert when amount changes
+                                        let amount = Double(newValue.convertDigitsToEng) ?? 0
+                                        if amount > 0 && selectedIBANId != 0 {
+                                            showSARIEAlert = shouldShowSARIEAlert()
+                                        }
+                                    }
+                                
+                                if !amountError.isEmpty {
+                                    Text(amountError)
+                                        .font(.system(size: 12))
+                                        .foregroundColor(.red)
+                                }
                             }
-                            .environment(\.layoutDirection, .rightToLeft)
-                           
                         }
                         .padding(.top, 24)
-                        
                         
                         if !showSARIEAlert {
                             // MARK: - Notice
@@ -89,46 +118,45 @@ struct WithdrawDetailsView: View {
                             .cornerRadius(8)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
-                                 .stroke( Color(.blue) , lineWidth: 1)
+                                 .stroke(Color(.blue), lineWidth: 1)
                             )
                         }
                         
                         if showSARIEAlert {
-                                                   HStack(spacing: 12) {
-                                                       Image(systemName: "info.circle")
-                                                           .foregroundColor(.orangeAlert)
-                                                           .font(.system(size: 20))
-                                                       
-                                                       VStack(alignment: .leading, spacing: 4) {
-                                                           Text("5 minutes during business hours, otherwise the next business day".localized())
-                                                               .textModifier(.plain, 12, .brownAlert)
-                                                           HStack(alignment: .center, spacing: 2) {
-                                                               Text("SARIE transfer – for amounts over".localized())
-                                                                   .textModifier(.plain, 12, .orangeAlert)
-                                                               HStack(spacing: 5) {
-                                                                   Text("20,000")
-                                                                       .textModifier(.plain, 12, .orangeAlert)
-                                                                   Image(.riyal)
-                                                                       .resizable()
-                                                                       .aspectRatio(contentMode: .fit)
-                                                                       .foregroundColor( .orangeAlert)
-                                                                       .frame(width: 14)
-//                                                                       .padding(.trailing, 4)
-                                                               }
-                                                               .environment(\.layoutDirection, .rightToLeft)
-                                                           }
-                                                       }
-                                                       
-                                                       Spacer()
-                                                   }
-                                                   .padding(8)
-                                                   .background(Color.yellow.opacity(0.1))
-                                                   .cornerRadius(8)
-                                                   .overlay(
-                                                       RoundedRectangle(cornerRadius: 8)
-                                                        .stroke( Color(.primary) , lineWidth: 1)
-                                                   )
-                                               }
+                            HStack(spacing: 12) {
+                                Image(systemName: "info.circle")
+                                    .foregroundColor(.orangeAlert)
+                                    .font(.system(size: 20))
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("5 minutes during business hours, otherwise the next business day".localized())
+                                        .textModifier(.plain, 12, .brownAlert)
+                                    HStack(alignment: .center, spacing: 2) {
+                                        Text("SARIE transfer – for amounts over".localized())
+                                            .textModifier(.plain, 12, .orangeAlert)
+                                        HStack(spacing: 5) {
+                                            Text("20,000")
+                                                .textModifier(.plain, 12, .orangeAlert)
+                                            Image(.riyal)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .foregroundColor(.orangeAlert)
+                                                .frame(width: 14)
+                                        }
+                                        .environment(\.layoutDirection, .rightToLeft)
+                                    }
+                                }
+                                
+                                Spacer()
+                            }
+                            .padding(8)
+                            .background(Color.yellow.opacity(0.1))
+                            .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                 .stroke(Color(.primary), lineWidth: 1)
+                            )
+                        }
                         
                         // MARK: - Form Fields
                         VStack(spacing: 20) {
@@ -146,7 +174,6 @@ struct WithdrawDetailsView: View {
                                 .onChange(of: accountHolderName) { _, newValue in
                                     validateNameLive(newValue)
                                 }
-                                
                                 
                                 if !nameError.isEmpty {
                                     Text(nameError)
@@ -169,14 +196,16 @@ struct WithdrawDetailsView: View {
                                     options: $ibanDisplayList,
                                     submitLabel: .done,
                                     titleSize: 14,
-                                    image:  UIImage(systemName: "creditcard") ?? UIImage()
+                                    image: UIImage(systemName: "creditcard") ?? UIImage()
                                 )
                                 .focused($focusedField, equals: .iban)
                                 .onChange(of: selectedIBAN) { _, newValue in
                                     if newValue != "" {
                                         selectedIBANId = getIBANId(from: selectedIBAN)
-                                        showSARIEAlert = shouldShowSARIEAlert()
-                                        
+                                        let amount = Double(withdrawAmount.convertDigitsToEng) ?? 0
+                                        if amount > 0 {
+                                            showSARIEAlert = shouldShowSARIEAlert()
+                                        }
                                         validateIBANLive()
                                     }
                                 }
@@ -185,7 +214,6 @@ struct WithdrawDetailsView: View {
                                         selectedIBAN = ""
                                     }
                                 }
-                                
                                 
                                 if !ibanError.isEmpty {
                                     Text(ibanError)
@@ -252,20 +280,20 @@ struct WithdrawDetailsView: View {
                 
                 // MARK: - Withdraw Button
                 Button(action: {
+                    hasAttemptedSubmit = true
+                    validateAmountLive(withdrawAmount)
+                    validateNameLive(accountHolderName)
+                    validateIBANLive()
+                    validateMobileLive(mobileNumber)
+                    validateCityLive(city)
+                    
                     if isFormValid {
-                        hasAttemptedSubmit = true
                         submitWithdraw()
                     }
                 }) {
                     Text("Withdraw".localized())
                         .textModifier(.plain, 15, .white)
                         .frame(maxWidth: .infinity, minHeight: 51)
-                        .background(isFormValid ? Color(.black222222) : Color(.grayDADADA))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 32)
-                                .stroke(Color.clear, lineWidth: 1)
-                        )
-                        .padding(1)
                         .background(isFormValid ? Color(.black222222) : Color(.grayDADADA))
                         .cornerRadius(32)
                 }
@@ -294,7 +322,6 @@ struct WithdrawDetailsView: View {
         .onChange(of: withdrawViewModel._isWithdrawSuccess) { _, newValue in
             if newValue {
                 presentationMode.wrappedValue.dismiss()
-                
             }
         }
         .toolbar {
@@ -321,7 +348,6 @@ struct WithdrawDetailsView: View {
     private func updateIBANDisplayList() {
         ibanDisplayList = ibanViewModel.ibanList.map { iban in
             let ibanNumber = iban.iban ?? ""
-            let accountName = iban.name ?? ""
             return "\(ibanNumber)"
         }
     }
@@ -338,6 +364,17 @@ struct WithdrawDetailsView: View {
     }
     
     // MARK: - Live Validation
+    private func validateAmountLive(_ value: String) {
+        if hasAttemptedSubmit || !value.isEmpty {
+            let amount = Double(value.convertDigitsToEng) ?? 0
+            if value.isEmpty || amount <= 0 {
+                amountError = "amount_validation".localized()
+            } else {
+                amountError = ""
+            }
+        }
+    }
+    
     private func validateNameLive(_ value: String) {
         if hasAttemptedSubmit || !value.isEmpty {
             nameError = value.isEmpty ? "accountHolderNameValidation".localized() : ""
@@ -370,14 +407,16 @@ struct WithdrawDetailsView: View {
     
     // MARK: - Submit Withdraw
     private func submitWithdraw() {
+        validateAmountLive(withdrawAmount)
         validateNameLive(accountHolderName)
         validateIBANLive()
         validateMobileLive(mobileNumber)
         validateCityLive(city)
         
         if isFormValid {
+            let amount = Double(withdrawAmount.convertDigitsToEng) ?? 0
             withdrawViewModel.validateWithdrawAmount(
-                amount: withdrawAmount,
+                amount: amount,
                 accountName: accountHolderName,
                 iban: selectedIBAN,
                 mobile: mobileNumber,
@@ -386,10 +425,11 @@ struct WithdrawDetailsView: View {
         }
     }
     
-    
     // MARK: - Keyboard Navigation
     private func showNextTextField() {
         switch focusedField {
+        case .amount:
+            focusedField = .accountName
         case .accountName:
             focusedField = .iban
         case .iban:
@@ -409,27 +449,29 @@ struct WithdrawDetailsView: View {
             focusedField = .iban
         case .iban:
             focusedField = .accountName
+        case .accountName:
+            focusedField = .amount
         default:
             focusedField = nil
         }
     }
     
-    
     private func shouldShowSARIEAlert() -> Bool {
-          
-          guard withdrawAmount > Constants.WITHDRAW_THRESHOLD else { return false }
-          guard selectedIBANId != 0 else { return false }
-          
-          if let selectedIBANData = ibanViewModel.ibanList.first(where: { $0.id == selectedIBANId }),
-             let ibanNumber = selectedIBANData.iban {
-              return !Constants.isArabNationalBank(ibanNumber)
-          }
-          
-          return false
-      }
+        let amount = Double(withdrawAmount.convertDigitsToEng) ?? 0
+        guard amount > Constants.WITHDRAW_THRESHOLD else { return false }
+        guard selectedIBANId != 0 else { return false }
+        
+        if let selectedIBANData = ibanViewModel.ibanList.first(where: { $0.id == selectedIBANId }),
+           let ibanNumber = selectedIBANData.iban {
+            return !Constants.isArabNationalBank(ibanNumber)
+        }
+        
+        return false
+    }
 }
 
 enum WithdrawFormField {
+    case amount
     case accountName
     case iban
     case mobile
@@ -437,5 +479,5 @@ enum WithdrawFormField {
 }
 
 #Preview {
-    WithdrawDetailsView(withdrawAmount: 100.0)
+    WithdrawDetailsView()
 }

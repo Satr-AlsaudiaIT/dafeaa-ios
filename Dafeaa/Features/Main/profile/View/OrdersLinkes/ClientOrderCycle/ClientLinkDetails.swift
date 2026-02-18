@@ -38,6 +38,7 @@ struct ClientLinkDetails: View {
                         VStack(alignment: .leading,spacing: 19) {
                             Text(linkDetails.name ?? "")
                                 .textModifier(.plain, 16, .black010202)
+                            HTMLDescriptionPreviewView(html: linkDetails.description ?? "")
                             Text(linkDetails.description ?? "")
                                 .textModifier(.plain, 15, .black222222)
                                 .padding(.top,-10)

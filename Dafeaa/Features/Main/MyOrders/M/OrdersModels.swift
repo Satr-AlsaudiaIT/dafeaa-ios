@@ -43,6 +43,7 @@ struct OrderData: Codable, Identifiable {
     let maxCommissionValue: String?
     let taxPrice: Double?
     let commissionValue: Double?
+    let totalVatWithCommission: Double?
     let orderPrice: Double?
     let deliveryPrice: Double?
     let totalPrice: Double?
@@ -83,6 +84,7 @@ struct OrderData: Codable, Identifiable {
         case cityName = "cityName"
         case postalCode = "postalCode"
         case provinceCode = "provinceCode"
+        case totalVatWithCommission = "total_commission_with_vat"
     }
 
     init(
@@ -111,7 +113,8 @@ struct OrderData: Codable, Identifiable {
         countryCode: String? = nil,
         cityName: String? = nil,
         postalCode: String? = nil,
-        provinceCode: String? = nil
+        provinceCode: String? = nil,
+        totalVatWithCommission : Double? = nil
     ) {
         self.id = id
         self.clientImage = clientImage
@@ -139,6 +142,7 @@ struct OrderData: Codable, Identifiable {
         self.cityName = cityName
         self.postalCode = postalCode
         self.provinceCode = provinceCode
+        self.totalVatWithCommission = totalVatWithCommission
     }
 }
 
@@ -201,6 +205,7 @@ struct OrdersDataV3: Codable {
     let orderPrice, deliveryPrice, commission: Double?
     let totalPrice: Double?
     let products: [productList]?
+    let totalCommissionWithVat: Double?
 }
 
 
@@ -315,8 +320,8 @@ struct AddressModel: Codable, Equatable {
     let districtName: String?
     let streetName: String?
     let address: String?
-    let lat: Double?
-    let lng: Double?
+    let lat: String?
+    let lng: String?
 }
 
 // MARK: - ShowOfferDataV3
@@ -399,4 +404,25 @@ struct ShippingRatesModel: Codable {
 struct ShippingRatesData: Codable {
     let currencyType, priceCurrency: String?
     let price: Double?
+}
+
+
+// Add this struct at the top of OrdersVM.swift file (outside the class)
+struct TrackingEvent: Codable, Identifiable {
+    let id = UUID()
+    let date: String
+    let time: String
+    let typeCode: String
+    let description: String
+    let serviceArea: [ServiceArea]
+    let signedBy: String?
+    
+    struct ServiceArea: Codable {
+        let code: String
+        let description: String
+    }
+    
+//    enum CodingKeys: String, CodingKey {
+//        case date, time, typeCode, description, serviceArea, signedBy
+//    }
 }

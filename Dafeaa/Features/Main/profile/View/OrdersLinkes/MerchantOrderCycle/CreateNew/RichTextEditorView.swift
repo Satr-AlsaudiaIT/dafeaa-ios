@@ -8,36 +8,420 @@ import SwiftUI
 import UIKit
 
 // MARK: - Usage:
-// RichTextEditorView(attributedText: $text, placeholder: "productDescription".localized())
-// .dismissKeyboardOnTap()
 
 struct RichTextEditorView: View {
     @Binding var attributedText: NSAttributedString
     var placeholder: String = ""
     @FocusState private var isFocused: Bool
-    @State private var styleTitle: String = "Normal"
+    @StateObject private var viewModel = RichTextViewModel()
 
     var body: some View {
-        RichTextEditorRepresentable(
-            attributedText: $attributedText,
-            placeholder: placeholder,
-            styleTitle: $styleTitle
-        )
-        .frame(minHeight: 160)
-        .focused($isFocused)
+        VStack(spacing: 0) {
+            // Formatting Toolbar at top
+            FormattingToolbar(viewModel: viewModel)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(Color(.systemGray6))
+            
+            // Text Editor
+            RichTextEditorRepresentable(
+                attributedText: $attributedText,
+                placeholder: placeholder,
+                viewModel: viewModel
+            )
+            .frame(minHeight: 160)
+        }
         .background(Color(.grayF6F6F6))
         .overlay(
             RoundedRectangle(cornerRadius: 12)
                 .stroke(isFocused ? Color(.primary) : Color.clear, lineWidth: 1)
         )
         .clipShape(RoundedRectangle(cornerRadius: 12))
+        .focused($isFocused)
     }
 }
 
-private struct RichTextEditorRepresentable: UIViewRepresentable {
+// MARK: - View Model
+class RichTextViewModel: ObservableObject {
+    @Published var styleTitle: String = "Normal"
+    @Published var isBold: Bool = false
+    @Published var isItalic: Bool = false
+    @Published var isUnderline: Bool = false
+    @Published var isBulletList: Bool = false
+    @Published var isNumberedList: Bool = false
+    
+    weak var textView: UITextView?
+    var placeholder: String = ""
+    var attributedTextBinding: Binding<NSAttributedString>?
+    private var currentNumberInList: Int = 1
+    
+    func toggleBold() {
+        isBold.toggle()
+        applyCurrentFormatting()
+    }
+    
+    func toggleItalic() {
+        isItalic.toggle()
+        applyCurrentFormatting()
+    }
+    
+    func toggleUnderline() {
+        isUnderline.toggle()
+        applyCurrentFormatting()
+    }
+    
+    func toggleBulletList() {
+        isBulletList.toggle()
+        if isBulletList {
+            isNumberedList = false
+            insertBullet()
+        }
+    }
+    
+    func toggleNumberedList() {
+        isNumberedList.toggle()
+        if isNumberedList {
+            isBulletList = false
+            currentNumberInList = 1
+            insertNumber()
+        }
+    }
+    
+    func applyCurrentFormatting() {
+        guard let tv = textView else { return }
+        guard !isShowingPlaceholder() else { return }
+        
+        // Get current font size from style
+        let fontSize: CGFloat = switch styleTitle {
+        case "H1": 28
+        case "H2": 22
+        case "H3": 18
+        default: 16
+        }
+        
+        // Build font with bold/italic traits
+        var traits: UIFontDescriptor.SymbolicTraits = []
+        if isBold {
+            traits.insert(.traitBold)
+        }
+        if isItalic {
+            traits.insert(.traitItalic)
+        }
+        
+        let baseFont = UIFont.systemFont(ofSize: fontSize)
+        let descriptor = baseFont.fontDescriptor.withSymbolicTraits(traits) ?? baseFont.fontDescriptor
+        let font = UIFont(descriptor: descriptor, size: fontSize)
+        
+        // Apply to typing attributes
+        var attrs = tv.typingAttributes
+        attrs[.font] = font
+        attrs[.foregroundColor] = UIColor.label
+        
+        // Apply underline
+        if isUnderline {
+            attrs[.underlineStyle] = NSUnderlineStyle.single.rawValue
+        } else {
+            attrs.removeValue(forKey: .underlineStyle)
+        }
+        
+        tv.typingAttributes = attrs
+        
+        // If there's a selection, apply to selected text
+        if tv.selectedRange.length > 0 {
+            let range = tv.selectedRange
+            let mutable = NSMutableAttributedString(attributedString: tv.attributedText)
+            let safe = safeRange(range, length: mutable.length)
+            
+            mutable.addAttribute(.font, value: font, range: safe)
+            
+            if isUnderline {
+                mutable.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: safe)
+            } else {
+                mutable.removeAttribute(.underlineStyle, range: safe)
+            }
+            
+            tv.attributedText = mutable
+            attributedTextBinding?.wrappedValue = tv.attributedText
+            tv.selectedRange = range
+        }
+    }
+    
+    func insertBullet() {
+        guard let tv = textView else { return }
+        guard !isShowingPlaceholder() else { return }
+        tv.insertTextAtCursor("• ")
+        attributedTextBinding?.wrappedValue = tv.attributedText
+    }
+    
+    func insertNumber() {
+        guard let tv = textView else { return }
+        guard !isShowingPlaceholder() else { return }
+        tv.insertTextAtCursor("\(currentNumberInList). ")
+        currentNumberInList += 1
+        attributedTextBinding?.wrappedValue = tv.attributedText
+    }
+    
+    func handleNewLine() -> Bool {
+        guard let tv = textView else { return false }
+        
+        // Check if we're in a list mode
+        if isBulletList {
+            if isCurrentLineEmptyListItem(textView: tv, prefix: "• ") {
+                removeCurrentLineListPrefix(textView: tv, prefix: "• ")
+                isBulletList = false
+                return true
+            } else {
+                // Insert newline first, then bullet
+                tv.insertNewLineWithCurrentAttributes()
+                tv.insertTextAtCursor("• ")
+                attributedTextBinding?.wrappedValue = tv.attributedText
+                return true
+            }
+        } else if isNumberedList {
+            if isCurrentLineEmptyListItem(textView: tv, prefixPattern: #"^\d+\.\s$"#) {
+                removeCurrentLineListPrefix(textView: tv, prefixPattern: #"^\d+\.\s"#)
+                isNumberedList = false
+                currentNumberInList = 1
+                return true
+            } else {
+                // Insert newline first, then number
+                tv.insertNewLineWithCurrentAttributes()
+                tv.insertTextAtCursor("\(currentNumberInList). ")
+                currentNumberInList += 1
+                attributedTextBinding?.wrappedValue = tv.attributedText
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    private func isCurrentLineEmptyListItem(textView: UITextView, prefix: String) -> Bool {
+        let text = textView.text ?? ""
+        let cursorPosition = textView.selectedRange.location
+        
+        var lineStart = cursorPosition
+        while lineStart > 0 && text[text.index(text.startIndex, offsetBy: lineStart - 1)] != "\n" {
+            lineStart -= 1
+        }
+        
+        let lineStartIndex = text.index(text.startIndex, offsetBy: lineStart)
+        let cursorIndex = text.index(text.startIndex, offsetBy: cursorPosition)
+        let currentLine = String(text[lineStartIndex..<cursorIndex])
+        
+        return currentLine == prefix
+    }
+    
+    private func isCurrentLineEmptyListItem(textView: UITextView, prefixPattern: String) -> Bool {
+        let text = textView.text ?? ""
+        let cursorPosition = textView.selectedRange.location
+        
+        var lineStart = cursorPosition
+        while lineStart > 0 && text[text.index(text.startIndex, offsetBy: lineStart - 1)] != "\n" {
+            lineStart -= 1
+        }
+        
+        let lineStartIndex = text.index(text.startIndex, offsetBy: lineStart)
+        let cursorIndex = text.index(text.startIndex, offsetBy: cursorPosition)
+        let currentLine = String(text[lineStartIndex..<cursorIndex])
+        
+        if let regex = try? NSRegularExpression(pattern: prefixPattern) {
+            let range = NSRange(currentLine.startIndex..., in: currentLine)
+            return regex.firstMatch(in: currentLine, range: range) != nil
+        }
+        
+        return false
+    }
+    
+    private func removeCurrentLineListPrefix(textView: UITextView, prefix: String) {
+        let text = textView.text ?? ""
+        let cursorPosition = textView.selectedRange.location
+        
+        var lineStart = cursorPosition
+        while lineStart > 0 && text[text.index(text.startIndex, offsetBy: lineStart - 1)] != "\n" {
+            lineStart -= 1
+        }
+        
+        let mutable = NSMutableAttributedString(attributedString: textView.attributedText)
+        let prefixRange = NSRange(location: lineStart, length: prefix.count)
+        mutable.deleteCharacters(in: prefixRange)
+        
+        textView.attributedText = mutable
+        textView.selectedRange = NSRange(location: lineStart, length: 0)
+        attributedTextBinding?.wrappedValue = textView.attributedText
+    }
+    
+    private func removeCurrentLineListPrefix(textView: UITextView, prefixPattern: String) {
+        let text = textView.text ?? ""
+        let cursorPosition = textView.selectedRange.location
+        
+        var lineStart = cursorPosition
+        while lineStart > 0 && text[text.index(text.startIndex, offsetBy: lineStart - 1)] != "\n" {
+            lineStart -= 1
+        }
+        
+        let lineStartIndex = text.index(text.startIndex, offsetBy: lineStart)
+        let cursorIndex = text.index(text.startIndex, offsetBy: cursorPosition)
+        let currentLine = String(text[lineStartIndex..<cursorIndex])
+        
+        if let regex = try? NSRegularExpression(pattern: prefixPattern),
+           let match = regex.firstMatch(in: currentLine, range: NSRange(currentLine.startIndex..., in: currentLine)) {
+            let prefixLength = match.range.length
+            
+            let mutable = NSMutableAttributedString(attributedString: textView.attributedText)
+            let prefixRange = NSRange(location: lineStart, length: prefixLength)
+            mutable.deleteCharacters(in: prefixRange)
+            
+            textView.attributedText = mutable
+            textView.selectedRange = NSRange(location: lineStart, length: 0)
+            attributedTextBinding?.wrappedValue = textView.attributedText
+        }
+    }
+    
+    func applyStyle(title: String) {
+        styleTitle = title
+        applyCurrentFormatting()
+    }
+    
+    private func safeRange(_ range: NSRange, length: Int) -> NSRange {
+        let loc = max(0, min(range.location, length))
+        let maxLen = max(0, length - loc)
+        let len = max(0, min(range.length, maxLen))
+        return NSRange(location: loc, length: len)
+    }
+    
+    private func isShowingPlaceholder() -> Bool {
+        guard let tv = textView else { return false }
+        guard !placeholder.isEmpty else { return false }
+        return tv.textColor == .placeholderText && tv.text == placeholder
+    }
+}
+
+// MARK: - Formatting Toolbar
+struct FormattingToolbar: View {
+    @ObservedObject var viewModel: RichTextViewModel
+    
+    var body: some View {
+        HStack(spacing: 12) {
+            // Style Menu
+            Menu {
+                Button(action: {
+                    viewModel.applyStyle(title: "Normal")
+                }) {
+                    HStack {
+                        Text("Normal")
+                        if viewModel.styleTitle == "Normal" {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                }
+                
+                Button(action: {
+                    viewModel.applyStyle(title: "H3")
+                }) {
+                    HStack {
+                        Text("H3")
+                        if viewModel.styleTitle == "H3" {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                }
+                
+                Button(action: {
+                    viewModel.applyStyle(title: "H2")
+                }) {
+                    HStack {
+                        Text("H2")
+                        if viewModel.styleTitle == "H2" {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                }
+                
+                Button(action: {
+                    viewModel.applyStyle(title: "H1")
+                }) {
+                    HStack {
+                        Text("H1")
+                        if viewModel.styleTitle == "H1" {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                }
+            } label: {
+                HStack(spacing: 4) {
+                    Text(viewModel.styleTitle)
+                        .font(.system(size: 14))
+                    Image(systemName: "chevron.down")
+                        .font(.system(size: 10))
+                }
+                .foregroundColor(.primary)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(Color(.systemBackground))
+                .cornerRadius(6)
+            }
+            
+            Spacer(minLength: 0)
+            
+            // Bold Button
+            Button(action: { viewModel.toggleBold() }) {
+                Image(systemName: "bold")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(viewModel.isBold ? .white : .primary)
+                    .frame(width: 32, height: 32)
+                    .background(viewModel.isBold ? Color.blue : Color(.systemBackground))
+                    .cornerRadius(6)
+            }
+            
+            // Italic Button
+            Button(action: { viewModel.toggleItalic() }) {
+                Image(systemName: "italic")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(viewModel.isItalic ? .white : .primary)
+                    .frame(width: 32, height: 32)
+                    .background(viewModel.isItalic ? Color.blue : Color(.systemBackground))
+                    .cornerRadius(6)
+            }
+            
+            // Underline Button
+            Button(action: { viewModel.toggleUnderline() }) {
+                Image(systemName: "underline")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(viewModel.isUnderline ? .white : .primary)
+                    .frame(width: 32, height: 32)
+                    .background(viewModel.isUnderline ? Color.blue : Color(.systemBackground))
+                    .cornerRadius(6)
+            }
+            
+            // Bullet List Button
+            Button(action: { viewModel.toggleBulletList() }) {
+                Image(systemName: "list.bullet")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(viewModel.isBulletList ? .white : .primary)
+                    .frame(width: 32, height: 32)
+                    .background(viewModel.isBulletList ? Color.blue : Color(.systemBackground))
+                    .cornerRadius(6)
+            }
+            
+            // Numbered List Button
+            Button(action: { viewModel.toggleNumberedList() }) {
+                Image(systemName: "list.number")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(viewModel.isNumberedList ? .white : .primary)
+                    .frame(width: 32, height: 32)
+                    .background(viewModel.isNumberedList ? Color.blue : Color(.systemBackground))
+                    .cornerRadius(6)
+            }
+        }
+    }
+}
+
+// MARK: - UIViewRepresentable
+struct RichTextEditorRepresentable: UIViewRepresentable {
     @Binding var attributedText: NSAttributedString
     let placeholder: String
-    @Binding var styleTitle: String
+    @ObservedObject var viewModel: RichTextViewModel
 
     func makeUIView(context: Context) -> UITextView {
         let tv = UITextView()
@@ -47,433 +431,180 @@ private struct RichTextEditorRepresentable: UIViewRepresentable {
         tv.backgroundColor = .clear
         tv.textContainerInset = UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 10)
         tv.font = UIFont.systemFont(ofSize: 16)
-        tv.linkTextAttributes = [
-            .foregroundColor: UIColor.systemBlue,
-            .underlineStyle: NSUnderlineStyle.single.rawValue
-        ]
 
-        context.coordinator.styleTitleBinding = $styleTitle
+        viewModel.textView = tv
+        viewModel.placeholder = placeholder
+        viewModel.attributedTextBinding = $attributedText
+        
         context.coordinator.applyPlaceholderIfNeeded(textView: tv)
-        context.coordinator.applyDefaultTypingStyle(to: tv) // important for next typing
-        context.coordinator.setToolbar(on: tv)
+        
+        // Set initial typing attributes
+        context.coordinator.updateTypingAttributes(textView: tv)
 
         return tv
     }
 
     func updateUIView(_ uiView: UITextView, context: Context) {
-        context.coordinator.styleTitleBinding = $styleTitle
+        viewModel.textView = uiView
+        viewModel.placeholder = placeholder
+        viewModel.attributedTextBinding = $attributedText
 
-        // Don't override while user is typing
         guard !uiView.isFirstResponder else { return }
 
         if attributedText.string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             context.coordinator.applyPlaceholderIfNeeded(textView: uiView)
-            context.coordinator.applyDefaultTypingStyle(to: uiView)
         } else {
             uiView.attributedText = attributedText
             uiView.textColor = .label
         }
-
-        // Make sure toolbar title stays in sync
-        context.coordinator.setToolbar(on: uiView)
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(parent: self)
+        Coordinator(viewModel: viewModel)
     }
-
+    
     // MARK: - Coordinator
-    final class Coordinator: NSObject, UITextViewDelegate {
-        let parent: RichTextEditorRepresentable
-        weak var activeTextView: UITextView?
+    class Coordinator: NSObject, UITextViewDelegate {
+        let viewModel: RichTextViewModel
 
-        // keep current chosen style for typing + toolbar title
-        var styleTitleBinding: Binding<String>?
-
-        init(parent: RichTextEditorRepresentable) {
-            self.parent = parent
+        init(viewModel: RichTextViewModel) {
+            self.viewModel = viewModel
         }
 
-        // MARK: UITextViewDelegate
         func textViewDidBeginEditing(_ textView: UITextView) {
-            activeTextView = textView
+            viewModel.textView = textView
 
-            // Remove placeholder on focus
             if isShowingPlaceholder(textView: textView) {
                 textView.attributedText = NSAttributedString(string: "")
                 textView.textColor = .label
-                applyDefaultTypingStyle(to: textView)
+                updateTypingAttributes(textView: textView)
             }
-
-            setToolbar(on: textView)
         }
 
         func textViewDidEndEditing(_ textView: UITextView) {
             if textView.attributedText.string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                parent.attributedText = NSAttributedString(string: "")
+                viewModel.attributedTextBinding?.wrappedValue = NSAttributedString(string: "")
                 applyPlaceholderIfNeeded(textView: textView)
             }
         }
 
+        func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+            // Check if user pressed return/enter
+            if text == "\n" {
+                // First check if in list mode
+                if viewModel.handleNewLine() {
+                    return false // List mode handled it
+                }
+                
+                // Not in list mode - insert newline preserving current typing attributes
+                textView.insertNewLineWithCurrentAttributes()
+                viewModel.attributedTextBinding?.wrappedValue = textView.attributedText
+                return false // We handled it manually
+            }
+            return true
+        }
+
         func textViewDidChange(_ textView: UITextView) {
             if isShowingPlaceholder(textView: textView) { return }
-            parent.attributedText = textView.attributedText
+            
+            // If text is now empty, ensure typing attributes are preserved
+            if textView.text.isEmpty || textView.attributedText.length == 0 {
+                updateTypingAttributes(textView: textView)
+            }
+            
+            viewModel.attributedTextBinding?.wrappedValue = textView.attributedText
+        }
+        
+        func updateTypingAttributes(textView: UITextView) {
+            // Build the typing attributes based on current view model state
+            let fontSize: CGFloat = switch viewModel.styleTitle {
+            case "H1": 28
+            case "H2": 22
+            case "H3": 18
+            default: 16
+            }
+            
+            var traits: UIFontDescriptor.SymbolicTraits = []
+            if viewModel.isBold {
+                traits.insert(.traitBold)
+            }
+            if viewModel.isItalic {
+                traits.insert(.traitItalic)
+            }
+            
+            let baseFont = UIFont.systemFont(ofSize: fontSize)
+            let descriptor = baseFont.fontDescriptor.withSymbolicTraits(traits) ?? baseFont.fontDescriptor
+            let font = UIFont(descriptor: descriptor, size: fontSize)
+            
+            var attrs: [NSAttributedString.Key: Any] = [
+                .font: font,
+                .foregroundColor: UIColor.label
+            ]
+            
+            if viewModel.isUnderline {
+                attrs[.underlineStyle] = NSUnderlineStyle.single.rawValue
+            }
+            
+            textView.typingAttributes = attrs
         }
 
-        func textViewDidChangeSelection(_ textView: UITextView) {
-            // optional: you can later update toolbar selected state here
-            // For now, keep toolbar title correct
-            setToolbar(on: textView)
-        }
-
-        // MARK: Placeholder
         func applyPlaceholderIfNeeded(textView: UITextView) {
-            guard !parent.placeholder.isEmpty else {
-                textView.attributedText = parent.attributedText
+            guard !viewModel.placeholder.isEmpty else {
+                if let binding = viewModel.attributedTextBinding {
+                    textView.attributedText = binding.wrappedValue
+                }
                 textView.textColor = .label
                 return
             }
 
-            if parent.attributedText.string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            if let binding = viewModel.attributedTextBinding,
+               binding.wrappedValue.string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 textView.attributedText = NSAttributedString(
-                    string: parent.placeholder,
+                    string: viewModel.placeholder,
                     attributes: [
                         .font: UIFont.systemFont(ofSize: 16),
                         .foregroundColor: UIColor.placeholderText
                     ]
                 )
                 textView.textColor = .placeholderText
-            } else {
-                textView.attributedText = parent.attributedText
+            } else if let binding = viewModel.attributedTextBinding {
+                textView.attributedText = binding.wrappedValue
                 textView.textColor = .label
             }
         }
 
         private func isShowingPlaceholder(textView: UITextView) -> Bool {
-            guard !parent.placeholder.isEmpty else { return false }
-            return textView.textColor == .placeholderText && textView.text == parent.placeholder
-        }
-
-        // MARK: Default typing style based on chosen styleTitle
-        func applyDefaultTypingStyle(to textView: UITextView) {
-            let title = styleTitleBinding?.wrappedValue ?? "Normal"
-            let font: UIFont = switch title {
-            case "Heading 1": .boldSystemFont(ofSize: 28)
-            case "Heading 2": .boldSystemFont(ofSize: 22)
-            case "Heading 3": .boldSystemFont(ofSize: 18)
-            default:          .systemFont(ofSize: 16)
-            }
-            textView.setTypingFont(font)
-        }
-
-        // MARK: Toolbar
-        func setToolbar(on textView: UITextView) {
-            let tb = UIToolbar()
-            tb.sizeToFit()
-
-            let styleItem = makeStyleMenuItem(textView: textView)
-
-            let bold = UIBarButtonItem(image: UIImage(systemName: "bold"),
-                                       style: .plain,
-                                       target: self,
-                                       action: #selector(toggleBold))
-
-            let italic = UIBarButtonItem(image: UIImage(systemName: "italic"),
-                                         style: .plain,
-                                         target: self,
-                                         action: #selector(toggleItalic))
-
-            let underline = UIBarButtonItem(image: UIImage(systemName: "underline"),
-                                            style: .plain,
-                                            target: self,
-                                            action: #selector(toggleUnderline))
-
-            let link = UIBarButtonItem(image: UIImage(systemName: "link"),
-                                       style: .plain,
-                                       target: self,
-                                       action: #selector(addLink))
-
-            let numbered = UIBarButtonItem(image: UIImage(systemName: "list.number"),
-                                           style: .plain,
-                                           target: self,
-                                           action: #selector(insertNumberedItem))
-
-            let bullets = UIBarButtonItem(image: UIImage(systemName: "list.bullet"),
-                                          style: .plain,
-                                          target: self,
-                                          action: #selector(insertBullet))
-
-            let clear = UIBarButtonItem(title: "Tx",
-                                        style: .plain,
-                                        target: self,
-                                        action: #selector(clearFormatting))
-
-            let done = UIBarButtonItem(title: "Done".localized(),
-                                       style: .done,
-                                       target: self,
-                                       action: #selector(doneTapped))
-
-            let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-
-            tb.items = [
-                styleItem,
-                flex,
-                bold, italic, underline,
-                link,
-                numbered, bullets,
-                clear,
-                flex,
-                done
-            ]
-
-            textView.inputAccessoryView = tb
-            textView.reloadInputViews()
-        }
-
-        private func makeStyleMenuItem(textView: UITextView) -> UIBarButtonItem {
-            let current = styleTitleBinding?.wrappedValue ?? "Normal"
-
-            func applyStyle(title: String, font: UIFont) {
-                // If selection exists -> apply to selection
-                if textView.selectedRange.length > 0 {
-                    textView.applyFont(font)
-                }
-                // Always apply to next typing
-                textView.setTypingFont(font)
-
-                parent.attributedText = textView.attributedText
-                styleTitleBinding?.wrappedValue = title
-
-                // Refresh toolbar title + checkmarks
-                setToolbar(on: textView)
-            }
-
-            let menu = UIMenu(title: "", children: [
-                UIAction(title: "Heading 1", state: current == "Heading 1" ? .on : .off) { _ in
-                    applyStyle(title: "Heading 1", font: .boldSystemFont(ofSize: 28))
-                },
-                UIAction(title: "Heading 2", state: current == "Heading 2" ? .on : .off) { _ in
-                    applyStyle(title: "Heading 2", font: .boldSystemFont(ofSize: 22))
-                },
-                UIAction(title: "Heading 3", state: current == "Heading 3" ? .on : .off) { _ in
-                    applyStyle(title: "Heading 3", font: .boldSystemFont(ofSize: 18))
-                },
-                UIAction(title: "Normal", state: current == "Normal" ? .on : .off) { _ in
-                    applyStyle(title: "Normal", font: .systemFont(ofSize: 16))
-                }
-            ])
-
-            // Title shows currently selected style (like your screenshot) [file:91]
-            return UIBarButtonItem(
-                title: current,
-                image: UIImage(systemName: "chevron.up.chevron.down"),
-                primaryAction: nil,
-                menu: menu
-            )
-        }
-
-        // MARK: Toolbar actions
-        @objc private func doneTapped() {
-            activeTextView?.resignFirstResponder()
-        }
-
-        @objc private func toggleBold() {
-            guard let tv = activeTextView, !isShowingPlaceholder(textView: tv) else { return }
-
-            if tv.selectedRange.length > 0 {
-                tv.toggleTrait(.traitBold)                // selection
-            } else {
-                tv.toggleTypingTrait(.traitBold)          // next typing via typingAttributes [web:94]
-            }
-            parent.attributedText = tv.attributedText
-        }
-
-        @objc private func toggleItalic() {
-            guard let tv = activeTextView, !isShowingPlaceholder(textView: tv) else { return }
-
-            if tv.selectedRange.length > 0 {
-                tv.toggleTrait(.traitItalic)
-            } else {
-                tv.toggleTypingTrait(.traitItalic)        // next typing [web:94]
-            }
-            parent.attributedText = tv.attributedText
-        }
-
-        @objc private func toggleUnderline() {
-            guard let tv = activeTextView, !isShowingPlaceholder(textView: tv) else { return }
-
-            if tv.selectedRange.length > 0 {
-                tv.toggleUnderline()
-            } else {
-                tv.toggleTypingUnderline()                 // next typing [web:94]
-            }
-            parent.attributedText = tv.attributedText
-        }
-
-        @objc private func insertBullet() {
-            guard let tv = activeTextView, !isShowingPlaceholder(textView: tv) else { return }
-            tv.insertTextAtCursor("• ")
-            parent.attributedText = tv.attributedText
-        }
-
-        @objc private func insertNumberedItem() {
-            guard let tv = activeTextView, !isShowingPlaceholder(textView: tv) else { return }
-            tv.insertTextAtCursor("1. ")
-            parent.attributedText = tv.attributedText
-        }
-
-        @objc private func clearFormatting() {
-            guard let tv = activeTextView, !isShowingPlaceholder(textView: tv) else { return }
-
-            if tv.selectedRange.length > 0 {
-                tv.clearFormatting()
-            } else {
-                tv.clearTypingFormatting()
-            }
-
-            parent.attributedText = tv.attributedText
-        }
-
-        @objc private func addLink() {
-            guard let tv = activeTextView, !isShowingPlaceholder(textView: tv) else { return }
-            guard tv.selectedRange.length > 0 else { return }
-            tv.applyLink(url: URL(string: "https://")!)
-            parent.attributedText = tv.attributedText
+            guard !viewModel.placeholder.isEmpty else { return false }
+            return textView.textColor == .placeholderText && textView.text == viewModel.placeholder
         }
     }
 }
 
 // MARK: - UITextView formatting helpers
-private extension UITextView {
+extension UITextView {
     func insertTextAtCursor(_ text: String) {
         let range = selectedRange
         let mutable = NSMutableAttributedString(attributedString: attributedText ?? NSAttributedString(string: ""))
 
-        // use current typing attributes for inserted text
         let insertion = NSAttributedString(string: text, attributes: typingAttributes)
         mutable.insert(insertion, at: min(max(0, range.location), mutable.length))
 
         attributedText = mutable
         selectedRange = NSRange(location: range.location + text.count, length: 0)
     }
-
-    // Apply to selection
-    func toggleUnderline() {
+    
+    func insertNewLineWithCurrentAttributes() {
         let range = selectedRange
-        guard range.length > 0 else { return }
-
-        let mutable = NSMutableAttributedString(attributedString: attributedText)
-        let safe = safeRange(range, length: mutable.length)
-
-        var isUnderlined = true
-        mutable.enumerateAttribute(.underlineStyle, in: safe) { value, _, stop in
-            if (value as? Int ?? 0) == 0 { isUnderlined = false; stop.pointee = true }
-        }
-
-        mutable.addAttribute(.underlineStyle, value: isUnderlined ? 0 : NSUnderlineStyle.single.rawValue, range: safe)
+        let mutable = NSMutableAttributedString(attributedString: attributedText ?? NSAttributedString(string: ""))
+        
+        // Insert plain newline character without any formatting that would affect previous line
+        let newline = NSAttributedString(string: "\n", attributes: [
+            .font: typingAttributes[.font] ?? UIFont.systemFont(ofSize: 16),
+            .foregroundColor: UIColor.label
+        ])
+        mutable.insert(newline, at: min(max(0, range.location), mutable.length))
+        
         attributedText = mutable
-    }
-
-    // Apply to selection
-    func toggleTrait(_ trait: UIFontDescriptor.SymbolicTraits) {
-        let range = selectedRange
-        guard range.length > 0 else { return }
-
-        let mutable = NSMutableAttributedString(attributedString: attributedText)
-        let safe = safeRange(range, length: mutable.length)
-
-        mutable.enumerateAttribute(.font, in: safe) { value, subRange, _ in
-            let current = (value as? UIFont) ?? (self.font ?? .systemFont(ofSize: 16))
-            var traits = current.fontDescriptor.symbolicTraits
-            if traits.contains(trait) { traits.remove(trait) } else { traits.insert(trait) }
-            let desc = current.fontDescriptor.withSymbolicTraits(traits) ?? current.fontDescriptor
-            let newFont = UIFont(descriptor: desc, size: current.pointSize)
-            mutable.addAttribute(.font, value: newFont, range: subRange)
-        }
-
-        attributedText = mutable
-    }
-
-    // Apply font to selection
-    func applyFont(_ font: UIFont) {
-        let range = selectedRange
-        guard range.length > 0 else { return }
-
-        let mutable = NSMutableAttributedString(attributedString: attributedText)
-        let safe = safeRange(range, length: mutable.length)
-        mutable.addAttribute(.font, value: font, range: safe)
-        attributedText = mutable
-    }
-
-    func applyLink(url: URL) {
-        let range = selectedRange
-        guard range.length > 0 else { return }
-
-        let mutable = NSMutableAttributedString(attributedString: attributedText)
-        let safe = safeRange(range, length: mutable.length)
-        mutable.addAttribute(.link, value: url, range: safe)
-        attributedText = mutable
-    }
-
-    func clearFormatting() {
-        let range = selectedRange
-        guard range.length > 0 else { return }
-
-        let mutable = NSMutableAttributedString(attributedString: attributedText)
-        let safe = safeRange(range, length: mutable.length)
-
-        mutable.removeAttribute(.font, range: safe)
-        mutable.removeAttribute(.underlineStyle, range: safe)
-        mutable.removeAttribute(.link, range: safe)
-
-        mutable.addAttribute(.font, value: self.font ?? .systemFont(ofSize: 16), range: safe)
-        attributedText = mutable
-    }
-
-    // MARK: typingAttributes (next typing) [web:94]
-    func setTypingFont(_ font: UIFont) {
-        var attrs = typingAttributes
-        attrs[.font] = font
-        typingAttributes = attrs
-    }
-
-    func toggleTypingTrait(_ trait: UIFontDescriptor.SymbolicTraits) {
-        var attrs = typingAttributes
-        let currentFont = (attrs[.font] as? UIFont) ?? (self.font ?? .systemFont(ofSize: 16))
-
-        var traits = currentFont.fontDescriptor.symbolicTraits
-        if traits.contains(trait) { traits.remove(trait) } else { traits.insert(trait) }
-
-        let desc = currentFont.fontDescriptor.withSymbolicTraits(traits) ?? currentFont.fontDescriptor
-        let newFont = UIFont(descriptor: desc, size: currentFont.pointSize)
-
-        attrs[.font] = newFont
-        typingAttributes = attrs
-    }
-
-    func toggleTypingUnderline() {
-        var attrs = typingAttributes
-        let current = (attrs[.underlineStyle] as? Int) ?? 0
-        attrs[.underlineStyle] = (current == 0) ? NSUnderlineStyle.single.rawValue : 0
-        typingAttributes = attrs
-    }
-
-    func clearTypingFormatting() {
-        var attrs = typingAttributes
-        attrs.removeValue(forKey: .underlineStyle)
-        attrs.removeValue(forKey: .link)
-
-        // keep current font if exists, else default
-        if attrs[.font] == nil {
-            attrs[.font] = self.font ?? .systemFont(ofSize: 16)
-        }
-        typingAttributes = attrs
-    }
-
-    private func safeRange(_ range: NSRange, length: Int) -> NSRange {
-        let loc = max(0, min(range.location, length))
-        let maxLen = max(0, length - loc)
-        let len = max(0, min(range.length, maxLen))
-        return NSRange(location: loc, length: len)
+        selectedRange = NSRange(location: range.location + 1, length: 0)
     }
 }

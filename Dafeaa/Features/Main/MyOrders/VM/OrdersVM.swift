@@ -52,6 +52,59 @@ final class OrdersVM : ObservableObject {
     var offersList   : [OffersData]         { get {return _offersList }  set {} }
 //    var offersData   : ShowOfferData?       { get {return _offersData }  set {} }
 
+    // Add this property to OrdersVM class
+    @Published var mockTrackingEvents: [TrackingEvent] = [
+        TrackingEvent(
+            date: "2026-01-18",
+            time: "12:51:57",
+            typeCode: "PU",
+            description: "Shipment picked up",
+            serviceArea: [TrackingEvent.ServiceArea(code: "CAN", description: "Guangzhou-CN")],
+            signedBy: nil
+        ),
+        TrackingEvent(
+            date: "2026-01-18",
+            time: "18:11:01",
+            typeCode: "AF",
+            description: "Arrived at DHL Sort Facility  GUANGZHOU,AP-CHINA, PEOPLES REPUBLIC",
+            serviceArea: [TrackingEvent.ServiceArea(code: "CAN", description: "Guangzhou-CN")],
+            signedBy: nil
+        ),
+        TrackingEvent(
+            date: "2026-01-19",
+            time: "01:15:59",
+            typeCode: "PL",
+            description: "Processed at HONG KONG-HONG KONG SAR, CHINA",
+            serviceArea: [TrackingEvent.ServiceArea(code: "HKG", description: "Hong Kong-HK")],
+            signedBy: nil
+        ),
+        TrackingEvent(
+            date: "2026-01-19",
+            time: "21:43:26",
+            typeCode: "PL",
+            description: "Processed at HONG KONG-HONG KONG SAR, CHINA",
+            serviceArea: [TrackingEvent.ServiceArea(code: "HKG", description: "Hong Kong-HK")],
+            signedBy: nil
+        ),
+        TrackingEvent(
+            date: "2026-01-20",
+            time: "12:19:59",
+            typeCode: "WC",
+            description: "Shipment is out with courier for delivery",
+            serviceArea: [TrackingEvent.ServiceArea(code: "YHM", description: "Brampton-CA")],
+            signedBy: nil
+        ),
+        TrackingEvent(
+            date: "2026-01-20",
+            time: "13:14:49",
+            typeCode: "OK",
+            description: "Delivered",
+            serviceArea: [TrackingEvent.ServiceArea(code: "YHM", description: "Brampton-CA")],
+            signedBy: ""
+        )
+    ]
+
+    
     func validations(dynamicLinkId:Int,addressId:Int,products:[[String:Any]]){
          if addressId == 0 {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message:"please choose address".localized())
@@ -155,8 +208,8 @@ final class OrdersVM : ObservableObject {
             floatNum: nil,
             countryCode: ordersModelV3.data?.countryCode,
             cityName: ordersModelV3.data?.cityName, postalCode: ordersModelV3.data?.postalCode,
-            provinceCode: ordersModelV3.data?.provinceCode
-            
+            provinceCode: ordersModelV3.data?.provinceCode,
+            totalVatWithCommission: ordersModelV3.data?.totalCommissionWithVat ?? 0
         )
         
         return OrderModel(
@@ -485,6 +538,8 @@ final class OrdersVM : ObservableObject {
         name: String,
         descriptionAttributed: NSAttributedString,
         price: String,
+        offerPrice: String,
+        haveOfferPrice: Bool,
         images: [UIImage],
         weight: String,
         length: String,
@@ -511,6 +566,13 @@ final class OrdersVM : ObservableObject {
             return
         }
 
+        if haveOfferPrice {
+            if offerPrice.isBlank || (Double(price.convertDigitsToEng) ?? 0) <= 0 {
+                toast = FancyToast(type: .error, title: "Error".localized(), message: "validation_offer_discount_price".localized())
+                return
+            }
+        }
+        
         if images.isEmpty {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "validation_offer_images".localized())
             return
@@ -540,7 +602,7 @@ final class OrdersVM : ObservableObject {
         }
 
         
-        let params: [String: Any] = [
+        var params: [String: Any] = [
             "name": name,
             "description": htmlDescription,
             "price": Double(price.convertDigitsToEng) ?? 0,
@@ -550,6 +612,10 @@ final class OrdersVM : ObservableObject {
             "height": height.convertDigitsToEng,
             "planned_shipping_date_and_time": plannedShippingDateAndTime.convertDigitsToEng
         ]
+        
+        if haveOfferPrice {
+            params.updateValue(Double(offerPrice.convertDigitsToEng) ?? 0, forKey: "offer_price")
+        }
         self.createOrderLinkByMerchant(param: params, selectedImages: images, selectedShippingCompanies: shippingCompanies)
     }
 
@@ -629,10 +695,10 @@ final class OrdersVM : ObservableObject {
     }
     
     
-    func getShippingRates(company: String,for productId: Int,from shipperAddressId: Int, to receiverAddressId: Int ){
+    func getShippingRates(company: String,for productId: Int,/*from shipperAddressId: Int,*/ to receiverAddressId: Int ){
         
         let param : [String:Any] = ["product_id":productId,
-                                    "shipper_address_id":shipperAddressId,
+//                                    "shipper_address_id":shipperAddressId,
                                     "receiver_address_id":receiverAddressId]
         apiV3.shippingRates(company: company, params: param) { result in
             switch result {

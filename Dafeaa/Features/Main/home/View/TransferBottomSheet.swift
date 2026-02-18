@@ -32,13 +32,13 @@ struct TransferBottomSheet: View {
                     image: .mobile)
                 .focused($focusedField, equals: .phone)
                 .id(FormField.phone)
-                CustomMainTextField(text: $amount, placeHolder: "transferAmount".localized(),keyBoardType: .numberPad,fieldType: .price)
+                CustomMainTextField(text: $amount, placeHolder: "transferAmount".localized(),keyBoardType: .decimalPad,fieldType: .price)
                     .focused($focusedField, equals: .amount)
                     .id(FormField.amount)
 
                 Spacer(minLength:60 )
                 ReusableButton(buttonText:"transferBalance".localized(), isEnabled: true) {
-                    viewModel.validateTransferAmount(phone: phoneNumber, amount: amount)
+                    viewModel.validateTransferAmount(phone: phoneNumber.normalizePhoneNumber, amount: amount)
                 }
                 .onChange(of: viewModel.isUserFound, { _, newValue in
                     if newValue {

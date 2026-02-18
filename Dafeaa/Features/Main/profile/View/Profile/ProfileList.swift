@@ -38,7 +38,7 @@ struct ProfileList: View {
                         )
                         NavigationLinkComponent(
                             destination: SavedIBANsView(),
-                            label: "Saved IBAN",
+                            label: "Saved IBANs",
                             image: Image(.iconAddress)
                         )
                         Button {

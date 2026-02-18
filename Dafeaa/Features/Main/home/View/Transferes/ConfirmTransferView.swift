@@ -68,13 +68,13 @@ struct ConfirmTransferView: View {
                         VStack(spacing: 24) {
                             // Amount
                             
-                            infoRow(title: "Amount", value:  "\(String(format: "%.2f", Double(amount) ?? 0))", isPrice: true)
+                            infoRow(title: "amount".localized(), value:  "\(String(format: "%.2f", Double(amount) ?? 0))", isPrice: true)
                             
                             // Fees
-                            infoRow(title: "Fees", value: fees, isPrice: true)
+                            infoRow(title: "fees".localized(), value: fees, isPrice: true)
                                                         
                             // Total
-                            infoRow(title: "Total", value: "\(String(format: "%.2f", total))",isPrice: true, color: .black222222)
+                            infoRow(title: "total".localized(), value: "\(String(format: "%.2f", total))",isPrice: true, color: .black222222)
                         }
                         
                         .padding(.horizontal,24)
@@ -95,7 +95,7 @@ struct ConfirmTransferView: View {
                 VStack(spacing: 12) {
                     ReusableButton(buttonText: "confirmTransfer") {
                         // Handle transfer confirmation
-                        viewModel.confirmTransfer(phone: phoneNumber, amount: total)
+                        viewModel.confirmTransfer(phone: phoneNumber.normalizePhoneNumber, amount: total)
                     }
                     
                     ReusableButton(

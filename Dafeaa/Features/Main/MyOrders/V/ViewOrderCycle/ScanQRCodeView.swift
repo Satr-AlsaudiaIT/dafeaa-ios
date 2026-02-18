@@ -41,20 +41,6 @@ struct QRCodeScannerOverlay: View {
                     NavigationBarView(title: "confirmReceivingOrder".localized()) {
                         isShowing = false
                     }
-//                    HStack {
-//                        Button(action: {
-//                            isShowing = false
-//                        }, label: {
-//                            Image("backArrow")
-//                                .resizable()
-//                                .frame(width: 10, height: 17)
-//                                
-//                        })
-//                        .padding(.horizontal,24)
-//                        .padding(.vertical,20)
-//                        Spacer()
-//                    }
-//                    .background(Color(.primary))
                     
                     Spacer()
                 }

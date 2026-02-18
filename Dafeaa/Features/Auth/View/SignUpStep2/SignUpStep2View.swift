@@ -43,7 +43,7 @@ struct SignUpStep2View: View {
                    
                    HStack {
                        RoundedRectangle(cornerRadius: 2).foregroundColor(Color(.primary))
-                       RoundedRectangle(cornerRadius: 2).foregroundColor(Color(.primary))
+//                       RoundedRectangle(cornerRadius: 2).foregroundColor(Color(.primary))
                    }
                    .frame(maxWidth: .infinity)
                    .frame(height: 3)
@@ -100,10 +100,10 @@ struct SignUpStep2View: View {
                            Spacer()
                            
                            ReusableButton(buttonText: "createAccount", isEnabled: true) {
-                               viewModel.validateRegister(photo: selectedProfileImage, name: name, email: email, phone: phoneNumber, accountType: selectedOption, password: password, confirmPassword: confirmPassword, isAgreeChecked: isAgreeChecked)
+                               viewModel.validateRegister(photo: selectedProfileImage, name: name, email: email, phone: phoneNumber.normalizePhoneNumber, accountType: selectedOption, password: password, confirmPassword: confirmPassword, isAgreeChecked: isAgreeChecked)
                            }
                            .navigationDestination(isPresented: $viewModel._isSignUpSuccess) {
-                               OTPConfirmationView(phone: phoneNumber, isForgetPassword: false)
+                               OTPConfirmationView(phone: phoneNumber.normalizePhoneNumber, isForgetPassword: false)
                            }
                            
                            HStack {

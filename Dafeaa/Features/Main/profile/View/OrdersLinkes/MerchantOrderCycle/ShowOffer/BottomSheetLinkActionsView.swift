@@ -18,40 +18,79 @@ struct BottomSheetLinkActionsView: View {
         HStack {
             VStack(alignment: .leading,spacing: 24) {
                 // Copy Button
-                Button(action: { copyURL() }, label: {
-                    HStack(spacing: 3) {
-                        Image(.copy)
-                            .resizable()
-                            .frame(width: 20,height: 20)
-                        Text("copy".localized())
-                            .textModifier(.plain, 14, .black222222)
-                    }
-                })
                 
-                // QR Code Share Button
-                Button(action: { shareQRCode() }, label: {
-                    Image(.qrcodeShare)
+                HStack(spacing: 3) {
+                    Image(.copy)
                         .resizable()
                         .frame(width: 20,height: 20)
-                    Text("code".localized())
+                    Text("copy_link_offer".localized())
                         .textModifier(.plain, 14, .black222222)
-                    
-                })
-                
-                // Share Link Button
-                let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
-                if let offerID = offer?.id, let offerCode = offer?.code, let url = URL(string: "https://dafea.com.sa/offers/\(offerCode)") {
-                    ShareLink(item: url) {
-                        HStack(spacing: 3) {
-                            Image(.share)
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                            Text("share".localized())
+                    Spacer()
+                    HStack(spacing: 10) {
+                        Button(action: { copyCode() }, label: {
+                            Text("code".localized())
                                 .textModifier(.plain, 14, .black222222)
-                        }
+                                .padding(.horizontal,10)
+                                .padding(.vertical,4)
+                                .overlay(
+                                    Capsule()
+                                        .stroke(Color.black222222, lineWidth: 1)
+                                )
+                        })
+                        Button(action: { copyURL() }, label: {
+                            Text("link_offer".localized())
+                                .textModifier(.plain, 14, .black222222)
+                                .padding(.horizontal,10)
+                                .padding(.vertical,4)
+                                .overlay(
+                                    Capsule()
+                                        .stroke(Color.black222222, lineWidth: 1)
+                                )
+                        })
                     }
                 }
                 
+                HStack(spacing: 3) {
+                    Image(.share)
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                    Text("share_offer".localized())
+                        .textModifier(.plain, 14, .black222222)
+                    Spacer()
+                    HStack(spacing: 10) {
+                        Button(action: { shareCode() }, label: {
+                            Text("code".localized())
+                                .textModifier(.plain, 14, .black222222)
+                                .padding(.horizontal,10)
+                                .padding(.vertical,4)
+                                .overlay(
+                                    Capsule()
+                                        .stroke(Color.black222222, lineWidth: 1)
+                                )
+                        })
+                        
+                        Button(action: { shareURL() }, label: {
+                            Text("link_offer".localized())
+                                .textModifier(.plain, 14, .black222222)
+                                .padding(.horizontal,10)
+                                .padding(.vertical,4)
+                                .overlay(
+                                    Capsule()
+                                        .stroke(Color.black222222, lineWidth: 1)
+                                )
+                        })
+                    }
+                }
+                
+                Button(action: { shareQRCode() }, label: {
+                    HStack(spacing: 3) {
+                        Image(.qrcodeShare)
+                            .resizable()
+                            .frame(width: 20,height: 20)
+                        Text("code_offer".localized())
+                            .textModifier(.plain, 14, .black222222)
+                    }
+                })
                 
                 // Delete Button
                 Button(action: { onDelete() }, label: {
@@ -74,11 +113,75 @@ struct BottomSheetLinkActionsView: View {
         
     }
     private func copyURL() {
-        let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
-        if let offerID = offer?.id, let offerCode = offer?.code {
+        if let _ = offer?.id, let offerCode = offer?.code {
             let urlString = "https://dafea.com.sa/offers/\(offerCode)"
             UIPasteboard.general.string = urlString
             self.toast = FancyToast(type: .info, title:"", message:  "copied successfully".localized())
+        }
+    }
+    
+    private func copyCode() {
+        if let offerCode = offer?.code {
+            UIPasteboard.general.string = offerCode
+            self.toast = FancyToast(type: .info, title:"", message: "copied successfully".localized())
+        }
+    }
+    
+    private func shareCode() {
+        if let _ = offer?.id, let offerCode = offer?.code {
+            let urlString = offerCode
+            
+            let activityViewController = UIActivityViewController(activityItems: [urlString], applicationActivities: nil)
+            
+            // Ensure the activityViewController is presented on the main thread
+            DispatchQueue.main.async {
+                // Get the current view controller from the window scene
+                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                   let rootViewController = windowScene.windows.first?.rootViewController {
+                    
+                    // Find the topmost presented view controller
+                    var topViewController = rootViewController
+                    while let presentedViewController = topViewController.presentedViewController {
+                        topViewController = presentedViewController
+                    }
+                    
+                    // Present the activityViewController from the topmost view controller
+                    topViewController.present(activityViewController, animated: true, completion: nil)
+                } else {
+                    print("Root view controller is nil")
+                }
+            }
+        } else {
+            print("Failed to generate QR code image")
+        }
+    }
+    
+    private func shareURL() {
+        if let _ = offer?.id, let offerCode = offer?.code {
+            let urlString = "https://dafea.com.sa/offers/\(offerCode)"
+            
+            let activityViewController = UIActivityViewController(activityItems: [urlString], applicationActivities: nil)
+            
+            // Ensure the activityViewController is presented on the main thread
+            DispatchQueue.main.async {
+                // Get the current view controller from the window scene
+                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                   let rootViewController = windowScene.windows.first?.rootViewController {
+                    
+                    // Find the topmost presented view controller
+                    var topViewController = rootViewController
+                    while let presentedViewController = topViewController.presentedViewController {
+                        topViewController = presentedViewController
+                    }
+                    
+                    // Present the activityViewController from the topmost view controller
+                    topViewController.present(activityViewController, animated: true, completion: nil)
+                } else {
+                    print("Root view controller is nil")
+                }
+            }
+        } else {
+            print("Failed to generate QR code image")
         }
     }
     

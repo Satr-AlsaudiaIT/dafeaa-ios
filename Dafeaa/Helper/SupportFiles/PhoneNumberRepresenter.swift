@@ -8,246 +8,7 @@
 import SwiftUI
 import FlagPhoneNumber
 
-struct CustomPasswordField: View {
-    
-    @Binding var password: String
-    @State var isPasswordVisible: Bool = false
-    var placeholder: String = "password"
-    @FocusState private var isFocused: Bool
 
-    var body: some View {
-        HStack {
-            Image(.securitySafe)
-                .foregroundColor(Color.yellow)
-                .frame(width: 20, height: 20)
-            
-            // Password TextField with Eye Toggle
-            ZStack {
-                if password.isEmpty {
-                    HStack {
-                        Text(placeholder.localized())
-                            .textModifier(.plain, 15, .grayB5B5B5)
-                        Spacer()
-                    }
-                }
-                if isPasswordVisible {
-                    TextField("", text: $password)
-                        .textModifier(.plain, 15, .black010202)
-                        .focused($isFocused)
-                    
-                }
-                else {
-                    SecureField("", text: $password)
-                        .textModifier(.plain, 15, .black010202)
-                        .focused($isFocused)
-                }
-            }
-            
-            // Eye Icon for showing/hiding password
-            Button(action: {
-                isPasswordVisible.toggle()
-            }) {
-                Image(isPasswordVisible ? .eyeSlash : .eye)
-                    
-            }
-        }
-        .frame(height: 48)
-        .padding(.horizontal,20)
-        .background(Color(.grayF6F6F6))
-        .cornerRadius(5)
-        .overlay(
-            RoundedRectangle(cornerRadius: 5)
-                .stroke(isFocused ? Color(.primary) : Color.clear, lineWidth: 1)
-        )
-        .onTapGesture {
-            isFocused = true // Set focus when the field is tapped
-        }
-    }
-}
-
-
-struct PhoneNumberField: View {
-    @Binding var phoneNumber: String
-    @Binding var selectedCountryCode: String
-    var placeholder: String = "phoneNumber"
-    var image: UIImage
-    @FocusState private var isFocused: Bool
-
-    var body: some View {
-        HStack {
-            // Icon on the left
-            if Constants.shared.isAR {
-                Image(uiImage: image)
-                    .foregroundColor(Color.yellow)
-                    .frame(width: 20, height: 20)
-            }
-            if !Constants.shared.isAR { Image(.phoneCountryCode)
-                        .resizable()
-                        .frame(width: 91, height: 48)
-                    .padding(.leading,-20)
-}
-//            Text("+966").textModifier(.plain, 15, .black222222)
-            // Phone number text field
-            ZStack {
-                if phoneNumber.isEmpty {
-                    HStack {
-                        Text(placeholder.localized())
-                            .textModifier(.plain, 15, .grayB5B5B5)
-                        Spacer()
-                    }
-                }
-                
-                TextField("", text: $phoneNumber)
-                    .textModifier(.plain, 15, .black010202)
-                    .keyboardType(.numberPad)
-                    .focused($isFocused) // Track the focus state
-                //            Text("+966").textModifier(.plain, 15, .black222222)
-                // Country code icon or additional UI on the right
-            }
-            if Constants.shared.isAR {
-                Image(.phoneCountryCode)
-                    .resizable()
-                    .frame(width: 91, height: 48)
-            }
-        }
-        .frame(height: 48)
-        .padding(.leading, 20)
-        .background(Color(.grayF6F6F6))
-        .cornerRadius(5)
-        .overlay(
-            RoundedRectangle(cornerRadius: 5)
-                .stroke(isFocused ? Color(.primary) : Color.clear, lineWidth: 1)
-        )
-        .onTapGesture {
-            isFocused = true // Set focus when the field is tapped
-        }
-    }
-}
-
-struct CustomMainTextField: View {
-    @Binding var text: String
-    @State var placeHolder: String
-    @State var image: ImageResource?
-    @FocusState private var isFocused: Bool
-    @State var keyBoardType: UIKeyboardType = .default
-    @State var fieldType: FieldType = .none
-    @State var showHeader: Bool = false
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            if showHeader == true {
-                Text(placeHolder.localized())
-                    .textModifier(.plain, 14, .black)
-            }
-            HStack {
-                if let image = image {
-                    Image(image)
-                        .resizable()
-                        .foregroundColor(Color.yellow)
-                        .frame(width: 20, height: 20)
-                }
-                VStack {
-                    ZStack {
-                        
-                        if text.isEmpty {
-                            HStack {
-                                Text(placeHolder.localized())
-                                    .textModifier(.plain, 15, .grayB5B5B5)
-                                Spacer()
-                            }
-                        }
-                        
-                        TextField("", text: $text)
-                            .textModifier(.plain, 15, .black010202)
-                            .focused($isFocused)
-                            .keyboardType(keyBoardType)
-                            .onChange(of: text) { newValue,oldValue in
-                                if fieldType == .arabicOnly || fieldType == .englishOnly {
-                                    validateInput(for: fieldType)
-                                }
-                            }
-                        
-                        switch fieldType {
-                        case .price:
-                            HStack {
-                                Spacer()
-                                Image(.riyal)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.gray8B8C86)
-                                    .frame(width: 15)
-                                //                            .padding(.trailing, 10)
-                            }
-                        case .percentage:
-                            HStack {
-                                Spacer()
-                                Text("%")
-                                    .textModifier(.plain,  13, .gray616161)
-                                    .padding(.trailing, 10)
-                            }
-                            
-                        case .optional:
-                            HStack {
-                                Spacer()
-                                Text("optional".localized())
-                                    .textModifier(.plain,  13, .gray616161)
-                                //                            .padding(.trailing, 10)
-                            }
-                        case .dimensional:
-                            HStack {
-                                Spacer()
-                                Text("cm".localized())
-                                    .textModifier(.plain,  13, .gray616161)
-                                //                            .padding(.trailing, 10)
-                            }
-                        case .weight:
-                            HStack {
-                                Spacer()
-                                Text("kg".localized())
-                                    .textModifier(.plain,  13, .gray616161)
-                                //                            .padding(.trailing, 10)
-                            }
-                        case .daysNumber :
-                            HStack {
-                                Spacer()
-                                Text("days".localized())
-                                    .textModifier(.plain,  13, .gray616161)
-                                //                            .padding(.trailing, 10)
-                            }
-                        default:
-                            Text("")
-                            
-                        }
-                        
-                        
-                    }
-                }
-            }
-            .frame(height: 48)
-            .padding(.horizontal, 20)
-            .background(Color(.grayF6F6F6))
-            .cornerRadius(5)
-            .overlay(
-                RoundedRectangle(cornerRadius: 5)
-                    .stroke(isFocused ? Color(.primary) : Color.clear, lineWidth: 1)
-            )
-            .onTapGesture {
-                isFocused = true // Set the focus when the user taps on the text field
-            }
-        }
-    }
-    private func validateInput(for fieldType: FieldType) {
-            switch fieldType {
-            case .arabicOnly:
-                // Allow only Arabic characters
-                text = text.filter { $0.isArabic }
-            case .englishOnly:
-                // Allow only English characters
-                text = text.filter { $0.isEnglish }
-            default:
-                break
-            }
-        }
-}
 extension Character {
     var isArabic: Bool {
         return self >= "\u{0600}" && self <= "\u{06FF}"
@@ -261,28 +22,54 @@ struct ButtonWithImageView: View {
     var imageName: ImageResource
     var trailingImageName: ImageResource?
     var text: String
+    var details: String?
+    var showCopyIcon: Bool = false
     var action: () -> Void
+    var onCopy: (() -> Void)?
 
     var body: some View {
-        Button(action: action) {
-            HStack {
-                Image(imageName)
-                    .frame(width: 20, height: 20)
-                
-                Text(text)
-                    .textModifier(.plain, 14, .black292D32)
-                Spacer()
-                if let trailingImageName  {
-                    Image(trailingImageName)
-                    .frame(width: 16, height: 16)
+        HStack(spacing: 0) {
+            // Main button (takes most space)
+            Button(action: action) {
+                HStack(spacing: 10) {
+                    Image(imageName)
+                        .frame(width: 20, height: 20)
+                    
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(text)
+                            .textModifier(.plain, 14, .black292D32)
+                            .multilineTextAlignment(.leading)
+                        
+                        if let details, !details.isEmpty {
+                            Text(details)
+                                .textModifier(.plain, 12, .black292D32.opacity(0.6))
+                                .multilineTextAlignment(.leading)
+                        }
+                    }
+                    
+                    Spacer()
+                    
+                    if let trailingImageName {
+                        Image(trailingImageName)
+                            .frame(width: 16, height: 16)
+                    }
                 }
+                .frame(height: 60)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 10)
             }
-            .frame(height: 56)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 20)
-            .background(Color(.grayF6F6F6))
-            .cornerRadius(5)
+            
+            if showCopyIcon, let onCopy = onCopy {
+                Button(action: onCopy) {
+                    Image(.copy)
+                       
+                }
+                .padding(.trailing)
+            }
         }
+        .background(Color(.grayF6F6F6))
+        .cornerRadius(5)
+        .shadow(color: Color(.gray919191).opacity(0.3), radius: 1, x: 0, y: 1)
     }
 }
 
@@ -396,14 +183,3 @@ struct CustomPhoneNumberField: View {
 
 
 
-enum FieldType{
-    case price
-    case percentage
-    case none
-    case arabicOnly
-    case englishOnly
-    case optional
-    case dimensional
-    case daysNumber
-    case weight
-}

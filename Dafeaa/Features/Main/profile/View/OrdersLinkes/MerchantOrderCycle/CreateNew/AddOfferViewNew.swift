@@ -69,14 +69,14 @@ struct AddOfferViewNew: View {
                                 }
                             }
                             
-                            CustomMainTextField(text: $price, placeHolder: "productPrice",keyBoardType: .numberPad,fieldType: .price, showHeader: true)
+                            CustomMainTextField(text: $price, placeHolder: "productPrice",keyBoardType: .decimalPad,fieldType: .price, showHeader: true)
                                 .focused($focusedField, equals: .price)
                                 .id(FormField.price)
                             
                             if showOfferPriceTextField {
                                 CustomMainTextField(text: $offerPrice,
                                                    placeHolder: "offerPrice",
-                                                   keyBoardType: .numberPad,
+                                                   keyBoardType: .decimalPad,
                                                    fieldType: .price,
                                                     showHeader: true)
                                     .focused($focusedField, equals: .offerPrice)
@@ -181,19 +181,19 @@ struct AddOfferViewNew: View {
                           
                             VStack(alignment: .leading, spacing: 12) {
                                 HStack(spacing: 12) {
-                                    CustomMainTextField(text: $weight, placeHolder: "Weight", keyBoardType: .numberPad, fieldType: .weight, showHeader: true)
+                                    CustomMainTextField(text: $weight, placeHolder: "Weight", keyBoardType: .decimalPad, fieldType: .weight, showHeader: true)
                                         .focused($focusedField, equals: .weight)
                                         .id(FormField.weight)
-                                    CustomMainTextField(text: $length, placeHolder: "Length", keyBoardType: .numberPad, fieldType: .dimensional,showHeader: true)
+                                    CustomMainTextField(text: $length, placeHolder: "Length", keyBoardType: .decimalPad, fieldType: .dimensional,showHeader: true)
                                         .focused($focusedField, equals: .length)
                                         .id(FormField.length)
                                 }
 
                                 HStack(spacing: 12) {
-                                    CustomMainTextField(text: $width, placeHolder: "Width", keyBoardType: .numberPad, fieldType: .dimensional, showHeader: true)
+                                    CustomMainTextField(text: $width, placeHolder: "Width", keyBoardType: .decimalPad, fieldType: .dimensional, showHeader: true)
                                         .focused($focusedField, equals: .width)
                                         .id(FormField.width)
-                                    CustomMainTextField(text: $height, placeHolder: "Height", keyBoardType: .numberPad, fieldType: .dimensional, showHeader: true)
+                                    CustomMainTextField(text: $height, placeHolder: "Height", keyBoardType: .decimalPad, fieldType: .dimensional, showHeader: true)
                                         .focused($focusedField, equals: .height)
                                         .id(FormField.height)
                                 }
@@ -222,7 +222,7 @@ struct AddOfferViewNew: View {
                     .padding(24)
 
                     ReusableButton(buttonText: "saveBtn", action: {
-                        viewModel.validateCreateOfferLinkV3(name: name, descriptionAttributed: descriptionAttributed, price: price, images: selectedProductImage, weight: weight, length: length, width: width, height: height, shippingCompanies: selectedShippingCompanies, plannedShippingDateAndTime: daysNumber)
+                        viewModel.validateCreateOfferLinkV3(name: name, descriptionAttributed: descriptionAttributed, price: price, offerPrice: offerPrice, haveOfferPrice :showOfferPriceTextField , images: selectedProductImage, weight: weight, length: length, width: width, height: height, shippingCompanies: selectedShippingCompanies, plannedShippingDateAndTime: daysNumber)
                     })
                     .padding(24)
                 }

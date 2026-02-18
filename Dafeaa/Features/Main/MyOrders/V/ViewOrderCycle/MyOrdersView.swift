@@ -79,7 +79,7 @@ struct MyOrdersView: View {
                                                     "MySales".localized()], selectedSegment:$selectedSegment)
                     .onChange(of: selectedSegment) { _, newValue in
                         
-                        selectedFilterStatus = "current"
+//                        selectedFilterStatus = "current"
                         
                         if newValue == 0 {
                             viewModel.orders(skip: 0, status: selectedFilterStatus, type: "client")
@@ -87,12 +87,7 @@ struct MyOrdersView: View {
                         else {
                             viewModel.orders(skip: 0, status: selectedFilterStatus, type: "merchant")
                         }
-                        //                            if userType == 1{
-                        //                                viewModel.orders(skip: 0, status: newValue == 1 ? "current":"history")
-                        //                            }
-                        //                            else {
-                        //                                viewModel.orders(skip: 0, status: newValue == 1 ? "current":"history")
-                        //                            }
+                        
                     }
                    
                     VStack(alignment: .leading,spacing: 24) {
@@ -250,6 +245,7 @@ struct OrderComponent: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(order?.name ?? "")
                             .textModifier(.plain, 14, .black222222)
+                            .lineLimit(1)
                         let statusTitle = orderStatusEnum(rawValue: order?.orderStatus ?? 0)?.title ?? ""
                         let createdAt = order?.createdAt ?? ""
                         let time = order?.time ?? ""

@@ -40,7 +40,7 @@ struct ForgotPasswordView: View {
                             .padding(.top,12)
                         
                         ReusableButton(buttonText: "send"){
-                            viewModel.validateForgetPasswordPhone(phone:phoneNumber)
+                            viewModel.validateForgetPasswordPhone(phone:phoneNumber.normalizePhoneNumber)
                         }.padding(.top,16)
                             .navigationDestination(isPresented: $isSendSuccess) {
                                 OTPConfirmationView()

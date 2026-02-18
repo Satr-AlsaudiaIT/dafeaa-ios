@@ -36,112 +36,127 @@ struct OrderClientDetailsView: View {
                         self.presentationMode.wrappedValue.dismiss()
                     }
                 }
-                
-                VStack(alignment: .leading, spacing: 24) {
-                    ScrollView(showsIndicators: false) {
-                        VStack(spacing: 24) {
-                            
-                            if let orderStatusInt = viewModel.orderData?.orderStatus {
-                                PathViewChoice(orderStatus: .constant( orderStatusEnum(rawValue: orderStatusInt) ?? .pending))
-                                    .padding(.horizontal,-10)
-                                    .padding(.vertical,-10)
-                            }
-                            
-                            //  Order Items Section
-                            VStack(spacing: 8) {
-                                Text("showOrderDetails".localized())
-                                    .textModifier(.plain, 15,  .black222222)
-                                    .frame(maxWidth: .infinity,alignment: .leading)
+                if !viewModel.isLoading && !viewModel.isFailed {
+                    VStack(alignment: .leading, spacing: 24) {
+                        ScrollView(showsIndicators: false) {
+                            VStack(spacing: 24) {
                                 
-                                ZStack{
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .stroke(Color(.black).opacity(0.1), lineWidth: 1)
-                                        .background(RoundedRectangle(cornerRadius: 16).fill(Color.clear))
-                                    VStack(spacing: 8) {
-                                        ForEach(0..<(viewModel.orderData?.products?.count ?? 3),id: \.self){ index in
-                                            Button(action: {
-                                                showingProductDetails = true
-                                                selectedProduct = viewModel.orderData?.products?[index] ?? selectedProduct
-                                            }) {
-                                                OrderItemView(itemName:viewModel.orderData?.products?[index].name ?? "",
-                                                              price: viewModel.orderData?.products?[index].price ?? 0,
-                                                              offerPrice: viewModel.orderData?.products?[index].offerPrice ?? 0,
-                                                              amount: viewModel.orderData?.products?[index].amount ?? 0,
-                                                              isLast: index == (viewModel.orderData?.products?.count ?? 3 ) - 1 )
-                                            }
-                                        }
-                                    } .padding(.horizontal,16)
+                                if let orderStatusInt = viewModel.orderData?.orderStatus {
+                                    PathViewChoice(orderStatus: .constant( orderStatusEnum(rawValue: orderStatusInt) ?? .pending))
+                                        .padding(.horizontal,-10)
+                                        .padding(.vertical,-10)
                                 }
-                            }
-                            // Payment Info Section
-                            VStack(spacing: 8) {
-                                Text("paymentInfo".localized())
-                                    .textModifier(.plain, 15,  .black222222)
-                                    .frame(maxWidth: .infinity,alignment: .leading)
-                                if viewModel.orderData?.orderPrice != nil {
-                                    PaymentInfoView(breakdown: PaymentDetails(commission: Double( viewModel.orderData?.commissionValue ?? 0), commissionMaxPrice: Double(viewModel.orderData?.maxCommissionValue ?? "0") ?? 0),itemsPrice: $orderPrice,totalPrice: viewModel.orderData?.totalPrice ?? 0, deliveryPrice: viewModel.orderData?.deliveryPrice ?? 0,  isShowDetails: true,isCalculateCommission: false)
-                                }
-                             
-                                        
-                                  
                                 
-                            }
-                            
-                            
-                            // Shipping Address Section
-                            VStack(spacing: 8) {
-                                Text("addressInfo".localized())
-                                    .textModifier(.plain, 15,  .black222222)
-                                    .frame(maxWidth: .infinity,alignment: .leading)
-                                
-                                ZStack{
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .stroke(Color(.black).opacity(0.1), lineWidth: 1)
-                                        .background(RoundedRectangle(cornerRadius: 16)
-                                            .fill(Color.clear))
+                                //  Order Items Section
+                                VStack(spacing: 8) {
+                                    Text("showOrderDetails".localized())
+                                        .textModifier(.plain, 15,  .black222222)
+                                        .frame(maxWidth: .infinity,alignment: .leading)
                                     
-                                    VStack(spacing: 8) {
-                                        if viewModel.orderData != nil {
-                                            
-                                            AddressView(
-                                                name: Constants.userName,
-                                                phone: Constants.phone,
-                                                addressDetails: viewModel.orderData
-                                            )
+                                    ZStack{
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .stroke(Color(.black).opacity(0.1), lineWidth: 1)
+                                            .background(RoundedRectangle(cornerRadius: 16).fill(Color.clear))
+                                        VStack(spacing: 8) {
+                                            ForEach(0..<(viewModel.orderData?.products?.count ?? 3),id: \.self){ index in
+                                                Button(action: {
+                                                    showingProductDetails = true
+                                                    selectedProduct = viewModel.orderData?.products?[index] ?? selectedProduct
+                                                }) {
+                                                    let product = viewModel.orderData?.products?[index] ?? selectedProduct
+                                                    let images = product.images ?? []
+                                                    let image = images.first?.file ?? ""
+                                                    
+                                                    OrderItemView(image: image, itemName:viewModel.orderData?.products?[index].name ?? "",
+                                                                  price: viewModel.orderData?.products?[index].price ?? 0,
+                                                                  offerPrice: viewModel.orderData?.products?[index].offerPrice ?? 0,
+                                                                  amount: viewModel.orderData?.products?[index].amount ?? 0,
+                                                                  isLast: index == (viewModel.orderData?.products?.count ?? 3 ) - 1 )
+                                                }
+                                            }
+                                        } .padding(.horizontal,16)
+                                    }
+                                }
+                                
+
+                               
+
+                                // Payment Info Section
+                                VStack(spacing: 8) {
+                                    Text("paymentInfo".localized())
+                                        .textModifier(.plain, 15,  .black222222)
+                                        .frame(maxWidth: .infinity,alignment: .leading)
+                                    if viewModel.orderData?.orderPrice != nil {
+                                        PaymentInfoView(breakdown: PaymentDetails(commission: Double( viewModel.orderData?.totalVatWithCommission ?? 0), commissionMaxPrice: Double(viewModel.orderData?.maxCommissionValue ?? "0") ?? 0),itemsPrice: $orderPrice,totalPrice: viewModel.orderData?.totalPrice ?? 0, deliveryPrice: viewModel.orderData?.deliveryPrice ?? 0,  isShowDetails: true,isCalculateCommission: false)
+                                    }
+                                    
+                                    
+                                    
+                                    
+                                }
+                                
+                                
+                                // Shipping Address Section
+                                VStack(spacing: 8) {
+                                    Text("addressInfo".localized())
+                                        .textModifier(.plain, 15,  .black222222)
+                                        .frame(maxWidth: .infinity,alignment: .leading)
+                                    
+                                    ZStack{
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .stroke(Color(.black).opacity(0.1), lineWidth: 1)
+                                            .background(RoundedRectangle(cornerRadius: 16)
+                                                .fill(Color.clear))
+                                        
+                                        VStack(spacing: 8) {
+                                            if viewModel.orderData != nil {
+                                                
+                                                AddressView(
+                                                    name: Constants.userName,
+                                                    phone: Constants.phone,
+                                                    addressDetails: viewModel.orderData
+                                                )
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            // Customer Service Section
-                            Button(action: {
-                                isNavigateToContactInfo = true
-                            }) {
-                                Text("problemInfo".localized())
-                                    .textModifier(.plain, 15,  .redEE002B)
-                                    .frame(maxWidth: .infinity,alignment: .leading)
-                                    .underline()
-                            }
-                            
-                            
-                            
-                            // Confirm Button
-                            if viewModel.orderData?.orderStatus ?? 0 == 3 {
                                 
-                                ReusableButton(buttonText: "confirmReceivingOrder".localized(),isEnabled: true){
-                                    confirmReceivingOrder = true
+                                if !viewModel.mockTrackingEvents.isEmpty && viewModel.orderData?.orderStatus ?? 0 >= 3 {
+                                    TrackingEventsView(events: viewModel.mockTrackingEvents)
                                 }
-                            }
-                            
-                            else if viewModel.orderData?.orderStatus == 1 || viewModel.orderData?.orderStatus == 2 {
-                                ReusableButton(buttonText: "Cancel".localized(),isEnabled: true){
-                                    isCancelTapped = true
+                                
+                                // Customer Service Section
+                                Button(action: {
+                                    isNavigateToContactInfo = true
+                                }) {
+                                    Text("problemInfo".localized())
+                                        .textModifier(.plain, 15,  .redEE002B)
+                                        .frame(maxWidth: .infinity,alignment: .leading)
+                                        .underline()
+                                }
+                                
+                                
+                                
+                                // Confirm Button
+                                if viewModel.orderData?.orderStatus ?? 0 == 3 {
                                     
+                                    ReusableButton(buttonText: "confirmReceivingOrder".localized(),isEnabled: true){
+                                        confirmReceivingOrder = true
+                                    }
+                                }
+                                
+                                else if viewModel.orderData?.orderStatus == 1 || viewModel.orderData?.orderStatus == 2 {
+                                    ReusableButton(buttonText: "Cancel".localized(),isEnabled: true){
+                                        isCancelTapped = true
+                                        
+                                    }
                                 }
                             }
                         }
                     }
+                    .padding(24)
                 }
-                .padding(24)
+                Spacer()
             }
             .navigationDestination(isPresented: $isNavigateToContactInfo) {
                 HelpAndSupportView()

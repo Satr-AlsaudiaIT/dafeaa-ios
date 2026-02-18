@@ -130,10 +130,9 @@ struct OfferComponent: View {
                 VStack(alignment: .leading, spacing: 0) {
                     Text(offer?.name ?? "")
                         .textModifier(.plain, 15, .black1E1E1E)
- 
-              
-                    HTMLDescriptionView(html: offer?.description  ?? "")
-
+                        .lineLimit(1)
+                    HTMLDescriptionPreviewView(html: offer?.description  ?? "")
+//                    HTMLDescriptionView(html: offer?.description  ?? "")
                 }
             }
             Spacer()

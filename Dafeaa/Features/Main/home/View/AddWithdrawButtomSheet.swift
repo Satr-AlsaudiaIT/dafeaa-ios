@@ -52,12 +52,12 @@ struct AddWithdrawBottomSheet: View {
                 .padding(.horizontal)
                 .environment(\.layoutDirection, .rightToLeft)
                 TextField("0", text: $amount)
-                    .keyboardType(.numberPad)
+                    .keyboardType(.decimalPad)
                     .multilineTextAlignment(.center)
                     .textModifier(.plain, 43, .black2B2D33)
-                    .frame(minHeight: 50) // Explicit height for text field
+                    .frame(minHeight: 50) 
                 
-                Text(actionType == .addBalance ? "noExtraFees".localized() : "")
+                Text(actionType == .addBalance ? "" : "")//"noExtraFees".localized()
                     .textModifier(.plain, 17, actionType == .addBalance ? .gray919191 : Color(.redD73D24))
                     .multilineTextAlignment(.center)
                     .padding(.bottom)

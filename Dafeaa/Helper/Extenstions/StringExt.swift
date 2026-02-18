@@ -59,11 +59,6 @@ extension String {
         return self.count == 2
     }
     
-    var isValidYear: Bool {
-        guard let year = Int(self), year >= 2026 && year <= 2050 else { return false }
-        return self.count == 4
-    }
-    
     var isValidCVV: Bool {
         let cleaned = self.replacingOccurrences(of: " ", with: "")
         guard cleaned.count >= 3 && cleaned.count <= 4 else { return false }
@@ -153,3 +148,58 @@ extension NSAttributedString {
         return html.isEmpty ? self.string : html
     }
 }
+
+extension String {
+    var hasMultipleWords: Bool {
+        let trimmed = self.trimmingCharacters(in: .whitespaces)
+        let words = trimmed.components(separatedBy: .whitespaces).filter { !$0.isEmpty }
+        return words.count >= 2
+    }
+    
+    var containsNumbers: Bool {
+        return self.rangeOfCharacter(from: .decimalDigits) != nil
+    }
+    
+    var isValidCardHolderName: Bool {
+        let trimmed = self.trimmingCharacters(in: .whitespaces)
+        guard !trimmed.isEmpty else { return false }
+        guard hasMultipleWords else { return false }
+        guard !containsNumbers else { return false }
+        return true
+    }
+}
+
+extension String {
+    enum YearValidationError {
+        case invalidFormat
+        case expired
+        case valid
+    }
+    
+    var yearValidationStatus: YearValidationError {
+        // Check format first
+        guard self.count == 4 else {
+            return .invalidFormat
+        }
+        
+        let calendar = Calendar.current
+        let currentYear = calendar.component(.year, from: Date())
+        let maxYear = currentYear + 10
+        
+        guard let year = Int(self) else {
+            return .invalidFormat
+        }
+        
+        guard year >= currentYear && year <= maxYear else {
+            return .expired
+        }
+        
+        return .valid
+    }
+    
+    var isValidYear: Bool {
+        return yearValidationStatus == .valid
+    }
+}
+
+

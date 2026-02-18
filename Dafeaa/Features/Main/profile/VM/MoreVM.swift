@@ -140,8 +140,8 @@ final class MoreVM : ObservableObject {
             "cityName": city,
             "provinceCode": governorate,
             "countryCode": countyCode,
-            "lat": lat ?? 0.0,
-            "lng": lng ?? 0.0
+            "lat": String(lat ?? 0.0 ),
+            "lng": String(lng ?? 0.0)
         ]
         
         if !postalCode.isBlank {

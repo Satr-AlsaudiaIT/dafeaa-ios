@@ -52,7 +52,7 @@ struct LoginView: View {
                                 .focused($focusedField, equals: .password)
                             
                             ReusableButton(buttonText: "login") {
-                                viewModel.validateLogin(phone: phoneNumber, password: password)
+                                viewModel.validateLogin(phone: phoneNumber.normalizePhoneNumber, password: password)
                             } .padding(.top, 4)
                             
                             Button(action: {
@@ -109,10 +109,10 @@ struct LoginView: View {
                 .onAppear(perform: subscribeToKeyboardEvents) // Listen for keyboard events
                 .onDisappear(perform: unsubscribeFromKeyboardEvents)
                 .navigationDestination(isPresented: $viewModel._isSendCodeSuccess) {
-                    OTPConfirmationView(phone: phoneNumber)
+                    OTPConfirmationView(phone: phoneNumber.normalizePhoneNumber)
                 }
                 .navigationDestination(isPresented: $viewModel._hasUnCompletedData) {
-                    CompleteDataView(phone:phoneNumber)
+                    CompleteDataView(phone:phoneNumber.normalizePhoneNumber)
                 }
                 if viewModel.isLoading {
                     ProgressView("Loading...".localized())
