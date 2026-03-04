@@ -200,7 +200,7 @@ struct AddBalanceCardDetailsView: View {
                                                     }
                                                     validateMonthLive(expirationMonth)
                                                 }
-                                                
+                                                .frame(width: 80)
                                                 CustomMainTextField(
                                                     text: $expirationYear,
                                                     placeHolder: "YYYY",
@@ -215,9 +215,9 @@ struct AddBalanceCardDetailsView: View {
                                                     }
                                                     validateYearLive(expirationYear)
                                                 }
+                                                .frame(width: 100)
                                             }
                                             
-                                            // Fixed height error row
                                             HStack {
                                                 if !monthError.isEmpty || !yearError.isEmpty {
                                                     Text(monthError.isEmpty ? yearError : monthError)

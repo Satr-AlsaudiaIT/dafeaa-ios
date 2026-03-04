@@ -42,7 +42,8 @@ struct StaticPagesView: View {
                     NavigationBarView(title: pageTitle){
                         self.presentationMode.wrappedValue.dismiss()
                     }
-                    HTMLTextView(htmlText: content ?? "")
+//                    HTMLTextView(htmlText: content ?? "")
+                    HTMLDescriptionView(html: content ?? "")
                         .padding([.leading,.trailing,.bottom],24)
                     
                     Spacer()
@@ -144,6 +145,44 @@ import Foundation
 import UIKit
 
 
+// MARK: - Single Line Preview View
+struct HTMLDescriptionPreviewView: View {
+    let html: String
+    var baseFontSize: CGFloat = 13
+    var truncationMode: Text.TruncationMode = .tail
+    
+    private var isArabic: Bool {
+        Constants.shared.isAR
+    }
+    
+    var body: some View {
+        Text(extractPlainText(from: html))
+            .textModifier(.bold, baseFontSize, .black222222)
+            .lineLimit(1)
+            .truncationMode(truncationMode)
+            .environment(\.layoutDirection,  html.isArabic  ? .rightToLeft : .leftToRight)
+    }
+    
+    // MARK: - Plain Text Extraction
+    private func extractPlainText(from html: String) -> String {
+        do {
+            let doc = try SwiftSoup.parse(html)
+            guard let body = doc.body() else { return "" }
+            
+            // Extract text and clean whitespace
+            let text = try body.text()
+            return text.trimmingCharacters(in: .whitespacesAndNewlines)
+                .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
+        } catch {
+            print("SwiftSoup Error: \(error)")
+            return ""
+        }
+    }
+}
+
+
+
+
 func attributedStringFromHTML(_ html: String,
                               baseFont: UIFont = .systemFont(ofSize: 13),
                               textColor: UIColor = .black,
@@ -182,42 +221,6 @@ func attributedStringFromHTML(_ html: String,
 }
 
 
-
-
-// MARK: - Single Line Preview View
-struct HTMLDescriptionPreviewView: View {
-    let html: String
-    var baseFontSize: CGFloat = 13
-    var truncationMode: Text.TruncationMode = .tail
-    
-    private var isArabic: Bool {
-        Constants.shared.isAR
-    }
-    
-    var body: some View {
-        Text(extractPlainText(from: html))
-            .textModifier(.bold, baseFontSize, .black222222)
-            .lineLimit(1)
-            .truncationMode(truncationMode)
-            .environment(\.layoutDirection,  html.isArabic  ? .rightToLeft : .leftToRight)
-    }
-    
-    // MARK: - Plain Text Extraction
-    private func extractPlainText(from html: String) -> String {
-        do {
-            let doc = try SwiftSoup.parse(html)
-            guard let body = doc.body() else { return "" }
-            
-            // Extract text and clean whitespace
-            let text = try body.text()
-            return text.trimmingCharacters(in: .whitespacesAndNewlines)
-                .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
-        } catch {
-            print("SwiftSoup Error: \(error)")
-            return ""
-        }
-    }
-}
 
 
 
@@ -278,7 +281,7 @@ struct HTMLDescriptionView: View {
     @ViewBuilder
     private func renderTextView(_ str: AttributedString) -> some View {
         Text(str)
-            .textModifier(.extraBold, 16, .black222222)
+//            .textModifier(.extraBold, 16, .black222222)
             .multilineTextAlignment( (str.isArabic && Constants.shared.isAR ) ? .leading : ((!str.isArabic && !Constants.shared.isAR ) ? .leading: .trailing) )
     }
 
@@ -354,32 +357,55 @@ struct HTMLDescriptionView: View {
 
     private func parseFormattedText(_ element: Element) -> AttributedString? {
         var combined = AttributedString("")
-        
+
         do {
-            let parentIsBold = ["h1", "h2", "h3", "strong", "b"].contains(element.tagName())
-            
+            let tagName = element.tagName()
+            let parentIsBold = ["h1","h2","h3","strong","b"].contains(tagName)
+
+            // ✅ Define size per heading level
+            let headingSize: CGFloat = {
+                switch tagName {
+                case "h1": return baseFontSize + 8
+                case "h2": return baseFontSize + 6
+                case "h3": return baseFontSize + 4
+                default:   return baseFontSize
+                }
+            }()
+
             for node in element.getChildNodes() {
                 var segmentText = ""
                 var isBold = parentIsBold
-                
+                var segmentSize = headingSize   // ✅ inherit parent heading size
+
                 if let textNode = node as? TextNode {
                     segmentText = textNode.getWholeText()
                 } else if let childElement = node as? Element {
                     segmentText = try childElement.text()
-                    if ["strong", "b", "h1", "h2", "h3"].contains(childElement.tagName()) {
+                    let childTag = childElement.tagName()
+                    if ["strong","b","h1","h2","h3"].contains(childTag) {
                         isBold = true
+                        // ✅ Also apply heading size for nested heading tags
+                        switch childTag {
+                        case "h1": segmentSize = baseFontSize + 8
+                        case "h2": segmentSize = baseFontSize + 6
+                        case "h3": segmentSize = baseFontSize + 4
+                        default: break
+                        }
                     }
                 }
-                
+
                 if !segmentText.isEmpty {
                     var segment = AttributedString(segmentText)
-                    segment.font = .custom(AppFonts.shared.name(isBold ? .bold : .plain), size: parentIsBold ? baseFontSize + 1 : baseFontSize)
-                    segment.foregroundColor = Color(hex: "404553")
+                    segment.font = .custom(
+                        AppFonts.shared.name(isBold ? .bold : .plain),
+                        size: segmentSize   // ✅ Use correct size
+                    )
+                    segment.foregroundColor = Color(hex: isBold ? "222222" : "404553")
                     combined += segment
                 }
             }
         } catch { return nil }
-        
+
         return combined.characters.count > 0 ? combined : nil
     }
 

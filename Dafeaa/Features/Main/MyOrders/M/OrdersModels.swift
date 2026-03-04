@@ -271,15 +271,13 @@ struct ShowOfferData: Codable, Equatable {
     let maxCommissionValue                  : String?
     let shippingCompanies                   : [String]?
     let address                             : AddressModel?
+    // V3 additions
+    let shipmentFree                        : Int?
+    let hasTaxRecord                        : Int?
+    let priceCommission                     : PriceCommissionV3?
+    let shippingCommission                  : ShippingCommissionV3?
+    let seller                              : SellerV3?
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -303,13 +301,13 @@ struct CreateOrderPostModel: Codable {
 }
 
 
-// MARK: - ShowOfferModelV3
-struct ShowOfferModelV3: Codable {
-    let status: Bool?
-    let message: String?
-    let data: ShowOfferDataV3?
-}
-
+//// MARK: - ShowOfferModelV3
+//struct ShowOfferModelV3: Codable {
+//    let status: Bool?
+//    let message: String?
+//    let data: ShowOfferDataV3?
+//}
+//
 // MARK: - AddressModel
 struct AddressModel: Codable, Equatable {
     let id: Int?
@@ -323,76 +321,76 @@ struct AddressModel: Codable, Equatable {
     let lat: String?
     let lng: String?
 }
-
-// MARK: - ShowOfferDataV3
-struct ShowOfferDataV3: Codable {
-    let id: Int?
-    let name, code: String?
-    var status: Int?
-    let description: String?
-    let productId: Int?
-    let clientId: Int?
-    let price: Double?
-    let offerPrice: Double?
-    let width, height, length, weight: Double?
-    let plannedShippingDateAndTime: Int?
-    let shippingCompanies: [String]?
-    let images: [ImageModel]?
-    let commissionRatio, maxCommissionValue: String?
-    let commission: Double?
-    let vatRatio: String?
-    let vatValue: Double?
-    let totalCommissionWithVat: Double?
-    let address: AddressModel?
-}
-
-// MARK: - Updated Mapping Function
-extension ShowOfferModelV3 {
-    func mapToShowOfferModel() -> ShowOfferModel? {
-        guard let v3Data = data else { return nil }
-        
-        // Create a single product from V3 data
-        let product = productList(
-            id: v3Data.productId,
-            images: v3Data.images,
-            name: v3Data.name,
-            description: v3Data.description,
-            price: v3Data.price,
-            amount: nil,
-            offerPrice: v3Data.offerPrice,
-            totalQuantity: nil,
-            paiedQuantity: nil,
-            remainingQuantity: nil
-        )
-        
-        let showOfferData = ShowOfferData(
-            id: v3Data.id,
-            name: v3Data.name,
-            code: v3Data.code,
-            description: v3Data.description,
-            clientId: v3Data.clientId,
-            deliveryPrice: nil,
-            taxPrice: v3Data.vatValue,
-            products: [product],
-            status: v3Data.status,
-            commissionRatio: v3Data.commissionRatio,
-            maxCommissionValue: v3Data.maxCommissionValue,
-            shippingCompanies: v3Data.shippingCompanies,
-            address: v3Data.address
-        )
-        
-        return ShowOfferModel(
-            status: status,
-            message: message,
-            data: showOfferData
-        )
-    }
-    
-    
-    
-}
-
-
+//
+//// MARK: - ShowOfferDataV3
+//struct ShowOfferDataV3: Codable {
+//    let id: Int?
+//    let name, code: String?
+//    var status: Int?
+//    let description: String?
+//    let productId: Int?
+//    let clientId: Int?
+//    let price: Double?
+//    let offerPrice: Double?
+//    let width, height, length, weight: Double?
+//    let plannedShippingDateAndTime: Int?
+//    let shippingCompanies: [String]?
+//    let images: [ImageModel]?
+//    let commissionRatio, maxCommissionValue: String?
+//    let commission: Double?
+//    let vatRatio: String?
+//    let vatValue: Double?
+//    let totalCommissionWithVat: Double?
+//    let address: AddressModel?
+//}
+//
+//// MARK: - Updated Mapping Function
+//extension ShowOfferModelV3 {
+//    func mapToShowOfferModel() -> ShowOfferModel? {
+//        guard let v3Data = data else { return nil }
+//        
+//        // Create a single product from V3 data
+//        let product = productList(
+//            id: v3Data.productId,
+//            images: v3Data.images,
+//            name: v3Data.name,
+//            description: v3Data.description,
+//            price: v3Data.price,
+//            amount: nil,
+//            offerPrice: v3Data.offerPrice,
+//            totalQuantity: nil,
+//            paiedQuantity: nil,
+//            remainingQuantity: nil
+//        )
+//        
+//        let showOfferData = ShowOfferData(
+//            id: v3Data.id,
+//            name: v3Data.name,
+//            code: v3Data.code,
+//            description: v3Data.description,
+//            clientId: v3Data.clientId,
+//            deliveryPrice: nil,
+//            taxPrice: v3Data.vatValue,
+//            products: [product],
+//            status: v3Data.status,
+//            commissionRatio: v3Data.commissionRatio,
+//            maxCommissionValue: v3Data.maxCommissionValue,
+//            shippingCompanies: v3Data.shippingCompanies,
+//            address: v3Data.address
+//        )
+//        
+//        return ShowOfferModel(
+//            status: status,
+//            message: message,
+//            data: showOfferData
+//        )
+//    }
+//    
+//    
+//    
+//}
+//
+//
 // MARK: - ShippingRatesModel
 struct ShippingRatesModel: Codable {
     let status: Bool?
@@ -404,6 +402,8 @@ struct ShippingRatesModel: Codable {
 struct ShippingRatesData: Codable {
     let currencyType, priceCurrency: String?
     let price: Double?
+    let shippingCommission: Double?
+    let totalPrice: Double?
 }
 
 
@@ -425,4 +425,155 @@ struct TrackingEvent: Codable, Identifiable {
 //    enum CodingKeys: String, CodingKey {
 //        case date, time, typeCode, description, serviceArea, signedBy
 //    }
+}
+
+// MARK: - ShowOfferModelV3
+struct ShowOfferModelV3: Codable {
+    let status: Bool?
+    let message: String?
+    let data: ShowOfferDataV3?
+}
+
+// MARK: - ShowOfferDataV3
+struct ShowOfferDataV3: Codable {
+    let id: Int?
+    let name, code: String?
+    var status: Int?
+    let description: String?
+    let shipmentFree: Int?
+    let hasTaxRecord: Int?
+    let productId: Int?
+    let product: ProductV3?
+    let priceCommission: PriceCommissionV3?
+    let shippingCommission: ShippingCommissionV3?
+    let seller: SellerV3?
+    let address: AddressModel?
+
+
+}
+
+// MARK: - ProductV3
+struct ProductV3: Codable {
+    let clientId: Int?
+    let price: Double?
+    let offerPrice: Double?
+    let description: String?
+    let width, height, length, weight: Double?
+    let plannedShippingDateAndTime: Int?
+    let shippingCompanies: [String]?
+    let images: [ImageModel]?
+
+  
+}
+
+// MARK: - PriceCommissionV3
+struct PriceCommissionV3: Codable, Equatable {
+    let commissionRatio: String?
+    let maxCommissionValue: String?
+    let vatRatio: String?
+    let commission: Double?
+    let commissionVat: Double?
+    let commissionNet: Double?
+
+  
+}
+
+// MARK: - ShippingCommissionV3
+struct ShippingCommissionV3: Codable, Equatable {
+    let shippingCommissionRatio: String?
+    let vatRatio: String?
+    let commission: Double?
+    let commissionVat: Double?
+    let commissionNet: Double?
+
+ 
+}
+
+// MARK: - SellerV3
+struct SellerV3: Codable, Equatable {
+    let merchantVatRatio: FlexibleDouble?
+    let sellerAmountBeforeVat: FlexibleDouble?
+    let sellerVatValue: FlexibleDouble?
+    let sellerNetAmount: FlexibleDouble?
+}
+
+enum FlexibleDouble: Codable, Equatable {
+    case string(String)
+    case double(Double)
+
+    var doubleValue: Double? {
+        switch self {
+        case .string(let s): return Double(s)
+        case .double(let d): return d
+        }
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let d = try? container.decode(Double.self) {
+            self = .double(d)
+        } else if let s = try? container.decode(String.self) {
+            self = .string(s)
+        } else {
+            throw DecodingError.typeMismatch(
+                FlexibleDouble.self,
+                .init(codingPath: decoder.codingPath,
+                      debugDescription: "Expected String or Double"))
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .string(let s): try container.encode(s)
+        case .double(let d): try container.encode(d)
+        }
+    }
+}
+
+extension ShowOfferModelV3 {
+    func mapToShowOfferModel() -> ShowOfferModel? {
+        guard let v3Data = data else { return nil }
+
+        let product = productList(
+            id: v3Data.productId,
+            images: v3Data.product?.images,
+            name: v3Data.name,
+            description: v3Data.product?.description,
+            price: v3Data.product?.price,
+            amount: nil,
+            offerPrice: v3Data.product?.offerPrice,
+            totalQuantity: nil,
+            paiedQuantity: nil,
+            remainingQuantity: nil
+        )
+
+        let showOfferData = ShowOfferData(
+            id: v3Data.id,
+            name: v3Data.name,
+            code: v3Data.code,
+            description: v3Data.description,
+            clientId: v3Data.product?.clientId,
+            deliveryPrice: nil,
+            taxPrice: v3Data.priceCommission?.commissionVat,
+            products: [product],
+            status: v3Data.status,
+            commissionRatio: v3Data.priceCommission?.commissionRatio,
+            maxCommissionValue: v3Data.priceCommission?.maxCommissionValue,
+            shippingCompanies: v3Data.product?.shippingCompanies,
+            address: v3Data.address,
+            // V3 additions
+            shipmentFree: v3Data.shipmentFree,
+            hasTaxRecord: v3Data.hasTaxRecord,
+            priceCommission: v3Data.priceCommission,
+            shippingCommission: v3Data.shippingCommission,
+            seller: v3Data.seller
+        )
+
+        return ShowOfferModel(
+            status: status,
+            message: message,
+            data: showOfferData
+        )
+    }
 }

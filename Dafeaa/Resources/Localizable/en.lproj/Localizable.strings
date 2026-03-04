@@ -98,6 +98,8 @@
 "Subscription Management"="Subscription Management";
 "Saved Addresses"="Saved Addresses";
 "About Dafeaa"="About DAFEA";
+"Privacy Policy" = "Privacy Policy";
+"Terms & Conditions" = "Terms & Conditions";
 "FAQ"="FAQ";
 "FAQNavTitle"="FAQ";
 "Help and Support"="Help and Support";
@@ -363,6 +365,13 @@
 "userNotExist" = "This number not connected to any account";
 "amount_validation" = "Please enter amount to transfer";
 "number_days" = "Number of days to Pickup";
+"free_shipping" = "Free Shipping";
+"tax_record" = "Tax Record";
+"add_tax_record_number" = "Add tax record number";
+"edit_tax_record_number" = "Edit tax record number";
+"addTaxRecordNumber" = "Add Tax Record Number";
+"hasTax" = "Order Has Tax";
+"validation_nit_have_tax_record" = "Please Add Tax Record";
 
 //MARK: - Withdraws
 "withdrawsProcess" = "Withdrawal Transactions";
@@ -544,3 +553,29 @@
 //MARK: -
 // tracking events
 "tracking_events" = "Tracking events";
+
+//MARK: - offer changes
+"shipping_on_seller" = "On Seller";
+"shipping_on_buyer" = "On Buyer";
+"price_label" = "Price";
+"service_fees_label" = "Service Fees";
+"net_label" = "Net Amount";
+"shipping_label" = "Shipping";
+"tooltip_shipping_on_seller" = "Shipping is on the seller.";
+"tooltip_price_shown_to_buyer" = "This is the price shown to the buyer.";
+"tooltip_shipping_deducted" = "Shipping cost will be deducted from the seller.";
+"free_shipping_hint" = "When free shipping is enabled, the delivery cost will be deducted from the net amount, approximately 25-30 SAR";
+"payment_info_title" = "Payment Information";
+"shipping_delivery_label" = "Shipping & Delivery";
+"tooltip_shipping_on_buyer" = "Shipping is on the buyer.";
+"tooltip_price_shown_with_shipping" = "This price will be shown to the buyer plus the shipping cost.";
+"login_required_title" = "Login Required";
+"login_required_message" = "You need to log in first to place an order.";
+"go_to_login" = "Go to Login";
+"cancel" = "Cancel";
+"free" = "free";
+"shipping_via" = "Shipping via";
+"unknown" = "Unknown";
+"delivery_date" = "Delivery date";
+"select_delivery_date" = "Select delivery date";
+"ok" = "OK";

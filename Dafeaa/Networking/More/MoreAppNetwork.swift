@@ -31,6 +31,9 @@ enum MoreNetwork
     case updateSecretKey
     case getNameFromPhone(phone:String)
     case confirmTransfer(phone:String, amount:Double)
+    case getTaxRecord
+    case addTaxRecord(taxNumber: String)
+    case deleteTaxRecord
 }
 
 extension MoreNetwork: TargetType
@@ -39,6 +42,8 @@ extension MoreNetwork: TargetType
         switch self {
         case .withDraw,.addAmountToWallet:
             return "https://dafeaa-backend.deplanagency.com/api/moyasar/"
+        case .getTaxRecord,.addTaxRecord, . deleteTaxRecord :
+            return Constants.shared.baseURLV1
         default:
             return Constants.shared.baseURL
         }
@@ -68,6 +73,9 @@ extension MoreNetwork: TargetType
         case .updateSecretKey:              return "auth/secret-key"
         case .getNameFromPhone(let phone)   : return "get-name/\(phone)"
         case .confirmTransfer               : return "wallet/transfer"
+        case .getTaxRecord, .addTaxRecord,
+                .deleteTaxRecord            :return "tax-record"
+
         }
     }
     
@@ -76,9 +84,9 @@ extension MoreNetwork: TargetType
         switch self  {
         case.changePassword, .contactUs, .logOut, .notifyOnOff,.createAddress,
                 .withDraw, .addAmountToWallet, .selectSubscriptionPlan
-            ,.updateSecretKey,.confirmTransfer:                                                   return .post
+            ,.updateSecretKey,.confirmTransfer, .addTaxRecord:                    return .post
         case .address(_, let method, _):                                          return method
-        case .deleteAccount:                                                      return .delete
+        case .deleteAccount, .deleteTaxRecord:                                    return .delete
         default:                                                                  return .get
         }
     }
@@ -103,6 +111,11 @@ extension MoreNetwork: TargetType
                   return .requestParameters(Parameters: dic, encoding: JSONEncoding.default)
         case let .confirmTransfer(phone, amount):
             return .requestParameters(Parameters: ["phone": phone,"amount":amount], encoding: JSONEncoding.default)
+        case .getTaxRecord, .deleteTaxRecord:
+                return .requestPlain
+        case .addTaxRecord(let taxNumber):
+                return .requestParameters( Parameters: ["tax_number": taxNumber], encoding: JSONEncoding.default)
+            
         default:
             return .requestPlain
             

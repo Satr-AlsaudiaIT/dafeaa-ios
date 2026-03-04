@@ -26,7 +26,7 @@ class BaseAPI<T: TargetType> {
         AF.request(target.baseURL + target.path, method: method, parameters: params.0, encoding:  params.1, headers:  headers,
                    requestModifier: { $0.timeoutInterval = 30 }).responseJSON { (response) in
             print("status is -----------:> \(response.response?.statusCode ?? 0)")
-            print("url is -----------:> \(target.path)")
+            print("url is -----------:>\(target.baseURL)/ \(target.path)")
             print("parameters is -----------:> \(params)")
             print("response is -----------:> \(response)")
             let notificationCount = response.response?.headers["X-Unread-Notifications-Count"]

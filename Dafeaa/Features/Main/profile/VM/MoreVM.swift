@@ -33,6 +33,11 @@ final class MoreVM : ObservableObject {
     @Published var _isActive               = false
     @Published var _subSuccess             = false
     @Published var activeSuccess             = false
+    // MARK: - Tax Record Published Properties
+    @Published var taxRecordNumber: String = ""
+    @Published var isEditingTaxRecord: Bool = false
+    @Published var showAddTaxRecordBottomSheet: Bool = false
+    @Published var isTaxRecordSuccess: Bool = false
 
     @Published var toast: FancyToast?      = nil
     let apiAuth: AuthAPIProtocol = AuthAPI()
@@ -439,6 +444,8 @@ final class MoreVM : ObservableObject {
     func reset(){
         GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
         GenericUserDefault.shared.setValue("", Constants.shared.token)
+        GenericUserDefault.shared.setValue(0, Constants.shared.userId)
+        
         MOLH.reset()
         
     }
@@ -591,4 +598,77 @@ final class MoreVM : ObservableObject {
         }
     }
 
+    
+    
+    
+
+    /// Fetches the existing tax record and pre-fills state if one exists
+    func getTaxRecord() {
+        api.getTaxRecord { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    self?.taxRecordNumber = response?.data?.taxNumber ?? ""
+                    self?.isEditingTaxRecord = !(response?.data?.taxNumber?.isEmpty ?? true)
+                case .failure(let error):
+                    self?._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                    self?.toast = FancyToast(type: .error, title: "Error".localized(), message: self?._message ?? "")
+                }
+            }
+        }
+    }
+
+    /// Validates input then adds or updates the tax record
+    func addOrEditTaxRecord(taxNumber: String) {
+        guard !taxNumber.trimmingCharacters(in: .whitespaces).isEmpty else {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "tax_record_required".localized())
+            return
+        }
+        _isLoading = true
+        api.addTaxRecord(taxNumber: taxNumber) { [weak self] result in
+            DispatchQueue.main.async {
+                self?._isLoading = false
+                switch result {
+                case .success(let response):
+                    if response?.status == true {
+                        self?.taxRecordNumber = taxNumber
+                        self?.isEditingTaxRecord = true
+                        self?.showAddTaxRecordBottomSheet = false
+                        self?.isTaxRecordSuccess = true
+                        self?.toast = FancyToast(type: .error, title: "Error".localized(), message: response?.message ?? "")
+
+                    } else {
+                        self?.toast = FancyToast(type: .error, title: "Error".localized(), message: response?.message ?? "")
+                    }
+                case .failure(let error):
+                    self?.toast = FancyToast(type: .error, title: "Error".localized(), message: error.userInfo[NSLocalizedDescriptionKey] as? String ?? "")
+                }
+            }
+        }
+    }
+
+    /// Deletes the tax record and resets all related state
+    func deleteTaxRecord() {
+        _isLoading = true
+        api.deleteTaxRecord { [weak self] result in
+            DispatchQueue.main.async {
+                self?._isLoading = false
+                switch result {
+                case .success(let response):
+                    if response?.status == true {
+                        self?.taxRecordNumber = ""
+                        self?.isEditingTaxRecord = false
+                        self?.showAddTaxRecordBottomSheet = false
+                        self?.toast = FancyToast(type: .error, title: "Error".localized(), message: response?.message ?? "")
+                    } else {
+                        self?.toast = FancyToast(type: .error, title: "Error".localized(), message: response?.message ?? "")
+                    }
+                case .failure(let error):
+                    self?.toast = FancyToast(type: .error, title: "Error".localized(), message: error.userInfo[NSLocalizedDescriptionKey] as? String ?? "")
+                }
+            }
+        }
+    }
+
+    
 }

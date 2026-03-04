@@ -105,7 +105,6 @@ struct LoginView: View {
                         })
                     }
                 }
-
                 .onAppear(perform: subscribeToKeyboardEvents) // Listen for keyboard events
                 .onDisappear(perform: unsubscribeFromKeyboardEvents)
                 .navigationDestination(isPresented: $viewModel._isSendCodeSuccess) {

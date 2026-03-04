@@ -201,3 +201,26 @@ struct PaymentResponseModel: Codable {
     let transactionUrl: String?
 
 }
+
+
+
+
+import Foundation
+
+// MARK: - Tax Record Response Model
+struct TaxRecordModel: Codable {
+    let status: Bool?
+    let message: String?
+    let data: TaxRecordData?
+}
+
+// MARK: - Tax Record Data
+struct TaxRecordData: Codable {
+    let id: Int?
+    let clientId: Int?
+    let taxNumber: String?
+    let createdAt: String?
+    let updatedAt: String?
+
+    
+}

@@ -32,19 +32,19 @@ struct CustomPasswordField: View {
                     .frame(width: 20, height: 20)
                 
                 ZStack(alignment: isRTL ? .trailing : .leading) {
-                    AdvancedTextField(
-                        text: $password,
-                        placeholder: placeholder.localized(),
-                        isRTL: isRTL,
-                        keyboardType: .default,
-                        fieldType: .none,
-                        isSecure: !isPasswordVisible,   // hide/show [web:23][web:24][web:26]
-                        onFocusChange: { focused in
-                            isFocused = focused
-                        }
-                    )
-                    
                     HStack {
+                        AdvancedTextField(
+                            text: $password,
+                            placeholder: placeholder.localized(),
+                            isRTL: isRTL,
+                            keyboardType: .default,
+                            fieldType: .none,
+                            isSecure: !isPasswordVisible,
+                            onFocusChange: { focused in
+                                isFocused = focused
+                            }
+                        )
+                        .frame(maxWidth: .infinity)
                         Spacer()
                         Button(action: {
                             isPasswordVisible.toggle()
@@ -53,6 +53,7 @@ struct CustomPasswordField: View {
                         }
                     }
                     .allowsHitTesting(true)
+                    
                 }
             }
             .frame(height: 48)
@@ -101,6 +102,9 @@ struct AdvancedTextField: UIViewRepresentable {
         field.leftView = paddingView
         field.leftViewMode = .always
         
+        field.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+         field.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        
         return field
     }
     
@@ -110,14 +114,11 @@ struct AdvancedTextField: UIViewRepresentable {
         }
         uiView.textAlignment = isRTL ? .right : .left
         if uiView.isSecureTextEntry != isSecure {
-            uiView.isSecureTextEntry = isSecure   // toggle visibility [web:21][web:30]
-            // Fix cursor jump:
-            if let existingText = uiView.text {
-                uiView.deleteBackward()
-                uiView.insertText(existingText + " ")
-                uiView.deleteBackward()
-            }
-        }
+               uiView.isSecureTextEntry = isSecure
+               let currentText = uiView.text
+               uiView.text = ""
+               uiView.text = currentText
+           }
     }
     
     func makeCoordinator() -> Coordinator {
@@ -236,6 +237,7 @@ struct CustomMainTextField: View {
                     }
                     .allowsHitTesting(false)
                 }
+                .frame(maxWidth: .infinity)
             }
             .frame(height: 48)
             .padding(.horizontal, 20)
@@ -246,6 +248,49 @@ struct CustomMainTextField: View {
                     .stroke(isFocused ? Color(.primary) : Color.clear, lineWidth: 1)
             )
         }
+    }
+}
+
+struct MaskedTextField: View {
+    @Binding var text: String
+    let placeHolder: String
+    let maxLength: Int
+
+    @State private var isFocused: Bool = false
+    @Environment(\.layoutDirection) private var layoutDirection
+
+    private var isRTL: Bool {
+        layoutDirection == .rightToLeft
+    }
+    
+    var body: some View {
+        AdvancedTextField(
+            text: $text,
+            placeholder: placeHolder,
+            isRTL: isRTL,
+            keyboardType: .numberPad,
+            fieldType: .none,
+            isSecure: true,
+            onFocusChange: { focused in
+                isFocused = focused
+            }
+        )
+        .frame(maxWidth: .infinity)
+        .onChange(of: text) { _, newValue in
+            let filtered = newValue.filter { $0.isNumber }
+            let clamped = filtered.count > maxLength
+                ? String(filtered.prefix(maxLength))
+                : filtered
+            if clamped != text { text = clamped }
+        }
+        .frame(height: 48)
+        .padding(.horizontal, 20)
+        .background(Color(.grayF6F6F6))
+        .cornerRadius(5)
+        .overlay(
+            RoundedRectangle(cornerRadius: 5)
+                .stroke(isFocused ? Color(.primary) : Color.clear, lineWidth: 1)
+        )
     }
 }
 
@@ -279,7 +324,7 @@ struct PhoneNumberField: View {
                           placeholder: placeholder.localized(),
                           isRTL: isRTL,
                           isFocused: _isFocused)
-            
+            .frame(maxWidth: .infinity)
             if isRTL {
                 Image(.phoneCountryCode)
                     .resizable()
@@ -323,6 +368,9 @@ struct SimpleTextField: UIViewRepresentable {
         )
         field.delegate = context.coordinator
         field.backgroundColor = .clear
+        field.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        field.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        
         return field
     }
     
@@ -348,48 +396,6 @@ struct SimpleTextField: UIViewRepresentable {
         }
     }
 }
-
-
-struct MaskedTextField: View {
-    @Binding var text: String
-    let placeHolder: String
-    let maxLength: Int
-    @FocusState private var isFieldFocused: Bool
-    
-    var body: some View {
-        ZStack(alignment: .leading) {
-            SecureField("", text: $text)
-                .keyboardType(.numberPad)
-                .focused($isFieldFocused)
-                .onChange(of: text) { _, newValue in
-                    let filtered = newValue.filter { $0.isNumber }
-                    if filtered.count > maxLength {
-                        text = String(filtered.prefix(maxLength))
-                    } else {
-                        text = filtered
-                    }
-                }
-            
-            HStack {
-                if text.isEmpty {
-                    Text(placeHolder.localized())
-                        .textModifier(.plain, 15, .grayB5B5B5)
-                } 
-                Spacer()
-            }
-            .allowsHitTesting(false)
-        }
-        .frame(height: 48)
-        .padding(.horizontal, 20)
-        .background(Color(.grayF6F6F6))
-        .cornerRadius(5)
-        .overlay(
-            RoundedRectangle(cornerRadius: 5)
-                .stroke(isFieldFocused ? Color(.primary) : Color.clear, lineWidth: 1)
-        )
-    }
-}
-
 
 enum FieldType{
     case price

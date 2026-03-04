@@ -80,6 +80,25 @@ struct ProfileList: View {
                             .frame(height: 32)
                         }
 
+                        Button {
+                            viewModel.showAddTaxRecordBottomSheet = true
+                        } label: {
+                            HStack(spacing:12) {
+                                Image(.developersKey)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 28, height: 28)
+                                
+                                Text("tax_record".localized())
+                                    .textModifier(.plain, 16, .black194558)
+                                Spacer()
+                                
+                                Image(.iconArrowNav)
+                                    .frame(width: 32, height: 32)
+                                    .foregroundColor(Color(.black194558))
+                            }
+                            .frame(height: 32)
+                        }
                         
                         
                     }
@@ -94,6 +113,7 @@ struct ProfileList: View {
         }
         .onAppear(){
             AppState.shared.swipeEnabled = true
+            viewModel.getTaxRecord()
         }
         .onChange(of: viewModel.profileData?.profileId, { _, newValue in
             profileId = newValue ?? ""
@@ -107,6 +127,12 @@ struct ProfileList: View {
                 .presentationCornerRadius(24)
                 .presentationDragIndicator(.visible)
         })
+        .sheet(isPresented: $viewModel.showAddTaxRecordBottomSheet) {
+            TaxRecordBottomSheet(viewModel: viewModel, taxInput: viewModel.taxRecordNumber, dismiss: $viewModel.showAddTaxRecordBottomSheet)
+                .presentationDetents([.height(320)])
+                .presentationDragIndicator(.visible)
+        }
+
     }
     
 }

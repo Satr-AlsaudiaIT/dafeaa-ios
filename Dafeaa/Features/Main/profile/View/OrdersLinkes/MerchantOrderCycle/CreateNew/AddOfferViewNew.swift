@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-
 struct AddOfferViewNew: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel = OrdersVM()
+    
     @State var goToAddOffer = false
 
     @State private var deliveryPrice: String = ""
@@ -25,7 +25,7 @@ struct AddOfferViewNew: View {
     @State var description: String = ""
     @State var quantity: String = ""
     
-    @State private var selectedProductImage :[UIImage] = []
+    @State private var selectedProductImage: [UIImage] = []
     @State private var isShowingImagesSheet = false
     @State private var sourceType: UIImagePickerController.SourceType = .photoLibrary
     @State private var isShowingImagesPicker = false
@@ -39,23 +39,37 @@ struct AddOfferViewNew: View {
     @State private var length = ""
     @State private var width = ""
     @State private var height = ""
-    @State private var daysNumber = ""
 
+    // ── Date picker replaces daysNumber text field ──
+    @State private var selectedDeliveryDate: Date? = nil
+    @State private var showDatePicker: Bool = false
+
+    @State private var isFreeShipping: Bool = false
     @State private var selectedShippingCompanies: [ShippingCompany] = []
     @State private var isShippingDropDownOpen: Bool = false
+    @State private var hasIncludedTax: Bool = false
+    @State private var taxRecord: String = ""
+    @State private var showTaxBottomSheet: Bool = false
+    @State private var hasRecord: Bool = false
     
+    // ── Computed days string to send to backend ──
+    private var daysNumber: String {
+        guard let date = selectedDeliveryDate else { return "" }
+        return "\(daysFromNow(date))"
+    }
+
     var body: some View {
-        ZStack{
-            VStack(spacing: 20){
-                VStack{
-                    NavigationBarView(title: "offerContent"){
+        ZStack {
+            VStack(spacing: 20) {
+                VStack {
+                    NavigationBarView(title: "offerContent") {
                         self.presentationMode.wrappedValue.dismiss()
                     }
                     
                     ScrollView {
                         VStack(spacing: 17) {
                             VStack(spacing: 8) {
-                                CustomMainTextField(text: $name, placeHolder: "Name",showHeader: true)
+                                CustomMainTextField(text: $name, placeHolder: "Name", showHeader: true)
                                     .focused($focusedField, equals: .name)
                                     .id(FormField.name)
                                 
@@ -69,7 +83,7 @@ struct AddOfferViewNew: View {
                                 }
                             }
                             
-                            CustomMainTextField(text: $price, placeHolder: "productPrice",keyBoardType: .decimalPad,fieldType: .price, showHeader: true)
+                            CustomMainTextField(text: $price, placeHolder: "productPrice", keyBoardType: .decimalPad, fieldType: .price, showHeader: true)
                                 .focused($focusedField, equals: .price)
                                 .id(FormField.price)
                             
@@ -78,7 +92,7 @@ struct AddOfferViewNew: View {
                                                    placeHolder: "offerPrice",
                                                    keyBoardType: .decimalPad,
                                                    fieldType: .price,
-                                                    showHeader: true)
+                                                   showHeader: true)
                                     .focused($focusedField, equals: .offerPrice)
                                     .id(FormField.offerPrice)
                                     .transition(.move(edge: .trailing).combined(with: .opacity))
@@ -91,17 +105,17 @@ struct AddOfferViewNew: View {
                                 }
                             } label: {
                                 HStack {
-                                    Text(showOfferPriceTextField == true ? "hide_discount?".localized() : "apply_discount?".localized())
+                                    Text(showOfferPriceTextField ? "hide_discount?".localized() : "apply_discount?".localized())
                                         .textModifier(.plain, 14, .primaryF9CE29)
                                         .underline()
                                     Spacer()
                                 }
-                                .padding(.top,-10)
+                                .padding(.top, -10)
                             }
 
+                            // ── Images Grid ──
                             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 4), spacing: 10) {
-                                
-                                let validateIndex = (selectedProductImage.count)
+                                let validateIndex = selectedProductImage.count
                                 if validateIndex < 4 {
                                     Button {
                                         isShowingImagesSheet = true
@@ -110,7 +124,8 @@ struct AddOfferViewNew: View {
                                             Rectangle()
                                                 .fill(Color(.primaryF9CE29).opacity(0.1))
                                                 .cornerRadius(10)
-                                                .frame(width: (UIScreen.main.bounds.width - 80 ) / 4 ,height: (UIScreen.main.bounds.width - 80 ) / 4)
+                                                .frame(width: (UIScreen.main.bounds.width - 80) / 4,
+                                                       height: (UIScreen.main.bounds.width - 80) / 4)
                                                 .overlay(
                                                     RoundedRectangle(cornerRadius: 10)
                                                         .stroke(style: StrokeStyle(lineWidth: 2, dash: [8]))
@@ -121,45 +136,35 @@ struct AddOfferViewNew: View {
                                                 Image(systemName: "plus")
                                                     .foregroundColor(Color(.gray979797))
                                                 Text("Image".localized())
-                                                    .textModifier(.plain, 12,  .gray979797)
-                                                   
+                                                    .textModifier(.plain, 12, .gray979797)
                                                 Spacer()
                                             }
                                         }
-                                        .frame(width: (UIScreen.main.bounds.width - 80 ) / 4 ,height: (UIScreen.main.bounds.width - 80 ) / 4)
+                                        .frame(width: (UIScreen.main.bounds.width - 80) / 4,
+                                               height: (UIScreen.main.bounds.width - 80) / 4)
                                     }
-//                                    .actionSheet(isPresented: $isShowingImagesSheet) {
-//                                        ActionSheet(title: Text("Choose the file type you want to upload".localized()), buttons: [
-//                                            .default(Text("Image".localized())) {
-//                                                sourceType = .photoLibrary
-//                                                isShowingImagesPicker = true
-//                                            },
-//                                            .default(Text("Camera".localized())) {
-//                                                sourceType = .camera
-//                                                isShowingImagesPicker = true
-//                                            },
-//                                            .cancel()
-//                                        ])
-//                                    }
                                     .sheet(isPresented: $isShowingImagesSheet) {
-                                        ImagePickerMultiSelection(sourceType: sourceType, isMultiSelection: true, selectedImages: $selectedProductImage, selectionNumber: (4 - (( selectedProductImage.count))))
+                                        ImagePickerMultiSelection(
+                                            sourceType: sourceType,
+                                            isMultiSelection: true,
+                                            selectedImages: $selectedProductImage,
+                                            selectionNumber: 4 - selectedProductImage.count)
                                     }
                                 }
                                 
-                                
-                                ForEach( 0 ..< selectedProductImage.count, id: \.self) { index in
-                                    
+                                ForEach(0..<selectedProductImage.count, id: \.self) { index in
                                     ZStack {
                                         Image(uiImage: selectedProductImage[index])
                                             .resizable()
-                                            .frame(width: (UIScreen.main.bounds.width - 80 ) / 4 ,height: (UIScreen.main.bounds.width - 80 ) / 4)
+                                            .frame(width: (UIScreen.main.bounds.width - 80) / 4,
+                                                   height: (UIScreen.main.bounds.width - 80) / 4)
                                             .aspectRatio(contentMode: .fill)
                                             .cornerRadius(15)
                                         VStack {
                                             HStack {
                                                 Spacer()
                                                 Button {
-                                                    selectedProductImage.remove(at: (index))
+                                                    selectedProductImage.remove(at: index)
                                                 } label: {
                                                     Image(systemName: "multiply.circle")
                                                         .resizable()
@@ -168,27 +173,28 @@ struct AddOfferViewNew: View {
                                                         .scaledToFit()
                                                         .shadow(radius: 10)
                                                 }
-                                                .padding(.top,-7)
-                                                .padding(.trailing,-7)
+                                                .padding(.top, -7)
+                                                .padding(.trailing, -7)
                                             }
                                             Spacer()
                                         }
                                     }
-                                    .frame(width: (UIScreen.main.bounds.width - 80 ) / 4 ,height: (UIScreen.main.bounds.width - 80 ) / 4)
+                                    .frame(width: (UIScreen.main.bounds.width - 80) / 4,
+                                           height: (UIScreen.main.bounds.width - 80) / 4)
                                 }
                             }
-                            .padding([.leading,.trailing],10)
-                          
+                            .padding([.leading, .trailing], 10)
+
+                            // ── Dimensions ──
                             VStack(alignment: .leading, spacing: 12) {
                                 HStack(spacing: 12) {
                                     CustomMainTextField(text: $weight, placeHolder: "Weight", keyBoardType: .decimalPad, fieldType: .weight, showHeader: true)
                                         .focused($focusedField, equals: .weight)
                                         .id(FormField.weight)
-                                    CustomMainTextField(text: $length, placeHolder: "Length", keyBoardType: .decimalPad, fieldType: .dimensional,showHeader: true)
+                                    CustomMainTextField(text: $length, placeHolder: "Length", keyBoardType: .decimalPad, fieldType: .dimensional, showHeader: true)
                                         .focused($focusedField, equals: .length)
                                         .id(FormField.length)
                                 }
-
                                 HStack(spacing: 12) {
                                     CustomMainTextField(text: $width, placeHolder: "Width", keyBoardType: .decimalPad, fieldType: .dimensional, showHeader: true)
                                         .focused($focusedField, equals: .width)
@@ -204,46 +210,115 @@ struct AddOfferViewNew: View {
                                 selected: $selectedShippingCompanies,
                                 isOpen: $isShippingDropDownOpen
                             )
-                            
-                            CustomMainTextField(text: $daysNumber, placeHolder: "number_days".localized(), keyBoardType: .numberPad, fieldType: .daysNumber, showHeader: true)
-                                .focused($focusedField, equals: .daysNumber)
-                                .id(FormField.daysNumber)
+
+                            // ── Date Picker Field ──
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("delivery_date".localized())
+                                    .textModifier(.plain, 14, .black)
+
+                                Button {
+                                    showDatePicker = true
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "calendar")
+                                            .foregroundColor(.primaryF9CE29)
+                                            .frame(width: 20, height: 20)
+                                        Text(selectedDeliveryDate != nil
+                                             ? formattedDate(selectedDeliveryDate!)
+                                             : "select_delivery_date".localized())
+                                            .textModifier(.plain, 14, selectedDeliveryDate != nil ? .black222222 : .grayB5B5B5)
+                                        Spacer()
+                                        if let date = selectedDeliveryDate {
+                                            Text("\(daysFromNow(date)) " + "days".localized())
+                                                .textModifier(.plain, 13, .primaryF9CE29)
+                                        }
+                                    }
+                                    .frame(height: 48)
+                                    .padding(.horizontal, 20)
+                                    .background(Color(.grayF6F6F6))
+                                    .cornerRadius(5)
+                                }
+                            }
+//                            .sheet(isPresented: $showDatePicker) {
+//                                deliveryDatePickerSheet
+//                            }
+
+                            // ── Free Shipping ──
+                            HStack {
+                                Button {
+                                    withAnimation(.easeInOut(duration: 0.2)) {
+                                        isFreeShipping.toggle()
+                                    }
+                                } label: {
+                                    checkBoxButton(text: "free_shipping", isSelected: $isFreeShipping)
+                                }
+                                .buttonStyle(.plain)
+                                Spacer()
+                            }
+
+                            // ── Tax ──
+                            HStack {
+                                Button {
+                                    withAnimation(.easeInOut(duration: 0.2)) {
+                                        hasIncludedTax.toggle()
+                                    }
+                                } label: {
+                                    checkBoxButton(text: "hasTax", isSelected: $hasIncludedTax)
+                                }
+                                .buttonStyle(.plain)
+                                Spacer()
+                                if viewModel.taxRecordNumber == "" && hasIncludedTax {
+                                    Button {
+                                        showTaxBottomSheet = true
+                                    } label: {
+                                        Text("addTaxRecordNumber".localized())
+                                            .textModifier(.plain, 14, .primaryF9CE29)
+                                    }
+                                }
+                            }
                         }
-                        .padding(.bottom, focusedField == .daysNumber ? 300 : 0)
                         .animation(.easeOut(duration: 0.25), value: focusedField)
-                        .onTapGesture(perform: {
+                        .onTapGesture {
                             hideKeyboard()
                             isShippingDropDownOpen = false
-                        })
+                        }
                         .navigationDestination(isPresented: $navigateToAddProduct) {
-                            AddProductView(productsAdding:$productsAdding)
+                            AddProductView(productsAdding: $productsAdding)
                         }
                     }
                     .padding(24)
 
                     ReusableButton(buttonText: "saveBtn", action: {
-                        viewModel.validateCreateOfferLinkV3(name: name, descriptionAttributed: descriptionAttributed, price: price, offerPrice: offerPrice, haveOfferPrice :showOfferPriceTextField , images: selectedProductImage, weight: weight, length: length, width: width, height: height, shippingCompanies: selectedShippingCompanies, plannedShippingDateAndTime: daysNumber)
+                        viewModel.validateCreateOfferLinkV3(
+                            name: name,
+                            descriptionAttributed: descriptionAttributed,
+                            price: price,
+                            offerPrice: offerPrice,
+                            haveOfferPrice: showOfferPriceTextField,
+                            images: selectedProductImage,
+                            weight: weight,
+                            length: length,
+                            width: width,
+                            height: height,
+                            shippingCompanies: selectedShippingCompanies,
+                            plannedShippingDateAndTime: daysNumber,  // ← computed from date
+                            isShipmentFree: isFreeShipping,
+                            hasTaxRecord: hasIncludedTax
+                        )
                     })
                     .padding(24)
                 }
             }
-            .toolbar{
-                ToolbarItemGroup(placement: .keyboard){
-                    Button("Done".localized()){
-                        hideKeyboard()
-                    }
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Button("Done".localized()) { hideKeyboard() }
                     Spacer()
-                    Button(action: {
-                        showPerviousTextField()
-                    }, label: {
+                    Button { showPerviousTextField() } label: {
                         Image(systemName: "chevron.up").foregroundColor(.blue)
-                    })
-                    
-                    Button(action: {
-                        showNextTextField()
-                    }, label: {
+                    }
+                    Button { showNextTextField() } label: {
                         Image(systemName: "chevron.down").foregroundColor(.blue)
-                    })
+                    }
                 }
             }
 
@@ -252,78 +327,173 @@ struct AddOfferViewNew: View {
                     .foregroundColor(.white)
                     .progressViewStyle(WithBackgroundProgressViewStyle())
             } else if viewModel.isFailed {
-                ProgressView()
-                    .hidden()
+                ProgressView().hidden()
             }
+            
+            if showDatePicker {
+                datePickerDialog
+            }
+            
         }
         .edgesIgnoringSafeArea(.bottom)
         .toastView(toast: $viewModel.toast)
         .navigationBarHidden(true)
-        .onAppear(){
+        .onAppear {
             AppState.shared.swipeEnabled = true
+            viewModel.getTaxRecord()
         }
-        .onReceive(viewModel.$_isCreateOrderSuccess){value in
-            if value {
-                self.presentationMode.wrappedValue.dismiss()
+        .onChange(of: showTaxBottomSheet) { _, new in
+            if !new { viewModel.getTaxRecord() }
+        }
+        .onReceive(viewModel.$_isCreateOrderSuccess) { value in
+            if value { self.presentationMode.wrappedValue.dismiss() }
+        }
+        .sheet(isPresented: $showTaxBottomSheet) {
+            TaxRecordBottomSheet(taxInput: viewModel.taxRecordNumber, dismiss: $showTaxBottomSheet)
+                .presentationDetents([.height(320)])
+                .presentationDragIndicator(.visible)
+        }
+    }
+
+    // MARK: - Date Picker Sheet
+    @ViewBuilder
+    private var datePickerDialog: some View {
+        ZStack {
+            Color.black.opacity(0.4)
+                .ignoresSafeArea()
+                .onTapGesture { showDatePicker = false }
+
+            VStack(spacing: 0) {
+                InlineDatePickerView(
+                    selectedDate: Binding(
+                        get: { selectedDeliveryDate ?? minSelectableDate },
+                        set: { selectedDeliveryDate = $0 }
+                    ),
+                    minDate: minSelectableDate
+                )
+                .padding(.horizontal, 8)
+                .padding(.top, 8)
+
+                Divider()
+
+                HStack {
+                    Button {
+                        showDatePicker = false
+                    } label: {
+                        Text("ok".localized())
+                            .textModifier(.bold, 16, .primaryF9CE29)
+                            .padding(.horizontal, 24)
+                            .padding(.vertical, 14)
+                    }
+                    Spacer()
+                }
             }
+            .frame(height: UIScreen.main.bounds.height * 0.70)
+            .background(Color.white)
+            .cornerRadius(14)
+            .padding(.horizontal, 16)
+            .shadow(color: .black.opacity(0.15), radius: 20)
         }
     }
-    
-    func showNextTextField(){
+
+    // MARK: - Date Helpers
+    private var minSelectableDate: Date {
+        Calendar.current.startOfDay(
+            for: Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+        )
+    }
+
+    private func isFriday(_ date: Date) -> Bool {
+        Calendar.current.component(.weekday, from: date) == 6
+    }
+
+    private func daysFromNow(_ date: Date) -> Int {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let target = calendar.startOfDay(for: date)
+        return calendar.dateComponents([.day], from: today, to: target).day ?? 0
+    }
+
+    private func formattedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.locale = Locale(identifier: Constants.shared.isAR ? "ar" : "en")
+        return formatter.string(from: date)
+    }
+
+    // MARK: - Keyboard Navigation
+    func showNextTextField() {
         switch focusedField {
-        case .name:
-            focusedField = .price
-        case .price:
-            focusedField = showOfferPriceTextField ? .offerPrice : .weight
-        case .offerPrice:
-            focusedField = .weight
-        case .weight:
-            focusedField = .length
-        case .length:
-            focusedField = .width
-        case .width:
-            focusedField = .height
-        case .height:
-            focusedField = .daysNumber
-        case .daysNumber:
-            focusedField = nil
-        default:
-            focusedField = nil
+        case .name:     focusedField = .price
+        case .price:    focusedField = showOfferPriceTextField ? .offerPrice : .weight
+        case .offerPrice: focusedField = .weight
+        case .weight:   focusedField = .length
+        case .length:   focusedField = .width
+        case .width:    focusedField = .height
+        case .height:   focusedField = nil
+        default:        focusedField = nil
         }
     }
-    
-    func showPerviousTextField(){
+
+    func showPerviousTextField() {
         switch focusedField {
-        case .daysNumber:
-            focusedField = .height
-        case .height:
-            focusedField = .width
-        case .width:
-            focusedField = .length
-        case .length:
-            focusedField = .weight
-        case .weight:
-            focusedField = showOfferPriceTextField ? .offerPrice : .price
-        case .offerPrice:
-            focusedField = .price
-        case .price:
-            focusedField = .name
-        case .name:
-            focusedField = nil
-        default:
-            focusedField = nil
+        case .height:   focusedField = .width
+        case .width:    focusedField = .length
+        case .length:   focusedField = .weight
+        case .weight:   focusedField = showOfferPriceTextField ? .offerPrice : .price
+        case .offerPrice: focusedField = .price
+        case .price:    focusedField = .name
+        case .name:     focusedField = nil
+        default:        focusedField = nil
         }
     }
-    
+
     func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
-    
+
     enum FormField {
-        case name, description, quantity, price, offerPrice, weight, length, width, height, daysNumber
+        case name, description, quantity, price, offerPrice, weight, length, width, height
     }
 }
+
+
 
 #Preview {
     AddOfferViewNew()
 }
+
+
+struct checkBoxButton : View {
+    let text: String
+    @Binding var isSelected: Bool
+    
+    var body: some View {
+        HStack(spacing: 8) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 6)
+                    .fill(isSelected ? Color(.primaryF9CE29) : Color.white)
+                    .frame(width: 18, height: 18)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 9)
+                            .stroke(Color(.primaryF9CE29), lineWidth: 1.5)
+                    )
+                if isSelected {
+                    Image(systemName: "checkmark")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 8, height: 8)
+                        .foregroundColor(.white)
+                        .fontWeight(.bold)
+                }
+            }
+            .padding(.leading,2)
+            Text(text.localized())
+                .textModifier(.plain, 14, .black)
+            Spacer()
+        }
+
+    }
+    
+}
+

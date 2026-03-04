@@ -28,6 +28,9 @@ protocol MoreAPIProtocol {
     func updateSecretKey(Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func getNameFromPhone(phone:String, Completion: @escaping (Result<GetNameFromPhoneModel?, NSError>) -> Void)
     func confirmTransfer(phone:String,amount:Double ,Completion: @escaping (Result<ConfirmTransferModel?, NSError>) -> Void)
+    func getTaxRecord(completion: @escaping (Result<TaxRecordModel?, NSError>) -> Void)
+    func addTaxRecord(taxNumber: String, completion: @escaping (Result<TaxRecordModel?, NSError>) -> Void)
+    func deleteTaxRecord(completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
 }
 
 
@@ -149,6 +152,30 @@ class MoreAPI: BaseAPI<MoreNetwork>, MoreAPIProtocol
     func confirmTransfer(phone:String,amount:Double ,Completion: @escaping (Result<ConfirmTransferModel?, NSError>) -> Void) {
         self.fetchData(target: .confirmTransfer(phone: phone, amount: amount), responseClass: ConfirmTransferModel.self) { (result) in
             Completion(result)
+        }
+    }
+    
+    
+
+}
+
+extension MoreAPI {
+
+    func getTaxRecord(completion: @escaping (Result<TaxRecordModel?, NSError>) -> Void) {
+        self.fetchData(target: .getTaxRecord, responseClass: TaxRecordModel.self) { result in
+            completion(result)
+        }
+    }
+
+    func addTaxRecord(taxNumber: String, completion: @escaping (Result<TaxRecordModel?, NSError>) -> Void) {
+        self.fetchData(target: .addTaxRecord(taxNumber: taxNumber), responseClass: TaxRecordModel.self) { result in
+            completion(result)
+        }
+    }
+
+    func deleteTaxRecord(completion: @escaping (Result<GeneralModel?, NSError>) -> Void) {
+        self.fetchData(target: .deleteTaxRecord, responseClass: GeneralModel.self) { result in
+            completion(result)
         }
     }
 }

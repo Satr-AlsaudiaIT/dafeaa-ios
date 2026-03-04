@@ -37,7 +37,13 @@ struct ShippingCompanySelectionView: View {
                     )
                 }
             }
+            .padding(12)
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.primaryF9CE29, lineWidth: 1)
+            )
         }
+        
         .onAppear {
             if selectedCompany == nil, let firstCompany = availableCompanies.first {
                 selectedCompany = firstCompany

@@ -72,13 +72,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
         let resetLanguage = GenericUserDefault.shared.getValue(Constants.shared.resetLanguage) as? Bool ?? false
         let token = GenericUserDefault.shared.getValue(Constants.shared.token) as? String ?? ""
         let status  = Constants.accountStatus
+        let resetFromLoginLink = Constants.resetFromLinkLogin
         //
         if resetLanguage == false {
             window.rootViewController = UIHostingController(rootView: SplashView(window: window) .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
                 .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight)
                 )
         } else if token != ""  {
-            if status == 2{
+            if resetFromLoginLink {
+                let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
+                // ✅ Decode from Data
+                if let savedData = UserDefaults.standard.data(forKey: "offerDataAfterLoginResetFromLink"),
+                   let offerData = try? JSONDecoder().decode(ShowOfferData.self, from: savedData) {
+                    // use offerData
+                    UserDefaults.standard.removeObject(forKey: "offerDataAfterLoginResetFromLink")
+                    if userId != offerData.clientId ?? 0 {
+                        let rootView = ClientLinkDetailsNew(offerData: offerData)
+                            .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar" : "en"))
+                            .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft : .leftToRight)
+                        window.rootViewController = UIHostingController(rootView: rootView)
+                    } else {
+                        let rootView = OrderLinkDetailsViewNew(offerData: offerData)
+                            .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar" : "en"))
+                            .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft : .leftToRight)
+                        window.rootViewController = UIHostingController(rootView: rootView)
+                    }
+
+                }
+
+
+
+            }
+
+           else if status == 2{
                 let navigationHelper = NavigationHelper(actionType: 0, actionId: 0, userType: "")
 
                 window.rootViewController = UIHostingController(rootView: TabBarView().environmentObject(navigationHelper)
@@ -87,12 +113,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
                     )
                 UserDefaults.standard.set(false, forKey:  Constants.shared.resetLanguage)
                 
-            }else {
+            }
+            else {
                 window.rootViewController = UIHostingController(rootView: PendingView() .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
                     .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight)
                     )
                 UserDefaults.standard.set(false, forKey:  Constants.shared.resetLanguage)
             }
+            
         } else {
             window.rootViewController = UIHostingController(rootView: LoginView() .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
                 .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight)
@@ -116,7 +144,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
              return false
          }
 
-         // Parse the URL and handle it
          deepLink(url: incomingURL)
          return true
     }
@@ -159,7 +186,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
                 //to do if needed to return to v2 remove this and return self.offersData = data
                 
                     if let mappedModel = mapShowOfferModelV3ToShowOfferModel(v3Model: response) {
-                        navToOffer(offerData:mappedModel.data, offerUserId:response.data?.clientId ?? 0 )
+                        navToOffer(offerData:mappedModel.data, offerUserId:response.data?.product?.clientId ?? 0 )
                         }
             case .failure(let error):
                 if error.code == 404 {
@@ -170,51 +197,56 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
         
     }
     
-    //to do if needed to return to v2 remove this
+    // to do if needed to return to v2 remove this
     func mapShowOfferModelV3ToShowOfferModel(v3Model: ShowOfferModelV3) -> ShowOfferModel? {
         guard let v3Data = v3Model.data else { return nil }
-        
-        // Create a single product from V3 data since V3 represents a single offer
+
         let product = productList(
-            id: v3Data.id,
-            images: v3Data.images,
+            id: v3Data.productId,
+            images: v3Data.product?.images,
             name: v3Data.name,
-            description: v3Data.description,
-            price: v3Data.price,
-            amount: nil, // Not available in V3
-            offerPrice: v3Data.offerPrice,
-            totalQuantity: nil, // Not available in V3
-            paiedQuantity: nil, // Not available in V3
-            remainingQuantity: nil // Not available in V3
+            description: v3Data.product?.description,
+            price: v3Data.product?.price,
+            amount: nil,
+            offerPrice: v3Data.product?.offerPrice,
+            totalQuantity: nil,
+            paiedQuantity: nil,
+            remainingQuantity: nil
         )
-        
+
         let showOfferData = ShowOfferData(
             id: v3Data.id,
             name: v3Data.name,
             code: v3Data.code,
             description: v3Data.description,
-            clientId: v3Data.clientId,
-            deliveryPrice: nil, // Not available in V3
-            taxPrice: nil, // Not available in V3
-            products: [product], // Convert single offer to product array
+            clientId: v3Data.product?.clientId,
+            deliveryPrice: nil,
+            taxPrice: v3Data.priceCommission?.commissionVat,
+            products: [product],
             status: v3Data.status,
-            commissionRatio: v3Data.commissionRatio,
-            maxCommissionValue: v3Data.maxCommissionValue,
-            shippingCompanies: v3Data.shippingCompanies,
-            address: v3Data.address
+            commissionRatio: v3Data.priceCommission?.commissionRatio,
+            maxCommissionValue: v3Data.priceCommission?.maxCommissionValue,
+            shippingCompanies: v3Data.product?.shippingCompanies,
+            address: v3Data.address,
+            // V3 additions
+            shipmentFree: v3Data.shipmentFree,
+            hasTaxRecord: v3Data.hasTaxRecord,
+            priceCommission: v3Data.priceCommission,
+            shippingCommission: v3Data.shippingCommission,
+            seller: v3Data.seller
         )
-        
+
         return ShowOfferModel(
             status: v3Model.status,
             message: v3Model.message,
             data: showOfferData
         )
     }
+
     
     
-    private func navToOffer(offerData: ShowOfferData?,offerUserId: Int) {
+    func navToOffer(offerData: ShowOfferData?,offerUserId: Int) {
         guard Constants.accountStatus == 2 else { return }
-//        let userType = GenericUserDefault.shared.getValue(Constants.shared.userType) as? Int ?? 0
         let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
         if let window = self.window {
             if userId != offerUserId {

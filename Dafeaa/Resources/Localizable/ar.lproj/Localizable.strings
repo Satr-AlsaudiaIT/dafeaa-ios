@@ -99,6 +99,8 @@
 "Subscription Management"="إدارة الاشتراكات";
 "Saved Addresses"="العناوين المحفوظة";
 "About Dafeaa"="عن دافع";
+"Terms & Conditions" = "الشروط والاحكام";
+"Privacy Policy" = "سياسة الخصوصية";
 "FAQ"="أسئلة متكررة";
 "FAQNavTitle"="الأسئلة الشائعة";
 "Help and Support"="المساعدة والدعم";
@@ -363,6 +365,13 @@
 "userNotExist" = "هذا الرقم غير مرتبط بأي حساب";
 "amount_validation" = "برجاء إدخال المبلغ المراد تحويله";
 "number_days" = "عدد أيام التوصيل";
+"free_shipping" = "شحن مجاني";
+"tax_record" = "السجل الضريبي";
+"edit_tax_record_number" = "تعديل رقم السجل الضريبي";
+"add_tax_record_number" = "اضافة رقم سجل ضريبي ";
+"addTaxRecordNumber" = "أضف رقم سجل ضريبي";
+"hasTax" = "الطلب خاضع للضريبة";
+"validation_nit_have_tax_record" = "برجاء اضافة السجل الضريبي";
 
 //MARK: - Withdraws
 "withdrawsProcess" = "عمليات سحب الرصيد";
@@ -537,3 +546,29 @@
 //MARK: -
 // tracking events
 "tracking_events" = "متابعة الطلب";
+
+//MARK: - offer changes
+"shipping_on_seller" = "على البائع";
+"shipping_on_buyer" = "على المشتري";
+"price_label" = "السعر";
+"service_fees_label" = "رسوم الخدمة";
+"net_label" = "الصافي";
+"shipping_label" = "الشحن";
+"tooltip_shipping_on_seller" = "الشحن على البائع.";
+"tooltip_price_shown_to_buyer" = "هذا السعر الذي سيظهر للمشتري.";
+"tooltip_shipping_deducted" = "تكلفة الشحن سيتم خصمها من البائع.";
+"free_shipping_hint" = "عند تفعيل الشحن المجاني، سيتم خصم قيمة التوصيل من المبلغ الصافي , تقريبا من 25-30 ريال";
+"payment_info_title" = "معلومات الدفع";
+"shipping_delivery_label" = "الشحن والتسليم";
+"tooltip_shipping_on_buyer" = "الشحن على المشتري";
+"tooltip_price_shown_with_shipping" = "سيظهر هذا السعر للمشتري بالإضافة إلى تكلفة الشحن.";
+"login_required_title" = "تسجيل الدخول مطلوب";
+"login_required_message" = "يجب تسجيل الدخول أولاً لتتمكن من إتمام الطلب.";
+"go_to_login" = "تسجيل الدخول";
+"cancel" = "الغاء";
+"free" = "مجاني";
+"shipping_via" = "الشحن عن طريق";
+"unknown" = "غير معروف";
+"delivery_date" = "تاريخ التوصيل";
+"select_delivery_date" = "اختر تاريخ التوصيل";
+"ok" = "حسنا";

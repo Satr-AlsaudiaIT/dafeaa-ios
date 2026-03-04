@@ -52,7 +52,7 @@ class Constants {
     let businessInformationStatus = "businessInformationStatus"
     let subPlanId = "subPlanId"
     let activeNotification = "activeNotification"
-
+    let offerDataAfterLoginResetFromLink = "offerDataAfterLoginResetFromLink"
 
     static let ARAB_NATIONAL_BANK_CODE = "30"  // البنك العربي الوطني
     static let WITHDRAW_THRESHOLD: Double = 20000.0  // SAR
@@ -157,6 +157,30 @@ class Constants {
         }
     }
     
+    static var resetFromLinkLogin: Bool {
+        get {
+            let ud = UserDefaults.standard
+            return ud.value(forKey: "resetFromLinkLogin") as? Bool ?? false
+        }
+        set(value) {
+            let ud = UserDefaults.standard
+            ud.set(value, forKey: "resetFromLinkLogin")
+        }
+    }
+    
+    
+    
+//    static var offerDataAfterLoginResetFromLink: ShowOfferData {
+//        get {
+//            let ud = UserDefaults.standard
+//            return ud.value(forKey: "offerUserIdAfterLoginResetFromLink") as? ShowOfferData ?? ShowOfferData()
+//        }
+//        set(value) {
+//            let ud = UserDefaults.standard
+//            ud.set(value, forKey: "offerUserIdAfterLoginResetFromLink")
+//        }
+//    }
+
     
     static var lastPayoutStatus: String {
         get {

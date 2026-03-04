@@ -23,6 +23,7 @@ class AuthVM: ObservableObject {
     @Published private var _isCheckCodeSuccess = false
     @Published var _isVerifyCodeSuccess = false
     @Published var _isChangePhoneSuccess = false
+    @Published private var _profileData    : LoginData?
 
     @Published private var _isCreatePasswordSuccess = false
     @Published var _hasUnCompletedData = false
@@ -31,11 +32,13 @@ class AuthVM: ObservableObject {
     
     @Published private var _cities: [CountryCityModelData] = []
     @Published private var _citiesNames: [String] = []
-    
-    
+    @Published var isLoginSuccess: Bool = false
+    private var isFromGuestModeLogin: Bool = false
     private var _message: String = ""
     private var token = ""
     let api: AuthAPIProtocol = AuthAPI()
+    let moreApi : MoreAPIProtocol = MoreAPI()
+
     var isLoading: Bool {
         get { return _isLoading}
     }
@@ -63,7 +66,7 @@ class AuthVM: ObservableObject {
         }
         set{}
     }
-    func validateLogin(phone: String, password: String) {
+    func validateLogin(phone: String, password: String,isFromGuestMode:Bool? = false) {
         if phone.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPhone".localized())
         } else if !phone.isValidPhone() {
@@ -71,6 +74,7 @@ class AuthVM: ObservableObject {
         } else if password.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPassword".localized())
         } else {
+            self.isFromGuestModeLogin = isFromGuestMode ?? false
             login(for: ["phone": phone.convertDigitsToEng,
                         "password": password])
         }
@@ -235,10 +239,12 @@ class AuthVM: ObservableObject {
                 self._message = response?.message ?? ""
                 self._isLoading = false
                 self._isFailed = false
-                
-                if let response = response,let phone = dic["phone"] as? String {
-                    self.logIn(response:response, phone: phone)
+                if let response = response {
+                    GenericUserDefault.shared.setValue(response.token ?? "", Constants.shared.token)
+                    self.profile()
                 }
+//                    self.logIn(response:response, phone: phone)
+//                }
             case .failure(let error):
                 self._needsVerification = GenericUserDefault.shared.getValue(Constants.shared.needsVerification) as? Bool ?? false
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
@@ -413,7 +419,35 @@ class AuthVM: ObservableObject {
             }
         }
     }
-    
+    func profile(_ animated: Bool = true) {
+        self._isLoading = animated ? true:false
+        moreApi.profile {(result)  in
+            switch result {
+            case .success(let response):
+                self._message = response?.message ?? ""
+                self._isLoading = false
+                self._isFailed = false
+                self._profileData = response?.data
+                GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
+                Constants.accountStatus = response?.data?.status ?? 2
+                Constants.phone = response?.data?.phone ?? ""
+                Constants.userName = response?.data?.name ?? ""
+                GenericUserDefault.shared.setValue(response?.data?.id ?? 0, Constants.shared.userId)
+                GenericUserDefault.shared.setValue(response?.data?.businessInformationStatus, Constants.shared.businessInformationStatus)
+                GenericUserDefault.shared.setValue(response?.data?.activeNotification ?? 0, Constants.shared.activeNotification)
+                self.isLoginSuccess = true
+                if !self.isFromGuestModeLogin {
+                    MOLH.reset()
+                }
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+            }
+        }
+    }
+
     func logIn(response:LoginModel, phone: String) {
         GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
         GenericUserDefault.shared.setValue(response.data?.accountType ?? 1 , Constants.shared.userType)
@@ -424,12 +458,9 @@ class AuthVM: ObservableObject {
         if response.data?.uncompletedData == 1 {
             sendCode(for: ["phone":phone ,"usage":"verify"])
         }
-//        else if response.data?.uncompletedData == 2 {
-//            self._hasUnCompletedData = true
-//        }
-        else {
-            MOLH.reset()
-        }
+        
+        MOLH.reset()
+
     }
     func getCountryId(countryName:String) -> Int {
         if let selectedCountry = self._countries.first(where: { $0.name == countryName }){

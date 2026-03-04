@@ -37,11 +37,14 @@ final class OrdersVM : ObservableObject {
     @Published var _isAddProDuctValid       = false
     @Published var _isCreateOrderSuccess    = false
     @Published var shippingRatePrice: Double = 0
+    @Published var taxRecordNumber: String = ""
 
     private var _message                    : String = ""
     private var token                       = ""
     let api                                 : OrdersAPIProtocol = OrdersAPI()
     let apiV3                               : OrdersAPIProtocolV3 = OrdersAPIV3()
+    
+    let moreApi                             : MoreAPIProtocol = MoreAPI()
     var hasMoreData                         = true
 
     var isLoading    : Bool                 { get { return _isLoading }         }
@@ -546,7 +549,9 @@ final class OrdersVM : ObservableObject {
         width: String,
         height: String,
         shippingCompanies: [ShippingCompany],
-        plannedShippingDateAndTime: String
+        plannedShippingDateAndTime: String,
+        isShipmentFree:Bool,
+        hasTaxRecord: Bool
     )  {
 
         let plainDescription = descriptionAttributed.string.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -590,13 +595,15 @@ final class OrdersVM : ObservableObject {
 
         if plannedShippingDateAndTime.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "validation_planned_shipping".localized())
+            
+        }
+        if hasTaxRecord && taxRecordNumber == "" {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "validation_nit_have_tax_record".localized())
             return
         }
 
-        // Convert rich text to HTML with proper UTF-8 encoding
         let htmlDescription = descriptionAttributed.toHTML()
 
-        // Debug: Check what attributes exist
         descriptionAttributed.enumerateAttributes(in: NSRange(location: 0, length: descriptionAttributed.length), options: []) { attributes, range, _ in
             print("📋 Attributes at range \(range): \(attributes)")
         }
@@ -610,7 +617,9 @@ final class OrdersVM : ObservableObject {
             "length": length.convertDigitsToEng,
             "width": width.convertDigitsToEng,
             "height": height.convertDigitsToEng,
-            "planned_shipping_date_and_time": plannedShippingDateAndTime.convertDigitsToEng
+            "planned_shipping_date_and_time": plannedShippingDateAndTime.convertDigitsToEng,
+            "shipment_free": isShipmentFree ? "1" : "0",
+            "has_tax_record": hasTaxRecord ? "1" : "0"
         ]
         
         if haveOfferPrice {
@@ -706,7 +715,7 @@ final class OrdersVM : ObservableObject {
                 guard  let data = Result else {return}
                 self._isLoading = false
                 self._isFailed = false
-                self.shippingRatePrice = data.data?.price ?? 0
+                self.shippingRatePrice = data.data?.totalPrice ?? 0
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
@@ -717,4 +726,21 @@ final class OrdersVM : ObservableObject {
             }
         }
     }
+    
+    
+    
+    func getTaxRecord() {
+        moreApi.getTaxRecord { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    self?.taxRecordNumber = response?.data?.taxNumber ?? ""
+                case .failure(let error):
+                    self?._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                    self?.toast = FancyToast(type: .error, title: "Error".localized(), message: self?._message ?? "")
+                }
+            }
+        }
+    }
+
 }

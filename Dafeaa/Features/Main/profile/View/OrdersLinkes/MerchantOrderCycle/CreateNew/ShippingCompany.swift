@@ -7,7 +7,7 @@
 
 
 enum ShippingCompany: String, CaseIterable, Identifiable {
-    case dhl, aramex, samsa
+    case dhl, aramex, smsa
 
     var id: String { rawValue }
 
@@ -15,10 +15,10 @@ enum ShippingCompany: String, CaseIterable, Identifiable {
         switch self {
         case .dhl: return "DHL"
         case .aramex: return "Aramex"
-        case .samsa: return "SMSA"
+        case .smsa: return "SMSA"
         }
     }
 
-    // Image + color assets are named exactly: dhl, aramex, samsa
+    // Image + color assets are named exactly: dhl, aramex, smsa
     var assetName: String { rawValue }
 }

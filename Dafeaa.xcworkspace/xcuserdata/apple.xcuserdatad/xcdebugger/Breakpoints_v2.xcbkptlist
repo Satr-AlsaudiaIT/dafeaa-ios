@@ -190,8 +190,8 @@
             filePath = "Dafeaa/Features/Auth/VM/AuthVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
             landmarkName = "validateBusiness(phone:commLecs:name:country:city:area:taxNum:endDate:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -206,8 +206,8 @@
             filePath = "Dafeaa/Features/Auth/VM/AuthVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "461"
-            endingLineNumber = "461"
+            startingLineNumber = "492"
+            endingLineNumber = "492"
             landmarkName = "getCityId(cityName:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -222,8 +222,8 @@
             filePath = "Dafeaa/Features/Auth/VM/AuthVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
             landmarkName = "validateBusiness(phone:commLecs:name:country:city:area:taxNum:endDate:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -238,8 +238,8 @@
             filePath = "Dafeaa/Features/Auth/VM/AuthVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "validateBusiness(phone:commLecs:name:country:city:area:taxNum:endDate:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -574,8 +574,8 @@
             filePath = "Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetails.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -590,8 +590,8 @@
             filePath = "Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetails.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -606,8 +606,8 @@
             filePath = "Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetails.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
             landmarkName = "calculateTotalPrice()"
             landmarkType = "7">
          </BreakpointContent>
@@ -622,8 +622,8 @@
             filePath = "Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetails.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
             landmarkName = "calculateTotalPrice()"
             landmarkType = "7">
          </BreakpointContent>
@@ -638,8 +638,8 @@
             filePath = "Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetails.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
             landmarkName = "calculateTotalPrice()"
             landmarkType = "7">
          </BreakpointContent>
@@ -654,8 +654,8 @@
             filePath = "Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetails.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
             landmarkName = "calculateTotalPrice()"
             landmarkType = "7">
          </BreakpointContent>
@@ -670,8 +670,8 @@
             filePath = "Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetails.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
             landmarkName = "calculateTotalPrice()"
             landmarkType = "7">
          </BreakpointContent>
@@ -702,8 +702,8 @@
             filePath = "Dafeaa/Features/Main/MyOrders/VM/OrdersVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "233"
-            endingLineNumber = "233"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
             landmarkName = "changeOrderStatus(id:status:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -782,8 +782,8 @@
             filePath = "Dafeaa/Features/Auth/VM/AuthVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
             landmarkName = "validateForgetPasswordPhone(phone:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -798,8 +798,8 @@
             filePath = "Dafeaa/Features/Main/MyOrders/VM/OrdersVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "380"
-            endingLineNumber = "380"
+            startingLineNumber = "383"
+            endingLineNumber = "383"
             landmarkName = "updateQuantity(productId:quantity:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -878,8 +878,8 @@
             filePath = "Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetails.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -962,6 +962,36 @@
             endingLineNumber = "338"
             landmarkName = "uploadOrderWithProduct(path:parameterS:products:responseClass:completion:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CA0FF75C-FB32-4F0D-ADE6-0573269682BB - 1a6bb0f50b9cb7ed"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.MultipartFormData) -&gt; () in DAFEA___&#x62f;&#x627;&#x641;&#x639;.MultipartUploadImageWithModel.uploadOrderWithProduct&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(path: Swift.String, parameterS: Swift.Dictionary&lt;Swift.String, Any&gt;, products: Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, responseClass: &#x3c4;_0_0.Type, completion: (Swift.Result&lt;Swift.Optional&lt;&#x3c4;_0_0&gt;, __C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "338"
+                  endingLineNumber = "338">
+               </Location>
+               <Location
+                  uuid = "CA0FF75C-FB32-4F0D-ADE6-0573269682BB - 1a6bb0f50b9cb7ed"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.MultipartFormData) -&gt; () in DAFEA___&#x62f;&#x627;&#x641;&#x639;.MultipartUploadImageWithModel.uploadOrderWithProduct&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(path: Swift.String, parameterS: Swift.Dictionary&lt;Swift.String, Any&gt;, products: Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, responseClass: &#x3c4;_0_0.Type, completion: (Swift.Result&lt;Swift.Optional&lt;&#x3c4;_0_0&gt;, __C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "338"
+                  endingLineNumber = "338">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -978,6 +1008,36 @@
             endingLineNumber = "337"
             landmarkName = "uploadOrderWithProduct(path:parameterS:products:responseClass:completion:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F2BF35C9-D167-4B7E-AB3A-292151F9C5F3 - 1a6bb0f50b9cb78c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.MultipartFormData) -&gt; () in DAFEA___&#x62f;&#x627;&#x641;&#x639;.MultipartUploadImageWithModel.uploadOrderWithProduct&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(path: Swift.String, parameterS: Swift.Dictionary&lt;Swift.String, Any&gt;, products: Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, responseClass: &#x3c4;_0_0.Type, completion: (Swift.Result&lt;Swift.Optional&lt;&#x3c4;_0_0&gt;, __C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "337"
+                  endingLineNumber = "337">
+               </Location>
+               <Location
+                  uuid = "F2BF35C9-D167-4B7E-AB3A-292151F9C5F3 - 1a6bb0f50b9cb78c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.MultipartFormData) -&gt; () in DAFEA___&#x62f;&#x627;&#x641;&#x639;.MultipartUploadImageWithModel.uploadOrderWithProduct&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(path: Swift.String, parameterS: Swift.Dictionary&lt;Swift.String, Any&gt;, products: Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, responseClass: &#x3c4;_0_0.Type, completion: (Swift.Result&lt;Swift.Optional&lt;&#x3c4;_0_0&gt;, __C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "337"
+                  endingLineNumber = "337">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -994,6 +1054,50 @@
             endingLineNumber = "336"
             landmarkName = "uploadOrderWithProduct(path:parameterS:products:responseClass:completion:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7235BE77-D158-4EEE-86BF-A50FFE589135 - 1a6bb0f50b9cb7a3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.MultipartFormData) -&gt; () in DAFEA___&#x62f;&#x627;&#x641;&#x639;.MultipartUploadImageWithModel.uploadOrderWithProduct&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(path: Swift.String, parameterS: Swift.Dictionary&lt;Swift.String, Any&gt;, products: Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, responseClass: &#x3c4;_0_0.Type, completion: (Swift.Result&lt;Swift.Optional&lt;&#x3c4;_0_0&gt;, __C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "336"
+                  endingLineNumber = "336">
+               </Location>
+               <Location
+                  uuid = "7235BE77-D158-4EEE-86BF-A50FFE589135 - 1a6bb0f50b9cb7a3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.MultipartFormData) -&gt; () in DAFEA___&#x62f;&#x627;&#x641;&#x639;.MultipartUploadImageWithModel.uploadOrderWithProduct&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(path: Swift.String, parameterS: Swift.Dictionary&lt;Swift.String, Any&gt;, products: Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, responseClass: &#x3c4;_0_0.Type, completion: (Swift.Result&lt;Swift.Optional&lt;&#x3c4;_0_0&gt;, __C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "336"
+                  endingLineNumber = "336">
+               </Location>
+               <Location
+                  uuid = "7235BE77-D158-4EEE-86BF-A50FFE589135 - 1a6bb0f50b9cb7a3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.MultipartFormData) -&gt; () in DAFEA___&#x62f;&#x627;&#x641;&#x639;.MultipartUploadImageWithModel.uploadOrderWithProduct&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(path: Swift.String, parameterS: Swift.Dictionary&lt;Swift.String, Any&gt;, products: Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, responseClass: &#x3c4;_0_0.Type, completion: (Swift.Result&lt;Swift.Optional&lt;&#x3c4;_0_0&gt;, __C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "336"
+                  endingLineNumber = "336">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1010,6 +1114,36 @@
             endingLineNumber = "327"
             landmarkName = "uploadOrderWithProduct(path:parameterS:products:responseClass:completion:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A8845725-F153-4D9D-B6DB-9C91A11358DE - 1a6bb0f50b9cb67a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.MultipartFormData) -&gt; () in DAFEA___&#x62f;&#x627;&#x641;&#x639;.MultipartUploadImageWithModel.uploadOrderWithProduct&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(path: Swift.String, parameterS: Swift.Dictionary&lt;Swift.String, Any&gt;, products: Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, responseClass: &#x3c4;_0_0.Type, completion: (Swift.Result&lt;Swift.Optional&lt;&#x3c4;_0_0&gt;, __C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "327"
+                  endingLineNumber = "327">
+               </Location>
+               <Location
+                  uuid = "A8845725-F153-4D9D-B6DB-9C91A11358DE - 1a6bb0f50b9cb67a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.MultipartFormData) -&gt; () in DAFEA___&#x62f;&#x627;&#x641;&#x639;.MultipartUploadImageWithModel.uploadOrderWithProduct&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(path: Swift.String, parameterS: Swift.Dictionary&lt;Swift.String, Any&gt;, products: Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, responseClass: &#x3c4;_0_0.Type, completion: (Swift.Result&lt;Swift.Optional&lt;&#x3c4;_0_0&gt;, __C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "327"
+                  endingLineNumber = "327">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1022,8 +1156,8 @@
             filePath = "Dafeaa/Features/Main/MyOrders/VM/OrdersVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "447"
-            endingLineNumber = "447"
+            startingLineNumber = "450"
+            endingLineNumber = "450"
             landmarkName = "validateAddOrderOLD(images:name:description:quantity:price:offerPrice:haveOffer:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1038,8 +1172,8 @@
             filePath = "Dafeaa/Features/Main/MyOrders/VM/OrdersVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "456"
-            endingLineNumber = "456"
+            startingLineNumber = "459"
+            endingLineNumber = "459"
             landmarkName = "validateAddOrderOLD(images:name:description:quantity:price:offerPrice:haveOffer:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1054,8 +1188,8 @@
             filePath = "Dafeaa/Features/Main/MyOrders/VM/OrdersVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "440"
-            endingLineNumber = "440"
+            startingLineNumber = "443"
+            endingLineNumber = "443"
             landmarkName = "validateAddOrderOLD(images:name:description:quantity:price:offerPrice:haveOffer:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1122,6 +1256,36 @@
             endingLineNumber = "44"
             landmarkName = "body"
             landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "8872350A-78D5-4E8A-8F92-79A0E6117230 - 81a2cd21a198f3b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, Swift.Optional&lt;&lt;&lt;opaque return type of DAFEA___&#x62f;&#x627;&#x641;&#x639;.DeveloperKeyBottomSheet.keySection(title: Swift.String, value: Swift.String, copyAction: () -&gt; (), toggleAction: () -&gt; (), showValue: Swift.Bool) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of DAFEA___&#x62f;&#x627;&#x641;&#x639;.DeveloperKeyBottomSheet.keySection(title: Swift.String, value: Swift.String, copyAction: () -&gt; (), toggleAction: () -&gt; (), showValue: Swift.Bool) -&gt; some&gt;&gt;.0&gt;, SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.multilineTextAlignment(SwiftUI.TextAlignment) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.multilineTextAlignment(SwiftUI.TextAlignment) -&gt; some&gt;&gt;.0&gt;)&gt;&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.Spacer)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Color, &lt;&lt;opaque return type of SwiftUI.View.cornerRadius(_: CoreGraphics.CGFloat, antialiased: Swift.Bool) -&gt; some&gt;&gt;.0, Swift.Optional&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.progressViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ProgressViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.hidden() -&gt; some&gt;&gt;.0&gt;&gt;)&gt; in DAFEA___&#x62f;&#x627;&#x641;&#x639;.DeveloperKeyBottomSheet.body.getter : some"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Features/Main/profile/View/Settings/DeveloperKeyBottomSheet.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44">
+               </Location>
+               <Location
+                  uuid = "8872350A-78D5-4E8A-8F92-79A0E6117230 - 81a2cd21a198f3b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, Swift.Optional&lt;&lt;&lt;opaque return type of DAFEA___&#x62f;&#x627;&#x641;&#x639;.DeveloperKeyBottomSheet.keySection(title: Swift.String, value: Swift.String, copyAction: () -&gt; (), toggleAction: () -&gt; (), showValue: Swift.Bool) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of DAFEA___&#x62f;&#x627;&#x641;&#x639;.DeveloperKeyBottomSheet.keySection(title: Swift.String, value: Swift.String, copyAction: () -&gt; (), toggleAction: () -&gt; (), showValue: Swift.Bool) -&gt; some&gt;&gt;.0&gt;, SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.multilineTextAlignment(SwiftUI.TextAlignment) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.multilineTextAlignment(SwiftUI.TextAlignment) -&gt; some&gt;&gt;.0&gt;)&gt;&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.Spacer)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Color, &lt;&lt;opaque return type of SwiftUI.View.cornerRadius(_: CoreGraphics.CGFloat, antialiased: Swift.Bool) -&gt; some&gt;&gt;.0, Swift.Optional&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.progressViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ProgressViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.hidden() -&gt; some&gt;&gt;.0&gt;&gt;)&gt; in DAFEA___&#x62f;&#x627;&#x641;&#x639;.DeveloperKeyBottomSheet.body.getter : some"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Features/Main/profile/View/Settings/DeveloperKeyBottomSheet.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1138,6 +1302,36 @@
             endingLineNumber = "57"
             landmarkName = "body"
             landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "231F9D6E-1256-475E-980A-52D9C5A014F0 - 5be805e0365fb37e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #5 () -&gt; SwiftUI.TupleView&lt;(Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.multilineTextAlignment(SwiftUI.TextAlignment) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.multilineTextAlignment(SwiftUI.TextAlignment) -&gt; some&gt;&gt;.0&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, Swift.Optional&lt;&lt;&lt;opaque return type of DAFEA___&#x62f;&#x627;&#x641;&#x639;.DeveloperKeyBottomSheet.keySection(title: Swift.String, value: Swift.String, copyAction: () -&gt; (), toggleAction: () -&gt; (), showValue: Swift.Bool) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of DAFEA___&#x62f;&#x627;&#x641;&#x639;.DeveloperKeyBottomSheet.keySection(title: Swift.String, value: Swift.String, copyAction: () -&gt; (), toggleAction: () -&gt; (), showValue: Swift.Bool) -&gt; some&gt;&gt;.0&gt;, SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.multilineTextAlignment(SwiftUI.TextAlignment) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.multilineTextAlignment(SwiftUI.TextAlignment) -&gt; some&gt;&gt;.0&gt;)&gt;&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.Spacer)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Color, &lt;&lt;opaque return type of SwiftUI.View.cornerRadius(_: CoreGraphics.CGFloat, antialiased: Swift.Bool) -&gt; some&gt;&gt;.0, Swift.Optional&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.progressViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ProgressViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.hidden() -&gt; some&gt;&gt;.0&gt;&gt;)&gt; in DAFEA___&#x62f;&#x627;&#x641;&#x639;.DeveloperKeyBottomSheet.body.getter : some"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Features/Main/profile/View/Settings/DeveloperKeyBottomSheet.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "57"
+                  endingLineNumber = "57">
+               </Location>
+               <Location
+                  uuid = "231F9D6E-1256-475E-980A-52D9C5A014F0 - 5be805e0365fb37e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #5 () -&gt; SwiftUI.TupleView&lt;(Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.multilineTextAlignment(SwiftUI.TextAlignment) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.multilineTextAlignment(SwiftUI.TextAlignment) -&gt; some&gt;&gt;.0&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, Swift.Optional&lt;&lt;&lt;opaque return type of DAFEA___&#x62f;&#x627;&#x641;&#x639;.DeveloperKeyBottomSheet.keySection(title: Swift.String, value: Swift.String, copyAction: () -&gt; (), toggleAction: () -&gt; (), showValue: Swift.Bool) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of DAFEA___&#x62f;&#x627;&#x641;&#x639;.DeveloperKeyBottomSheet.keySection(title: Swift.String, value: Swift.String, copyAction: () -&gt; (), toggleAction: () -&gt; (), showValue: Swift.Bool) -&gt; some&gt;&gt;.0&gt;, SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.multilineTextAlignment(SwiftUI.TextAlignment) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.multilineTextAlignment(SwiftUI.TextAlignment) -&gt; some&gt;&gt;.0&gt;)&gt;&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.Spacer)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Color, &lt;&lt;opaque return type of SwiftUI.View.cornerRadius(_: CoreGraphics.CGFloat, antialiased: Swift.Bool) -&gt; some&gt;&gt;.0, Swift.Optional&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.progressViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ProgressViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.hidden() -&gt; some&gt;&gt;.0&gt;&gt;)&gt; in DAFEA___&#x62f;&#x627;&#x641;&#x639;.DeveloperKeyBottomSheet.body.getter : some"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Features/Main/profile/View/Settings/DeveloperKeyBottomSheet.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "57"
+                  endingLineNumber = "57">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1198,8 +1392,8 @@
             filePath = "Dafeaa/Application/Constants.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "isArabNationalBank(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1214,8 +1408,8 @@
             filePath = "Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetails.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1234,6 +1428,92 @@
             endingLineNumber = "19"
             landmarkName = "OrderLinkDetailsView"
             landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "DB499896-4AC2-4AAA-8332-86E1D2EF226F - 4b32eba343ebcc60"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "property wrapper backing initializer of DAFEA___&#x62f;&#x627;&#x641;&#x639;.OrderLinkDetailsView.isNavigateToAddress : Swift.Bool"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Features/Main/profile/View/OrdersLinkes/MerchantOrderCycle/ShowOffer/OrderLinkDetailsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "DB499896-4AC2-4AAA-8332-86E1D2EF226F - 1f38eb8413213db3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DAFEA___&#x62f;&#x627;&#x641;&#x639;.OrderLinkDetailsView.isNavigateToAddress.getter : Swift.Bool"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Features/Main/profile/View/OrdersLinkes/MerchantOrderCycle/ShowOffer/OrderLinkDetailsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "DB499896-4AC2-4AAA-8332-86E1D2EF226F - c10a878ff2dc2d87"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DAFEA___&#x62f;&#x627;&#x641;&#x639;.OrderLinkDetailsView.isNavigateToAddress.setter : Swift.Bool"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Features/Main/profile/View/OrdersLinkes/MerchantOrderCycle/ShowOffer/OrderLinkDetailsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "DB499896-4AC2-4AAA-8332-86E1D2EF226F - c48f660b7315cfc3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DAFEA___&#x62f;&#x627;&#x641;&#x639;.OrderLinkDetailsView.isNavigateToAddress.modify : Swift.Bool"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Features/Main/profile/View/OrdersLinkes/MerchantOrderCycle/ShowOffer/OrderLinkDetailsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19">
+               </Location>
+               <Location
+                  uuid = "DB499896-4AC2-4AAA-8332-86E1D2EF226F - 1ad62aeef5c17c4f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DAFEA___&#x62f;&#x627;&#x641;&#x639;.OrderLinkDetailsView.$isNavigateToAddress.getter : SwiftUI.Binding&lt;Swift.Bool&gt;"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Features/Main/profile/View/OrdersLinkes/MerchantOrderCycle/ShowOffer/OrderLinkDetailsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "DB499896-4AC2-4AAA-8332-86E1D2EF226F - f34c571b056fcac1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "default argument 8 of DAFEA___&#x62f;&#x627;&#x641;&#x639;.OrderLinkDetailsView.init(presentationMode: SwiftUI.Environment&lt;SwiftUI.Binding&lt;SwiftUI.PresentationMode&gt;&gt;, code: Swift.String, offerData: Swift.Optional&lt;DAFEA___&#x62f;&#x627;&#x641;&#x639;.ShowOfferData&gt;, viewModel: @autoclosure () -&gt; DAFEA___&#x62f;&#x627;&#x641;&#x639;.OrdersVM, totalPrice: Swift.Double, amountChanged: Swift.Bool, addressId: Swift.Int, address: Swift.String, isNavigateToAddress: Swift.Bool, showingProductDetails: Swift.Bool, selectedProduct: DAFEA___&#x62f;&#x627;&#x641;&#x639;.productList, selectedShippingCompany: Swift.Optional&lt;Swift.String&gt;, status: Swift.Int, toast: Swift.Optional&lt;DAFEA___&#x62f;&#x627;&#x641;&#x639;.FancyToast&gt;) -&gt; DAFEA___&#x62f;&#x627;&#x641;&#x639;.OrderLinkDetailsView"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Features/Main/profile/View/OrdersLinkes/MerchantOrderCycle/ShowOffer/OrderLinkDetailsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1246,10 +1526,40 @@
             filePath = "Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetails.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "body"
             landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "7FFA5C1E-EC17-4EC8-8D07-CC9CB82F4D95 - 23bade7b047584c3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.textModifier(DAFEA___&#x62f;&#x627;&#x641;&#x639;.AppFontsTypes, CoreGraphics.CGFloat, SwiftUI.Color) -&gt; some&gt;&gt;.0, DAFEA___&#x62f;&#x627;&#x641;&#x639;.HTMLDescriptionPreviewView, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.textModifier(DAFEA___&#x62f;&#x627;&#x641;&#x639;.AppFontsTypes, CoreGraphics.CGFloat, SwiftUI.Color) -&gt; some&gt;&gt;.0&gt;, SwiftUI.ForEach&lt;Swift.Array&lt;DAFEA___&#x62f;&#x627;&#x641;&#x639;.productList&gt;, Swift.Optional&lt;Swift.Int&gt;, SwiftUI.Button&lt;&lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, initial: Swift.Bool, _: (&#x3c4;_1_0, &#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0&gt;&gt;, DAFEA___&#x62f;&#x627;&#x641;&#x639;.PaymentInfoView, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.textModifier(DAFEA___&#x62f;&#x627;&#x641;&#x639;.AppFontsTypes, CoreGraphics.CGFloat, SwiftUI.Color) -&gt; some&gt;&gt;.0, SwiftUI.Spacer, SwiftUI.Button&lt;&lt;&lt;opaque return type of SwiftUI.View.textModifier(DAFEA___&#x62f;&#x627;&#x641;&#x639;.AppFontsTypes, CoreGraphics.CGFloat, SwiftUI.Color) -&gt; some&gt;&gt;.0&gt;)&gt;&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.overlay&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.View&gt;(_: &#x3c4;_1_0, alignment: SwiftUI.Alignment) -&gt; some&gt;&gt;.0&gt;, DAFEA___&#x62f;&#x627;&#x641;&#x639;.ReusableButton, SwiftUI.Spacer)&gt; in closure #2 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.navigationDestination&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.View&gt;(isPresented: SwiftUI.Binding&lt;Swift.Bool&gt;, destination: () -&gt; &#x3c4;_1_0) -&gt; some&gt;&gt;.0 in closure #1 () -&gt; SwiftUI.TupleView&lt;(DAFEA___&#x62f;&#x627;&#x641;&#x639;.NavigationBarView, SwiftUI.ScrollView&lt;&lt;&lt;opaque return type of SwiftUI.View.navigationDestination&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.View&gt;(isPresented: SwiftUI.Binding&lt;Swift.Bool&gt;, destination: () -&gt; &#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(DAFEA___&#x62f;&#x627;&#x641;&#x639;.NavigationBarView, SwiftUI.ScrollView&lt;&lt;&lt;opaque return type of SwiftUI.View.navigationDestination&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.View&gt;(isPresented: SwiftUI.Binding&lt;Swift.Bool&gt;, destination: () -&gt; &#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;)&gt;&gt;, Swift.Optional&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.progressViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ProgressViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.hidden() -&gt; some&gt;&gt;.0&gt;&gt;)&gt; in DAFEA___&#x62f;&#x627;&#x641;&#x639;.ClientLinkDetails.body.getter : some"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetails.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "115"
+                  endingLineNumber = "115">
+               </Location>
+               <Location
+                  uuid = "7FFA5C1E-EC17-4EC8-8D07-CC9CB82F4D95 - 5b1b530b658abcb9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #4 () -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.textModifier(DAFEA___&#x62f;&#x627;&#x641;&#x639;.AppFontsTypes, CoreGraphics.CGFloat, SwiftUI.Color) -&gt; some&gt;&gt;.0, DAFEA___&#x62f;&#x627;&#x641;&#x639;.HTMLDescriptionPreviewView, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.textModifier(DAFEA___&#x62f;&#x627;&#x641;&#x639;.AppFontsTypes, CoreGraphics.CGFloat, SwiftUI.Color) -&gt; some&gt;&gt;.0&gt;, SwiftUI.ForEach&lt;Swift.Array&lt;DAFEA___&#x62f;&#x627;&#x641;&#x639;.productList&gt;, Swift.Optional&lt;Swift.Int&gt;, SwiftUI.Button&lt;&lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, initial: Swift.Bool, _: (&#x3c4;_1_0, &#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0&gt;&gt;, DAFEA___&#x62f;&#x627;&#x641;&#x639;.PaymentInfoView, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.textModifier(DAFEA___&#x62f;&#x627;&#x641;&#x639;.AppFontsTypes, CoreGraphics.CGFloat, SwiftUI.Color) -&gt; some&gt;&gt;.0, SwiftUI.Spacer, SwiftUI.Button&lt;&lt;&lt;opaque return type of SwiftUI.View.textModifier(DAFEA___&#x62f;&#x627;&#x641;&#x639;.AppFontsTypes, CoreGraphics.CGFloat, SwiftUI.Color) -&gt; some&gt;&gt;.0&gt;)&gt;&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.overlay&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.View&gt;(_: &#x3c4;_1_0, alignment: SwiftUI.Alignment) -&gt; some&gt;&gt;.0&gt;, DAFEA___&#x62f;&#x627;&#x641;&#x639;.ReusableButton, SwiftUI.Spacer)&gt; in closure #2 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.navigationDestination&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.View&gt;(isPresented: SwiftUI.Binding&lt;Swift.Bool&gt;, destination: () -&gt; &#x3c4;_1_0) -&gt; some&gt;&gt;.0 in closure #1 () -&gt; SwiftUI.TupleView&lt;(DAFEA___&#x62f;&#x627;&#x641;&#x639;.NavigationBarView, SwiftUI.ScrollView&lt;&lt;&lt;opaque return type of SwiftUI.View.navigationDestination&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.View&gt;(isPresented: SwiftUI.Binding&lt;Swift.Bool&gt;, destination: () -&gt; &#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(DAFEA___&#x62f;&#x627;&#x641;&#x639;.NavigationBarView, SwiftUI.ScrollView&lt;&lt;&lt;opaque return type of SwiftUI.View.navigationDestination&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.View&gt;(isPresented: SwiftUI.Binding&lt;Swift.Bool&gt;, destination: () -&gt; &#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;)&gt;&gt;, Swift.Optional&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.progressViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ProgressViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.hidden() -&gt; some&gt;&gt;.0&gt;&gt;)&gt; in DAFEA___&#x62f;&#x627;&#x641;&#x639;.ClientLinkDetails.body.getter : some"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetails.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "115"
+                  endingLineNumber = "115">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1278,8 +1588,8 @@
             filePath = "Dafeaa/Features/Main/profile/VM/MoreVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
             landmarkName = "validateCreateAddress(countyCode:governorate:city:postalCode:address:lat:lng:addressId:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1294,8 +1604,8 @@
             filePath = "Dafeaa/Features/Auth/VM/AuthVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
             landmarkName = "validateRegister(photo:name:email:phone:accountType:password:confirmPassword:isAgreeChecked:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1310,8 +1620,8 @@
             filePath = "Dafeaa/Features/Auth/VM/AuthVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
             landmarkName = "validateRegister(photo:name:email:phone:accountType:password:confirmPassword:isAgreeChecked:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1326,8 +1636,8 @@
             filePath = "Dafeaa/Features/Auth/VM/AuthVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "validateRegister(photo:name:email:phone:accountType:password:confirmPassword:isAgreeChecked:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1342,8 +1652,8 @@
             filePath = "Dafeaa/Features/Auth/VM/AuthVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
             landmarkName = "validateRegister(photo:name:email:phone:accountType:password:confirmPassword:isAgreeChecked:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1367,15 +1677,31 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2F49F89B-F309-498F-8D2B-912F6B90AC39"
+            uuid = "00475DF8-F45A-47A5-8FC6-BDA1CBF41E05"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Dafeaa/Features/Main/profile/View/Profile/ProfileList.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6A85E623-56BC-4BC0-A270-24FE1A13468A"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/home/VM/HomeVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
+            startingLineNumber = "340"
+            endingLineNumber = "340"
             landmarkName = "confirmTransfer(phone:amount:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1383,17 +1709,189 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8ABE47E0-395D-4580-98B0-167457963920"
+            uuid = "0DBFA487-10C4-4760-9CD1-65233AD0AF1B"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Dafeaa/Features/Main/MyOrders/VM/OrdersVM.swift"
+            filePath = "Dafeaa/Application/DafeaaApp.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "631"
-            endingLineNumber = "631"
-            landmarkName = "createOrderLinkByMerchant(param:selectedImages:selectedShippingCompanies:)"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "reset()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7C2B79CF-A586-4C4B-9E30-EA2BC83D77B7"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Dafeaa/Application/DafeaaApp.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "reset()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B4BB61C5-983C-4C50-BC46-B280B1F755C1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Dafeaa/Application/DafeaaApp.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "reset()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "482205BF-337D-46EC-B081-E1FD8D7E67F7"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetailsNew.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "518060C3-7334-4B36-8850-3F1D2CA2672E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Dafeaa/Application/DafeaaApp.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
+            landmarkName = "reset()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "77EC835D-4CDC-48F2-93CE-CE2D16FABA47"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetailsNew.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "280"
+            endingLineNumber = "280"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A02F8875-BDB9-44D6-A94B-623AB06AFEC8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Dafeaa/Features/Auth/View/Login/LoginSheetView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "A02F8875-BDB9-44D6-A94B-623AB06AFEC8 - dee91ff7df28759"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.textModifier(DAFEA___&#x62f;&#x627;&#x641;&#x639;.AppFontsTypes, CoreGraphics.CGFloat, SwiftUI.Color) -&gt; some&gt;&gt;.0, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.textModifier(DAFEA___&#x62f;&#x627;&#x641;&#x639;.AppFontsTypes, CoreGraphics.CGFloat, SwiftUI.Color) -&gt; some&gt;&gt;.0, SwiftUI.Spacer)&gt;&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.ScrollView&lt;&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0&gt;, SwiftUI.Spacer, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.navigationDestination&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.View&gt;(isPresented: SwiftUI.Binding&lt;Swift.Bool&gt;, destination: () -&gt; &#x3c4;_1_0) -&gt; some&gt;&gt;.0, Swift.Optional&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.progressViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ProgressViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.hidden() -&gt; some&gt;&gt;.0&gt;&gt;)&gt; in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.toastView(toast: SwiftUI.Binding&lt;Swift.Optional&lt;DAFEA___&#x62f;&#x627;&#x641;&#x639;.FancyToast&gt;&gt;) -&gt; some&gt;&gt;.0 in DAFEA___&#x62f;&#x627;&#x641;&#x639;.LoginSheetView.body.getter : some"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Features/Auth/View/Login/LoginSheetView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29">
+               </Location>
+               <Location
+                  uuid = "A02F8875-BDB9-44D6-A94B-623AB06AFEC8 - ef821c1aab54aa37"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.textModifier(DAFEA___&#x62f;&#x627;&#x641;&#x639;.AppFontsTypes, CoreGraphics.CGFloat, SwiftUI.Color) -&gt; some&gt;&gt;.0, SwiftUI.Spacer)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.textModifier(DAFEA___&#x62f;&#x627;&#x641;&#x639;.AppFontsTypes, CoreGraphics.CGFloat, SwiftUI.Color) -&gt; some&gt;&gt;.0, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.textModifier(DAFEA___&#x62f;&#x627;&#x641;&#x639;.AppFontsTypes, CoreGraphics.CGFloat, SwiftUI.Color) -&gt; some&gt;&gt;.0, SwiftUI.Spacer)&gt;&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.ScrollView&lt;&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0&gt;, SwiftUI.Spacer, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.navigationDestination&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.View&gt;(isPresented: SwiftUI.Binding&lt;Swift.Bool&gt;, destination: () -&gt; &#x3c4;_1_0) -&gt; some&gt;&gt;.0, Swift.Optional&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.progressViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ProgressViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.hidden() -&gt; some&gt;&gt;.0&gt;&gt;)&gt; in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.toastView(toast: SwiftUI.Binding&lt;Swift.Optional&lt;DAFEA___&#x62f;&#x627;&#x641;&#x639;.FancyToast&gt;&gt;) -&gt; some&gt;&gt;.0 in DAFEA___&#x62f;&#x627;&#x641;&#x639;.LoginSheetView.body.getter : some"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Features/Auth/View/Login/LoginSheetView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F0C3F841-02CD-419D-B5AB-77AE01BF651D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Dafeaa/Features/Auth/View/Login/LoginSheetView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "F0C3F841-02CD-419D-B5AB-77AE01BF651D - 4e22b36527da720"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DAFEA___&#x62f;&#x627;&#x641;&#x639;.LoginSheetView.body.getter : some"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Features/Auth/View/Login/LoginSheetView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24">
+               </Location>
+               <Location
+                  uuid = "F0C3F841-02CD-419D-B5AB-77AE01BF651D - 289269f86d3d84a9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.toastView(toast: SwiftUI.Binding&lt;Swift.Optional&lt;DAFEA___&#x62f;&#x627;&#x641;&#x639;.FancyToast&gt;&gt;) -&gt; some&gt;&gt;.0 in DAFEA___&#x62f;&#x627;&#x641;&#x639;.LoginSheetView.body.getter : some"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaa%20/Dafeaa/Features/Auth/View/Login/LoginSheetView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -227,6 +227,10 @@
 		18F54E8A2CCD1C0300462383 /* WalletVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F54E7C2CCD1C0300462383 /* WalletVM.swift */; };
 		18F54E8F2CCD2F1C00462383 /* ProcessesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F54E8D2CCD2F1C00462383 /* ProcessesVM.swift */; };
 		18F81CE72D907B6F00B732D7 /* BottomSheetLinkActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F81CE62D907B6F00B732D7 /* BottomSheetLinkActionsView.swift */; };
+		18F9FB7D2F4F989C005C1224 /* TaxRecordBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F9FB7C2F4F989C005C1224 /* TaxRecordBottomSheet.swift */; };
+		18F9FB7F2F573340005C1224 /* LoginSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F9FB7E2F573340005C1224 /* LoginSheetView.swift */; };
+		18F9FB812F5834E9005C1224 /* ClientPaymentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F9FB802F5834E9005C1224 /* ClientPaymentInfoView.swift */; };
+		18F9FB832F585210005C1224 /* FridayBlockingDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F9FB822F585210005C1224 /* FridayBlockingDatePicker.swift */; };
 		18FAE18F2F065ED900DE9128 /* IBANListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FAE18E2F065ED900DE9128 /* IBANListModel.swift */; };
 		18FAE1912F06608500DE9128 /* IBANVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FAE1902F06608500DE9128 /* IBANVM.swift */; };
 		18FAE1942F0660A300DE9128 /* SavedIBANsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FAE1932F0660A300DE9128 /* SavedIBANsView.swift */; };
@@ -492,6 +496,10 @@
 		18F54E7E2CCD1C0300462383 /* WalletModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletModel.swift; sourceTree = "<group>"; };
 		18F54E8D2CCD2F1C00462383 /* ProcessesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessesVM.swift; sourceTree = "<group>"; };
 		18F81CE62D907B6F00B732D7 /* BottomSheetLinkActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetLinkActionsView.swift; sourceTree = "<group>"; };
+		18F9FB7C2F4F989C005C1224 /* TaxRecordBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxRecordBottomSheet.swift; sourceTree = "<group>"; };
+		18F9FB7E2F573340005C1224 /* LoginSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSheetView.swift; sourceTree = "<group>"; };
+		18F9FB802F5834E9005C1224 /* ClientPaymentInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientPaymentInfoView.swift; sourceTree = "<group>"; };
+		18F9FB822F585210005C1224 /* FridayBlockingDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FridayBlockingDatePicker.swift; sourceTree = "<group>"; };
 		18FAE18E2F065ED900DE9128 /* IBANListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBANListModel.swift; sourceTree = "<group>"; };
 		18FAE1902F06608500DE9128 /* IBANVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBANVM.swift; sourceTree = "<group>"; };
 		18FAE1932F0660A300DE9128 /* SavedIBANsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedIBANsView.swift; sourceTree = "<group>"; };
@@ -1199,6 +1207,7 @@
 		1820E2C42CBAAC2800627DF9 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				18F9FB7C2F4F989C005C1224 /* TaxRecordBottomSheet.swift */,
 				1820E2C62CBAAC4E00627DF9 /* ProfileDetailView.swift */,
 				1820E2BD2CBA98A600627DF9 /* ProfileView.swift */,
 				183443542D6B9509001E5EAE /* ProfileList.swift */,
@@ -1285,6 +1294,7 @@
 		18277EB42CB2B1A70020A647 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				18F9FB7E2F573340005C1224 /* LoginSheetView.swift */,
 				18277EB12CB2AF7E0020A647 /* LoginView.swift */,
 			);
 			path = Login;
@@ -1354,6 +1364,7 @@
 				18AD22D92F139A4300B32FD9 /* ShippingCompanyDropdown.swift */,
 				18A1C6202F0F96AD000C61D6 /* RichTextEditorView.swift */,
 				1878513F2E0066DC00E9BD79 /* AddOfferViewNew.swift */,
+				18F9FB822F585210005C1224 /* FridayBlockingDatePicker.swift */,
 			);
 			path = CreateNew;
 			sourceTree = "<group>";
@@ -1394,7 +1405,7 @@
 			isa = PBXGroup;
 			children = (
 				1878513E2E0066C900E9BD79 /* CreateNew */,
-				189437E12CE1268400CA5D96 /* CreateOLD_offer_sperated_from_Product */,
+				189437E12CE1268400CA5D96 /* CreateOLD_offer_speratedfromProduct */,
 				189437E02CE1267600CA5D96 /* ShowOffer */,
 			);
 			path = MerchantOrderCycle;
@@ -1412,13 +1423,13 @@
 			path = ShowOffer;
 			sourceTree = "<group>";
 		};
-		189437E12CE1268400CA5D96 /* CreateOLD_offer_sperated_from_Product */ = {
+		189437E12CE1268400CA5D96 /* CreateOLD_offer_speratedfromProduct */ = {
 			isa = PBXGroup;
 			children = (
 				187607B32CDF5DAD00F4D261 /* AddOfferView.swift */,
 				189437DE2CE0F74D00CA5D96 /* AddProductView.swift */,
 			);
-			path = CreateOLD_offer_sperated_from_Product;
+			path = CreateOLD_offer_speratedfromProduct;
 			sourceTree = "<group>";
 		};
 		189CD7462CDC838F00E929DE /* ClientOrderCycle */ = {
@@ -1428,6 +1439,7 @@
 				187607B52CDFCA1700F4D261 /* ClientLinkCellIView.swift */,
 				189CD7482CDC83D500E929DE /* ClientLinkDetails.swift */,
 				187851432E00946700E9BD79 /* ClientLinkDetailsNew.swift */,
+				18F9FB802F5834E9005C1224 /* ClientPaymentInfoView.swift */,
 				187607B72CDFCA3A00F4D261 /* ProductDetailsPopUp.swift */,
 			);
 			path = ClientOrderCycle;
@@ -2005,6 +2017,7 @@
 				14E67ABD2CAC643B00C10AB5 /* AppFonts.swift in Sources */,
 				14E67AD72CAC643B00C10AB5 /* NavigationUtil.swift in Sources */,
 				188FF24F2CC6D49D0070CC57 /* SubscribtionView.swift in Sources */,
+				18F9FB832F585210005C1224 /* FridayBlockingDatePicker.swift in Sources */,
 				189437DF2CE0F74D00CA5D96 /* AddProductView.swift in Sources */,
 				14E67ADE2CAC643B00C10AB5 /* ValidateTF.swift in Sources */,
 				18F81CE72D907B6F00B732D7 /* BottomSheetLinkActionsView.swift in Sources */,
@@ -2044,6 +2057,7 @@
 				189962E12F0A6775005E833C /* WithdrawDetailsView.swift in Sources */,
 				14E67A6B2CAC5E3400C10AB5 /* MOLHLanguage.swift in Sources */,
 				1820E2AB2CB9066D00627DF9 /* AuthModels.swift in Sources */,
+				18F9FB812F5834E9005C1224 /* ClientPaymentInfoView.swift in Sources */,
 				1820E2A72CB905F800627DF9 /* AuthAppAPI.swift in Sources */,
 				1891B9212F0D3DE600A6FF08 /* MapSearchView.swift in Sources */,
 				18929A5A2F202023002CEC17 /* PhoneTransferSelectionView.swift in Sources */,
@@ -2077,6 +2091,7 @@
 				18086A762CCBF42600F5C2F8 /* HomeVM.swift in Sources */,
 				189437DC2CE0CA0900CA5D96 /* OrderLinkDetailsView.swift in Sources */,
 				18EF4D912CB4F9C300599D03 /* ResetPasswordView.swift in Sources */,
+				18F9FB7F2F573340005C1224 /* LoginSheetView.swift in Sources */,
 				14E67AC42CAC643B00C10AB5 /* uiview+exSwiftUI.swift in Sources */,
 				1891B91F2F0D3DD300A6FF08 /* LocationSearchService.swift in Sources */,
 				14E67AD52CAC643B00C10AB5 /* MainButtonView.swift in Sources */,
@@ -2147,6 +2162,7 @@
 				188FF2492CC509B40070CC57 /* ChangePhoneView.swift in Sources */,
 				18D428602CE676F70059CAF4 /* WithdrawsView.swift in Sources */,
 				18086A822CCC246800F5C2F8 /* HomeAppAPI.swift in Sources */,
+				18F9FB7D2F4F989C005C1224 /* TaxRecordBottomSheet.swift in Sources */,
 				14E67ADF2CAC643B00C10AB5 /* LogoView.swift in Sources */,
 				180DDD012CDA91540002F6F1 /* ScanQRCodeView.swift in Sources */,
 				187607B82CDFCA3A00F4D261 /* ProductDetailsPopUp.swift in Sources */,
