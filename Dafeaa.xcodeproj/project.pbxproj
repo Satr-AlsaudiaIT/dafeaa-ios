@@ -171,7 +171,6 @@
 		187851402E0066DC00E9BD79 /* AddOfferViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1878513F2E0066DC00E9BD79 /* AddOfferViewNew.swift */; };
 		187851422E007AE100E9BD79 /* OrderLinkDetailsViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187851412E007AE100E9BD79 /* OrderLinkDetailsViewNew.swift */; };
 		187851442E00946700E9BD79 /* ClientLinkDetailsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187851432E00946700E9BD79 /* ClientLinkDetailsNew.swift */; };
-		187851462E00998800E9BD79 /* OrderBusinessDetailsViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187851452E00998800E9BD79 /* OrderBusinessDetailsViewNew.swift */; };
 		1882D12C2D836781002EB5E2 /* StaticPagesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1882D12B2D836781002EB5E2 /* StaticPagesList.swift */; };
 		188B594A2F18C7A200445F69 /* ApplePAymentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B59492F18C7A200445F69 /* ApplePAymentHandler.swift */; };
 		188B594C2F18C82800445F69 /* ApplyPayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188B594B2F18C82800445F69 /* ApplyPayButton.swift */; };
@@ -231,6 +230,8 @@
 		18F9FB7F2F573340005C1224 /* LoginSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F9FB7E2F573340005C1224 /* LoginSheetView.swift */; };
 		18F9FB812F5834E9005C1224 /* ClientPaymentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F9FB802F5834E9005C1224 /* ClientPaymentInfoView.swift */; };
 		18F9FB832F585210005C1224 /* FridayBlockingDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F9FB822F585210005C1224 /* FridayBlockingDatePicker.swift */; };
+		18F9FB982F5E2848005C1224 /* PaymentInfoOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F9FB972F5E2848005C1224 /* PaymentInfoOwner.swift */; };
+		18F9FB9A2F5E2989005C1224 /* PaymentInfoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F9FB992F5E2989005C1224 /* PaymentInfoClient.swift */; };
 		18FAE18F2F065ED900DE9128 /* IBANListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FAE18E2F065ED900DE9128 /* IBANListModel.swift */; };
 		18FAE1912F06608500DE9128 /* IBANVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FAE1902F06608500DE9128 /* IBANVM.swift */; };
 		18FAE1942F0660A300DE9128 /* SavedIBANsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FAE1932F0660A300DE9128 /* SavedIBANsView.swift */; };
@@ -441,7 +442,6 @@
 		1878513F2E0066DC00E9BD79 /* AddOfferViewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOfferViewNew.swift; sourceTree = "<group>"; };
 		187851412E007AE100E9BD79 /* OrderLinkDetailsViewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderLinkDetailsViewNew.swift; sourceTree = "<group>"; };
 		187851432E00946700E9BD79 /* ClientLinkDetailsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientLinkDetailsNew.swift; sourceTree = "<group>"; };
-		187851452E00998800E9BD79 /* OrderBusinessDetailsViewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBusinessDetailsViewNew.swift; sourceTree = "<group>"; };
 		1882D12B2D836781002EB5E2 /* StaticPagesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticPagesList.swift; sourceTree = "<group>"; };
 		188B59492F18C7A200445F69 /* ApplePAymentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePAymentHandler.swift; sourceTree = "<group>"; };
 		188B594B2F18C82800445F69 /* ApplyPayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyPayButton.swift; sourceTree = "<group>"; };
@@ -500,6 +500,8 @@
 		18F9FB7E2F573340005C1224 /* LoginSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSheetView.swift; sourceTree = "<group>"; };
 		18F9FB802F5834E9005C1224 /* ClientPaymentInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientPaymentInfoView.swift; sourceTree = "<group>"; };
 		18F9FB822F585210005C1224 /* FridayBlockingDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FridayBlockingDatePicker.swift; sourceTree = "<group>"; };
+		18F9FB972F5E2848005C1224 /* PaymentInfoOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentInfoOwner.swift; sourceTree = "<group>"; };
+		18F9FB992F5E2989005C1224 /* PaymentInfoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentInfoClient.swift; sourceTree = "<group>"; };
 		18FAE18E2F065ED900DE9128 /* IBANListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBANListModel.swift; sourceTree = "<group>"; };
 		18FAE1902F06608500DE9128 /* IBANVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBANVM.swift; sourceTree = "<group>"; };
 		18FAE1932F0660A300DE9128 /* SavedIBANsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedIBANsView.swift; sourceTree = "<group>"; };
@@ -1448,12 +1450,13 @@
 		189CD7472CDC83A400E929DE /* ViewOrderCycle */ = {
 			isa = PBXGroup;
 			children = (
+				18F9FB972F5E2848005C1224 /* PaymentInfoOwner.swift */,
 				1818DD692F38F9C900B647A8 /* TrackingEventsView.swift */,
 				1820E2C12CBA98C400627DF9 /* MyOrdersView.swift */,
 				18F54E7A2CCCFF1D00462383 /* OrderBusinessDetailsView.swift */,
-				187851452E00998800E9BD79 /* OrderBusinessDetailsViewNew.swift */,
 				18AF59432DB42847000DF15F /* ImageSlider.swift */,
 				18086A7C2CCC1F7A00F5C2F8 /* OrderClientDetailsView.swift */,
+				18F9FB992F5E2989005C1224 /* PaymentInfoClient.swift */,
 				180DDD002CDA91540002F6F1 /* ScanQRCodeView.swift */,
 				18F54E782CCCFE7A00462383 /* OrderComponentsView.swift */,
 				18D3655C2CD81E8300D50A34 /* PathView.swift */,
@@ -2021,6 +2024,7 @@
 				189437DF2CE0F74D00CA5D96 /* AddProductView.swift in Sources */,
 				14E67ADE2CAC643B00C10AB5 /* ValidateTF.swift in Sources */,
 				18F81CE72D907B6F00B732D7 /* BottomSheetLinkActionsView.swift in Sources */,
+				18F9FB9A2F5E2989005C1224 /* PaymentInfoClient.swift in Sources */,
 				14E67A652CAC5E3400C10AB5 /* MOLH-dummy.m in Sources */,
 				14E67AD32CAC643B00C10AB5 /* NetWorkHelper.swift in Sources */,
 				14E67ACE2CAC643B00C10AB5 /* UploadImage.swift in Sources */,
@@ -2040,6 +2044,7 @@
 				1835ECF42CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift in Sources */,
 				18277EBF2CB2B9BA0020A647 /* PhoneNumberRepresenter.swift in Sources */,
 				18AD22DC2F14F05B00B32FD9 /* ShippingCompanySelectionView.swift in Sources */,
+				18F9FB982F5E2848005C1224 /* PaymentInfoOwner.swift in Sources */,
 				189962E32F0A9A37005E833C /* AddBalanceCardDetailsView.swift in Sources */,
 				18E676872DBD63F20043B84B /* BuyProductBottomSheet.swift in Sources */,
 				1820E2C92CBAAC6600627DF9 /* SavedAddressesView.swift in Sources */,
@@ -2077,7 +2082,6 @@
 				14E67A692CAC5E3400C10AB5 /* MOLHFont.swift in Sources */,
 				18FAE1942F0660A300DE9128 /* SavedIBANsView.swift in Sources */,
 				18929A5C2F20217D002CEC17 /* PhoneTransferDetailsView.swift in Sources */,
-				187851462E00998800E9BD79 /* OrderBusinessDetailsViewNew.swift in Sources */,
 				188FF2462CC38CF00070CC57 /* ChangePasswordView.swift in Sources */,
 				1820E2C22CBA98C400627DF9 /* MyOrdersView.swift in Sources */,
 				14E67ADB2CAC643B00C10AB5 /* DropDownSearchTF.swift in Sources */,
@@ -2396,7 +2400,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/Dafeaa.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12.6;
+				CURRENT_PROJECT_VERSION = 12.9;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
@@ -2442,7 +2446,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/DafeaaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12.6;
+				CURRENT_PROJECT_VERSION = 12.9;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
@@ -2563,7 +2567,7 @@
 				CODE_SIGN_ENTITLEMENTS = DafeaaAppClip/DafeaaAppClip.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12.6;
+				CURRENT_PROJECT_VERSION = 12.9;
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2581,6 +2585,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Dafeaa.Plantech.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2595,7 +2604,7 @@
 				CODE_SIGN_ENTITLEMENTS = DafeaaAppClip/DafeaaAppClip.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12.6;
+				CURRENT_PROJECT_VERSION = 12.9;
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2613,6 +2622,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Dafeaa.Plantech.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

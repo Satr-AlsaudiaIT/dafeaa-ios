@@ -160,7 +160,7 @@ final class OrdersVM : ObservableObject {
         hasMoreData = true
     }
     
-    func getOrder(id : Int) {
+    func getOrder(id : Int, isClient: Bool? = false) {
         self._isLoading = true
         apiV3.getOrder(id: id) { [weak self] (Result) in
             guard let self = self else {return}
@@ -170,7 +170,7 @@ final class OrdersVM : ObservableObject {
                 self._isLoading = false
                 self._isFailed = false
                 guard let result = Result else {return}
-                let convertedOrder = convertOrdersModelV3ToOrderModel(result)
+                let convertedOrder = convertOrdersModelV3ToOrderModel(result, isClient: isClient)
                 self._orderData = convertedOrder.data
                 self._isStatusChangedSuccess = false
 
@@ -183,7 +183,21 @@ final class OrdersVM : ObservableObject {
         }
     }
     
-    func convertOrdersModelV3ToOrderModel(_ ordersModelV3: OrdersModelV3) -> OrderModel {
+    func convertOrdersModelV3ToOrderModel(_ ordersModelV3: OrdersModelV3, isClient:Bool? = false ) -> OrderModel {
+        
+        let priceCommision = ordersModelV3.data?.priceCommission?.commission ?? 0
+        let shippingCommision = ordersModelV3.data?.shippingCommission?.commission ?? 0
+        let isFreeShipping = ordersModelV3.data?.shipmentFree
+        var  shippingCost : Double = 0
+        if isClient ?? false {
+            shippingCost  =  isFreeShipping ?? false ?   0 : (ordersModelV3.data?.shipmentFees ?? 0) + (shippingCommision)
+        }else {
+            shippingCost  =  isFreeShipping ?? false ? (ordersModelV3.data?.shipmentFees ?? 0) + (shippingCommision)  : 0
+        }
+        
+        
+        let netValue = (ordersModelV3.data?.orderPrice ?? 0) - (priceCommision +  shippingCost)
+        
         let orderData = OrderData(
             id: ordersModelV3.data?.id,
             clientImage: ordersModelV3.data?.userImage,
@@ -196,13 +210,11 @@ final class OrdersVM : ObservableObject {
             products: ordersModelV3.data?.products,
             orderPrice: ordersModelV3.data?.orderPrice,
             deliveryPrice: Double(ordersModelV3.data?.deliveryPrice ?? 0),
-            commissionValue: ordersModelV3.data?.commission ?? 0,
+            commissionValue: ordersModelV3.data?.priceCommission?.commission ?? 0,
             paymentStatus: ordersModelV3.data?.paymentStatus,
             address: ordersModelV3.data?.address,
-            
             taxPrice: nil,
-            totalPrice: Double(ordersModelV3.data?.totalPrice ?? 0),
-            
+            totalPrice: Double(ordersModelV3.data?.orderPrice ?? 0),
             commissionRatio: nil,
             maxCommissionValue: nil,
             streetName: nil,
@@ -211,8 +223,12 @@ final class OrdersVM : ObservableObject {
             floatNum: nil,
             countryCode: ordersModelV3.data?.countryCode,
             cityName: ordersModelV3.data?.cityName, postalCode: ordersModelV3.data?.postalCode,
-            provinceCode: ordersModelV3.data?.provinceCode,
-            totalVatWithCommission: ordersModelV3.data?.totalCommissionWithVat ?? 0
+            totalVatWithCommission: ordersModelV3.data?.priceCommission?.commissionVat,
+            shippingCommission: shippingCommision,
+            isFreeShipping: isFreeShipping,
+            netValue: netValue,
+            shippingCost: shippingCost
+            
         )
         
         return OrderModel(

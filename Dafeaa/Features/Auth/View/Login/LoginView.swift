@@ -25,10 +25,12 @@ struct LoginView: View {
             ZStack{
                 VStack {
                     
-                    Image(.topImageLogin)
+                    Image(.splashLogoWithoutName)
                         .resizable()
-                        .frame(width: UIScreen.main.bounds.width)
-                        .aspectRatio(contentMode: .fit)
+                        .frame(width:  57  ,height:  65 )
+                        .safeAreaPadding(.top,24 )
+                        .padding(.leading,  0  )
+                        .padding(.vertical ,40)
                     
                     
                     ScrollView(.vertical,showsIndicators: false){

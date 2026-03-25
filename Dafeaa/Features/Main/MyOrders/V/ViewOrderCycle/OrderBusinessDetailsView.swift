@@ -70,12 +70,11 @@ struct OrderBusinessDetailsView: View {
                                 }
                                 // Payment Info Section
                                 VStack(spacing: 8) {
-                                    Text("paymentInfo".localized())
-                                        .textModifier(.plain, 15,  .black222222)
-                                        .frame(maxWidth: .infinity,alignment: .leading)
-                                    if orderData.orderPrice != nil {
-                                        PaymentInfoView(breakdown: PaymentDetails(commission: Double(orderData.totalVatWithCommission ?? 0), commissionMaxPrice: Double(orderData.maxCommissionValue ?? "0") ?? 0),itemsPrice: $itemsPrice, totalPrice: orderData.totalPrice ?? 0,deliveryPrice: orderData.deliveryPrice ?? 0, isShowDetails: true,isCalculateCommission: false)
+                               
+                                    if let orderData = viewModel.orderData {
+                                        PaymentInfoOwner(data: orderData)
                                     }
+
                                 }
                                 
                                 

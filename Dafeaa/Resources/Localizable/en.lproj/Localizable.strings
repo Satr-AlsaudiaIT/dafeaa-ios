@@ -372,6 +372,9 @@
 "addTaxRecordNumber" = "Add Tax Record Number";
 "hasTax" = "Order Has Tax";
 "validation_nit_have_tax_record" = "Please Add Tax Record";
+"tax_record_required" = "Tax record number is required.";
+"tax_record_numbers_only" = "Tax record number must contain digits only.";
+"tax_record_invalid" = "Tax record number is invalid.";
 
 //MARK: - Withdraws
 "withdrawsProcess" = "Withdrawal Transactions";
@@ -579,3 +582,6 @@
 "delivery_date" = "Delivery date";
 "select_delivery_date" = "Select delivery date";
 "ok" = "OK";
+"dafeaa_payment_way" = "Pay with Dafeaa";
+"paymentWay" = "Payment method";
+"product_label" = "Product";

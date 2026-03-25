@@ -48,14 +48,15 @@ struct OnBoardingView: View {
                                     .safeAreaPadding(.top,24 )
                                     .padding(.leading,  0  )
                                     
-                                Spacer(minLength: 15)
+//                                Spacer(minLength: 15)
                             }
                             if viewAppear {
                                 VStack {
+                                    Spacer()
                                     Image(onboardingData[index].0)
-                                        .resizable()
-                                        .aspectRatio(375 / 385, contentMode: .fit)
-                                    
+//                                        .resizable()
+//                                        .aspectRatio(250 / 264, contentMode: .fit)
+                                    Spacer()
                                     VStack(spacing: 16) {
                                         
                                         HStack(spacing: 8) {

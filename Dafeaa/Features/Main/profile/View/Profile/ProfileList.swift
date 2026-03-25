@@ -107,6 +107,7 @@ struct ProfileList: View {
                 .padding()
             }
         }
+        .toastView(toast: $viewModel.toast)
         .navigationBarHidden(true)
         .navigationDestination(isPresented: $showChangePassword) {
             ChangePasswordView()

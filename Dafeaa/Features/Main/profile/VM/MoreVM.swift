@@ -40,6 +40,8 @@ final class MoreVM : ObservableObject {
     @Published var isTaxRecordSuccess: Bool = false
 
     @Published var toast: FancyToast?      = nil
+    @Published var toastSheet: FancyToast?      = nil
+
     let apiAuth: AuthAPIProtocol = AuthAPI()
     private var _message                   : String = ""
     private var token                      = ""
@@ -620,23 +622,38 @@ final class MoreVM : ObservableObject {
 
     /// Validates input then adds or updates the tax record
     func addOrEditTaxRecord(taxNumber: String) {
-        guard !taxNumber.trimmingCharacters(in: .whitespaces).isEmpty else {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: "tax_record_required".localized())
+        let trimmed = taxNumber.trimmingCharacters(in: .whitespaces)
+
+        // 1. Must not be empty
+        guard !trimmed.isEmpty else {
+            toastSheet = FancyToast(type: .error, title: "Error".localized(), message: "tax_record_required".localized())
             return
         }
+
+        // 2. Must contain only digits
+        guard trimmed.allSatisfy({ $0.isNumber }) else {
+            toastSheet = FancyToast(type: .error, title: "Error".localized(), message: "tax_record_numbers_only".localized())
+            return
+        }
+
+        // 3. Must not be all repeated digits (e.g. 1111111111)
+        guard Set(trimmed).count > 1 else {
+            toastSheet = FancyToast(type: .error, title: "Error".localized(), message: "tax_record_invalid".localized())
+            return
+        }
+
         _isLoading = true
-        api.addTaxRecord(taxNumber: taxNumber) { [weak self] result in
+        api.addTaxRecord(taxNumber: trimmed) { [weak self] result in
             DispatchQueue.main.async {
                 self?._isLoading = false
                 switch result {
                 case .success(let response):
                     if response?.status == true {
-                        self?.taxRecordNumber = taxNumber
+                        self?.taxRecordNumber = trimmed
                         self?.isEditingTaxRecord = true
                         self?.showAddTaxRecordBottomSheet = false
                         self?.isTaxRecordSuccess = true
-                        self?.toast = FancyToast(type: .error, title: "Error".localized(), message: response?.message ?? "")
-
+                        self?.toast = FancyToast(type: .success, title: "Success".localized(), message: response?.message ?? "")
                     } else {
                         self?.toast = FancyToast(type: .error, title: "Error".localized(), message: response?.message ?? "")
                     }

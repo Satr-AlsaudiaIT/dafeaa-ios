@@ -14,7 +14,8 @@ struct OrdersModel: Codable {
 struct OrdersData: Codable, Identifiable {
     let id: Int?
     let name, userName, userImage: String?
-    let orderStatus, isTransformed: Int?
+    let orderStatus: Int?
+    let isTransformed: Bool?
     let createdAt, time: String?
     let type: Int?
 }
@@ -51,42 +52,14 @@ struct OrderData: Codable, Identifiable {
     let buildingNum: String?
     let area: String?
     let floatNum: String?
-
+    let shippingCommission: Double?
     let countryCode: String?
     let cityName: String?
     let postalCode: String?
-    let provinceCode: String?
-
-    enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case clientImage = "client_image"
-        case clientName = "client_name"
-        case orderStatus = "order_status"
-        case clientPhone = "client_phone"
-        case clientEmail = "client_email"
-        case qrCode = "qr_code"
-        case name = "name"
-        case products = "products"
-        case paymentStatus = "payment_status"
-        case address = "address"
-        case commissionRatio = "commission_ratio"
-        case maxCommissionValue = "max_commission_value"
-        case taxPrice = "tax_price"
-        case commissionValue = "commission_value"
-        case orderPrice = "order_price"
-        case deliveryPrice = "delivery_price"
-        case totalPrice = "total_price"
-        case streetName = "street_name"
-        case buildingNum = "building_num"
-        case area = "area"
-        case floatNum = "float_num"
-        case countryCode = "countryCode"
-        case cityName = "cityName"
-        case postalCode = "postalCode"
-        case provinceCode = "provinceCode"
-        case totalVatWithCommission = "total_commission_with_vat"
-    }
-
+    let isFreeShipping: Bool?
+    let netValue: Double?
+    let shippingCost : Double?
+    
     init(
         id: Int? = nil,
         clientImage: String? = nil,
@@ -113,8 +86,12 @@ struct OrderData: Codable, Identifiable {
         countryCode: String? = nil,
         cityName: String? = nil,
         postalCode: String? = nil,
-        provinceCode: String? = nil,
-        totalVatWithCommission : Double? = nil
+        totalVatWithCommission : Double? = nil,
+        shippingCommission: Double? = nil,
+        isFreeShipping: Bool? = nil,
+        netValue: Double? = nil,
+        shippingCost : Double? = nil
+        
     ) {
         self.id = id
         self.clientImage = clientImage
@@ -141,8 +118,11 @@ struct OrderData: Codable, Identifiable {
         self.countryCode = countryCode
         self.cityName = cityName
         self.postalCode = postalCode
-        self.provinceCode = provinceCode
         self.totalVatWithCommission = totalVatWithCommission
+        self.shippingCommission = shippingCommission
+        self.isFreeShipping = isFreeShipping
+        self.netValue = netValue
+        self.shippingCost = shippingCost
     }
 }
 
@@ -190,27 +170,71 @@ struct OrdersModelV3: Codable {
 // MARK: - OrdersDataV3
 struct OrdersDataV3: Codable {
     let id: Int?
-    let name, userName, userImage: String?
-    let orderStatus, isTransformed: Int?
-    let createdAt, time: String?
-    let type: Int?
-    let userPhone, userEmail: String?
+    let name: String?
+    let clientId: Int?
+    let merchantId: Int?
+    let userName: String?
+    let userImage: String?
+    let orderStatus: Int?
     let paymentStatus: Int?
+    let isTransformed: Bool?
+    let shipmentFree: Bool?
+    let createdAt: String?
+    let time: String?
+    let type: Int?
+    let dhlTrackingNumber: String?
+    let dhlStatus: String?
+    let dhlLastEvent: String?
+    let deliveryPrice: Double?
+    let userPhone: String?
+    let userEmail: String?
     let qrCode: String?
-    let countryId: Int?
+    let canceledBy: String?
+    let address: String?
+    let postalCode: String?
+    let cityName: String?
     let countryCode: String?
-    let cityId: Int?
-    let cityName, postalCode, provinceCode, address: String?
-    let lat, lng: String?
-    let orderPrice, deliveryPrice, commission: Double?
-    let totalPrice: Double?
+    let orderPrice: Double?
+    let shipmentFees: Double?
+    let vatValue: Double?
+    let priceCommission: PriceCommission?
+    let shippingCommission: ShippingCommission?
+    let seller: SellerInfo?
     let products: [productList]?
-    let totalCommissionWithVat: Double?
+}
+
+// MARK: - PriceCommission
+struct PriceCommission: Codable {
+    let commissionRatio: String?
+    let maxCommissionValue: String?
+    let vatRatio: String?
+    let commission: Double?
+    let commissionVat: Double?
+    let commissionNet: Double?
+}
+
+// MARK: - ShippingCommission
+struct ShippingCommission: Codable {
+    let shippingCommissionRatio: String?
+    let vatRatio: String?
+    let commission: Double?
+    let commissionVat: Double?
+    let commissionNet: Double?
+}
+
+// MARK: - SellerInfo
+struct SellerInfo: Codable {
+    let merchantVatRatio: FlexibleDouble?
+    let sellerAmountBeforeVat: FlexibleDouble?
+    let sellerVatValue: FlexibleDouble?
+    let sellerNetAmount: FlexibleDouble?
 }
 
 
-
-
+// MARK: - ProductImage
+struct ProductImage: Codable {
+    let file: String?
+}
 
 
 struct LinkDetailsClient: Codable {

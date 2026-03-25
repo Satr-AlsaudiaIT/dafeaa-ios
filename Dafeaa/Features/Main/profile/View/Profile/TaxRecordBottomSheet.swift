@@ -76,6 +76,7 @@ struct TaxRecordBottomSheet: View {
                     .progressViewStyle(WithBackgroundProgressViewStyle())
             }
         }
+        .toastView(toast: $viewModel.toastSheet)
         .onAppear {
             taxInput = viewModel.taxRecordNumber
             isEditTapped = taxInput == "" ? true : false

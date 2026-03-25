@@ -86,11 +86,10 @@ struct OrderClientDetailsView: View {
                                     Text("paymentInfo".localized())
                                         .textModifier(.plain, 15,  .black222222)
                                         .frame(maxWidth: .infinity,alignment: .leading)
-                                    if viewModel.orderData?.orderPrice != nil {
-                                        PaymentInfoView(breakdown: PaymentDetails(commission: Double( viewModel.orderData?.totalVatWithCommission ?? 0), commissionMaxPrice: Double(viewModel.orderData?.maxCommissionValue ?? "0") ?? 0),itemsPrice: $orderPrice,totalPrice: viewModel.orderData?.totalPrice ?? 0, deliveryPrice: viewModel.orderData?.deliveryPrice ?? 0,  isShowDetails: true,isCalculateCommission: false)
+                                    
+                                    if let orderData = viewModel.orderData {
+                                        PaymentInfoClient(data: orderData)
                                     }
-                                    
-                                    
                                     
                                     
                                 }
@@ -201,16 +200,16 @@ struct OrderClientDetailsView: View {
         .toastView(toast: $viewModel.toast)
         .onChange(of: viewModel._isCompleteOrderSuccess) {_,newValue in
             confirmReceivingOrder = false
-            viewModel.getOrder(id: orderID ?? 0)
+            viewModel.getOrder(id: orderID ?? 0,isClient: true)
         }
         .onChange(of: viewModel._isStatusChangedSuccess) {_,newValue in
             isCancelTapped = false
-            viewModel.getOrder(id: orderID ?? 0)
+            viewModel.getOrder(id: orderID ?? 0,isClient: true)
         }
         .navigationBarHidden(true)
         .onAppear() {
             AppState.shared.swipeEnabled = true
-            viewModel.getOrder(id: orderID ?? 0)
+            viewModel.getOrder(id: orderID ?? 0,isClient: true)
         }
        
         .onChange(of: viewModel.isLoading, { oldValue, newValue in

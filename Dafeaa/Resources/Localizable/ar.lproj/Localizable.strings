@@ -22,7 +22,7 @@
 "Change Language" = "تغيير اللغة";
 "Start Now" = "ابدأ الآن";
 "Next" = "التالي";
-"onboardingTitle1"="دافع هي منصة دفع إلكترونية";
+"onboardingTitle1"="دافع هي منصة دفع الكترونية";
 "onboardingTitle2"="ادفع كل مشترياتك عبر دافع";
 "onboardingTitle3"="معلوماتك في أمان مع دافع";
 "onboardingDesc1"="تتيح دافع للمستخدمين إدارة عملياتهم المالية بكل سهولة وأمان. توفر دافع مجموعة من خدمات الدفع والحلول للأفراد والشركات على حد سواء.";
@@ -372,6 +372,9 @@
 "addTaxRecordNumber" = "أضف رقم سجل ضريبي";
 "hasTax" = "الطلب خاضع للضريبة";
 "validation_nit_have_tax_record" = "برجاء اضافة السجل الضريبي";
+"tax_record_required" = "رقم السجل الضريبي مطلوب.";
+"tax_record_numbers_only" = "يجب أن يحتوي رقم السجل الضريبي على أرقام فقط.";
+"tax_record_invalid" = "رقم السجل الضريبي غير صالح.";
 
 //MARK: - Withdraws
 "withdrawsProcess" = "عمليات سحب الرصيد";
@@ -572,3 +575,6 @@
 "delivery_date" = "تاريخ التوصيل";
 "select_delivery_date" = "اختر تاريخ التوصيل";
 "ok" = "حسنا";
+"dafeaa_payment_way" = "الدفع عن طريق تطبيق دافع";
+"paymentWay" = "طريقة الدفع";
+"product_label" = "المنتج";
