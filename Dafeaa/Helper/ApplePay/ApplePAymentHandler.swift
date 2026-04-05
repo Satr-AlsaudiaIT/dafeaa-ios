@@ -31,13 +31,17 @@ class PaymentHandler: NSObject {
     ) {
         
         let totalAmount = NSDecimalNumber(value: amount)
-        let total = PKPaymentSummaryItem(
+        let addBalanceItem = PKPaymentSummaryItem(
             label: "Add Balance",
             amount: totalAmount,
             type: .final
         )
-        
-        paymentSummaryItems = [total]
+        let total = PKPaymentSummaryItem(
+            label: "Dafea",
+            amount: totalAmount,
+            type: .final
+        )
+        paymentSummaryItems = [addBalanceItem, total]
         completionHandler = completion
         
         let paymentRequest = PKPaymentRequest()

@@ -47,7 +47,11 @@ class HomeVM: ObservableObject {
     @Published var isTransferFailed: Bool = false
 
     @Published var transferData: ConfirmTransferData = ConfirmTransferData()
-
+    @Published var _isApplePaySuccess = false
+      @Published var applePayTransactionId: String = ""
+      @Published var applePayStatus: String = ""
+      @Published var applePayAmount: Int = 0
+    
     //MARK: - APIs
     
     func home() {
@@ -97,6 +101,7 @@ class HomeVM: ObservableObject {
             }
         }
     }
+    
     func validateWithdrawAmount(amount: Double, accountName: String, iban: String, mobile: String, city: String) {
         // Get UDID
         guard let udid = UIDevice.current.identifierForVendor?.uuidString else {
@@ -314,8 +319,6 @@ class HomeVM: ObservableObject {
         }
     }
     
-    
-    
     func confirmTransfer(phone:String,amount:Double) {
         self._isLoading = true
         isUserFound = false
@@ -330,7 +333,7 @@ class HomeVM: ObservableObject {
                     isTransferSuccess = true
                     isTransferFailed =  false
                     transferData = data.data ?? ConfirmTransferData()
-                }else {
+                } else {
                     isTransferFailed =  true
                     isTransferSuccess = false
                     transferData = data.errors ?? ConfirmTransferData()
@@ -345,6 +348,74 @@ class HomeVM: ObservableObject {
             }
         }
     }
+ 
+    
+    
+    func processApplePay(amount: Double, token: String) {
+          self._isLoading = true
+          
+          // Convert amount to halalas (multiply by 100)
+          let amountInHalalas = Int(amount * 100)
+          
+          api.processApplePay(amount: amountInHalalas, token: token) { [weak self] (Result) in
+              guard let self = self else { return }
+              self._isLoading = false
+              
+              switch Result {
+              case .success(let response):
+                  guard let data = response else { return }
+                  
+                  if data.success == true {
+                      // Store transaction details
+                      self.applePayTransactionId = data.transactionId ?? ""
+                      self.applePayStatus = data.status ?? ""
+                      self.applePayAmount = data.amount ?? 0
+                      
+                      // Check if wallet was charged
+                      if data.walletCharged == true {
+                          // Payment successful and wallet charged
+                          self.toast = FancyToast(
+                              type: .success,
+                              title: "Success".localized(),
+                              message: data.message ?? "Payment completed successfully".localized()
+                          )
+
+                          
+                          DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                              self._isApplePaySuccess = true
+                          }
+                      } else {
+                          self.toast = FancyToast(
+                              type: .info,
+                              title: "Info".localized(),
+                              message: data.message ?? "Payment completed but wallet not charged".localized()
+                          )
+                          
+                          DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                              self._isApplePaySuccess = true
+                          }
+                      }
+                  } else {
+                      // Payment failed
+                      self.toast = FancyToast(
+                          type: .error,
+                          title: "Error".localized(),
+                          message: data.message ?? "Apple Pay payment failed".localized()
+                      )
+                  }
+                  
+              case .failure(let error):
+                  self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                  self._isLoading = false
+                  self._isFailed = true
+                  self.toast = FancyToast(
+                      type: .error,
+                      title: "Error".localized(),
+                      message: self._message
+                  )
+              }
+          }
+      }
     
 }
 

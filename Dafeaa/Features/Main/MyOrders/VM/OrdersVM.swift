@@ -248,7 +248,11 @@ final class OrdersVM : ObservableObject {
             case .success(_):
                 self._isLoading = false
                 self._isFailed = false
-                self.toast = FancyToast(type: .success, title: "Success".localized(), message: "statusChanges".localized())
+                if status == 5 {
+                    self.toast = FancyToast(type: .success, title: "Success".localized(), message: "orderCanceled".localized())
+                }else {
+                    self.toast = FancyToast(type: .success, title: "Success".localized(), message: "statusChanges".localized())
+                }
                 self._isStatusChangedSuccess = true
                 
             case .failure(let error):
@@ -291,7 +295,7 @@ final class OrdersVM : ObservableObject {
                 self._message = response?.message ?? ""
                 self._isLoading = false
                 self._isFailed = false
-                self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
+                self.toast = FancyToast(type: .success, title: "Success".localized(), message: "ordered_success".localized())
 
                 self.orderId = response?.data?.orderId ?? 0
                 self.isOrderSuccess = true

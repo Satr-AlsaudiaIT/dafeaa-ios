@@ -83,15 +83,58 @@ class BaseAPI<T: TargetType> {
             }
         }
     }
-        private func buildParams(task: Task) -> (params:[String: Any], encodingType: ParameterEncoding) {
-            switch task {
-            case .requestPlain:
-                return ([:],URLEncoding.default)
-            case .requestParameters(Parameters: let parameters, encoding: let encoding):
-                return (parameters,encoding)
+    
+    private func buildParams(task: Task) -> (params:[String: Any], encodingType: ParameterEncoding) {
+        switch task {
+        case .requestPlain:
+            return ([:],URLEncoding.default)
+        case .requestParameters(Parameters: let parameters, encoding: let encoding):
+            return (parameters,encoding)
+        }
+    }
+      
+    
+    func fetchApplePayData<M: Codable>(target: T, responseClass: M.Type, completion: @escaping (Result<M?, NSError>) -> Void) {
+        
+        let method = Alamofire.HTTPMethod(rawValue: target.methods.rawValue)
+        let headers = Alamofire.HTTPHeaders(target.headers ?? [:])
+        let params = buildParams(task: target.task)
+        
+        AF.request(target.baseURL + target.path, method: method, parameters: params.0, encoding: params.1, headers: headers,
+                   requestModifier: { $0.timeoutInterval = 30 }).responseJSON { (response) in
+            print("Apple Pay Request - URL: \(target.baseURL)/\(target.path)")
+            print("Apple Pay Request - Parameters: \(params)")
+            print("Apple Pay Response - Status Code: \(response.response?.statusCode ?? 0)")
+            print("Apple Pay Response - Data: \(response)")
+            
+            // Handle network errors
+            guard response.error == nil else {
+                let error = response.error! as NSError
+                completion(.failure(error))
+                return
+            }
+            
+            // Always try to decode the response, even if status code is not 200
+            guard let data = response.data else {
+                let error = NSError(domain: target.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey: "No data received from server"])
+                completion(.failure(error))
+                return
+            }
+            
+            // Decode the response
+            do {
+                let decoder = JSONDecoder()
+                let decodedObject = try decoder.decode(M.self, from: data)
+                print("Apple Pay Response - Decoded: \(decodedObject)")
+                completion(.success(decodedObject))
+            } catch {
+                print("Apple Pay Response - Decoding Error: \(error)")
+                let decodingError = NSError(domain: target.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to decode response: \(error.localizedDescription)"])
+                completion(.failure(decodingError))
             }
         }
-        
+    }
+    
     private func handleUrlStatusCode(targetPath: String ,responseData:Data?,code:Int?, completion:@escaping(Bool,String?)->Void){
             
             guard let statusCode = code else {
@@ -247,6 +290,9 @@ class BaseAPI<T: TargetType> {
             
         }
         
+    
+    
+    
         
     }
 

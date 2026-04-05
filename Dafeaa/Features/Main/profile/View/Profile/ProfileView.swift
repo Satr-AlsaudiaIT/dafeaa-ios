@@ -24,9 +24,11 @@ struct ProfileView: View {
     @State private var navigateToCompleteProfileView: Bool = false
     @State private var businessInfo: BusinessInfo = .noFilesUploaded
     @State private var navigateToSubscriptionView = false
+    @State private var isSharePresented: Bool = false
+    
     enum ActiveSheet {
-           case logOut, deleteAccount
-       }
+        case logOut, deleteAccount
+    }
     
     var body: some View {
         ZStack{
@@ -69,9 +71,14 @@ struct ProfileView: View {
                         
                         VStack(spacing: 16) {
                             NavigationLinkComponent(
-                                destination: ProfileList(profileId: viewModel.profileData?.profileId ?? "",secretKey: viewModel.profileData?.secretKey ?? ""),
+                                destination: ProfileDetailView(profileId: viewModel.profileData?.profileId ?? "",secretKey: viewModel.profileData?.secretKey ?? "") /*ProfileList(profileId: viewModel.profileData?.profileId ?? "",secretKey: viewModel.profileData?.secretKey ?? "")*/,
                                 label: "profile",
                                 image: Image(.iconProfile)
+                            )
+                            NavigationLinkComponent(
+                                destination: ProfileList(profileId: viewModel.profileData?.profileId ?? "",secretKey: viewModel.profileData?.secretKey ?? ""),
+                                label: "accounts_address",
+                                image: Image(.iconMange)
                             )
                             NavigationLinkComponent(
                                 destination: OrdersOffersLinksView(),
@@ -79,11 +86,11 @@ struct ProfileView: View {
                                 image: Image(.iconOffer)
                             )
                             
-                            NavigationLinkComponent(
-                                destination: WithdrawsView(),
-                                label: "withdrawsProcess",
-                                image: Image(.withdrawBalance)
-                            )
+                            //                            NavigationLinkComponent(
+                            //                                destination: WithdrawsView(),
+                            //                                label: "withdrawsProcess",
+                            //                                image: Image(.withdrawBalance)
+                            //                            )
                             
                             HStack(spacing:12) {
                                 Image(.inviteFriend)
@@ -101,7 +108,10 @@ struct ProfileView: View {
                             }
                             .frame(height: 32)
                             .onTapGesture {
-                             
+                                isSharePresented = true  // ← ADD THIS
+                            }
+                            .sheet(isPresented: $isSharePresented) {
+                                ShareSheet(activityItems: ["invite_friend_message".localized()])
                             }
                             
                             NavigationLinkComponent(
@@ -125,7 +135,7 @@ struct ProfileView: View {
                                 label: "Settings",
                                 image: Image(.iconSettings)
                             )
-                           
+                            
                         }
                     }
                     
@@ -146,38 +156,22 @@ struct ProfileView: View {
             }.navigationDestination(isPresented: $showingChangePhone) {
                 ChangePhoneView()
             }
-            .actionSheet(isPresented: $isActiveActionSheet) {
-                switch activeActionSheet {
-                           case .logOut:
-                               return ActionSheet(
-                                   title: Text("logout".localized()),
-                                   message: Text("logOutAlert".localized()),
-                                   buttons: [
-                                       .default(Text("logout".localized())) { viewModel.logOut() },
-                                       .cancel(Text("Cancel".localized()))
-                                   ]
-                               )
-                           case .deleteAccount:
-                               return ActionSheet(
-                                   title: Text("deleteAccount".localized()),
-                                   message: Text("deleteAccountAlert".localized()),
-                                   buttons: [
-                                       .default(Text("deleteAccount".localized())) { viewModel.deleteAccount() },
-                                       .cancel(Text("Cancel".localized()))
-                                   ]
-                               )
-                case .none:
-                    return ActionSheet(
-                        title: Text("".localized()),
-                        message: Text("".localized()),
-                        buttons: [
-                            .default(Text("".localized())) { },
-                            .cancel(Text("".localized()))
-                        ]
-                    )
-                }
-                       }
-            .navigationDestination(isPresented: $navigateToCompleteProfileView, destination: {
+            .appActionSheet(
+                isPresented: Binding(
+                    get: { isActiveActionSheet && activeActionSheet == .logOut },
+                    set: { if !$0 { isActiveActionSheet = false } }
+                ),
+                case: .logOut,
+                onConfirm: { viewModel.logOut() }
+            )
+            .appActionSheet(
+                isPresented: Binding(
+                    get: { isActiveActionSheet && activeActionSheet == .deleteAccount },
+                    set: { if !$0 { isActiveActionSheet = false } }
+                ),
+                case: .deleteAccount,
+                onConfirm: { viewModel.deleteAccount() }
+            )            .navigationDestination(isPresented: $navigateToCompleteProfileView, destination: {
                 CompleteDataView(phone:phone.normalizePhoneNumber)
             })
             .navigationDestination(isPresented: $navigateToPendingView) {
@@ -210,7 +204,7 @@ struct ProfileView: View {
                     phone        = viewModel.profileData?.phone?.convertDigitsToEng ?? ""
                     
                     businessInfo = BusinessInfo(rawValue: viewModel.profileData?.status ?? 0) ?? .noFilesUploaded
-//                    selectedProfileImageURL = viewModel.profileData?.profileImage ?? ""
+                    //                    selectedProfileImageURL = viewModel.profileData?.profileImage ?? ""
                     
                 }
             }

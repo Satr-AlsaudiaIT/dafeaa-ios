@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftUI
 
 struct TabBarView: View {
-    @State private var selectedTab: Tab = .home
+    @State var selectedTab: Tab = .home
     private let userType: Int = GenericUserDefault.shared.getValue(Constants.shared.userType) as? Int ?? 0
     @EnvironmentObject var navigationHelper: NavigationHelper
     @State private var isLoading : Bool = false
@@ -106,9 +106,9 @@ struct TabBarView: View {
             .navigationDestination(isPresented: $navigationHelper.navigateToMerchentOrder) {
                 OrderBusinessDetailsView(orderID: navigationHelper.actionId)
             }
-            .navigationDestination(isPresented: $navigationHelper.navigateToWithdraws) {
-                WithdrawsView(heighlightedId: navigationHelper.actionId)
-            }
+//            .navigationDestination(isPresented: $navigationHelper.navigateToWithdraws) {
+//                WithdrawsView(heighlightedId: navigationHelper.actionId)
+//            }
             .navigationBarHidden(true)
             
         }

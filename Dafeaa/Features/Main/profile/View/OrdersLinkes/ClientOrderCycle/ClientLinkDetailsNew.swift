@@ -82,7 +82,7 @@ struct ClientLinkDetailsNew: View {
                         
                         MOLH.reset()
                     }
-                    if !viewModel.isLoading {
+//                    if !viewModel.isLoading {
                         ScrollView {
                             VStack(alignment: .leading,spacing: 19) {
                                 //                            Text(linkDetails.name ?? "")
@@ -223,17 +223,15 @@ struct ClientLinkDetailsNew: View {
                             }
                             .onChange(of: viewModel.isOrderSuccess) { _, newValue in
                                 if newValue {
-                                    showOrderDetails = true
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+                                        GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
+                                        MOLH.reset()
+                                    }
                                 }
                             }
-                            .navigationDestination(isPresented: $showOrderDetails) {
-                                if let orderId = viewModel.orderId {
-                                    OrderClientDetailsView(orderID: orderId, isComingFromCreateOrder: true)
-                                }
-                                
-                            }
+                          
                         }
-                    }
+//                    }
                     Spacer(minLength: 0)
                 }
                 if let selectedImage = selectedImage, showSelectedImage {

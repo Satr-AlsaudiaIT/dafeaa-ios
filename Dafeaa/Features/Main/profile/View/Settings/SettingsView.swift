@@ -99,40 +99,24 @@ struct SettingsView: View {
 //            ChangePasswordView()
 //        }
     
-        .actionSheet(isPresented: $isActiveActionSheet) {
-            switch activeActionSheet {
-                       case .deleteAccount:
-                           return ActionSheet(
-                               title: Text("deleteAccount".localized()),
-                               message: Text("deleteAccountAlert".localized()),
-                               buttons: [
-                                   .default(Text("deleteAccount".localized())) { viewModel.deleteAccount() },
-                                   .cancel(Text("Cancel".localized()))
-                               ]
-                           )
-            case .changeLanguage:
-                return ActionSheet(
-                    title: Text("languageApp".localized()),
-                    message: Text("Select your preferred language".localized()),
-                    buttons: [
-                        .default(Text("English")) { changeLanguage(to: "en") },
-                        .default(Text("عربي")) {
-                            changeLanguage(to: "ar")
-                        }
-                    ])
-               
-            case .none:
-                return ActionSheet(
-                    title: Text("".localized()),
-                    message: Text("".localized()),
-                    buttons: [
-                        .default(Text("".localized())) { },
-                        .cancel(Text("".localized()))
-                    ]
-                )
+        .appActionSheet(
+            isPresented: Binding(
+                get: { isActiveActionSheet && activeActionSheet == .deleteAccount },
+                set: { if !$0 { isActiveActionSheet = false } }
+            ),
+            case: .deleteAccount,
+            onConfirm: { viewModel.deleteAccount() }
+        )
+        .appActionSheet(
+            isPresented: Binding(
+                get: { isActiveActionSheet && activeActionSheet == .changeLanguage },
+                set: { if !$0 { isActiveActionSheet = false } }
+            ),
+            case: .changeLanguage,
+            onExtraAction: { languageCode in
+                changeLanguage(to: languageCode)
             }
-                   }
-//        .sheet(isPresented: $showDeveloperKeyBottomSheet, content: {
+        )//        .sheet(isPresented: $showDeveloperKeyBottomSheet, content: {
 //            DeveloperKeyBottomSheet(isSheetPresented: $showDeveloperKeyBottomSheet, profileID: viewModel.profileData?.profileId ?? "", secretKey: viewModel.profileData?.secretKey ?? "")
 //                .presentationDetents([.medium,.large])
 //                .presentationCornerRadius(24)

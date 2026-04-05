@@ -65,8 +65,8 @@ class NotificationConfigration: NSObject, UNUserNotificationCenterDelegate, Mess
     
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        _ = notification.request.content.userInfo
-        // print("userInfo\(userInfo)")
+        let userInfo = notification.request.content.userInfo
+         print("userInfo\(userInfo)")
         completionHandler([.banner, .badge, .sound])
     }
     
@@ -74,20 +74,26 @@ class NotificationConfigration: NSObject, UNUserNotificationCenterDelegate, Mess
         // print("CALL:: didReceiveRemoteNotification:: userinfo: \(userInfo)")
     }
     
-    // MARK: - NotCalled
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
         let userInfo = response.notification.request.content.userInfo
         let actionId = userInfo["action_id"] as? String
         let actionType = userInfo["action_type"] as? String
-        let userType = userInfo["user_type"] as? String
-        
-        print(userInfo,"userInfo", actionId, actionType)
-        
-        if  actionType != "0" && actionId != "" {
-            setRoot(actionType: actionType  ?? "" , actionId: actionId ?? "", userType: userType ?? "")
+        let userType = userInfo["user_type"] as? String ?? "client"
+print("userInfo",userInfo, actionId, actionType, userType)
+        if let actionTypeInt = Int(actionType ?? "0"),
+           actionTypeInt != 0
+        {
+            setRoot(
+                actionType: actionType ?? "",
+                actionId: actionId ?? "",
+                userType: userType
+            )
         }
-        
+
         completionHandler()
     }
     
@@ -137,7 +143,12 @@ class NavigationHelper: ObservableObject {
             }
         } else if actionType == 2 {
             self.navigateToWithdraws = true
+        } else if actionType == 3 {
+            Constants.shouldNavigateToWallet = true
         }
+        else if actionType == 4 {
+           Constants.shouldNavigateToWallet = true
+       }
     }
 }
 

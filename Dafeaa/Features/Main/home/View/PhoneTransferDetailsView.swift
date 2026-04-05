@@ -57,7 +57,7 @@ struct PhoneTransferDetailsView: View {
                                 .padding(.horizontal)
                                 .environment(\.layoutDirection, .rightToLeft)
                                 
-                                TextField("0", text: $amount)
+                                TextField("0.00", text: $amount)
                                     .keyboardType(.numberPad)
                                     .multilineTextAlignment(.center)
                                     .textModifier(.plain, 43, .black2B2D33)

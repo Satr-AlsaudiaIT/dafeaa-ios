@@ -10,6 +10,8 @@ import SwiftUI
 struct OrdersOffersLinksView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel = OrdersVM()
+    @StateObject var moreViewModel = MoreVM()
+
     @State var goToAddOffer = false
     @State var goToDetails = false
     @State var toast: FancyToast? = nil
@@ -59,7 +61,14 @@ struct OrdersOffersLinksView: View {
                             .padding(.bottom, 60)
                         }
                     }
-                        ReusableButton(buttonText: "addOffer", action: { goToAddOffer = true })
+                        ReusableButton(buttonText: "addOffer", action: {
+                            
+                            if moreViewModel.addressList.count != 0 {
+                                goToAddOffer = true
+                            } else {
+                                toast = FancyToast(type: .error, title: "error", message: "noAddressValidation".localized())
+                            }
+                        })
                             .navigationDestination(isPresented: $goToAddOffer, destination: { AddOfferViewNew() })
                     }
                     .padding(24)
@@ -84,15 +93,14 @@ struct OrdersOffersLinksView: View {
             isShowActionBottomSheet = false
             viewModel._isSuccess = false
         })
-        .sheet(isPresented: $isShowActionBottomSheet, content: {
+            .appBottomSheet(isPresented: $isShowActionBottomSheet, detents: [.fraction(0.32)]) {
             BottomSheetLinkActionsView(offer: selectedOffer, toast: $toast, isShow: $isShowActionBottomSheet, onDelete: {
                 viewModel.deleteOffer(id: selectedOffer?.id ?? 0)
-            })
-            .presentationDetents([.fraction(0.32)])
-            .presentationCornerRadius(24)
-            .presentationDragIndicator(.visible)
-        })
+            }
+           )
+        }
         .onAppear {
+            moreViewModel.addressesList(isLoading: false)
             viewModel.offers(skip: 0)
             AppState.shared.swipeEnabled = true
         }
@@ -100,7 +108,8 @@ struct OrdersOffersLinksView: View {
             viewModel._offersList.removeAll()
         }
     }
-
+    
+    
     private func loadMoreOrdersIfNeeded() {
         if viewModel.hasMoreData && !viewModel.isLoading {
             viewModel.offers(skip: viewModel._offersList.count)

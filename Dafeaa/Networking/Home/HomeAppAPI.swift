@@ -8,7 +8,7 @@ protocol HomeAPIProtocol {
     func home(Completion: @escaping (Result<HomeModel?, NSError>) -> Void)
     func wallet(skip: Int, Completion: @escaping (Result<WalletModel?, NSError>) -> Void)
     func operations(skip: Int, Completion: @escaping (Result<WalletModel?, NSError>) -> Void)
-
+    func processApplePay(amount: Int, token: String, Completion: @escaping (Result<ApplePayResponse?, NSError>) -> Void)
 }
 
 class HomeAPI: BaseAPI<HomeNetwork>, HomeAPIProtocol
@@ -31,5 +31,10 @@ class HomeAPI: BaseAPI<HomeNetwork>, HomeAPIProtocol
         }
     }
 
-
+    func processApplePay(amount: Int, token: String, Completion: @escaping (Result<ApplePayResponse?, NSError>) -> Void) {
+         self.fetchApplePayData(target: .applePay(amount: amount, token: token), responseClass: ApplePayResponse.self) { (result) in
+             Completion(result)
+         }
+     }
+    
 }

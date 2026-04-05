@@ -11,6 +11,7 @@ enum ButtonColors {
     case yellow
     case transparent
     case gray
+    case cancelRed
     
     // Function to return the correct color from assets
     func color() -> Color {
@@ -23,6 +24,8 @@ enum ButtonColors {
             return Color.clear
         case .gray:
             return Color(.grayDADADA)
+        case .cancelRed:
+            return Color(.redEE002B)
         }
     }
 }
@@ -49,12 +52,12 @@ struct ReusableButton: View {
             }
         }) {
             Text(buttonText.localized())
-                .textModifier(.plain, 15,textColor)
+                .textModifier(.plain, 15, buttonColor == .cancelRed ? .redEE002B : textColor)
                 .frame(maxWidth: .infinity, minHeight: 51)
-                .background(isEnabled ? Color(buttonColor.color()) : Color(.grayDADADA))
+                .background(isEnabled ? ( buttonColor == .cancelRed ? .white : Color(buttonColor.color())) : Color(.grayDADADA))
                 .overlay(
                     RoundedRectangle(cornerRadius: cornerRadius)
-                        .stroke(borderColor, lineWidth: 1)
+                        .stroke( buttonColor == .cancelRed ?  .redEE002B : borderColor, lineWidth: 1.5)
                 ).padding(1)
                 .background(isEnabled ? Color(buttonColor.color()) : Color(.grayDADADA))
                 .cornerRadius(cornerRadius)

@@ -81,7 +81,7 @@ struct BuyProductBottomSheet: View {
             .padding()
             .background(Color.white)
             .cornerRadius(24)
-            .frame(height: UIScreen.main.bounds.height * 0.45)
+//            .frame(minHeight: UIScreen.main.bounds.height * 0.45)
             .toastView(toast: $viewModel.toast)
             .onChange(of: viewModel.offerData) { oldValue, newValue in
                 self.offerData = newValue
@@ -128,8 +128,7 @@ struct BuyProductBottomSheet: View {
             }
             return scannedString
         } else {
-            toast = FancyToast(type: .error, title: "error", message: "not valid code".localized())
-            return ""
+            return scannedString
         }
         
         

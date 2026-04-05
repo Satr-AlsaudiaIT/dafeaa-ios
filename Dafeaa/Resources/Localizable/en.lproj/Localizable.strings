@@ -127,6 +127,7 @@
 "add_data_button" = "Add data";
 "invite_friend" = "Invite a Friend";
 "orderNotAvailable" = "This offer is stopped by merchant";
+"accounts_address" = "Accounts and Address";
 
 //MARK: - ChangePassword
 "changePassword"="Change Password";
@@ -224,6 +225,7 @@
 "exceedQuantity" = "The remaining quantity is only";
 //MARK: - NOTIFICATIONS
 "emptyNotifications"="You don't have any notifications yet. You will be alerted when you receive any notifications.";
+"Press to show details" = "Press to show details";
 
 //MARK: - orderDetails
 "orderDetails"="Order Details";
@@ -245,6 +247,7 @@
 "accept" = "Accept";
 "onWay" = "On the way";
 "statusChanges" = "Order status successfully changed";
+"orderCanceled" = "Order canceled successfully";
 "pendingState" ="Order Pending";
 "acceptedState" = "Order Accepted";
 "awayState" = "On the way";
@@ -263,6 +266,8 @@
 "amount: " = "Amount: ";
 "amount" = "Amount";
 "fees" = "Fees";
+"ordered_success" = "Order successfully submitted";
+
 
 //MARK: - addresses
 "address"="Address";
@@ -483,6 +488,8 @@
 "The balance has been successfully withdrawn." = "The balance has been successfully withdrawn." ;
 "Total Amount" = "Total Amount";
 "Pay with" = "Pay with";
+"ApplePayAmountValidation" = "The maximum transfer amount using apple pay is 5000 SAR";
+
 "5 minutes during business hours, otherwise the next business day" = "5 minutes during business hours, otherwise the next business day";
 "SARIE transfer – for amounts over" = "SARIE transfer – for amounts over";
 "location_outside_saudi" = "You can’t choose locations outside Saudi Arabia.";
@@ -504,6 +511,7 @@
 "shippingCompany" = "Shipping Company";
 "notAvailable" = "Not Available";
 "deliveryPrice" = "Shipping price";
+"noAddressValidation" = "You don't have any address, please add address first";
 
 // Validation messages
 "validation_offer_name" = "Please enter the offer name";
@@ -585,3 +593,7 @@
 "dafeaa_payment_way" = "Pay with Dafeaa";
 "paymentWay" = "Payment method";
 "product_label" = "Product";
+
+
+//InviteFriend
+"invite_friend_message" = "Join me on Dafea from here: https://dafea.com.sa";

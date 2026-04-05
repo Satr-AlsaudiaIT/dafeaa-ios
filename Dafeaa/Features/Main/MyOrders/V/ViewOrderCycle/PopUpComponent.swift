@@ -29,7 +29,7 @@ struct PopUpComponent: View {
                             .padding([.horizontal,.bottom],24)
                             .padding(.top,16)
                         HStack {
-                            ReusableButton(buttonText: "Cancel",buttonColor: .gray) {
+                            ReusableButton(buttonText: "Cancel",buttonColor: .cancelRed) {
                                 isShowing = false
                             }
                             ReusableButton(buttonText: "Confirm",buttonColor: .black) {

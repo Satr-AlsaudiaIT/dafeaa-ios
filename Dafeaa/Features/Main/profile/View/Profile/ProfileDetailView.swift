@@ -17,6 +17,9 @@ struct ProfileDetailView:  View {
     @State private var showChangePassword : Bool = false
     @FocusState private var focusedField: FormField?
     @State private var isDataLoaded: Bool = false
+    @State private var showDeveloperKeyBottomSheet : Bool = false
+    @State var profileId : String = ""
+    @State var secretKey : String = ""
     var body: some View {
         ZStack{
             VStack(spacing: 0){
@@ -38,7 +41,47 @@ struct ProfileDetailView:  View {
                                
                                 CustomMainTextField(text: $email, placeHolder: "Email", image: .mailTFIcon)
                                     .focused($focusedField, equals: .email)
-                                
+                                VStack(spacing: 20){
+                                    Button {
+                                        showChangePassword = true
+                                    } label: {
+                                        HStack(spacing:12) {
+                                            Image(.changePassword)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: 28, height: 28)
+                                            
+                                            Text("changePassword".localized())
+                                                .textModifier(.plain, 16, .black194558)
+                                            Spacer()
+                                            
+                                            Image(.iconArrowNav)
+                                                .frame(width: 32, height: 32)
+                                                .foregroundColor(Color(.black194558))
+                                        }
+                                        .frame(height: 32)
+                                    }
+                                    Button {
+                                        showDeveloperKeyBottomSheet = true
+                                    } label: {
+                                        HStack(spacing:12) {
+                                            Image(.developersKey)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: 28, height: 28)
+                                            
+                                            Text("developerKeys".localized())
+                                                .textModifier(.plain, 16, .black194558)
+                                            Spacer()
+                                            
+                                            Image(.iconArrowNav)
+                                                .frame(width: 32, height: 32)
+                                                .foregroundColor(Color(.black194558))
+                                        }
+                                        .frame(height: 32)
+                                    }
+                                }
+                                .padding(.top)
 //                                Button(action: {
 //                                    // Handle forgot password action
 //                                    showChangePassword = true
@@ -102,7 +145,17 @@ struct ProfileDetailView:  View {
                 self.isDataLoaded = true
             } }
         .onReceive(viewModel.$_isSuccess){ value in  if value { self.presentationMode.wrappedValue.dismiss()} }
-        
+        .onChange(of: viewModel.profileData?.secretKey ?? "", { _, newValue in
+            secretKey = newValue
+        })
+        .appBottomSheet(isPresented: $showDeveloperKeyBottomSheet, detents: [.medium,.large]){
+            DeveloperKeyBottomSheet(isSheetPresented: $showDeveloperKeyBottomSheet, profileID: $profileId, secretKey: $secretKey )
+
+        }
+        .navigationDestination(isPresented: $showChangePassword) {
+            ChangePasswordView()
+        }
+
     }
     func showNextTextField(){
         switch focusedField {

@@ -127,6 +127,7 @@
 "add_data_button" = "أضف البيانات";
 "invite_friend" = "دعوة صديق";
 "orderNotAvailable" = "هذا العرض موقوف بواسطة البائع";
+"accounts_address" = "الحسابات والعناوين";
 
 //MARK: - ChangePassword
 "changePassword"="تغيير كلمة المرور";
@@ -224,6 +225,7 @@
 
 //MARK: - NOTIFICATIONS
 "emptyNotifications"="لا توجد إشعارات لديك بعد، سيتم تنبيهك في حال وصول أي إشعار لك";
+"Press to show details" = "اضغط لعرض التفاصيل";
 
 //MARK: - orderDetails
 "orderDetails"="تفاصيل الطلب";
@@ -245,6 +247,7 @@
 "accept" = "موافقة";
 "onWay" = "في الطريق";
 "statusChanges" = "تم تغيير حالة الطلبية بنجاح";
+"orderCanceled" = "تم الغاء الطلبية بنجاح";
 "pendingState" ="الطلبية معلقة";
 "acceptedState" = "الطلبية مقبولة";
 "awayState" = "في الطريق";
@@ -263,6 +266,7 @@
 "amount: " = "الكمية: ";
 "amount" = "المبلغ";
 "fees" = "رسوم تحويل";
+"ordered_success" = "تم الطلب بنجاح";
 
 //MARK: - addresses
 "address"="العنوان";
@@ -479,6 +483,7 @@
 "The balance has been successfully withdrawn." = "تم تحويل الرصيد بنجاح.";
 "Total Amount" = "إجمالي المبلغ";
 "Pay with" = "الدفع عن طريق";
+"ApplePayAmountValidation" = " الحد الاقصى للدفع باستخدام ابل هو ٥٠٠٠ ريال";
 "5 minutes during business hours, otherwise the next business day" = "5 دقائق خلال ساعات العمل، وإلا في يوم العمل التالي";
 "SARIE transfer – for amounts over" = "تحويل سريع – للمبالغ التي تزيد عن";
 "location_outside_saudi" = "لا يمكنك اختيار موقع خارج المملكة العربية السعودية.";
@@ -500,6 +505,7 @@
 "shippingCompany" = "شركات الشحن";
 "notAvailable" = "غير متاحة";
 "deliveryPrice" = "سعر التوصيل";
+"noAddressValidation" = "لا تمتلك عناوين برجاء اضافة عنوان اولا";
 
 // Validation messages
 "validation_offer_name" = "يرجى إدخال اسم العرض";
@@ -578,3 +584,6 @@
 "dafeaa_payment_way" = "الدفع عن طريق تطبيق دافع";
 "paymentWay" = "طريقة الدفع";
 "product_label" = "المنتج";
+
+//InviteFriend
+"invite_friend_message" = "انضم إليّ على دافع من هنا: https://dafea.com.sa";

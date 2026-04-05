@@ -125,15 +125,10 @@ struct WalletView: View {
                         .hidden()
                 }
             }
-            .sheet(isPresented: $isSheetPresented, onDismiss: {
-                //
-            }, content: {
-                AddWithdrawBottomSheet(actionType : $balanceActionType, amountDouble: $amount ,isSheetPresented: $isSheetPresented,navigateToWebView: $navigateToWebView, paymentURL: $paymentURL, navigateToWithDrawView: $navigateToWithDrawView, navigateToAddBalance: $navigateToAddBalance)
-                    .presentationCornerRadius(24)
-                    .presentationDragIndicator(.visible)
-                    .presentationDetents([.medium])
+            .appBottomSheet(isPresented: $isSheetPresented, detents: [.fraction(0.45)]) {
+                AddWithdrawBottomSheet(actionType: $balanceActionType, amountDouble: $amount, isSheetPresented: $isSheetPresented,navigateToWebView: $navigateToWebView,paymentURL: $paymentURL, navigateToWithDrawView: $navigateToWithDrawView, navigateToAddBalance: $navigateToAddBalance)
                 
-            })
+            }
             .toastView(toast: $viewModel.toast)
             .popupView(popup: $popupMessage)
             .navigationBarHidden(true)
@@ -160,15 +155,12 @@ struct WalletView: View {
                     addAmount: amount
                 )
             }
-            .sheet(isPresented: $showTransferMethodSheet) {
+            .appBottomSheet(isPresented: $showTransferMethodSheet, detents: [.fraction(0.45)]) {
                 TransferMethodBottomSheet(
                     isSheetPresented: $showTransferMethodSheet,
                     navigateToIBANTransfer: $navigateToIBANTransfer,
                     navigateToPhoneTransfer: $navigateToPhoneTransfer
                 )
-                .presentationDetents([.fraction(0.45)])
-                .presentationCornerRadius(24)
-                .presentationDragIndicator(.visible)
             }
 
             .navigationDestination(isPresented: $navigateToIBANTransfer) {

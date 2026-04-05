@@ -21,7 +21,8 @@ struct HomeView: View {
     @State private var isPresentBuySheet: Bool = false
     let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
     let businessInformationStatus = GenericUserDefault.shared.getValue(Constants.shared.businessInformationStatus) as? Int ?? nil
-    @State var isUnreadNotification: Bool = UserDefaults.standard.value(forKey: Constants.shared.unReadNotificationCount) as? Int ?? 0 > 0 ? true : false
+    @State var unreadCount: Int = 0
+    @State var unReadNotificationCount: String  = UserDefaults.standard.value(forKey: Constants.shared.unReadNotificationCount) as? String ?? ""
     @State var showClientOfferDetails: Bool = false
     @State var showOfferDetails: Bool = false
     @State var offerData: ShowOfferData? = nil
@@ -70,11 +71,22 @@ struct HomeView: View {
                                 } label: {
                                     ZStack {
                                         Image(.notificationIcon)
-                                        if isUnreadNotification {
+                                        
+                                        if unreadCount > 0 {
                                             VStack {
                                                 HStack {
-                                                    Circle().fill(.red)
-                                                        .frame(width: 3, height: 3)
+                                                    Spacer()
+                                                    ZStack {
+                                                        Circle()
+                                                            .fill(Color.red)
+                                                            .frame(width: 20, height: 20)
+                                                        
+                                                        Text("\(unreadCount > 99 ? "99+" : "\(unreadCount)")")
+                                                            .font(.system(size: 10))
+                                                            .foregroundColor(.white)
+                                                            .fontWeight(.bold)
+                                                    }
+                                                    .offset(x: 8, y: -8)
                                                     Spacer()
                                                 }
                                                 Spacer()
@@ -82,7 +94,7 @@ struct HomeView: View {
                                         }
                                     }
                                     .fixedSize()
-                                }.navigationDestination(isPresented: $isNotificationPresented){ NotificationsView()}
+                                }.navigationDestination(isPresented: $isNotificationPresented){ NotificationsView(selectedTab: $selectedTab)}
                                 
                             }
                             .padding(.horizontal,24)
@@ -303,7 +315,8 @@ struct HomeView: View {
                     profileViewModel.addressesList(isLoading: false)
                     Constants.sessionFlag = true
                 }
-            
+                unReadNotificationCount = UserDefaults.standard.value(forKey: Constants.shared.unReadNotificationCount) as? String ?? ""
+                unreadCount = ((unReadNotificationCount == "" ||  unReadNotificationCount == "0") ? (0): (Int(unReadNotificationCount))) ?? 0
             }
             .onChange(of: isViewAppeared, { _, newValue in
                 if newValue {
@@ -337,18 +350,13 @@ struct HomeView: View {
             .navigationDestination(isPresented: $showClientOfferDetails, destination: {
                 ClientLinkDetailsNew(offerData: offerData)
             })
-            .sheet(isPresented: $isPresentBuySheet, content: {
+            .appBottomSheet(isPresented: $isPresentBuySheet, detents: [.fraction(0.45)]) {
                 BuyProductBottomSheet(isShowClientLinkDetails: $showClientOfferDetails, isShowOrderLinkDetails: $showOfferDetails, offerData: $offerData,isSheetPresented: $isPresentBuySheet)
-                    .presentationDetents([.fraction(0.45)])
-                    .presentationCornerRadius(24)
-                    .presentationDragIndicator(.visible)
-            })
-            .sheet(isPresented: $isSheetPresented, content: {
+            }
+            .appBottomSheet(isPresented: $isSheetPresented, detents: [.fraction(0.45)]) {
                 AddWithdrawBottomSheet(actionType: $balanceActionType, amountDouble: $amount, isSheetPresented: $isSheetPresented,navigateToWebView: $navigateToWebView,paymentURL: $paymentURL, navigateToWithDrawView: $navigateToWithDrawView, navigateToAddBalance: $navigateToAddBalance)
-                    .presentationDetents([.fraction(0.6)])
-                    .presentationCornerRadius(24)
-                    .presentationDragIndicator(.visible)
-            })
+                
+            }
 //            .sheet(isPresented: $showTransferBottomSheet, content: {
 //                TransferBottomSheet(isSheetPresented: $showTransferBottomSheet,amount: $transferBalanceAmount,phoneNumber: $transferBalancePhone, name: $transferBalanceName,isNavigateToTransferView: $isNavigateToTransferView)
 //                    .presentationDetents([.fraction(0.4)])
@@ -376,15 +384,12 @@ struct HomeView: View {
                     addAmount: amount
                 )
             }
-            .sheet(isPresented: $showTransferMethodSheet) {
+            .appBottomSheet(isPresented: $showTransferMethodSheet, detents: [.fraction(0.45)]) {
                 TransferMethodBottomSheet(
                     isSheetPresented: $showTransferMethodSheet,
                     navigateToIBANTransfer: $navigateToIBANTransfer,
                     navigateToPhoneTransfer: $navigateToPhoneTransfer
                 )
-                .presentationDetents([.fraction(0.45)])
-                .presentationCornerRadius(24)
-                .presentationDragIndicator(.visible)
             }
 
             .navigationDestination(isPresented: $navigateToIBANTransfer) {
@@ -404,7 +409,7 @@ struct HomeView: View {
 
 struct LastProcessNavView: View {
     var title    : String
-    @Binding var selectedTab: TabBarView.Tab   // Optional selectedTab
+    @Binding var selectedTab: TabBarView.Tab
     var isShow   : Bool = true
     var body: some View {
         HStack{

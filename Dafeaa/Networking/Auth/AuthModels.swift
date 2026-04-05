@@ -33,11 +33,77 @@ struct NotificationsModel: Codable {
     let status: Bool?
 }
 
+// Top of the same file as NotificationsView
+enum NotificationAction: Hashable {
+    case clientOrder(id: Int)
+    case merchantOrder(id: Int)
+    case withdraws(id: Int)
+    case wallet(id: Int)
+    case none
+}
+
 // MARK: - NotificationsData
 struct NotificationsData: Codable {
     let  id, isRead, actionId, actionType : Int?
     let title,  createdAt, body, data, time : String?
     let userType: String?
+}
+
+extension NotificationsData {
+    var navigationAction: NotificationAction {
+        guard let actionTypeInt = actionType else {
+            return .none
+        }
+
+        switch actionTypeInt {
+        case 1:
+            guard let actionId = actionId else { return .none }
+            if userType?.lowercased() == "client" {
+                return .clientOrder(id: actionId)
+            } else if userType?.lowercased() == "merchant" {
+                return .merchantOrder(id: actionId)
+            } else {
+                return .none
+            }
+        case 2:
+            return .withdraws(id: actionId ?? 1)
+            
+        case 3:
+            return .wallet(id: actionId ?? 1)
+            
+        default:
+            return .none
+        }
+    }
+}
+
+extension NotificationAction {
+    static func make(
+        actionType: Int,
+        actionId: Int,
+        userType: String
+    ) -> NotificationAction {
+        switch actionType {
+        case 1:
+            switch userType.lowercased() {
+            case "client":
+                return .clientOrder(id: actionId)
+            case "merchant":
+                return .merchantOrder(id: actionId)
+            default:
+                return .clientOrder(id: actionId)
+            }
+
+        case 2:
+            return .withdraws(id: actionId)
+
+        case 3:
+            return .wallet(id: actionId)
+
+        default:
+            return .none
+        }
+    }
 }
 // MARK: - LoginModel
 struct LoginModel: Codable {

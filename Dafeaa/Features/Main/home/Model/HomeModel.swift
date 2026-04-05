@@ -88,3 +88,18 @@ struct ConfirmTransferData: Codable {
     var createdAt : String?
     var transId: String?
 }
+
+
+
+import Foundation
+
+struct ApplePayResponse: Codable {
+    let success: Bool?
+    let message: String?
+    let transactionId: String?
+    let status: String?
+    let amount: Int?
+    let currency: String?
+    let walletCharged: Bool?
+    
+}

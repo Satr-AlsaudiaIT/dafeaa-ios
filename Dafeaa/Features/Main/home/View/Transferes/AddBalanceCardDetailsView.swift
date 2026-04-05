@@ -28,6 +28,7 @@ struct AddBalanceCardDetailsView: View {
     @State private var navigateToPaymentWeb = false
 
     @FocusState private var focusedField: CardFormField?
+    @State private var toast: FancyToast? = nil
     
     var isFormValid: Bool {
         !cardHolderName.isEmpty &&
@@ -76,18 +77,16 @@ struct AddBalanceCardDetailsView: View {
                         ApplyPayButton(
                             amount: addAmount,
                             currency: "SAR",
-                            countryCode: "SA"
+                            countryCode: "SA",
+                            validationReturn: { message in
+                                self.toast = FancyToast(type: .error, title: "Error".localized(), message: message)
+                            }
                         ) { token in
-                            // Send token to your backend (Moyasar API)
-                            print("Received Apple Pay token: \(token)")
-                            // You can call your viewModel method here to process the token
+                            if token != "" {
+                                viewModel.processApplePay(amount: addAmount, token: token)
+                            }
                         }
 
-                               
-                            
-                            
-                        
-                        
                         // MARK: - Or Divider
                         HStack(spacing: 16) {
                             Rectangle()
@@ -321,7 +320,13 @@ struct AddBalanceCardDetailsView: View {
                     .progressViewStyle(WithBackgroundProgressViewStyle())
             }
         }
-        .toastView(toast: $viewModel.toast)
+        .toastView(toast: Binding(
+            get: { viewModel.toast ?? toast },
+            set: { newVal in
+                if viewModel.toast != nil { viewModel.toast = newVal }
+                else { toast = newVal }
+            }
+        ))
         .navigationBarHidden(true)
         .onChange(of: viewModel._isPaymentSuccess) { _, newValue in
                        if newValue {
@@ -348,6 +353,11 @@ struct AddBalanceCardDetailsView: View {
                     Image(systemName: "chevron.down").foregroundColor(.blue)
                 })
             }
+        }
+        .onChange(of: viewModel._isApplePaySuccess) { oldValue, newValue in
+            presentationMode.wrappedValue.dismiss()
+            Constants.shouldNavigateToWallet = true
+            NavigationUtil.popToRootView()
         }
     }
     
