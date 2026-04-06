@@ -493,27 +493,27 @@ struct OrderLinkDetailsViewNew: View {
 
 //    private func shareQRCode() {
 //        guard let offerCode = viewModel.offersData?.code else { return }
-//        
+//
 //        // Generate QR Code
 //        let qrCodeImage = qrcodeImage(string: offerCode)
-//        
+//
 //        // Convert UIImage to SwiftUI Image
 //        if let qrCodeImage = qrCodeImage {
 //            // Share the QR Code Image
 //            let activityViewController = UIActivityViewController(activityItems: [qrCodeImage], applicationActivities: nil)
-//            
+//
 //            // Ensure the activityViewController is presented on the main thread
 //            DispatchQueue.main.async {
 //                // Get the current view controller from the window scene
 //                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
 //                   let rootViewController = windowScene.windows.first?.rootViewController {
-//                    
+//
 //                    // Find the topmost presented view controller
 //                    var topViewController = rootViewController
 //                    while let presentedViewController = topViewController.presentedViewController {
 //                        topViewController = presentedViewController
 //                    }
-//                    
+//
 //                    // Present the activityViewController from the topmost view controller
 //                    topViewController.present(activityViewController, animated: true, completion: nil)
 //                } else {
@@ -648,7 +648,7 @@ struct OfferPriceBreakdownView: View {
                 .textModifier(.plain, 14, .black000000)
             Spacer()
             riyalRow(
-                value: seller?.sellerNetAmount?.doubleValue ?? 0,
+                value: seller?.sellerAmountBeforeVat?.doubleValue ?? 0,
                 color: .black000000,
                 size: 14,
                 bold: true

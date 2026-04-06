@@ -377,9 +377,9 @@
 "addTaxRecordNumber" = "Add Tax Record Number";
 "hasTax" = "Order Has Tax";
 "validation_nit_have_tax_record" = "Please Add Tax Record";
-"tax_record_required" = "Tax record number is required.";
-"tax_record_numbers_only" = "Tax record number must contain digits only.";
-"tax_record_invalid" = "Tax record number is invalid.";
+"tax_record_required" = "Tax number is required.";
+"tax_record_numbers_only" = "Tax number must contain digits only.";
+"tax_record_invalid" = "Tax number is invalid.";
 
 //MARK: - Withdraws
 "withdrawsProcess" = "Withdrawal Transactions";

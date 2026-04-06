@@ -137,7 +137,7 @@ struct PaymentInfoOwner: View {
     ) -> some View {
         HStack(spacing: 4) {
             Text(forceSign
-                 ? (value < 0 ? String(format: "%.2f", value) : String(format: "+%.2f", value))
+                 ? (value <= 0 ? String(format: "%.2f", value) : String(format: "+%.2f", value))
                  : String(format: "%.2f", value))
                 .textModifier(bold ? .bold : .plain, size, color)
                 .fixedSize()

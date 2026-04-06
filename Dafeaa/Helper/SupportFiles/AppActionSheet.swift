@@ -199,3 +199,143 @@ extension View {
         )
     }
 }
+
+
+
+
+// MARK: - ActionSheetHelper (Direct call without modifier)
+struct ActionSheetHelper {
+    static func show(
+        title: String,
+        message: String = "",
+        confirmTitle: String,
+        cancelTitle: String = "Cancel".localized(),
+        isDestructive: Bool = false,
+        onConfirm: @escaping () -> Void,
+        onCancel: (() -> Void)? = nil
+    ) {
+        DispatchQueue.main.async {
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                  let window = windowScene.windows.first,
+                  let rootViewController = window.rootViewController else { return }
+
+            var topViewController = rootViewController
+            while let presented = topViewController.presentedViewController {
+                topViewController = presented
+            }
+
+            let actionSheetView = _DirectActionSheetView(
+                title: title,
+                message: message,
+                confirmTitle: confirmTitle,
+                cancelTitle: cancelTitle,
+                isDestructive: isDestructive,
+                onConfirm: onConfirm,
+                onCancel: onCancel
+            )
+
+            let hostingController = UIHostingController(rootView: actionSheetView)
+            hostingController.modalPresentationStyle = .overFullScreen
+            hostingController.modalTransitionStyle = .crossDissolve
+            hostingController.view.backgroundColor = .clear
+
+            topViewController.present(hostingController, animated: false)
+        }
+    }
+}
+
+// MARK: - Internal View
+private struct _DirectActionSheetView: View {
+    let title: String
+    let message: String
+    let confirmTitle: String
+    let cancelTitle: String
+    let isDestructive: Bool
+    let onConfirm: () -> Void
+    let onCancel: (() -> Void)?
+
+    @State private var isVisible = false
+
+    var body: some View {
+        ZStack {
+            Color.black.opacity(isVisible ? 0.4 : 0)
+                .ignoresSafeArea()
+                .onTapGesture { dismiss(action: nil) }
+
+            VStack {
+                Spacer()
+                VStack(spacing: 0) {
+                    // Title + Message
+                    if !title.isEmpty || !message.isEmpty {
+                        VStack(spacing: 8) {
+                            if !title.isEmpty {
+                                Text(title)
+                                    .font(.system(size: 13, weight: .semibold))
+                                    .foregroundColor(.gray)
+                                    .multilineTextAlignment(.center)
+                            }
+                            if !message.isEmpty {
+                                Text(message)
+                                    .font(.system(size: 13))
+                                    .foregroundColor(.gray)
+                                    .multilineTextAlignment(.center)
+                            }
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 14)
+
+                        Divider()
+                    }
+
+                    // Confirm Button
+                    Button(action: { dismiss(action: onConfirm) }) {
+                        Text(confirmTitle)
+                            .font(.system(size: 20))
+                            .foregroundColor(isDestructive ? .red : .blue)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 56)
+                    }
+
+                    Divider()
+
+                    // Cancel Button
+                    Button(action: { dismiss(action: onCancel) }) {
+                        Text(cancelTitle)
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundColor(.blue)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 56)
+                    }
+                }
+                .background(Color(.systemGray6))
+                .cornerRadius(14)
+                .padding(.horizontal, 8)
+                .padding(.bottom, 8)
+                .offset(y: isVisible ? 0 : 300)
+            }
+            .ignoresSafeArea()
+        }
+        .onAppear {
+            withAnimation(.easeInOut(duration: 0.25)) {
+                isVisible = true
+            }
+        }
+    }
+
+    private func dismiss(action: (() -> Void)?) {
+        withAnimation(.easeInOut(duration: 0.25)) {
+            isVisible = false
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            UIApplication.shared.connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .flatMap { $0.windows }
+                .first?.rootViewController?
+                .presentedViewController?.dismiss(animated: false) {
+                    action?()
+                }
+        }
+    }
+}
+
+

@@ -306,7 +306,7 @@
 
 //MARK: - Add Order cycle
 "offerDetails" = "تفاصيل العرض";
-"offers"="عروض";
+"offers"="عروض البيع";
 "addOffer"="أضف عرضًا";
 "offerContent"= "أضف عرضًا";
 "description"="الوصف";
@@ -376,9 +376,9 @@
 "addTaxRecordNumber" = "أضف رقم سجل ضريبي";
 "hasTax" = "الطلب خاضع للضريبة";
 "validation_nit_have_tax_record" = "برجاء اضافة السجل الضريبي";
-"tax_record_required" = "رقم السجل الضريبي مطلوب.";
-"tax_record_numbers_only" = "يجب أن يحتوي رقم السجل الضريبي على أرقام فقط.";
-"tax_record_invalid" = "رقم السجل الضريبي غير صالح.";
+"tax_record_required" = " الرقم الضريبي مطلوب.";
+"tax_record_numbers_only" = "يجب أن يحتوي الرقم الضريبي على أرقام فقط.";
+"tax_record_invalid" = "الرقم الضريبي غير صالح.";
 
 //MARK: - Withdraws
 "withdrawsProcess" = "عمليات سحب الرصيد";
