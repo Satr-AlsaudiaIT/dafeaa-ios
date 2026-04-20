@@ -12,57 +12,60 @@ class NotificationConfigration: NSObject, UNUserNotificationCenterDelegate, Mess
     
     static var shared = NotificationConfigration()
     
-    func firebaseConfigration() {
-        registerForPushNotifications()
+    func firebaseConfigration(onReady: (() -> Void)? = nil) {
+        registerForPushNotifications(onReady: onReady)
     }
     
     // catch Notification Back Ground
-    func registerForPushNotifications() {
+    func registerForPushNotifications(onReady: (() -> Void)? = nil) {
         UNUserNotificationCenter.current().delegate = self
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
         UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { [weak self]
             granted, error in
-            guard granted else { //print("Permission denied");
-                return}
-            self?.getNotificationSettings()
+            guard granted else { return }
+            self?.getNotificationSettings(onReady: onReady)
             Messaging.messaging().delegate = self
         }
     }
     
     
-    private func getNotificationSettings() {
-        UNUserNotificationCenter.current().getNotificationSettings {settings in
-            guard settings.authorizationStatus == .authorized else { return }
-            DispatchQueue.main.async {[weak self] in
-                guard let self = self else { return}
+    private func getNotificationSettings(onReady: (() -> Void)? = nil) {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            guard settings.authorizationStatus == .authorized else {
+                DispatchQueue.main.async { onReady?() }
+                return
+            }
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 UIApplication.shared.registerForRemoteNotifications()
-                self.pushNotificationAPISetUp()
+                self.pushNotificationAPISetUp(onReady: onReady)
             }
         }
     }
     
-    private func pushNotificationAPISetUp() {
-        //MARK:- toDo push notification
+    private func pushNotificationAPISetUp(onReady: (() -> Void)? = nil) {
         Messaging.messaging().token { token, error in
             print("token is ----> \(token ?? "")")
             GenericUserDefault.shared.setValue(token, Constants.shared.deviceToken)
             let UUIDValue = UIDevice.current.identifierForVendor!.uuidString
-            if  GenericUserDefault.shared.getValue( Constants.shared.token) as? String ?? "" != "" {
-                
-                let api  = AuthAPI()
+            guard GenericUserDefault.shared.getValue(Constants.shared.token) as? String ?? "" != "" else {
+                DispatchQueue.main.async { onReady?() }
+                return
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                let api = AuthAPI()
                 api.submitToken(token: token ?? "", deviceId: UUIDValue) { (result) in
                     switch result {
-                        
                     case .success(let result):
                         print(result?.message ?? "")
                     case .failure(let error):
                         print(error.localizedDescription)
                     }
+                    DispatchQueue.main.async { onReady?() }
                 }
             }
         }
     }
-    
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         let userInfo = notification.request.content.userInfo

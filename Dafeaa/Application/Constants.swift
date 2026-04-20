@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 class Constants {
     static var shared = Constants()
 
@@ -240,6 +241,14 @@ class Constants {
             let bankCode = getBankCodeFromIBAN(iban)
             return bankCode == ARAB_NATIONAL_BANK_CODE
         }
+    
+    static func clearSession() {
+        refreshToken = ""
+        accountStatus = 2
+        userName = ""
+        phone = ""
+        sessionFlag = false
+    }
     
 //    static var offersData: ShowOfferData? {
 //        get {

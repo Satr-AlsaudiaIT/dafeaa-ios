@@ -447,7 +447,7 @@ final class MoreVM : ObservableObject {
         GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
         GenericUserDefault.shared.setValue("", Constants.shared.token)
         GenericUserDefault.shared.setValue(0, Constants.shared.userId)
-        
+        Constants.refreshToken = ""
         MOLH.reset()
         
     }

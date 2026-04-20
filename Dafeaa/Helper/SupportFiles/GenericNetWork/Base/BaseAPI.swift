@@ -157,11 +157,16 @@ class BaseAPI<T: TargetType> {
                     }
                     else {
                         let message = result?.message ?? ""
-                        BiometricAuthManager.shared.authenticate(message: message) { success in
+                        BiometricAuthManager.shared.authenticate(message: message) { success, wasCancelled in
                             guard success else {
-                                GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
-                                GenericUserDefault.shared.setValue("", Constants.shared.token)
-                                MOLH.reset()
+                                if wasCancelled {
+                                    DispatchQueue.main.async {
+                                        UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                            exit(0)
+                                        }
+                                    }
+                                }
                                 return
                             }
                             let storedRefresh = Constants.refreshToken

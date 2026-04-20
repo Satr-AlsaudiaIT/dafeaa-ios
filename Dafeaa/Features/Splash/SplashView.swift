@@ -63,18 +63,25 @@ struct SplashView: View {
     }
     
     private func goTo(){
-        let onboarding = GenericUserDefault.shared.getValue(Constants.shared.onboarding) as? Bool ?? false
-        let token = GenericUserDefault.shared.getValue(Constants.shared.token) as? String ?? ""
-        let status  = Constants.accountStatus
-        print("token \(token)\(onboarding)")
-        if onboarding != true {
-            onboardingTransition()
-        }else{
-            token == "" ? authorizationTransition() : status == 2 ? tabBarTransition(): pendingTransition()
-            self.window?.makeKeyAndVisible()
-            
+            let onboarding = GenericUserDefault.shared.getValue(Constants.shared.onboarding) as? Bool ?? false
+            let token = GenericUserDefault.shared.getValue(Constants.shared.token) as? String ?? ""
+            let status  = Constants.accountStatus
+            print("token \(token)\(onboarding)")
+            if onboarding != true {
+                onboardingTransition()
+            } else if token == "" {
+                authorizationTransition()
+                self.window?.makeKeyAndVisible()
+            } else {
+                // Wait for submitToken to finish before navigating
+                NotificationConfigration.shared.firebaseConfigration {
+                    DispatchQueue.main.async {
+                        status == 2 ? self.tabBarTransition() : self.pendingTransition()
+                        self.window?.makeKeyAndVisible()
+                    }
+                }
+            }
         }
-    }
     
     func tabBarTransition() {
         let navigationHelper = NavigationHelper(actionType: 0, actionId: 0, userType: "")
