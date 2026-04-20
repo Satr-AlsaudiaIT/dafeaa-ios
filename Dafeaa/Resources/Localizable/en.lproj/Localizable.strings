@@ -56,7 +56,7 @@
 "PhoneIsTheMainActor" = "*Your phone number is the payment identifier code on websites";
 "Name" = "Name";
 "Email" = "Email";
-"AgreeToTermsAndConditionsCheckText" = "By proceeding and creating your account, you agree to the terms of use";
+"AgreeToTermsAndConditionsCheckText" = "By proceeding and creating your account, you agree to ";
 "Terms&Conditions" = " Terms and Conditions";
 "privacy" = "Privacy Policy";
 "AgreeTo" = "I agree to ";
@@ -364,6 +364,7 @@
 "code" = "Code";
 "copy" = "Copy";
 "share" = "Share Link";
+"Share" = "Share";
 "delete" = "Delete";
 "noOffers" = "You have no offers yet";
 "availableBalance:" = "Available Balance:";
@@ -597,3 +598,30 @@
 
 //InviteFriend
 "invite_friend_message" = "Join me on Dafea from here: https://dafea.com.sa";
+
+//QuickPayment
+"quick_payment" = "Quick Payment";
+"scan_qr_desc" = "Scan QR & transfer instantly";
+"enter_amount_to_generate_qr" = "Enter amount to generate QR";
+"enter_amount" = "Enter amount";
+"scan_with_in" = "Perform a scan within ";
+"wait_enter_amount"            = "Waiting for amount...";
+"tap_to_reload"                = "Tap to reload";
+"qr_code_expired"              = "QR code has expired";
+"cancel_process"               = "Cancel Process";
+"payment_success"              = "Payment completed successfully";
+"payment_failed"               = "Payment failed";
+"payment_cancelled_success"    = "Payment Cancelled successfully";
+"payment_success"              = "Payment completed successfully";
+"payment_failed"               = "Payment failed";
+"payment_cancelled_success"    = "Process cancelled successfully";
+"transfer_success_title"       = "Transfer Successful";
+"transfer_success_body"        = "The amount has been received in your wallet successfully";
+"transfer_failed_title"        = "Transfer Failed";
+"transfer_failed_body"         = "The transfer could not be completed, please try again";
+"retry"                        = "Retry";
+"close"                        = "Close";
+"transfer_success_body_other"  = "The amount has been successfully transferred to the other party";
+"waiting_payment"              = "Waiting for payment to complete...";
+"confirm_payment_biometric"    = "Confirm payment with Face ID or Touch ID";
+"authenticate_to_continue"     = "Open to login";

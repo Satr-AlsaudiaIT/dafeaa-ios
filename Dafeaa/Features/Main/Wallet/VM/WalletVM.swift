@@ -20,6 +20,10 @@ class WalletVM: ObservableObject {
     
     @Published var _getData                : Bool = false
     @Published var _isSuccess              = false
+    @Published var acceptQRResult: AcceptQRResult? = nil
+    @Published var isQRLoading: Bool = false
+    @Published var qrAcceptError: String? = nil
+    
     private var _message                   : String = ""
     private var token                      = ""
     let api                                : HomeAPIProtocol = HomeAPI()
@@ -64,8 +68,39 @@ class WalletVM: ObservableObject {
             }
         }
     }
-    
-}
+        
+    func acceptQR(qrCode: String) {
+            isQRLoading = true
+            acceptQRResult = nil
+            qrAcceptError = nil
+            
+            api.acceptQR(qrCode: qrCode) { [weak self] result in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.isQRLoading = false
+                    switch result {
+                    case .success(let response):
+                        guard let data = response else { return }
+                        if data.success == true {
+                            self.acceptQRResult = .success(transferId: data.transferId, transId: data.transId)
+                        } else {
+                            self.acceptQRResult = .failure
+                            self.qrAcceptError = "payment_failed".localized()
+                        }
+                    case .failure(let error):
+                        self.acceptQRResult = .failure
+                        self.qrAcceptError = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                    }
+                }
+            }
+        }
+        
+        
+    }
 
+enum AcceptQRResult: Equatable {
+        case success(transferId: Int?, transId: String?)
+        case failure
+    }
 
-
+enum QRResultState { case success, failure }

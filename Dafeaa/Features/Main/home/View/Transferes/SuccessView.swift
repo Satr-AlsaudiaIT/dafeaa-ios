@@ -106,7 +106,7 @@ struct SuccessView: View {
                     // Buttons
                     VStack(spacing: 12) {
                         ReusableButton(
-                            buttonText: "Share",
+                            buttonText: "Share".localized(),
                             isEnabled: true,
                             buttonColor: .transparent,
                             borderColor: .black222222,
@@ -116,6 +116,10 @@ struct SuccessView: View {
                         }
                         
                         ReusableButton(buttonText: "O.K") {
+
+                                Constants.shouldNavigateToWallet = true
+                                Constants.lastPayoutStatus = "done"
+
                             NavigationUtil.popToRootView()
                         }
                     }

@@ -65,10 +65,10 @@ extension NotificationsData {
             } else {
                 return .none
             }
-        case 2:
-            return .withdraws(id: actionId ?? 1)
-            
-        case 3:
+//        case 2:
+//            return .withdraws(id: actionId ?? 1)
+//            
+        case 2, 3:
             return .wallet(id: actionId ?? 1)
             
         default:
@@ -110,7 +110,8 @@ struct LoginModel: Codable {
     let status: Bool?
     let message: String?
     let data: LoginData?
-    let token: String?
+    let accessToken: String?
+    let refreshToken: String?
 }
 
 // MARK: - LoginData
@@ -122,6 +123,14 @@ struct LoginData:Codable, Equatable {
     let subscriptionPlan, subscriptionPlanEndDate: String?
     let profileId: String?
     var secretKey : String? = nil
+}
+
+// MARK: - RefreshTokenModel
+struct RefreshTokenModel: Codable {
+    let status: Bool?
+    let message: String?
+    let accessToken: String?
+    let refreshToken: String?
 }
 
 struct QuestionsListModel: Codable {

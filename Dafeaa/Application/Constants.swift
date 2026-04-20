@@ -145,6 +145,26 @@ class Constants {
         }
     }
     
+    static var quickQrCode: String {
+        get {
+            let ud = UserDefaults.standard
+            return ud.value(forKey: "quickQrCode") as? String ?? ""
+        }
+        set(token) {
+            let ud = UserDefaults.standard
+            ud.set(token, forKey: "quickQrCode")
+        }
+    }
+
+    static var refreshToken: String {
+        get {
+            UserDefaults.standard.string(forKey: "refreshToken") ?? ""
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "refreshToken")
+        }
+    }
+    
     // Payment status tracking
     static var shouldNavigateToWallet: Bool {
         get {

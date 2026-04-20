@@ -21,14 +21,20 @@ enum AuthNetwork
     case cities(countryId:Int)
     case changePhone(dic: [String: Any])
     case confirmChangePhone(dic: [String: Any])
-
+    case refreshToken(refreshToken: String)
 }
 
 extension AuthNetwork: TargetType
 {
     var baseURL: String {
-        let source = Constants.shared.baseURL
-        return source
+        switch self {
+        case .refreshToken:
+            let source = Constants.shared.baseURLV1
+            return source
+        default:
+            let source = Constants.shared.baseURL
+            return source
+        }
     }
     
     var path: String {
@@ -45,6 +51,7 @@ extension AuthNetwork: TargetType
         case .cities                      : return "cities"
         case .changePhone                 : return "auth/change-phone"
         case .confirmChangePhone          : return "auth/confirm-new-phone"
+        case .refreshToken                : return "auth/refresh-token"
 }
     }
     
@@ -52,7 +59,7 @@ extension AuthNetwork: TargetType
     {
         switch self  {
         case.Login, .signUp, .userSubmitToken, .verify, .verifyCode, .sendCode, .forgetPassword,.changePhone, .confirmChangePhone: return .post
-
+        case .refreshToken: return .post
         default:  return .get
         }
     }
@@ -72,6 +79,10 @@ extension AuthNetwork: TargetType
             return .requestParameters(Parameters: dic, encoding: JSONEncoding.default)
         case let .cities(countryId):
             return .requestParameters(Parameters: ["filter[country_id]": countryId], encoding: URLEncoding.default)
+        case let .refreshToken(refreshToken):
+                    return .requestParameters(
+                        Parameters: ["refresh_token": refreshToken],
+                        encoding: JSONEncoding.default)
         default:
             return .requestPlain
             

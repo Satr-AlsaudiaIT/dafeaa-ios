@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import AVFoundation
+import LocalAuthentication
 
 struct HomeView: View {
     @StateObject var viewModel = HomeVM()
@@ -43,8 +45,15 @@ struct HomeView: View {
     @State var showTransferMethodSheet: Bool = false
     @State var navigateToIBANTransfer: Bool = false
     @State var navigateToPhoneTransfer: Bool = false
-    
-    
+
+    @State private var isShowingQRPaymentSheet: Bool = false
+    @State private var sliderImages: [String] = [(Constants.shared.isAR ? "Ar1":"En1"), (Constants.shared.isAR ? "Ar2":"En2")]
+    @State private var isHiddenPageIndicator: Bool = false
+    @State private var isWebImage: Bool = false
+    @State private var isIndicatorSeparated: Bool = true
+    @State private var showQRDeeplinkSheet: Bool = false
+    @State private var pendingDeeplinkQRCode: String = ""
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -138,106 +147,211 @@ struct HomeView: View {
                                 Rectangle().fill(.white)
                                     .frame(height: 32)
                                 
-                                VStack(spacing:20) {
-                                    Button {
-                                        isPresentBuySheet = true
-                                    } label: {
-                                        ZStack {
-                                                HStack {
-                                                    Text("buy_product".localized())
-                                                        .textModifier(.plain, 16, .black222222)
-                                                    Spacer()
-                                                    Image(.buyProduct)
-                                                        .resizable()
-                                                        .frame(width: 28.05, height: 28)
+                                ScrollView(showsIndicators: false) {
+                                    
+                                    VStack(spacing: 16) {
+                                        
+                                        Button {
+                                            isShowingQRPaymentSheet = true
+                                        } label: {
+                                            HStack(spacing: 12) {
+                                                Spacer()
+                                                Image(.qrPrimary) //
+                                                    .resizable()
+                                                    .frame(width: 28, height: 28)
+                                                VStack(alignment: .leading, spacing: 2) {
+                                                    Text("quick_payment".localized())
+                                                        .textModifier(.bold, 16, .black000000)
+                                                    Text("scan_qr_desc".localized())
+                                                        .textModifier(.bold, 10, .gray979797)
                                                 }
-                                                .padding(15)
-                                        }
-                                        .overlay(
-                                            ZStack {
-                                                RoundedRectangle(cornerRadius: 10)
-                                                    .stroke(LinearGradient(colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)], startPoint: .top, endPoint: .bottom), lineWidth: 1)
+                                                Spacer()
                                             }
-                                        )
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 10)
-                                                .fill(Color.white)
-                                                .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
-                                        )
-                                    }
-                                    
-                                    
-                                    Button {
-                                        if businessInfo.rawValue == 0 {
-                                            showCompleteDataPopup = true
-                                        }
-                                        else if businessInfo.rawValue == 1 {
-                                            navigateToPendingView = true
-                                        }
-                                        else {
-                                            navigateToOffers = true
-                                        }
-                                    } label: {
-                                        ZStack {
-                                                HStack {
-                                                    Text("sell_product".localized())
-                                                        .textModifier(.plain, 16, .black222222)
-                                                        .lineLimit(nil)
-                                                    Spacer()
-                                                    Image(.sellProduct)
-                                                        .resizable()
-                                                        .frame(width: 28.05, height: 28)
+                                            .padding(.vertical,9)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 16)
+                                                    .stroke(.primaryF9CE29, lineWidth: 1)
+                                            )
+                                            .background(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .fill(.primaryF9CE29.opacity(0.1))
+                                                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 6)
+                                            )
+                                        }  .padding(.horizontal, 20)
+                                            .frame(height:60)
+                                        HStack(spacing:15) {
+                                            Button {
+                                                isPresentBuySheet = true
+                                            } label: {
+                                                ZStack {
+                                                    HStack(spacing: 5) {
+                                                        Spacer(minLength: 2)
+                                                        Text("buy_product".localized())
+                                                            .textModifier(.plain, 16, .black222222)
+                                                        Image(.buyProduct)
+                                                            .resizable()
+                                                            .frame(width: 28.05, height: 28)
+                                                        Spacer(minLength: 2)
+                                                        
+                                                    }
+                                                    .padding(.vertical,15)
                                                 }
-                                            .padding(15)
-                                            
-                                        }
-                                        .overlay(
-                                            ZStack {
-                                                
-                                                RoundedRectangle(cornerRadius: 10)
-                                                    .stroke(LinearGradient(colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)], startPoint: .top, endPoint: .bottom), lineWidth: 1)
+                                                .overlay(
+                                                    ZStack {
+                                                        RoundedRectangle(cornerRadius: 16)
+                                                            .stroke(LinearGradient(colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)], startPoint: .top, endPoint: .bottom), lineWidth: 1)
+                                                    }
+                                                )
+                                                .background(
+                                                    RoundedRectangle(cornerRadius: 16)
+                                                        .fill(Color.white)
+                                                        .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
+                                                )
+                                            }.frame(height:60)
+                                            Button {
+                                                if businessInfo.rawValue == 0 {
+                                                    showCompleteDataPopup = true
+                                                }
+                                                else if businessInfo.rawValue == 1 {
+                                                    navigateToPendingView = true
+                                                }
+                                                else {
+                                                    navigateToOffers = true
+                                                }
+                                            } label: {
+                                                ZStack {
+                                                    HStack(spacing: 5) {
+                                                        Spacer(minLength: 2)
+                                                        Text("sell_product".localized())
+                                                            .textModifier(.plain, 16, .black222222)
+                                                            .minimumScaleFactor(0.95)
+                                                        Image(.sellProduct)
+                                                            .resizable()
+                                                            .frame(width: 28.05, height: 28)
+                                                        Spacer(minLength: 2)
+                                                    }
+                                                    .padding(.vertical,15)
+                                                    
+                                                }
+                                                .overlay(
+                                                    ZStack {
+                                                        
+                                                        RoundedRectangle(cornerRadius: 16)
+                                                            .stroke(LinearGradient(colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)], startPoint: .top, endPoint: .bottom), lineWidth: 1)
+                                                    }
+                                                )
+                                                .background(
+                                                    RoundedRectangle(cornerRadius: 16)
+                                                        .fill(Color.white)
+                                                        .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
+                                                )
                                             }
-                                        )
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 10)
-                                                .fill(Color.white)
-                                                .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
-                                        )
+                                            .frame(height:60)
+                                        }
+                                        .padding(.horizontal, 19)
+                                        SliderView(
+                                            images: $sliderImages,
+                                            isHiddenPageIndicator: $isHiddenPageIndicator,
+                                            isWebImage: $isWebImage,
+                                            isIndicatorSeparated: $isIndicatorSeparated,
+                                            widthFraction: 0.9 )
+                                        
+                                        .padding(.vertical,16)
+                                        .padding(.bottom,20)
+                                        .cornerRadius(12)
+                                        //.allowsHitTesting(false)
+                                        
+                                        
+                                        //                                    HStack(spacing: 12) {
+                                        //                                        // Buy Product
+                                        //                                        Button {
+                                        //                                            isPresentBuySheet = true
+                                        //                                        } label: {
+                                        //                                            HStack {
+                                        //                                                Text("buy_product".localized())
+                                        //                                                    .textModifier(.plain, 16, .black222222)
+                                        //                                                Spacer()
+                                        //                                                Image(.buyProduct)
+                                        //                                                    .resizable()
+                                        //                                                    .frame(width: 28, height: 28)
+                                        //                                            }
+                                        //                                            .padding(15)
+                                        //                                            .overlay(
+                                        //                                                RoundedRectangle(cornerRadius: 10)
+                                        //                                                    .stroke(LinearGradient(
+                                        //                                                        colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)],
+                                        //                                                        startPoint: .top,
+                                        //                                                        endPoint: .bottom
+                                        //                                                    ), lineWidth: 1)
+                                        //                                            )
+                                        //                                            .background(
+                                        //                                                RoundedRectangle(cornerRadius: 10)
+                                        //                                                    .fill(Color.white)
+                                        //                                                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
+                                        //                                            )
+                                        //                                        }
+                                        //
+                                        //                                        // Sell Product
+                                        //                                        Button {
+                                        //                                            if businessInfo.rawValue == 0 {
+                                        //                                                showCompleteDataPopup = true
+                                        //                                            } else if businessInfo.rawValue == 1 {
+                                        //                                                navigateToPendingView = true
+                                        //                                            } else {
+                                        //                                                navigateToOffers = true
+                                        //                                            }
+                                        //                                        } label: {
+                                        //                                            HStack {
+                                        //                                                Text("sell_product".localized())
+                                        //                                                    .textModifier(.plain, 16, .black222222)
+                                        //                                                    .lineLimit(nil)
+                                        //                                                Spacer()
+                                        //                                                Image(.sellProduct)
+                                        //                                                    .resizable()
+                                        //                                                    .frame(width: 28, height: 28)
+                                        //                                            }
+                                        //                                            .padding(15)
+                                        //                                            .overlay(
+                                        //                                                RoundedRectangle(cornerRadius: 10)
+                                        //                                                    .stroke(LinearGradient(
+                                        //                                                        colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)],
+                                        //                                                        startPoint: .top,
+                                        //                                                        endPoint: .bottom
+                                        //                                                    ), lineWidth: 1)
+                                        //                                            )
+                                        //                                            .background(
+                                        //                                                RoundedRectangle(cornerRadius: 10)
+                                        //                                                    .fill(Color.white)
+                                        //                                                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
+                                        //                                            )
+                                        //                                        }
+                                        //                                    }
                                     }
-
-                                    
-                                   
-                                    
+                                    .padding(.top, 15)
                                 }
-                                .padding(.horizontal,20).padding(.top,15)
+
                                 Spacer()
-                              
                             }
-//                            .padding(.top)
                         }
                         .cornerRadius(24)
-                        .padding(.bottom,-24)
-                        
-                        //MARK: - Wallet View
+                        .padding(.bottom, -24)
+
+                        // MARK: - Wallet View
                         VStack {
                             ZStack {
                                 Color(.white)
                                 HStack {
-                                    HStack {
-                                        WalletButton(buttonText: "transferBalance".localized(), image: .transferBalance) {
-                                            showTransferMethodSheet = true
-                                        }
+                                    WalletButton(buttonText: "transferBalance".localized(), image: .transferBalance) {
+                                        showTransferMethodSheet = true
                                     }
                                     Spacer()
                                     Rectangle()
                                         .fill(.black.opacity(0.1))
                                         .frame(width: 2, height: 24)
                                     Spacer()
-                                    HStack {
-                                        WalletButton(buttonText: "addBalance".localized(), image: .addBalance) {
-                                            balanceActionType = .addBalance
-                                            isSheetPresented = true
-                                        }
+                                    WalletButton(buttonText: "addBalance".localized(), image: .addBalance) {
+                                        balanceActionType = .addBalance
+                                        isSheetPresented = true
                                     }
                                 }
                                 .padding(.horizontal, 24)
@@ -248,10 +362,13 @@ struct HomeView: View {
                             .cornerRadius(16)
                             .padding(.horizontal, 24)
                             .shadow(color: Color(.dropShadow2B2D3333).opacity(0.2), radius: 5, x: 0, y: 6)
-                        }.padding(.top, -39)
+                        }
+                        .padding(.top, -39)
                     }
-                }.edgesIgnoringSafeArea(.top)
-                
+                }
+                .edgesIgnoringSafeArea(.top)
+
+                // MARK: - Complete Data Popup
                 if showCompleteDataPopup {
                     ZStack {
                         Color.black.opacity(0.2)
@@ -316,7 +433,8 @@ struct HomeView: View {
                     Constants.sessionFlag = true
                 }
                 unReadNotificationCount = UserDefaults.standard.value(forKey: Constants.shared.unReadNotificationCount) as? String ?? ""
-                unreadCount = ((unReadNotificationCount == "" ||  unReadNotificationCount == "0") ? (0): (Int(unReadNotificationCount))) ?? 0
+                unreadCount = ((unReadNotificationCount == "" || unReadNotificationCount == "0") ? 0 : Int(unReadNotificationCount)) ?? 0
+                handleQRCodeIfNeeded()
             }
             .onChange(of: isViewAppeared, { _, newValue in
                 if newValue {
@@ -350,6 +468,24 @@ struct HomeView: View {
             .navigationDestination(isPresented: $showClientOfferDetails, destination: {
                 ClientLinkDetailsNew(offerData: offerData)
             })
+            
+            .appBottomSheet(isPresented: $isShowingQRPaymentSheet, detents: [.fraction(0.85)]) {
+                          QRPaymentBottomSheet(
+                              isPresented: $isShowingQRPaymentSheet,
+                              onNavigateToWallet: {
+                                  selectedTab = .wallet
+                              }
+                          )
+                      }
+            .appBottomSheet(isPresented: $showQRDeeplinkSheet, detents: [.fraction(0.55)]) {
+                QRDeeplinkBottomSheet(
+                    isPresented: $showQRDeeplinkSheet,
+                    qrCode: $pendingDeeplinkQRCode,
+                    onSuccess: {
+                        selectedTab = .wallet
+                    }
+                )
+            }
             .appBottomSheet(isPresented: $isPresentBuySheet, detents: [.fraction(0.45)]) {
                 BuyProductBottomSheet(isShowClientLinkDetails: $showClientOfferDetails, isShowOrderLinkDetails: $showOfferDetails, offerData: $offerData,isSheetPresented: $isPresentBuySheet)
             }
@@ -402,6 +538,59 @@ struct HomeView: View {
         }
     }
 }
+
+/// MARK: - QR Deeplink Handling
+extension HomeView {
+    private func handleQRCodeIfNeeded() {
+        let qrCode = Constants.quickQrCode
+        guard !qrCode.isEmpty else { return }
+        authenticateWithBiometrics(qrCode: qrCode)
+    }
+
+    private func authenticateWithBiometrics(qrCode: String) {
+        let context = LAContext()
+        var error: NSError?
+        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
+            authenticateWithPasscode(qrCode: qrCode)
+            return
+        }
+        context.evaluatePolicy(
+            .deviceOwnerAuthenticationWithBiometrics,
+            localizedReason: "confirm_payment_biometric".localized()
+        ) { success, authError in
+            DispatchQueue.main.async {
+                if success {
+                    Constants.quickQrCode = ""
+                    pendingDeeplinkQRCode = qrCode
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                        showQRDeeplinkSheet = true
+                    }
+                } else if let err = authError as? LAError, err.code == .biometryLockout {
+                    authenticateWithPasscode(qrCode: qrCode)
+                }
+            }
+        }
+    }
+
+    private func authenticateWithPasscode(qrCode: String) {
+        let context = LAContext()
+        context.evaluatePolicy(
+            .deviceOwnerAuthentication,
+            localizedReason: "confirm_payment_biometric".localized()
+        ) { success, _ in
+            DispatchQueue.main.async {
+                if success {
+                    Constants.quickQrCode = ""
+                    pendingDeeplinkQRCode = qrCode
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                        showQRDeeplinkSheet = true
+                    }
+                }
+            }
+        }
+    }
+}
+// MARK: - Previews
 #Preview {
     HomeView(selectedTab: .constant(.home))
 }

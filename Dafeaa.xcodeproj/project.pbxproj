@@ -97,6 +97,12 @@
 		181358A72F81437E00400203 /* BottomSheetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181358A62F81437E00400203 /* BottomSheetModifier.swift */; };
 		181358A92F81575A00400203 /* ConfirmationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181358A82F81575A00400203 /* ConfirmationAlert.swift */; };
 		181358AF2F81652B00400203 /* AppActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181358AE2F81652B00400203 /* AppActionSheet.swift */; };
+		181358F02F88098400400203 /* QRCodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181358EF2F88098400400203 /* QRCodeModel.swift */; };
+		181358F22F88098A00400203 /* QRPaymentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181358F12F88098A00400203 /* QRPaymentState.swift */; };
+		181358F42F8809FE00400203 /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181358F32F8809FE00400203 /* QRScannerView.swift */; };
+		181358F62F881E0000400203 /* AcceptQRResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181358F52F881E0000400203 /* AcceptQRResponse.swift */; };
+		1813590D2F8CEE3700400203 /* QRDeeplinkBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1813590C2F8CEE3700400203 /* QRDeeplinkBottomSheet.swift */; };
+		1813590F2F8E25E700400203 /* QRTimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1813590E2F8E25E700400203 /* QRTimerManager.swift */; };
 		1818DD6A2F38F9C900B647A8 /* TrackingEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1818DD692F38F9C900B647A8 /* TrackingEventsView.swift */; };
 		1820E2822CB904F500627DF9 /* DafeaaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E2802CB904F500627DF9 /* DafeaaApp.swift */; };
 		1820E2832CB904F500627DF9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820E27F2CB904F500627DF9 /* Constants.swift */; };
@@ -216,6 +222,7 @@
 		18D3655D2CD81E8300D50A34 /* PathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D3655C2CD81E8300D50A34 /* PathView.swift */; };
 		18D428602CE676F70059CAF4 /* WithdrawsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4285F2CE676F70059CAF4 /* WithdrawsView.swift */; };
 		18D428622CE679F30059CAF4 /* WithdrawComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D428612CE679F30059CAF4 /* WithdrawComponent.swift */; };
+		18E31A1E2F96085000DF9768 /* BiometricAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E31A1D2F96085000DF9768 /* BiometricAuthManager.swift */; };
 		18E676852DBD63D50043B84B /* TransferBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E676842DBD63CF0043B84B /* TransferBottomSheet.swift */; };
 		18E676872DBD63F20043B84B /* BuyProductBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E676862DBD63F20043B84B /* BuyProductBottomSheet.swift */; };
 		18EF4D8D2CB4F92F00599D03 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF4D8C2CB4F92F00599D03 /* ForgotPasswordView.swift */; };
@@ -398,6 +405,12 @@
 		181358A62F81437E00400203 /* BottomSheetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetModifier.swift; sourceTree = "<group>"; };
 		181358A82F81575A00400203 /* ConfirmationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationAlert.swift; sourceTree = "<group>"; };
 		181358AE2F81652B00400203 /* AppActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppActionSheet.swift; sourceTree = "<group>"; };
+		181358EF2F88098400400203 /* QRCodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeModel.swift; sourceTree = "<group>"; };
+		181358F12F88098A00400203 /* QRPaymentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRPaymentState.swift; sourceTree = "<group>"; };
+		181358F32F8809FE00400203 /* QRScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
+		181358F52F881E0000400203 /* AcceptQRResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptQRResponse.swift; sourceTree = "<group>"; };
+		1813590C2F8CEE3700400203 /* QRDeeplinkBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRDeeplinkBottomSheet.swift; sourceTree = "<group>"; };
+		1813590E2F8E25E700400203 /* QRTimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRTimerManager.swift; sourceTree = "<group>"; };
 		1818DD692F38F9C900B647A8 /* TrackingEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingEventsView.swift; sourceTree = "<group>"; };
 		1820E27F2CB904F500627DF9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1820E2802CB904F500627DF9 /* DafeaaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DafeaaApp.swift; sourceTree = "<group>"; };
@@ -487,6 +500,7 @@
 		18D3655C2CD81E8300D50A34 /* PathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathView.swift; sourceTree = "<group>"; };
 		18D4285F2CE676F70059CAF4 /* WithdrawsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawsView.swift; sourceTree = "<group>"; };
 		18D428612CE679F30059CAF4 /* WithdrawComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawComponent.swift; sourceTree = "<group>"; };
+		18E31A1D2F96085000DF9768 /* BiometricAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuthManager.swift; sourceTree = "<group>"; };
 		18E676842DBD63CF0043B84B /* TransferBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferBottomSheet.swift; sourceTree = "<group>"; };
 		18E676862DBD63F20043B84B /* BuyProductBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyProductBottomSheet.swift; sourceTree = "<group>"; };
 		18EF4D8C2CB4F92F00599D03 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
@@ -929,7 +943,9 @@
 		14E67AB82CAC643A00C10AB5 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				18E31A1C2F96083200DF9768 /* BiometricAuthManager */,
 				181358AE2F81652B00400203 /* AppActionSheet.swift */,
+				1813590E2F8E25E700400203 /* QRTimerManager.swift */,
 				18F1CC852F420DF70063A79C /* ReusableTextFields.swift */,
 				181358A62F81437E00400203 /* BottomSheetModifier.swift */,
 				18B8D56F2CC02E6200C2676C /* LottieAnimationView.swift */,
@@ -1027,6 +1043,7 @@
 			isa = PBXGroup;
 			children = (
 				18086A6B2CCBF23700F5C2F8 /* HomeModel.swift */,
+				181358EF2F88098400400203 /* QRCodeModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1041,6 +1058,9 @@
 				18086A6D2CCBF23700F5C2F8 /* ProcessComponent.swift */,
 				1835ECF52CCF9B5B007EEAC1 /* Notifications */,
 				1820E2B92CBA985300627DF9 /* HomeView.swift */,
+				181358F12F88098A00400203 /* QRPaymentState.swift */,
+				181358F32F8809FE00400203 /* QRScannerView.swift */,
+				1813590C2F8CEE3700400203 /* QRDeeplinkBottomSheet.swift */,
 				18929A552F201FCB002CEC17 /* TransferMethodBottomSheet.swift */,
 				1835ECF32CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift */,
 				18E676862DBD63F20043B84B /* BuyProductBottomSheet.swift */,
@@ -1512,6 +1532,14 @@
 			path = WithdrawView;
 			sourceTree = "<group>";
 		};
+		18E31A1C2F96083200DF9768 /* BiometricAuthManager */ = {
+			isa = PBXGroup;
+			children = (
+				18E31A1D2F96085000DF9768 /* BiometricAuthManager.swift */,
+			);
+			path = BiometricAuthManager;
+			sourceTree = "<group>";
+		};
 		18F54E7D2CCD1C0300462383 /* VM */ = {
 			isa = PBXGroup;
 			children = (
@@ -1524,6 +1552,7 @@
 			isa = PBXGroup;
 			children = (
 				18F54E7E2CCD1C0300462383 /* WalletModel.swift */,
+				181358F52F881E0000400203 /* AcceptQRResponse.swift */,
 			);
 			path = M;
 			sourceTree = "<group>";
@@ -2053,6 +2082,7 @@
 				1835ECF42CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift in Sources */,
 				18277EBF2CB2B9BA0020A647 /* PhoneNumberRepresenter.swift in Sources */,
 				18AD22DC2F14F05B00B32FD9 /* ShippingCompanySelectionView.swift in Sources */,
+				1813590F2F8E25E700400203 /* QRTimerManager.swift in Sources */,
 				18F9FB982F5E2848005C1224 /* PaymentInfoOwner.swift in Sources */,
 				189962E32F0A9A37005E833C /* AddBalanceCardDetailsView.swift in Sources */,
 				18E676872DBD63F20043B84B /* BuyProductBottomSheet.swift in Sources */,
@@ -2074,11 +2104,13 @@
 				14E67A6B2CAC5E3400C10AB5 /* MOLHLanguage.swift in Sources */,
 				1820E2AB2CB9066D00627DF9 /* AuthModels.swift in Sources */,
 				181358AF2F81652B00400203 /* AppActionSheet.swift in Sources */,
+				181358F22F88098A00400203 /* QRPaymentState.swift in Sources */,
 				18F9FB812F5834E9005C1224 /* ClientPaymentInfoView.swift in Sources */,
 				1820E2A72CB905F800627DF9 /* AuthAppAPI.swift in Sources */,
 				1891B9212F0D3DE600A6FF08 /* MapSearchView.swift in Sources */,
 				18929A5A2F202023002CEC17 /* PhoneTransferSelectionView.swift in Sources */,
 				1820E2DC2CBBB26F00627DF9 /* MoreAppNetwork.swift in Sources */,
+				1813590D2F8CEE3700400203 /* QRDeeplinkBottomSheet.swift in Sources */,
 				1820E2DD2CBBB26F00627DF9 /* MoreAppAPI.swift in Sources */,
 				1820E2A82CB905F800627DF9 /* AuthAppNetwork.swift in Sources */,
 				18A1C6212F0F96AD000C61D6 /* RichTextEditorView.swift in Sources */,
@@ -2098,7 +2130,9 @@
 				1820E2C22CBA98C400627DF9 /* MyOrdersView.swift in Sources */,
 				14E67ADB2CAC643B00C10AB5 /* DropDownSearchTF.swift in Sources */,
 				14E67AC82CAC643B00C10AB5 /* CalendarSheet.swift in Sources */,
+				181358F62F881E0000400203 /* AcceptQRResponse.swift in Sources */,
 				18FAE19C2F06692800DE9128 /* StringExt.swift in Sources */,
+				181358F42F8809FE00400203 /* QRScannerView.swift in Sources */,
 				18277EB72CB2B1D00020A647 /* AuthVM.swift in Sources */,
 				187607B22CDF468200F4D261 /* OrdersLinksView.swift in Sources */,
 				14E67AD82CAC643B00C10AB5 /* PopUpViewBack.swift in Sources */,
@@ -2147,11 +2181,13 @@
 				14E67ADC2CAC643B00C10AB5 /* MainAppSecuredTF.swift in Sources */,
 				18C8A9C52DBE4B0D00A2AB42 /* DeveloperKeyBottomSheet.swift in Sources */,
 				18086A6A2CCB847800F5C2F8 /* OrdersModels.swift in Sources */,
+				181358F02F88098400400203 /* QRCodeModel.swift in Sources */,
 				18F54E882CCD1C0300462383 /* WalletModel.swift in Sources */,
 				18086A632CCB7F4800F5C2F8 /* OrdersVM.swift in Sources */,
 				182776E72D468FDD00437FDB /* PaymentWebView.swift in Sources */,
 				1835ECF72CCF9B81007EEAC1 /* NotificationsView.swift in Sources */,
 				14E67AE72CAC643B00C10AB5 /* DocumentPickerView.swift in Sources */,
+				18E31A1E2F96085000DF9768 /* BiometricAuthManager.swift in Sources */,
 				18277EC32CB306990020A647 /* SignUpStep1View.swift in Sources */,
 				18F54E792CCCFE7A00462383 /* OrderComponentsView.swift in Sources */,
 				1859135D2DBFD7D10035D6EF /* SuccessView.swift in Sources */,
@@ -2412,7 +2448,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/Dafeaa.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12.10;
+				CURRENT_PROJECT_VERSION = 12.17;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
@@ -2422,10 +2458,10 @@
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Dafeaa need access to your camera library to add picture to the profile.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Dafeaa need access to your Contacts in order to select contact .";
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "App needs to access to your Photo library to get a photo for you";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We use Face ID to confirm your identity during payment";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Dafeaa need access to your location  if  you need to pick location.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Dafeaa need access to your location  if  you need to pick location.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Dafeaa need access to your location  if  you need to pick location.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Dafeaa need access to your ploto library to add picture to the profile.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Dafeaa need access to your ploto library to add picture to the profile.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -2458,7 +2494,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/DafeaaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12.10;
+				CURRENT_PROJECT_VERSION = 12.17;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
@@ -2468,10 +2504,10 @@
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Dafeaa need access to your camera library to add picture to the profile.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Dafeaa need access to your Contacts in order to select contact .";
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "App needs to access to your Photo library to get a photo for you";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We use Face ID to confirm your identity during payment";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Dafeaa need access to your location  if  you need to pick location.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Dafeaa need access to your location  if  you need to pick location.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Dafeaa need access to your location  if  you need to pick location.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Dafeaa need access to your ploto library to add picture to the profile.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Dafeaa need access to your ploto library to add picture to the profile.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -2579,7 +2615,7 @@
 				CODE_SIGN_ENTITLEMENTS = DafeaaAppClip/DafeaaAppClip.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12.10;
+				CURRENT_PROJECT_VERSION = 12.17;
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2598,6 +2634,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Dafeaa.Plantech.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -2616,7 +2653,7 @@
 				CODE_SIGN_ENTITLEMENTS = DafeaaAppClip/DafeaaAppClip.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12.10;
+				CURRENT_PROJECT_VERSION = 12.17;
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2635,6 +2672,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Dafeaa.Plantech.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

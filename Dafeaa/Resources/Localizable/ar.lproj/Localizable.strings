@@ -56,7 +56,7 @@
 "PhoneIsTheMainActor" = "*رقم هاتفك هو الكود التعريفي للدفع عبر المواقع";
 "Name" = "الاسم";
 "Email" = "البريد الإلكتروني";
-"AgreeToTermsAndConditionsCheckText" = "بمجرد متابعتك وإنشاء حسابك لدينا فإنك توافق على شروط الاستخدام";
+"AgreeToTermsAndConditionsCheckText" = "بمجرد متابعتك وإنشاء حسابك لدينا فإنك توافق على ";
 "Terms&Conditions" = " شروط الاستخدام";
 "privacy" = "سياسة الخصوصية";
 "AgreeTo" = "أوافق على ";
@@ -363,6 +363,7 @@
 "copy" = "نسخ";
 "not valid code" = "كود غير صالح";
 "share" = "مشاركة رابط";
+"Share" = "مشاركة";
 "delete" = "مسح";
 "noOffers" = "ليس لديك عروض حتى الآن";
 "availableBalance:" = "الرصيد المتاح:";
@@ -587,3 +588,27 @@
 
 //InviteFriend
 "invite_friend_message" = "انضم إليّ على دافع من هنا: https://dafea.com.sa";
+
+//QuickPayment
+"quick_payment" = "دفع سريع";
+"scan_qr_desc" = "امسح QR وحول فوراً";
+"enter_amount_to_generate_qr" = "ادخل المبلغ لتوليد الـ QR";
+"scan_with_in" = "قم بعمل مسح خلال ";
+"enter_amount" = "ادخل المبلغ";
+"wait_enter_amount"            = "بانتظار تحديد المبلغ...";
+"tap_to_reload"                = "أنقر لإعادة التحميل";
+"qr_code_expired"              = "انتهت صلاحية رمز الـ QR";
+"cancel_process"               = "إلغاء العملية";
+"payment_success"              = "تمت عملية الدفع بنجاح";
+"payment_failed"               = "فشلت عملية الدفع";
+"payment_cancelled_success"    = "تم الغاء العملية بنجاح";
+"transfer_success_title" = "تم التحويل بنجاح";
+"transfer_success_body"  = "تم استلام المبلغ في محفظتك بنجاح";
+"transfer_failed_title"  = "فشل التحويل";
+"transfer_failed_body"   = "لم تتم عملية التحويل، حاول مرة أخرى";
+"retry"                  = "إعادة المحاولة";
+"close"                  = "إغلاق";
+"transfer_success_body_other"="تم تحويل المبلغ بنجاح للطرف الآخر";
+"waiting_payment"="بانتظار إتمام الدفع...";
+"confirm_payment_biometric" = "تأكيد الدفع ببصمة الإصبع أو الوجه أو الرقم السري";
+"authenticate_to_continue" = "فتح لسجيل الدخول";

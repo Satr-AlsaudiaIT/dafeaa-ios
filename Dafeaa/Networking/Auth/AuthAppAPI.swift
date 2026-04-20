@@ -19,6 +19,7 @@ protocol AuthAPIProtocol {
     func getCities(countryId:Int,Completion: @escaping (Result<CountryCityModel?, NSError>) -> Void)
     func changePhone(dic: [String:Any], Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func confirmChangePhone(dic: [String:Any], Completion: @escaping (Result<LoginModel?, NSError>) -> Void)
+    func refreshToken(refreshToken: String, completion: @escaping (Result<RefreshTokenModel?, NSError>) -> Void)
 
 }
 
@@ -109,5 +110,14 @@ class AuthAPI: BaseAPI<AuthNetwork>, AuthAPIProtocol
             Completion(result)
         }
     }
+    
+    func refreshToken(refreshToken: String, completion: @escaping (Result<RefreshTokenModel?, NSError>) -> Void) {
+            self.fetchData(
+                target: .refreshToken(refreshToken: refreshToken),
+                responseClass: RefreshTokenModel.self
+            ) { result in
+                completion(result)
+            }
+        }
     
 }

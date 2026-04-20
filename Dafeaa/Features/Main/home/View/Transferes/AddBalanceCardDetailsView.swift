@@ -12,7 +12,7 @@ struct AddBalanceCardDetailsView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @State var addAmount: Double
-    @State var cardHolderName: String = Constants.userName
+    @State var cardHolderName: String = ""
     @State var cardNumber: String = ""
     @State var expirationMonth: String = ""
     @State var expirationYear: String = ""
@@ -358,6 +358,11 @@ struct AddBalanceCardDetailsView: View {
             presentationMode.wrappedValue.dismiss()
             Constants.shouldNavigateToWallet = true
             NavigationUtil.popToRootView()
+        }
+        .onAppear{
+            Constants.shouldNavigateToWallet = false
+            Constants.lastPaymentStatus = ""
+            Constants.lastPayoutStatus = ""
         }
     }
     

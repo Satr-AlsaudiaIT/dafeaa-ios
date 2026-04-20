@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LocalAuthentication
 
 struct ConfirmTransferView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -91,11 +92,9 @@ struct ConfirmTransferView: View {
                     .padding(24)
                 }
                 
-                // Buttons
                 VStack(spacing: 12) {
                     ReusableButton(buttonText: "confirmTransfer") {
-                        // Handle transfer confirmation
-                        viewModel.confirmTransfer(phone: phoneNumber.normalizePhoneNumber, amount: total)
+                        authenticateWithBiometrics()
                     }
                     
                     ReusableButton(
@@ -162,6 +161,43 @@ struct ConfirmTransferView: View {
         }
     }
     
+    
+    // MARK: - Biometric Authentication
+
+    private func authenticateWithBiometrics() {
+        let context = LAContext()
+        var error: NSError?
+        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
+            authenticateWithPasscode()
+            return
+        }
+        context.evaluatePolicy(
+            .deviceOwnerAuthenticationWithBiometrics,
+            localizedReason: "confirm_payment_biometric".localized()
+        ) { success, authError in
+            DispatchQueue.main.async {
+                if success {
+                    viewModel.confirmTransfer(phone: phoneNumber.normalizePhoneNumber, amount: total)
+                } else if let err = authError as? LAError, err.code == .biometryLockout {
+                    authenticateWithPasscode()
+                }
+            }
+        }
+    }
+
+    private func authenticateWithPasscode() {
+        let context = LAContext()
+        context.evaluatePolicy(
+            .deviceOwnerAuthentication,
+            localizedReason: "confirm_payment_biometric".localized()
+        ) { success, _ in
+            DispatchQueue.main.async {
+                if success {
+                    viewModel.confirmTransfer(phone: phoneNumber.normalizePhoneNumber, amount: total)
+                }
+            }
+        }
+    }
 }
 
 #Preview {

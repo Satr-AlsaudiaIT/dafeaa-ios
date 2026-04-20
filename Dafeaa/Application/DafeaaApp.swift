@@ -15,22 +15,22 @@ import GooglePlaces
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
-
+    
     var window: UIWindow?
-//    var keyboardDismissManager = KeyboardDismissManager()
-//    private var tapGesture: AnyGestureRecognizer?
-
+    //    var keyboardDismissManager = KeyboardDismissManager()
+    //    private var tapGesture: AnyGestureRecognizer?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-                FirebaseApp.configure()
+        FirebaseApp.configure()
         GMSServices.provideAPIKey("AIzaSyAsii5qK2U6xsP39ahyNOoDjXDfHIzH9yU")
         GMSPlacesClient.provideAPIKey("AIzaSyAsii5qK2U6xsP39ahyNOoDjXDfHIzH9yU")
         GoogleMapsLanguageManager.shared.forceEnglish()
-
+        
         setUpDidFinishLaunch()
         
         return true
     }
-  
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         print("applicationWillEnterForeground")
         
@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
         IQKeyboardManager.shared.enable = true
         languageConfiguration()
         self.reset()
-
+        
     }
     
     func languageConfiguration() {
@@ -77,7 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
         if resetLanguage == false {
             window.rootViewController = UIHostingController(rootView: SplashView(window: window) .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
                 .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight)
-                )
+            )
         } else if token != ""  {
             if resetFromLoginLink {
                 let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
@@ -124,28 +124,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
         } else {
             window.rootViewController = UIHostingController(rootView: LoginView() .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
                 .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight)
-                )
+            )
             UserDefaults.standard.set(false, forKey:  Constants.shared.resetLanguage)
-         }
+        }
         window.makeKeyAndVisible()
-//        observeKeyboardDismissManager()
-
+        //        observeKeyboardDismissManager()
+        
     }
     
-//    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
-//        deepLink(url: url)
-//        return  true
-//    }
+    //    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+    //        deepLink(url: url)
+    //        return  true
+    //    }
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity,
                      restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
-               let incomingURL = userActivity.webpageURL else {
-             return false
-         }
-
-         deepLink(url: incomingURL)
-         return true
+              let incomingURL = userActivity.webpageURL else {
+            return false
+        }
+        
+        deepLink(url: incomingURL)
+        return true
     }
     
     func deepLink(url: URL) {
@@ -154,25 +154,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
         if let urlComponents = URLComponents(string: strURL) {
             let pathComponents = urlComponents.path.split(separator: "/")
             
-            // Check if the URL structure matches `/offers/{offerID}/{offerCode}/{userId}`
-             if pathComponents.count >= 1, pathComponents[0] == "offers" {
-                 let offerCode = String(pathComponents[1])
-                         Constants.clientOrderCode = offerCode
-                     
-                     print("Offer ID: \(Constants.clientOrderCode), Offer Code: (Constants.offerCode)")
-                     handleDeepLinkNav(code: offerCode) // Navigate in the app based on this link
-                 
-             }
-//            else if pathComponents.count >= 3, pathComponents[1] == "offers" {
-//                let offerCode = String(pathComponents[3])
-//                    Constants.clientOrderCode = offerCode
-//                    
-//                
-//                     print("Offer ID: \(Constants.clientOrderCode), Offer Code: (Constants.offerCode)")
-//                handleDeepLinkNav(code: offerCode) // Navigate in the app based on this link
-//                 
-//             }
-         }
+            // /payments/{qrCode}
+            if pathComponents.count >= 1, pathComponents[0] == "payments" {
+                if pathComponents.count > 1 {
+                    let quickQrCode = String(pathComponents[1])
+                    Constants.quickQrCode = quickQrCode
+                    navigateToWalletWithQR()
+                }
+            }
+            // /offers/payments/{qrCode}
+            else if pathComponents.count >= 2,
+                    pathComponents[0] == "offers",
+                    pathComponents[1] == "payments" {
+                if pathComponents.count > 2 {
+                    let quickQrCode = String(pathComponents[2])
+                    Constants.quickQrCode = quickQrCode
+                    navigateToWalletWithQR()
+                }
+            }
+            // /offers/{offerCode}
+            else if pathComponents.count >= 1, pathComponents[0] == "offers" {
+                if pathComponents.count > 1 {
+                    let offerCode = String(pathComponents[1])
+                    Constants.clientOrderCode = offerCode
+                    print("Offer ID: \(Constants.clientOrderCode)")
+                    handleDeepLinkNav(code: offerCode)
+                }
+            }
+        }
+        
+        //            else if pathComponents.count >= 3, pathComponents[1] == "offers" {
+        //                let offerCode = String(pathComponents[3])
+        //                    Constants.clientOrderCode = offerCode
+        //
+        //
+        //                     print("Offer ID: \(Constants.clientOrderCode), Offer Code: (Constants.offerCode)")
+        //                handleDeepLinkNav(code: offerCode) // Navigate in the app based on this link
+        //
+        //             }
+
+}
+
+func navigateToWalletWithQR() {
+    guard Constants.accountStatus == 2 else { return }
+    guard let window = self.window else { return }
+        
+        DispatchQueue.main.async {
+            let navigationHelper = NavigationHelper(actionType: 5, actionId: 0, userType: "")
+            let rootView = AnyView(
+                TabBarView()
+                    .environmentObject(navigationHelper)
+                    .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar" : "en"))
+                    .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft : .leftToRight)
+            )
+            window.rootViewController = UIHostingController(rootView: rootView)
+            UserDefaults.standard.set(false, forKey: Constants.shared.resetLanguage)
+            window.makeKeyAndVisible()
+        }
     }
     
     func handleDeepLinkNav(code:String){
@@ -200,7 +238,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
     // to do if needed to return to v2 remove this
     func mapShowOfferModelV3ToShowOfferModel(v3Model: ShowOfferModelV3) -> ShowOfferModel? {
         guard let v3Data = v3Model.data else { return nil }
-
+        
         let product = productList(
             id: v3Data.productId,
             images: v3Data.product?.images,
@@ -213,7 +251,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
             paiedQuantity: nil,
             remainingQuantity: nil
         )
-
+        
         let showOfferData = ShowOfferData(
             id: v3Data.id,
             name: v3Data.name,
@@ -235,14 +273,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
             shippingCommission: v3Data.shippingCommission,
             seller: v3Data.seller
         )
-
+        
         return ShowOfferModel(
             status: v3Model.status,
             message: v3Model.message,
             data: showOfferData
         )
     }
-
+    
     
     
     func navToOffer(offerData: ShowOfferData?,offerUserId: Int) {
@@ -272,10 +310,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
 
 struct DafeaaApp: App {
     @StateObject private var keyboardDismissManager = KeyboardDismissManager() // Create a shared instance
-
+    
     var body: some Scene {
         var window: UIWindow?
-
+        
         WindowGroup {
             SplashView(window: window)
                 .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar":"en"))
@@ -315,8 +353,8 @@ extension Bundle {
     @objc dynamic func swizzled_localizedString(forKey key: String, value: String?, table tableName: String?) -> String {
         // Check if this is a Google Maps related string
         if tableName?.contains("GoogleMaps") == true ||
-           key.contains("GMSCore") ||
-           key.contains("GoogleMaps") {
+            key.contains("GMSCore") ||
+            key.contains("GoogleMaps") {
             // Use English bundle
             if let path = Bundle.main.path(forResource: "en", ofType: "lproj"),
                let enBundle = Bundle(path: path) {
@@ -326,5 +364,22 @@ extension Bundle {
         
         // For non-Google Maps strings, use normal localization
         return self.swizzled_localizedString(forKey: key, value: value, table: tableName)
+    }
+}
+extension UIApplication {
+    func dismissAllPresentedViewControllers(completion: (() -> Void)? = nil) {
+        guard let root = connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .flatMap({ $0.windows })
+            .first(where: { $0.isKeyWindow })?.rootViewController else { return }
+        
+        // Find the topmost presenter
+        var topPresenter = root
+        while let presented = topPresenter.presentedViewController {
+            topPresenter = presented
+        }
+        
+        // Dismiss from root directly — kills entire stack at once
+        root.dismiss(animated: true, completion: completion)
     }
 }

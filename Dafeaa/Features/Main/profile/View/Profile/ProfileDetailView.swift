@@ -38,9 +38,10 @@ struct ProfileDetailView:  View {
                                 }.padding(.bottom, 16)
                                 CustomMainTextField(text: $name, placeHolder: "Name", image: .nameTFIcon)
                                     .focused($focusedField, equals: .userName)
-                               
-                                CustomMainTextField(text: $email, placeHolder: "Email", image: .mailTFIcon)
-                                    .focused($focusedField, equals: .email)
+                                if email != "" {
+                                    CustomMainTextField(text: $email, placeHolder: "Email", image: .mailTFIcon)
+                                        .focused($focusedField, equals: .email)
+                                }
                                 VStack(spacing: 20){
                                     Button {
                                         showChangePassword = true

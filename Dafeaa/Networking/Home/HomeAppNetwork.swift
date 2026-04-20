@@ -12,13 +12,17 @@ enum HomeNetwork {
     case wallet(skip: Int)
     case operations(skip: Int)
     case applePay(amount: Int, token: String)
+    case generateQR(amount: String)
+    case cancelQR(qrCode: String)
+    case checkQRStatus(qrCode: String)
+    case acceptQR(qrCode: String)
 }
 
 extension HomeNetwork: TargetType {
     var baseURL: String {
         switch self {
             
-        case .applePay:
+        case .applePay, .generateQR, .cancelQR, .checkQRStatus, .acceptQR:
             return Constants.shared.baseURLV1
         default  :
             return Constants.shared.baseURL
@@ -31,13 +35,19 @@ extension HomeNetwork: TargetType {
         case .wallet(let skip)              :return "wallet?skip=\(skip)"
         case .operations(let skip)          :return "wallet/operation?skip=\(skip)"
         case .applePay                      :return "payments/apple-pay"
+        case .generateQR:                   return "wallet-transfer"
+        case .cancelQR(let qrCode):         return "wallet-transfers/cancel/\(qrCode)"
+        case .checkQRStatus(let qrCode):    return "wallet-transfer/\(qrCode)"
+        case .acceptQR(qrCode: let qrCode): return "wallet-transfer/accept/\(qrCode)"
         }
     }
     
     var methods: HTTPMethod {
         switch self {
-        case .applePay                      :return .post  
-        default                             :return .get
+        case .applePay , .generateQR, .cancelQR,.acceptQR:
+            return .post
+                     
+        default  :return .get
         }
     }
     
@@ -50,6 +60,8 @@ extension HomeNetwork: TargetType {
                 "token": token
             ]
             return .requestParameters(Parameters:  parameters, encoding: JSONEncoding.default)
+        case .generateQR(let amount):
+            return .requestParameters(Parameters: ["amount": amount], encoding: JSONEncoding.default)
         default:
             return .requestPlain
         }

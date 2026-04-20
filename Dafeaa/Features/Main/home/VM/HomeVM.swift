@@ -25,7 +25,13 @@ class HomeVM: ObservableObject {
     @Published var _addToWalletURL         : String = ""
     @Published var paymentURL              : String = ""
     @Published var showOfferSuccess       : Bool = false
-    @Published var _isPaymentSuccess       = false 
+    @Published var _isPaymentSuccess       = false
+    @Published var qrCodeData      : QRCodeModel? = nil
+    @Published var isQRGenerated   : Bool = false
+    @Published var isQRCancelled  : Bool = false
+
+    @Published var qrStatusResult  : String? = nil
+
     private var _message                   : String = ""
     private var token                      = ""
     let api                                : HomeAPIProtocol = HomeAPI()
@@ -339,6 +345,7 @@ class HomeVM: ObservableObject {
                     transferData = data.errors ?? ConfirmTransferData()
                 }
                 self.transferToast = FancyToast(type: .success, title: "Success".localized(), message: data.message ?? "")
+                
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "userNotExist".localized())"
                 self._isLoading = false
@@ -417,6 +424,51 @@ class HomeVM: ObservableObject {
           }
       }
     
+    func generateQR(amount: String) {
+        self._isLoading = true
+        api.generateQR(amount: amount) { [weak self] result in
+            guard let self = self else { return }
+            self._isLoading = false
+            switch result {
+            case .success(let response):
+                self.qrCodeData    = response
+                self.isQRGenerated = true
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+            }
+        }
+    }
+
+    func cancelQR(qrCode: String) {
+        self.isQRCancelled = false
+        api.cancelQR(qrCode: qrCode) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                self.isQRCancelled = true
+                self.toast = FancyToast(type: .success, title: "success".localized(), message:  "payment_cancelled_success".localized())
+                break
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
+            }
+        }
+    }
+    
+    func checkQRStatus(qrCode: String) {
+        api.checkQRStatus(qrCode: qrCode) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let response):
+                guard let status = response?.status else { return }
+                if status == "completed" || status == "failed" {
+                    self.qrStatusResult = status
+                }
+            case .failure: break
+            }
+        }
+    }
 }
 
     

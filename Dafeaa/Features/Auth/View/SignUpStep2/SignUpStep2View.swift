@@ -27,27 +27,38 @@ struct SignUpStep2View: View {
     var body: some View {
            ZStack{
                VStack(alignment: .leading, spacing: 16) {
-                   HStack {
-                       Button(action: {
-                           withAnimation(.easeInOut(duration: 0.3)) {
-                               self.presentationMode.wrappedValue.dismiss()
-                           }
-                       }) {
-                           Image(.arrowRight)
-                               .resizable()
-                               .frame(width: 32, height: 32)
-                               .foregroundColor(.black222222)
-                       }
+//                   HStack {
+//                       Button(action: {
+//                           withAnimation(.easeInOut(duration: 0.3)) {
+//                               self.presentationMode.wrappedValue.dismiss()
+//                           }
+//                       }) {
+//                           Image(.arrowRight)
+//                               .resizable()
+//                               .frame(width: 32, height: 32)
+//                               .foregroundColor(.black222222)
+//                       }
+//                       Spacer()
+//                   }
+//                   
+//                   HStack {
+//                       RoundedRectangle(cornerRadius: 2).foregroundColor(Color(.primary))
+////                       RoundedRectangle(cornerRadius: 2).foregroundColor(Color(.primary))
+//                   }
+//                   .frame(maxWidth: .infinity)
+//                   .frame(height: 3)
+                   
+                   
+                   HStack(alignment: .center){
+                       Spacer()
+                       Image(.splashLogoWithoutName)
+                           .resizable()
+                           .frame(width:  57  ,height:  65)
+                           .padding(.leading,  0  )
+                           .padding(.bottom ,16)
                        Spacer()
                    }
-                   
-                   HStack {
-                       RoundedRectangle(cornerRadius: 2).foregroundColor(Color(.primary))
-//                       RoundedRectangle(cornerRadius: 2).foregroundColor(Color(.primary))
-                   }
-                   .frame(maxWidth: .infinity)
-                   .frame(height: 3)
-                   
+
                    VStack(alignment:.leading,spacing:8) {
                        Text("addSomeData".localized())
                            .textModifier(.plain, 19, .black222222)
@@ -59,66 +70,68 @@ struct SignUpStep2View: View {
                    
                    ScrollViewReader { proxy in
                        ScrollView {
-                           VStack(alignment: .leading, spacing: 8) {
-                               HStack {
-                                   Spacer()
-                                   ProfileImageView(selectedImage: $selectedProfileImage, imageURL: $selectedProfileImageURL, isShowFromEdit: false)
-                                   Spacer()
+                           VStack{
+                               VStack(alignment: .leading, spacing: 8) {
+    //                               HStack {
+    //                                   Spacer()
+    //                                   ProfileImageView(selectedImage: $selectedProfileImage, imageURL: $selectedProfileImageURL, isShowFromEdit: false)
+    //                                   Spacer()
+    //                               }
+    //                               .padding(.bottom,15)
+                                   CustomMainTextField(text: $name, placeHolder: "Name", image: .nameTFIcon)
+                                       .focused($focusedField, equals: .userName)
+                                       .id(FormField.userName)
+                                   
+                                   PhoneNumberField(
+                                       phoneNumber: $phoneNumber,
+                                       selectedCountryCode: $selectedCountryCode,
+                                       image: .mobile
+                                   )
+                                   .focused($focusedField, equals: .phone)
+                                   .id(FormField.phone)
+                                   
+                                   Text("PhoneIsTheMainActor".localized())
+                                       .textModifier(.plain, 12, .errorRed)
+                                   
+    //                               CustomMainTextField(text: $email, placeHolder: "Email", image: .mailTFIcon,keyBoardType: .emailAddress)
+    //                                   .focused($focusedField, equals: .email)
+    //                                   .id(FormField.email)
+                                   
+                                   CustomPasswordField(password: $password)
+                                       .focused($focusedField, equals: .password)
+                                       .id(FormField.password)
+                                   
+                                   CustomPasswordField(password: $confirmPassword,placeholder: "confirmPasswordPlaceholder".localized())
+                                       .focused($focusedField, equals: .confirmPassword)
+                                       .id(FormField.confirmPassword)
+                                   
                                }
-                               .padding(.bottom,15)
-                               CustomMainTextField(text: $name, placeHolder: "Name", image: .nameTFIcon)
-                                   .focused($focusedField, equals: .userName)
-                                   .id(FormField.userName)
                                
-                               PhoneNumberField(
-                                   phoneNumber: $phoneNumber,
-                                   selectedCountryCode: $selectedCountryCode,
-                                   image: .mobile
-                               )
-                               .focused($focusedField, equals: .phone)
-                               .id(FormField.phone)
-                               
-                               Text("PhoneIsTheMainActor".localized())
-                                   .textModifier(.plain, 12, .errorRed)
-                               
-                               CustomMainTextField(text: $email, placeHolder: "Email", image: .mailTFIcon,keyBoardType: .emailAddress)
-                                   .focused($focusedField, equals: .email)
-                                   .id(FormField.email)
-                               
-                               CustomPasswordField(password: $password)
-                                   .focused($focusedField, equals: .password)
-                                   .id(FormField.password)
-                               
-                               CustomPasswordField(password: $confirmPassword,placeholder: "confirmPasswordPlaceholder".localized())
-                                   .focused($focusedField, equals: .confirmPassword)
-                                   .id(FormField.confirmPassword)
-                               
-                               Spacer()
-                               TermsAndConditionsView(isAgreeChecked: $isAgreeChecked)
-                           }
-                           
-                           Spacer()
-                           
-                           ReusableButton(buttonText: "createAccount", isEnabled: true) {
-                               viewModel.validateRegister(photo: selectedProfileImage, name: name, email: email, phone: phoneNumber.normalizePhoneNumber, accountType: selectedOption, password: password, confirmPassword: confirmPassword, isAgreeChecked: isAgreeChecked)
-                           }
-                           .navigationDestination(isPresented: $viewModel._isSignUpSuccess) {
-                               OTPConfirmationView(phone: phoneNumber.normalizePhoneNumber, isForgetPassword: false)
-                           }
-                           
-                           HStack {
-                               Spacer()
-                               Text("haveAccount?".localized())
-                                   .textModifier(.plain, 16, .black222222)
-                               Button(action: {
-                                   NavigationUtil.popToRootView()
-                               }) {
-                                   Text("login".localized())
-                                       .textModifier(.plain, 16, Color(.primary))
+                               Spacer(minLength: 40)
+                               VStack(alignment: .leading, spacing: 20){
+                                   TermsAndConditionsView(isAgreeChecked: $isAgreeChecked)
+
+                                   ReusableButton(buttonText: "createAccount", isEnabled: true) {
+                                       viewModel.validateRegister(photo: selectedProfileImage, name: name, email: email, phone: phoneNumber.normalizePhoneNumber, accountType: selectedOption, password: password, confirmPassword: confirmPassword, isAgreeChecked: isAgreeChecked)
+                                   }
+                                   .navigationDestination(isPresented: $viewModel._isSignUpSuccess) {
+                                       OTPConfirmationView(phone: phoneNumber.normalizePhoneNumber, isForgetPassword: false)
+                                   }
+                                   
+                                   HStack {
+                                       Spacer()
+                                       Text("haveAccount?".localized())
+                                           .textModifier(.plain, 16, .black222222)
+                                       Button(action: {
+                                           NavigationUtil.popToRootView()
+                                       }) {
+                                           Text("login".localized())
+                                               .textModifier(.plain, 16, Color(.primary))
+                                       }
+                                       Spacer()
+                                   }
                                }
-                               Spacer()
                            }
-                           .padding(.top, 24)
                            .padding(.bottom, 30)
                        }
                        .scrollIndicators(.hidden)
@@ -130,6 +143,7 @@ struct SignUpStep2View: View {
                            }
                        }
                    }
+                   .padding([.top],29)
                    .padding(.bottom, keyboardHeight) // Adjust the scroll view padding based on the keyboard height
                }
                .padding([.leading,.trailing,.top],24)
@@ -170,8 +184,8 @@ struct SignUpStep2View: View {
         case .userName:
             focusedField = .phone
         case .phone:
-            focusedField = .email
-        case .email:
+//            focusedField = .email
+//        case .email:
             focusedField = .password
         case .password:
             focusedField = .confirmPassword
@@ -185,8 +199,8 @@ struct SignUpStep2View: View {
         case .confirmPassword:
             focusedField = .password
         case .password:
-            focusedField = .email
-        case .email:
+//            focusedField = .email
+//        case .email:
             focusedField = .phone
         case .phone:
             focusedField = .userName
@@ -234,15 +248,14 @@ struct TermsAndConditionsView: View {
                     }
                     
                     // Text with attributed clickable parts
-                    Text(secondAttributedString())
+                    Text(firstAttributedString())
                         .textModifier(.plain, 14, Color(.primary))
                         .onTapGesture {
                             showTermsAndConditions = true // Handle navigation on click
                         }
                     
                 }
-                .padding(.horizontal)
-                
+                .padding(.bottom,10)
                 
             }
             .navigationDestination(isPresented: $showTermsAndConditions) {

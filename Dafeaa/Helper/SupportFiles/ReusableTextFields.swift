@@ -75,6 +75,7 @@ struct AdvancedTextField: UIViewRepresentable {
     let isRTL: Bool
     let keyboardType: UIKeyboardType
     let fieldType: FieldType
+    var maxLength: Int? = nil
     var isSecure: Bool = false
     var onFocusChange: ((Bool) -> Void)?
     
@@ -144,6 +145,10 @@ struct AdvancedTextField: UIViewRepresentable {
                 break
             }
             
+            if let max = parent.maxLength, newText.count > max {
+                   newText = String(newText.prefix(max))
+               }
+            
             if newText != textField.text {
                 textField.text = newText
             }
@@ -169,6 +174,7 @@ struct CustomMainTextField: View {
     @State var keyBoardType: UIKeyboardType = .default
     @State var fieldType: FieldType = .none
     @State var showHeader: Bool = false
+    var maxLength: Int? = nil
     @Environment(\.layoutDirection) private var layoutDirection
     
     private var isRTL: Bool {
@@ -197,6 +203,7 @@ struct CustomMainTextField: View {
                         isRTL: isRTL,
                         keyboardType: keyBoardType,
                         fieldType: fieldType,
+                        maxLength: maxLength,
                         onFocusChange: { focused in
                             isFocused = focused
                         }

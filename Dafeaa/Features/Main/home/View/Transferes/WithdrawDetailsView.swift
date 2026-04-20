@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LocalAuthentication
 
 struct WithdrawDetailsView: View {
     @StateObject var ibanViewModel = IBANVM()
@@ -414,14 +415,8 @@ struct WithdrawDetailsView: View {
         validateCityLive(city)
         
         if isFormValid {
-            let amount = Double(withdrawAmount.convertDigitsToEng) ?? 0
-            withdrawViewModel.validateWithdrawAmount(
-                amount: amount,
-                accountName: accountHolderName,
-                iban: selectedIBAN,
-                mobile: mobileNumber,
-                city: city
-            )
+            
+            authenticateWithBiometrics()
         }
     }
     
@@ -467,6 +462,56 @@ struct WithdrawDetailsView: View {
         }
         
         return false
+    }
+    
+    private func authenticateWithBiometrics() {
+        let context = LAContext()
+        var error: NSError?
+        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
+            authenticateWithPasscode()
+            return
+        }
+        context.evaluatePolicy(
+            .deviceOwnerAuthenticationWithBiometrics,
+            localizedReason: "confirm_payment_biometric".localized()
+        ) { success, authError in
+            DispatchQueue.main.async {
+                if success {
+                    let amount = Double(withdrawAmount.convertDigitsToEng) ?? 0
+                    withdrawViewModel.validateWithdrawAmount(
+                        amount: amount,
+                        accountName: accountHolderName,
+                        iban: selectedIBAN,
+                        mobile: mobileNumber,
+                        city: city
+                    )
+                    
+                } else if let err = authError as? LAError, err.code == .biometryLockout {
+                    authenticateWithPasscode()
+                }
+            }
+        }
+    }
+
+    private func authenticateWithPasscode() {
+        let context = LAContext()
+        context.evaluatePolicy(
+            .deviceOwnerAuthentication,
+            localizedReason: "confirm_payment_biometric".localized()
+        ) { success, _ in
+            DispatchQueue.main.async {
+                if success {
+                    let amount = Double(withdrawAmount.convertDigitsToEng) ?? 0
+                    withdrawViewModel.validateWithdrawAmount(
+                        amount: amount,
+                        accountName: accountHolderName,
+                        iban: selectedIBAN,
+                        mobile: mobileNumber,
+                        city: city
+                    )
+                }
+            }
+        }
     }
 }
 

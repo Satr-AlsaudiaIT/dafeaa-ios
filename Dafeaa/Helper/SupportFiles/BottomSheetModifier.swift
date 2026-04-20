@@ -44,7 +44,6 @@ struct BottomSheetPresenter<Content: View>: UIViewControllerRepresentable {
             guard uiViewController.presentedViewController == nil else { return }
             
             let hostingController = UIHostingController(rootView: content())
-            
             hostingController.modalPresentationStyle = .pageSheet
             hostingController.modalTransitionStyle = .coverVertical
 
@@ -57,18 +56,6 @@ struct BottomSheetPresenter<Content: View>: UIViewControllerRepresentable {
                 sheet.delegate = context.coordinator
             }
 
-            if let popover = hostingController.popoverPresentationController {
-                popover.sourceView = uiViewController.view
-                popover.sourceRect = CGRect(
-                    x: uiViewController.view.bounds.midX,
-                    y: uiViewController.view.bounds.maxY,
-                    width: 0,
-                    height: 0
-                )
-                popover.permittedArrowDirections = []
-                popover.delegate = context.coordinator
-            }
-
             hostingController.presentationController?.delegate = context.coordinator
 
             DispatchQueue.main.async {
@@ -76,12 +63,12 @@ struct BottomSheetPresenter<Content: View>: UIViewControllerRepresentable {
             }
 
         } else {
+            guard let presented = uiViewController.presentedViewController else { return }
             DispatchQueue.main.async {
-                uiViewController.presentedViewController?.dismiss(animated: true)
+                presented.dismiss(animated: true)
             }
         }
     }
-
     // MARK: - Coordinator
     class Coordinator: NSObject,
                        UISheetPresentationControllerDelegate,

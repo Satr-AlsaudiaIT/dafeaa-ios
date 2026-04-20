@@ -115,7 +115,10 @@ extension MoreNetwork: TargetType
                 return .requestPlain
         case .addTaxRecord(let taxNumber):
                 return .requestParameters( Parameters: ["tax_number": taxNumber], encoding: JSONEncoding.default)
-            
+        case .logOut:
+            let UUIDValue = UIDevice.current.identifierForVendor!.uuidString
+            return .requestParameters(Parameters: ["device_id":UUIDValue], encoding: JSONEncoding.default)
+
         default:
             return .requestPlain
             

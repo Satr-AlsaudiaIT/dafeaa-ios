@@ -89,10 +89,10 @@ class AuthVM: ObservableObject {
         }
         else if !name.isValidName {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidUserName".localized())
-        } else if email.isBlank {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterEmail".localized())
-        } else if !email.isEmail {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidEmail".localized())
+//        } else if email.isBlank {
+//            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterEmail".localized())
+//        } else if !email.isEmail {
+//            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidEmail".localized())
         } else if phone.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPhone".localized())
         } else if !phone.isValidPhone() {
@@ -109,7 +109,7 @@ class AuthVM: ObservableObject {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "PleaseTermsconditions" .localized())
         } else {
             let registerDic: [String: Any] = ["name": name,
-                                              "email": email,
+//                                              "email": email,
                                               "phone": phone.convertDigitsToEng,
                                               "account_type": accountType.returnedInt(),
                                               "password": password,
@@ -240,7 +240,7 @@ class AuthVM: ObservableObject {
                 self._isLoading = false
                 self._isFailed = false
                 if let response = response {
-                    GenericUserDefault.shared.setValue(response.token ?? "", Constants.shared.token)
+                    self.handleLoginSuccess(response)
                     self.profile()
                 }
 //                    self.logIn(response:response, phone: phone)
@@ -254,6 +254,38 @@ class AuthVM: ObservableObject {
                     self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
                 }
                 
+            }
+        }
+    }
+    
+    func handleLoginSuccess(_ model: LoginModel) {
+        if let accessToken = model.accessToken {
+            GenericUserDefault.shared.setValue(accessToken, Constants.shared.token)
+        }
+        if let refreshToken = model.refreshToken {
+            Constants.refreshToken = refreshToken
+        }
+    }
+    
+    // Refresh token method
+    func refreshToken(completion: @escaping (Bool) -> Void) {
+        let storedRefresh = Constants.refreshToken
+        guard !storedRefresh.isEmpty else {
+            completion(false)
+            return
+        }
+        AuthAPI().refreshToken(refreshToken: storedRefresh) { result in
+            switch result {
+            case .success(let model):
+                if let newToken = model?.accessToken {
+                    GenericUserDefault.shared.setValue(newToken, Constants.shared.token)
+                }
+                if let newRefresh = model?.refreshToken {
+                    Constants.refreshToken = newRefresh
+                }
+                completion(true)
+            case .failure:
+                completion(false)
             }
         }
     }
@@ -451,7 +483,7 @@ class AuthVM: ObservableObject {
     func logIn(response:LoginModel, phone: String) {
         GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
         GenericUserDefault.shared.setValue(response.data?.accountType ?? 1 , Constants.shared.userType)
-        GenericUserDefault.shared.setValue(response.token ?? "", Constants.shared.token)
+        GenericUserDefault.shared.setValue(response.accessToken ?? "", Constants.shared.token)
         Constants.accountStatus = response.data?.status ?? 2
         GenericUserDefault.shared.setValue(response.data?.id ?? 0, Constants.shared.userId)
         

@@ -141,9 +141,9 @@ class NavigationHelper: ObservableObject {
             else if userType == "merchant" {
                 self.navigateToMerchentOrder = true
             }
-        } else if actionType == 2 {
-            self.navigateToWithdraws = true
-        } else if actionType == 3 {
+//        } else if actionType == 2 {
+//            self.navigateToWithdraws = true
+        } else if actionType == 3 || actionType == 2{
             Constants.shouldNavigateToWallet = true
         }
         else if actionType == 4 {

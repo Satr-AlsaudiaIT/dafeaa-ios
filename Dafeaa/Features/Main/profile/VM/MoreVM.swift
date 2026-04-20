@@ -636,8 +636,12 @@ final class MoreVM : ObservableObject {
             return
         }
 
-        // 3. Must not be all repeated digits (e.g. 1111111111)
-        guard Set(trimmed).count > 1 else {
+        guard trimmed.count == 15 else {
+            toastSheet = FancyToast(type: .error, title: "Error".localized(), message: "tax_record_invalid".localized())
+            return
+        }
+
+        guard trimmed.hasPrefix("3") && trimmed.hasSuffix("3") else {
             toastSheet = FancyToast(type: .error, title: "Error".localized(), message: "tax_record_invalid".localized())
             return
         }

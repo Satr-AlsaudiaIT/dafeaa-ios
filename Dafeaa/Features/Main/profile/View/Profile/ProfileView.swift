@@ -53,12 +53,12 @@ struct ProfileView: View {
                                     Text("\(phone)")
                                         .textModifier(.plain, 12, .gray888888)
                                     Spacer()
-                                    Button(action:{
-                                        showingChangePhone = true
-                                    }){
-                                        Text("changePhone".localized())
-                                            .textModifier(.plain, 12, Color(.primary))
-                                    }
+//                                    Button(action:{
+//                                        showingChangePhone = true
+//                                    }){
+//                                        Text("changePhone".localized())
+//                                            .textModifier(.plain, 12, Color(.primary))
+//                                    }
                                     
                                 }
                             }

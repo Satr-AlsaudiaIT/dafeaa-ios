@@ -43,7 +43,11 @@ class BaseAPI<T: TargetType> {
                 return
             }
             
-            self.handleUrlStatusCode(targetPath : target.path,responseData: response.data,code: response.response?.statusCode){ isSuccess,error  in
+            let onRetry: () -> Void = {
+                            self.fetchData(target: target, responseClass: responseClass, bool: bool, completion: completion)
+                        }
+            
+            self.handleUrlStatusCode(targetPath : target.path,responseData: response.data,code: response.response?.statusCode, onRetry: onRetry){ isSuccess,error  in
                 
                 guard isSuccess else {
                     if error == "Unauthenticated." {
@@ -135,7 +139,7 @@ class BaseAPI<T: TargetType> {
         }
     }
     
-    private func handleUrlStatusCode(targetPath: String ,responseData:Data?,code:Int?, completion:@escaping(Bool,String?)->Void){
+    private func handleUrlStatusCode(targetPath: String ,responseData:Data?,code:Int?, onRetry: (() -> Void)? = nil, completion:@escaping(Bool,String?)->Void){
             
             guard let statusCode = code else {
                 print("there is no status code")
@@ -146,22 +150,47 @@ class BaseAPI<T: TargetType> {
             case 200,201:
                 completion(true,nil)
             case 401:
-                //not Authorized
-                
                 guard let data = responseData else { return }
                 decode(fromData: data, toObject: BaseNetworkResponseErrorModel.self) { result, error in
-                    if targetPath == "auth/login" || targetPath == "patients/clinical-data" {
+                    if targetPath == "auth/login" {
                         completion(false,result?.message)
                     }
                     else {
-                        GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
-                        GenericUserDefault.shared.setValue("", Constants.shared.token)
-                        MOLH.reset()
-//                        UnauthorizedVC.shared.unAuthorized()
+                        let message = result?.message ?? ""
+                        BiometricAuthManager.shared.authenticate(message: message) { success in
+                            guard success else {
+                                GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
+                                GenericUserDefault.shared.setValue("", Constants.shared.token)
+                                MOLH.reset()
+                                return
+                            }
+                            let storedRefresh = Constants.refreshToken
+                            guard !storedRefresh.isEmpty else {
+                                GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
+                                GenericUserDefault.shared.setValue("", Constants.shared.token)
+                                MOLH.reset()
+                                return
+                            }
+                            AuthAPI().refreshToken(refreshToken: storedRefresh) { refreshResult in
+                                switch refreshResult {
+                                case .success(let model):
+                                    if let newToken = model?.accessToken {
+                                        GenericUserDefault.shared.setValue(newToken, Constants.shared.token)
+                                    }
+                                    if let newRefresh = model?.refreshToken {
+                                        Constants.refreshToken = newRefresh
+                                    }
+                                    onRetry?()
+                                case .failure:
+                                    GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
+                                    GenericUserDefault.shared.setValue("", Constants.shared.token)
+                                    MOLH.reset()
+                                }
+                            }
+                        }
                     }
-
+                    
                 }
-                
             case 403:
                 guard let data = responseData else { return }
                 decode(fromData: data, toObject: BaseNetworkResponseErrorModel.self) { result, error in
@@ -191,6 +220,14 @@ class BaseAPI<T: TargetType> {
             }
         }
         
+    private func forceLogout() {
+        DispatchQueue.main.async {
+            GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
+            GenericUserDefault.shared.setValue("", Constants.shared.token)
+            MOLH.reset()
+        }
+    }
+    
     private func handleUrlError(
         _ target: T,
         error: Error?,

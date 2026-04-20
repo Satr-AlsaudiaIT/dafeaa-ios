@@ -120,7 +120,7 @@ struct OTPConfirmationView: View {
                         }
                         
                         HStack {
-                            Text("didn’tReceiveCode?".localized())
+                            Text("didn'tReceiveCode?".localized())
                                 .textModifier(.plain, 16, .black222222)
                             Button(action: {
                                 viewModel.sendCode(for: ["phone":phone,"usage":isForgetPassword ?"forget_password":"verify"])
