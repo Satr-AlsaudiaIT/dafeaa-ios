@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 class Constants {
     static var shared = Constants()
-
     
     var isAR: Bool { return (MOLHLanguage.currentAppleLanguage() == "ar") }
 //    let baseURLV1 =  "https://dafeaa-backend.deplanagency.com/api/"  // develop instance
@@ -57,7 +56,8 @@ class Constants {
 
     static let ARAB_NATIONAL_BANK_CODE = "30"  // البنك العربي الوطني
     static let WITHDRAW_THRESHOLD: Double = 20000.0  // SAR
-    
+    static var qrAuthAlreadyConfirmed: Bool = false
+
     static var accountStatus: Int {
         get {
             let ud = UserDefaults.standard

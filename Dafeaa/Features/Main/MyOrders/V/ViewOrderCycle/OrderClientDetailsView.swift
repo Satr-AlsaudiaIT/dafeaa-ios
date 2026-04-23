@@ -145,9 +145,8 @@ struct OrderClientDetailsView: View {
                                 }
                                 
                                 else if viewModel.orderData?.orderStatus == 1 || viewModel.orderData?.orderStatus == 2 {
-                                    ReusableButton(buttonText: "Cancel".localized(),isEnabled: true){
+                                    ReusableButton(buttonText: "Cancel".localized(),isEnabled: viewModel.orderData?.canCancel ?? false){
                                         isCancelTapped = true
-                                        
                                     }
                                 }
                             }

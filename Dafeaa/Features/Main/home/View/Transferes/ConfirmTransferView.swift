@@ -11,29 +11,29 @@ import LocalAuthentication
 struct ConfirmTransferView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel = HomeVM()
-    
-    // Sample data - replace with your actual data model
-    @State var balance : String = ""
-    @State var phoneNumber : String = "59999999"
-    @State var amount : String = "0"
-    @State var name = "A M"
+
+    @State var balance: String = ""
+    @State var phoneNumber: String = ""
+    @State var amount: String = "0"
+    @State var name: String = ""
     @State var fees: String = "0"
-    @State var total : Double = 0
+    @State var total: Double = 0
+    @State var reason: String = ""
     @State private var isTransferSuccess: Bool = false
     @State private var isTransferFailed: Bool = false
+
     var body: some View {
         ZStack {
             VStack {
-                // Navigation Bar
                 NavigationBarView(title: "confirmTransfer") {
-                    self.presentationMode.wrappedValue.dismiss()
+                    presentationMode.wrappedValue.dismiss()
                 }
-                
+
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 24) {
-                        // Product Balance
-                        HStack(alignment: .center, spacing: 4){
-                            Text("availableBalance:".localized() )
+                        // Available Balance
+                        HStack(alignment: .center, spacing: 4) {
+                            Text("availableBalance:".localized())
                                 .textModifier(.plain, 20, .black000000)
                             HStack {
                                 Text("\(balance)")
@@ -45,18 +45,20 @@ struct ConfirmTransferView: View {
                                     .frame(width: 20)
                             }
                             .environment(\.layoutDirection, .rightToLeft)
-                        }.padding(.bottom, 24)
-                            
-                        // Recipient Info Section
-                        VStack(spacing: 24) {
-                            // Phone Number
-                            infoRow(title: "Phone Number", value: phoneNumber)
-                            
-                            // Name
-                            infoRow(title: "Name", value: name)
                         }
-                        .padding(.horizontal,24)
-                        .padding(.vertical,16)
+                        .padding(.bottom, 24)
+
+                        // Recipient Info
+                        VStack(spacing: 24) {
+                            infoRow(title: "Phone Number", value: phoneNumber)
+                            infoRow(title: "Name", value: name)
+                            
+                            if !reason.isEmpty {
+                                infoRow(title: "transfer_reason".localized(), value: reason)
+                            }
+                        }
+                        .padding(.horizontal, 24)
+                        .padding(.vertical, 16)
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color.grayBDBDBD, lineWidth: 1)
@@ -64,39 +66,43 @@ struct ConfirmTransferView: View {
                         .padding(1)
                         .background(Color.white)
                         .cornerRadius(8)
-                        
-                        // Transaction Details Section
+
+                        // Transaction Details
                         VStack(spacing: 24) {
-                            // Amount
-                            
-                            infoRow(title: "amount".localized(), value:  "\(String(format: "%.2f", Double(amount) ?? 0))", isPrice: true)
-                            
-                            // Fees
+                            infoRow(
+                                title: "amount".localized(),
+                                value: "\(String(format: "%.2f", Double(amount) ?? 0))",
+                                isPrice: true
+                            )
                             infoRow(title: "fees".localized(), value: fees, isPrice: true)
-                                                        
-                            // Total
-                            infoRow(title: "total".localized(), value: "\(String(format: "%.2f", total))",isPrice: true, color: .black222222)
+                            infoRow(
+                                title: "total".localized(),
+                                value: "\(String(format: "%.2f", total))",
+                                isPrice: true,
+                                color: .black222222
+                            )
                         }
-                        
-                        .padding(.horizontal,24)
-                        .padding(.vertical,16)
+                        .padding(.horizontal, 24)
+                        .padding(.vertical, 16)
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color.grayBDBDBD, lineWidth: 1)
-                        ).padding(1)
+                        )
+                        .padding(1)
                         .background(Color.white)
                         .cornerRadius(8)
-                        .padding(.top ,8)
+                        .padding(.top, 8)
+
                         Spacer()
                     }
                     .padding(24)
                 }
-                
+
                 VStack(spacing: 12) {
                     ReusableButton(buttonText: "confirmTransfer") {
                         authenticateWithBiometrics()
                     }
-                    
+
                     ReusableButton(
                         buttonText: "Cancel",
                         isEnabled: true,
@@ -110,8 +116,7 @@ struct ConfirmTransferView: View {
                 .padding(.horizontal, 24)
                 .padding(.bottom, 16)
             }
-            
-            // Loading Indicator
+
             if viewModel.isLoading {
                 ProgressView("Loading...".localized())
                     .foregroundColor(.white)
@@ -120,50 +125,60 @@ struct ConfirmTransferView: View {
         }
         .navigationBarHidden(true)
         .toastView(toast: $viewModel.toast)
-        .onAppear{
+        .onAppear {
             total = (Double(fees) ?? 0) + (Double(amount) ?? 0)
         }
         .onChange(of: viewModel.isTransferSuccess) { _, newValue in
-            if newValue {
-                isTransferSuccess = true
-            }
+            if newValue { isTransferSuccess = true }
         }
         .onChange(of: viewModel.isTransferFailed) { _, newValue in
-            if newValue {
-                isTransferFailed = true
-            }
+            if newValue { isTransferFailed = true }
         }
         .navigationDestination(isPresented: $isTransferSuccess) {
-            SuccessView(phoneNumber: phoneNumber,date: viewModel.transferData.createdAt ?? "" ,amount: amount, name: name,referenceNum: viewModel.transferData.transId ?? "")
+            SuccessView(
+                phoneNumber: phoneNumber,
+                date: viewModel.transferData.createdAt ?? "",
+                amount: amount,
+                name: name,
+                referenceNum: viewModel.transferData.transId ?? ""
+            )
         }
         .navigationDestination(isPresented: $isTransferFailed) {
-            FailedView(phoneNumber: phoneNumber,date: viewModel.transferData.createdAt ?? "" ,amount: amount, name: name, referenceNum: viewModel.transferData.transId ?? "")
+            FailedView(
+                phoneNumber: phoneNumber,
+                date: viewModel.transferData.createdAt ?? "",
+                amount: amount,
+                name: name,
+                referenceNum: viewModel.transferData.transId ?? ""
+            )
         }
     }
-    
-    // Helper view for info rows
-    private func infoRow(title: String, value: String, isPrice: Bool = false, color: Color = .gray8B8C86) -> some View {
+
+    // MARK: - Info Row
+    private func infoRow(title: String,
+                          value: String,
+                          isPrice: Bool = false,
+                          color: Color = .gray8B8C86) -> some View {
         HStack {
             Text(title.localized())
                 .textModifier(.plain, 16, color)
             Spacer()
-            HStack{
+            HStack {
                 Text(value)
                     .textModifier(.plain, 16, color)
                 if isPrice {
                     Image(.riyal)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .foregroundColor(color)
-                    .frame(width: 20)}
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(color)
+                        .frame(width: 20)
+                }
             }
             .environment(\.layoutDirection, .rightToLeft)
         }
     }
-    
-    
-    // MARK: - Biometric Authentication
 
+    // MARK: - Biometrics
     private func authenticateWithBiometrics() {
         let context = LAContext()
         var error: NSError?
@@ -177,7 +192,11 @@ struct ConfirmTransferView: View {
         ) { success, authError in
             DispatchQueue.main.async {
                 if success {
-                    viewModel.confirmTransfer(phone: phoneNumber.normalizePhoneNumber, amount: total)
+                    viewModel.confirmTransfer(
+                        phone: phoneNumber.normalizePhoneNumber,
+                        amount: total,
+                        reason: reason
+                    )
                 } else if let err = authError as? LAError, err.code == .biometryLockout {
                     authenticateWithPasscode()
                 }
@@ -193,13 +212,15 @@ struct ConfirmTransferView: View {
         ) { success, _ in
             DispatchQueue.main.async {
                 if success {
-                    viewModel.confirmTransfer(phone: phoneNumber.normalizePhoneNumber, amount: total)
+                    viewModel.confirmTransfer(
+                        phone: phoneNumber.normalizePhoneNumber,
+                        amount: total,
+                        reason: reason
+                    )
                 }
             }
         }
     }
 }
 
-#Preview {
-    ConfirmTransferView()
-}
+#Preview { ConfirmTransferView() }

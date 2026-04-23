@@ -302,8 +302,8 @@
             filePath = "Dafeaa/Features/Main/MyOrders/V/ViewOrderCycle/OrderClientDetailsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "211"
-            endingLineNumber = "211"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -606,8 +606,8 @@
             filePath = "Dafeaa/Features/Main/MyOrders/V/ViewOrderCycle/OrderClientDetailsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -670,8 +670,8 @@
             filePath = "Dafeaa/Features/Main/MyOrders/VM/OrdersVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "403"
-            endingLineNumber = "403"
+            startingLineNumber = "404"
+            endingLineNumber = "404"
             landmarkName = "updateQuantity(productId:quantity:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -802,6 +802,36 @@
             endingLineNumber = "338"
             landmarkName = "uploadOrderWithProduct(path:parameterS:products:responseClass:completion:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CA0FF75C-FB32-4F0D-ADE6-0573269682BB - 5081cf16cc52e423"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.MultipartFormData) -&gt; () in DAFEA___&#x62f;&#x627;&#x641;&#x639;.MultipartUploadImageWithModel.uploadOrderWithProduct&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(path: Swift.String, parameterS: Swift.Dictionary&lt;Swift.String, Any&gt;, products: Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, responseClass: &#x3c4;_0_0.Type, completion: (Swift.Result&lt;Swift.Optional&lt;&#x3c4;_0_0&gt;, __C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaaWithAppClip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "338"
+                  endingLineNumber = "338">
+               </Location>
+               <Location
+                  uuid = "CA0FF75C-FB32-4F0D-ADE6-0573269682BB - 5081cf16cc52e423"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.MultipartFormData) -&gt; () in DAFEA___&#x62f;&#x627;&#x641;&#x639;.MultipartUploadImageWithModel.uploadOrderWithProduct&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(path: Swift.String, parameterS: Swift.Dictionary&lt;Swift.String, Any&gt;, products: Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, responseClass: &#x3c4;_0_0.Type, completion: (Swift.Result&lt;Swift.Optional&lt;&#x3c4;_0_0&gt;, __C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaaWithAppClip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "338"
+                  endingLineNumber = "338">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -818,13 +848,43 @@
             endingLineNumber = "337"
             landmarkName = "uploadOrderWithProduct(path:parameterS:products:responseClass:completion:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F2BF35C9-D167-4B7E-AB3A-292151F9C5F3 - 5081cf16cc529bc2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.MultipartFormData) -&gt; () in DAFEA___&#x62f;&#x627;&#x641;&#x639;.MultipartUploadImageWithModel.uploadOrderWithProduct&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(path: Swift.String, parameterS: Swift.Dictionary&lt;Swift.String, Any&gt;, products: Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, responseClass: &#x3c4;_0_0.Type, completion: (Swift.Result&lt;Swift.Optional&lt;&#x3c4;_0_0&gt;, __C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaaWithAppClip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "337"
+                  endingLineNumber = "337">
+               </Location>
+               <Location
+                  uuid = "F2BF35C9-D167-4B7E-AB3A-292151F9C5F3 - 5081cf16cc529bc2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.MultipartFormData) -&gt; () in DAFEA___&#x62f;&#x627;&#x641;&#x639;.MultipartUploadImageWithModel.uploadOrderWithProduct&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(path: Swift.String, parameterS: Swift.Dictionary&lt;Swift.String, Any&gt;, products: Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, responseClass: &#x3c4;_0_0.Type, completion: (Swift.Result&lt;Swift.Optional&lt;&#x3c4;_0_0&gt;, __C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "DAFEA | &#x62f;&#x627;&#x641;&#x639;.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/nura/myProjects/dafeaaWithAppClip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "337"
+                  endingLineNumber = "337">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "7235BE77-D158-4EEE-86BF-A50FFE589135"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
@@ -840,7 +900,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "A8845725-F153-4D9D-B6DB-9C91A11358DE"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
@@ -856,14 +916,14 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "389D3792-23EA-4F4F-9605-98DF40F0FFF6"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/MyOrders/VM/OrdersVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "470"
-            endingLineNumber = "470"
+            startingLineNumber = "471"
+            endingLineNumber = "471"
             landmarkName = "validateAddOrderOLD(images:name:description:quantity:price:offerPrice:haveOffer:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -872,14 +932,14 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "2428B872-CAC1-488D-ADAA-14AE2682043B"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/MyOrders/VM/OrdersVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "479"
-            endingLineNumber = "479"
+            startingLineNumber = "480"
+            endingLineNumber = "480"
             landmarkName = "validateAddOrderOLD(images:name:description:quantity:price:offerPrice:haveOffer:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -888,14 +948,14 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "19CCB1AB-4101-44F9-B494-CEBEB83D0842"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/MyOrders/VM/OrdersVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "463"
-            endingLineNumber = "463"
+            startingLineNumber = "464"
+            endingLineNumber = "464"
             landmarkName = "validateAddOrderOLD(images:name:description:quantity:price:offerPrice:haveOffer:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -904,7 +964,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "287B4E74-A7D9-4DDB-ACE2-D42193D62BAD"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/profile/View/Settings/SettingsView.swift"
@@ -920,7 +980,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "6D5AD030-6D79-4FCB-AFAC-AE755E71E393"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/home/View/ProcessComponent.swift"
@@ -936,7 +996,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "6A3B6533-4A5D-4706-A040-B3073A2E5C37"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/profile/View/Settings/DeveloperKeyBottomSheet.swift"
@@ -952,7 +1012,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "8872350A-78D5-4E8A-8F92-79A0E6117230"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/profile/View/Settings/DeveloperKeyBottomSheet.swift"
@@ -968,7 +1028,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "231F9D6E-1256-475E-980A-52D9C5A014F0"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/profile/View/Settings/DeveloperKeyBottomSheet.swift"
@@ -984,7 +1044,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "2A67E53A-C273-416E-8C58-13A368965E50"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/MyOrders/V/ViewOrderCycle/OrderBusinessDetailsViewNew.swift"
@@ -1000,7 +1060,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "14FFBFCD-516E-4E8F-A5F5-31C80499AF28"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Application/Constants.swift"
@@ -1016,7 +1076,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "BCDEA35C-770F-4F78-9B3A-E0105D446E21"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetails.swift"
@@ -1032,7 +1092,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "DB499896-4AC2-4AAA-8332-86E1D2EF226F"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/profile/View/OrdersLinkes/MerchantOrderCycle/ShowOffer/OrderLinkDetailsView.swift"
@@ -1048,7 +1108,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "7FFA5C1E-EC17-4EC8-8D07-CC9CB82F4D95"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetails.swift"
@@ -1064,7 +1124,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "DD5E1181-2AD6-40DE-8A66-62D51C29F455"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/MyOrders/V/ViewOrderCycle/ImageSlider.swift"
@@ -1096,7 +1156,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "482205BF-337D-46EC-B081-E1FD8D7E67F7"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetailsNew.swift"
@@ -1112,7 +1172,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "77EC835D-4CDC-48F2-93CE-CE2D16FABA47"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/profile/View/OrdersLinkes/ClientOrderCycle/ClientLinkDetailsNew.swift"
@@ -1128,7 +1188,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "A02F8875-BDB9-44D6-A94B-623AB06AFEC8"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Auth/View/Login/LoginSheetView.swift"
@@ -1144,7 +1204,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "F0C3F841-02CD-419D-B5AB-77AE01BF651D"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Auth/View/Login/LoginSheetView.swift"
@@ -1160,7 +1220,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "550FD70D-72B7-4FD9-BE2C-6739660C00CA"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/MyOrders/V/ViewOrderCycle/OrderBusinessDetailsViewNew.swift"
@@ -1176,7 +1236,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "13C6F6D9-FB13-43DF-9236-DED9A059F895"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/MyOrders/V/ViewOrderCycle/OrderBusinessDetailsView.swift"
@@ -1192,7 +1252,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "1308BEA0-343D-4B53-9505-4EEEAB47DCCB"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/home/View/BuyProductBottomSheet.swift"
@@ -1208,7 +1268,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "2B463E57-B922-45C6-AE87-6BEFDB5D437C"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/home/View/BuyProductBottomSheet.swift"
@@ -1223,24 +1283,8 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "3B9655C8-B62D-4FF4-8EBF-93E7DC517A1C"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Dafeaa/Features/Main/Wallet/VM/WalletVM.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "acceptQR(qrCode:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "51AFF776-B570-4EE0-9B0C-7695565C1750"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dafeaa/Features/Main/home/View/Transferes/AddBalanceCardDetailsView.swift"
@@ -1248,6 +1292,38 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "359"
             endingLineNumber = "359"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AB66E20C-30CA-4CDB-AFD0-F98E6E5103BB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Dafeaa/Features/Main/home/View/HomeView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "482"
+            endingLineNumber = "482"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C926A62C-7836-498D-ABEC-B3E526E0F15D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Dafeaa/Features/Main/home/View/QRDeeplinkBottomSheet.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>

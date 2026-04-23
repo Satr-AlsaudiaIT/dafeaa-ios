@@ -11,44 +11,50 @@ import Contacts
 struct EnterPhoneTransferDetailsView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel = HomeVM()
-    
+
     @State var phoneNumber: String
     @State var showPhoneDetails: Bool = false
-    
+
     @State private var amount: String = ""
-    @State private var selectedCountryCode: String = ""
     @State private var phoneError: String = ""
     @State private var amountError: String = ""
+    @State private var reasonError: String = ""
     @State private var hasAttemptedSubmit: Bool = false
     @FocusState private var focusedField: TransferField?
-    
+
+    @State private var selectedReason: TransferReason? = nil
+    @State private var isReasonDropDownOpen: Bool? = false
+
     // Contact picker
     @State private var showContactPicker: Bool = false
     @State private var selectedContactName: String = ""
     @State private var hasSelectedContact: Bool = false
-    
+
     var isFormValid: Bool {
         let amountValue = Double(amount.convertDigitsToEng) ?? 0
         return amountValue > 0 &&
-               !phoneNumber.isEmpty &&
-               phoneNumber.isValidPhone() &&
-               phoneError.isEmpty
+            !phoneNumber.isEmpty &&
+            phoneNumber.isValidPhone() &&
+            selectedReason != nil &&
+            phoneError.isEmpty &&
+            amountError.isEmpty &&
+            reasonError.isEmpty
     }
-    
+
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
                 NavigationBarView(title: "Transfer Details".localized()) {
                     presentationMode.wrappedValue.dismiss()
                 }
-                
+
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 24) {
                         // Amount Input
                         VStack(spacing: 8) {
                             Text("Transfer Amount".localized())
                                 .textModifier(.bold, 17, .black000000)
-                            
+
                             VStack(alignment: .center, spacing: 8) {
                                 HStack {
                                     Image(.riyal)
@@ -60,44 +66,33 @@ struct EnterPhoneTransferDetailsView: View {
                                 }
                                 .padding(.horizontal)
                                 .environment(\.layoutDirection, .rightToLeft)
-                                
+
                                 TextField("0.00", text: $amount)
                                     .keyboardType(.decimalPad)
                                     .multilineTextAlignment(.center)
                                     .textModifier(.plain, 43, .black2B2D33)
                                     .frame(minHeight: 50)
                                     .focused($focusedField, equals: .amount)
-                                    .onChange(of: amount) { _, newValue in
-                                        validateAmountLive(newValue)
-                                    }
-                                
+                                    .onChange(of: amount) { _, newValue in validateAmountLive(newValue) }
+
                                 if !amountError.isEmpty {
-                                    Text(amountError)
-                                        .font(.system(size: 12))
-                                        .foregroundColor(.red)
+                                    Text(amountError).font(.system(size: 12)).foregroundColor(.red)
                                 }
                             }
                         }
                         .padding(.top, 24)
-                        
+
                         // Phone Number Section
                         VStack(alignment: .leading, spacing: 12) {
-                            HStack {
-                                Text("* " + "Phone Number".localized())
-                                    .textModifier(.plain, 14, .black1E1E1E)
-                                
-                                Spacer()
-                                
-                               
-                            }
-                            
-                            // Show Contact Card or Phone Field
+                            Text("* " + "Phone Number".localized())
+                                .textModifier(.plain, 14, .black1E1E1E)
+
                             if hasSelectedContact {
                                 selectedContactCard
                             } else {
                                 phoneInputField
                             }
-                            
+
                             if !phoneError.isEmpty {
                                 Text(phoneError)
                                     .font(.system(size: 12))
@@ -106,23 +101,41 @@ struct EnterPhoneTransferDetailsView: View {
                                     .padding(.top, 4)
                             }
                         }
-                        
+
+                        // ✅ Transfer Reason Dropdown
+                        VStack(alignment: .leading, spacing: 4) {
+                            TransferReasonDropdown(
+                                selectedReason: $selectedReason,
+                                isOpen: $isReasonDropDownOpen
+                            )
+                            .onChange(of: selectedReason) { _, _ in validateReasonLive() }
+
+                            if !reasonError.isEmpty {
+                                Text(reasonError)
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.red)
+                                    .padding(.leading, 8)
+                            }
+                        }
+
                         Spacer()
                     }
                     .padding(.horizontal, 24)
                     .padding(.bottom, 100)
                 }
-                
+
                 Spacer()
-                
-                // Transfer Button
+
                 Button(action: {
                     hasAttemptedSubmit = true
                     validateAmountLive(amount)
                     validatePhoneLive(phoneNumber)
-                    
+                    validateReasonLive()
                     if isFormValid {
-                        viewModel.validateTransferAmount(phone: phoneNumber.normalizePhoneNumber, amount: amount)
+                        viewModel.validateTransferAmount(
+                            phone: phoneNumber.normalizePhoneNumber,
+                            amount: amount
+                        )
                     }
                 }) {
                     Text("Transfer".localized())
@@ -151,7 +164,8 @@ struct EnterPhoneTransferDetailsView: View {
                 balance: String(format: "%.1f", Constants.availableAmount),
                 phoneNumber: phoneNumber.normalizePhoneNumber,
                 amount: amount,
-                name: selectedContactName.isEmpty ? viewModel.userNameOfPhone : selectedContactName
+                name: selectedContactName.isEmpty ? viewModel.userNameOfPhone : selectedContactName,
+                reason: selectedReason?.localized ?? ""
             )
         }
         .sheet(isPresented: $showContactPicker) {
@@ -161,27 +175,19 @@ struct EnterPhoneTransferDetailsView: View {
         }
         .onChange(of: showContactPicker) { _, isShowing in
             if !isShowing && !phoneNumber.isEmpty {
-                phoneNumber = phoneNumber.replacingOccurrences(of: " ", with: "")
-                phoneNumber = phoneNumber.replacingOccurrences(of: "-", with: "")
-                
-                if !selectedContactName.isEmpty {
-                    hasSelectedContact = true
-                }
+                phoneNumber = phoneNumber
+                    .replacingOccurrences(of: " ", with: "")
+                    .replacingOccurrences(of: "-", with: "")
+                if !selectedContactName.isEmpty { hasSelectedContact = true }
             }
         }
-        .onAppear {
-            amount = ""
-        }
+        .onAppear { amount = "" }
         .onChange(of: viewModel.isUserFound) { _, newValue in
-            if newValue {
-                showPhoneDetails = true
-            }
+            if newValue { showPhoneDetails = true }
         }
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
-                Button("Done".localized()) {
-                    hideKeyboard()
-                }
+                Button("Done".localized()) { hideKeyboard() }
                 Spacer()
                 Button { showPreviousField() } label: {
                     Image(systemName: "chevron.up").foregroundColor(.blue)
@@ -192,32 +198,26 @@ struct EnterPhoneTransferDetailsView: View {
             }
         }
     }
-    
-    // MARK: - Contact Card View (Matching Screenshot Design)
+
+    // MARK: - Contact Card
     private var selectedContactCard: some View {
         HStack(spacing: 12) {
-            // Person Icon (Simple outlined person icon)
             Image(systemName: "person")
                 .font(.system(size: 22))
                 .foregroundColor(.primaryF9CE29)
-            
-            // Contact Info
+
             VStack(alignment: .leading, spacing: 2) {
                 Text(selectedContactName)
                     .font(.system(size: 16, weight: .regular))
                     .foregroundColor(.black000000)
-                
                 Text(phoneNumber)
                     .font(.system(size: 14, weight: .regular))
                     .foregroundColor(.black000000)
             }
-            
+
             Spacer()
-            
-            // X Button
-            Button {
-                clearContact()
-            } label: {
+
+            Button { clearContact() } label: {
                 Image(systemName: "xmark")
                     .font(.system(size: 18, weight: .medium))
                     .foregroundColor(.black)
@@ -228,14 +228,10 @@ struct EnterPhoneTransferDetailsView: View {
         .padding(.vertical, 14)
         .background(Color(.primary).opacity(0.1))
         .cornerRadius(15)
-        .overlay(
-            RoundedRectangle(cornerRadius: 15)
-                .stroke(Color(.primary), lineWidth: 1.5)
-        )
-        .cornerRadius(8)
+        .overlay(RoundedRectangle(cornerRadius: 15).stroke(Color(.primary), lineWidth: 1.5))
     }
-    
-    // MARK: - Phone Input Field (When no contact selected)
+
+    // MARK: - Phone Input Field
     private var phoneInputField: some View {
         ZStack {
             HStack(spacing: 12) {
@@ -246,16 +242,11 @@ struct EnterPhoneTransferDetailsView: View {
                     keyboardType: .phonePad,
                     fieldType: .none,
                     onFocusChange: { focused in
-                        if focused {
-                            focusedField = .phone
-                        } else if focusedField == .phone {
-                            focusedField = nil
-                        }
+                        if focused { focusedField = .phone }
+                        else if focusedField == .phone { focusedField = nil }
                     }
                 )
-                .onChange(of: phoneNumber) { _, newValue in
-                    validatePhoneLive(newValue)
-                }
+                .onChange(of: phoneNumber) { _, newValue in validatePhoneLive(newValue) }
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 14)
@@ -265,82 +256,64 @@ struct EnterPhoneTransferDetailsView: View {
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(focusedField == .phone ? Color(.primary) : Color.clear, lineWidth: 1)
             )
-            
+
             HStack {
                 Spacer()
-                Button {
-                    showContactPicker = true
-                } label: {
-                    HStack(spacing: 6) {
-                        Image(.getcontacts)
-                    }
+                Button { showContactPicker = true } label: {
+                    Image(.getcontacts)
                 }
                 .padding(.trailing, 10)
             }
         }
     }
 
- 
-
-    // MARK: - Helper Functions
+    // MARK: - Helpers
     private func clearContact() {
         hasSelectedContact = false
         selectedContactName = ""
         phoneNumber = ""
         phoneError = ""
     }
-    
-    // MARK: - Validation Functions
+
+    // MARK: - Validation
     private func validateAmountLive(_ value: String) {
         if hasAttemptedSubmit || !value.isEmpty {
-            let amountValue = Double(value.convertDigitsToEng) ?? 0
-            if value.isEmpty || amountValue <= 0 {
-                amountError = "amount_validation".localized()
-            } else {
-                amountError = ""
-            }
+            let v = Double(value.convertDigitsToEng) ?? 0
+            amountError = (value.isEmpty || v <= 0) ? "amount_validation".localized() : ""
         }
     }
-    
-    
 
-    
     private func validatePhoneLive(_ value: String) {
-        let phoneNumber = phoneNumber.normalizePhoneNumber
-       
-        if hasAttemptedSubmit || !phoneNumber.isEmpty {
-            if phoneNumber.isEmpty {
-                phoneError = "enterPhone".localized()
-            } else if !phoneNumber.isValidPhone() {
-                phoneError = "enterValidPhone".localized()
-            } else {
-                phoneError = ""
-            }
+        let normalized = phoneNumber.normalizePhoneNumber
+        if hasAttemptedSubmit || !normalized.isEmpty {
+            if normalized.isEmpty { phoneError = "enterPhone".localized() }
+            else if !normalized.isValidPhone() { phoneError = "enterValidPhone".localized() }
+            else { phoneError = "" }
         }
     }
-    
+
+    private func validateReasonLive() {
+        if hasAttemptedSubmit || selectedReason != nil {
+            reasonError = selectedReason == nil ? "select_transfer_reason".localized() : ""
+        }
+    }
+
     // MARK: - Keyboard Navigation
     private func showNextField() {
         switch focusedField {
-        case .amount:
-            if !hasSelectedContact {
-                focusedField = .phone
-            }
-        case .phone: focusedField = nil
-        default: break
+        case .amount: if !hasSelectedContact { focusedField = .phone }
+        case .phone:  focusedField = nil
+        default:      break
         }
     }
-    
+
     private func showPreviousField() {
         switch focusedField {
-        case .phone: focusedField = .amount
+        case .phone:  focusedField = .amount
         case .amount: focusedField = nil
-        default: break
+        default:      break
         }
     }
 }
 
-enum TransferField {
-    case amount, phone
-}
-
+enum TransferField { case amount, phone }

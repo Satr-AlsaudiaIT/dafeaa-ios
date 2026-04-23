@@ -9,7 +9,7 @@ protocol HomeAPIProtocol {
     func wallet(skip: Int, Completion: @escaping (Result<WalletModel?, NSError>) -> Void)
     func operations(skip: Int, Completion: @escaping (Result<WalletModel?, NSError>) -> Void)
     func processApplePay(amount: Int, token: String, Completion: @escaping (Result<ApplePayResponse?, NSError>) -> Void)
-    func generateQR(amount: String, Completion: @escaping (Result<QRCodeModel?, NSError>) -> Void)
+    func generateQR(amount: String,reason: String, Completion: @escaping (Result<QRCodeModel?, NSError>) -> Void)
     func cancelQR(qrCode: String, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func checkQRStatus(qrCode: String, Completion: @escaping (Result<QRStatusModel?, NSError>) -> Void)
     func acceptQR(qrCode: String, Completion: @escaping (Result<AcceptQRResponse?, NSError>) -> Void) 
@@ -41,8 +41,8 @@ class HomeAPI: BaseAPI<HomeNetwork>, HomeAPIProtocol
          }
      }
  
-    func generateQR(amount: String, Completion: @escaping (Result<QRCodeModel?, NSError>) -> Void) {
-        self.fetchData(target: .generateQR(amount: amount), responseClass: QRCodeModel.self) { result in
+    func generateQR(amount: String,reason: String, Completion: @escaping (Result<QRCodeModel?, NSError>) -> Void) {
+        self.fetchData(target: .generateQR(amount: amount,reason: reason), responseClass: QRCodeModel.self) { result in
             Completion(result)
         }
     }

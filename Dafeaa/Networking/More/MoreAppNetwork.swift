@@ -30,7 +30,7 @@ enum MoreNetwork
     case selectSubscriptionPlan(id: Int)
     case updateSecretKey
     case getNameFromPhone(phone:String)
-    case confirmTransfer(phone:String, amount:Double)
+    case confirmTransfer(phone:String, amount:Double,reason: String)
     case getTaxRecord
     case addTaxRecord(taxNumber: String)
     case deleteTaxRecord
@@ -109,8 +109,8 @@ extension MoreNetwork: TargetType
             return .requestParameters(Parameters: dic, encoding: JSONEncoding.default)
         case let .addAmountToWallet(dic):
                   return .requestParameters(Parameters: dic, encoding: JSONEncoding.default)
-        case let .confirmTransfer(phone, amount):
-            return .requestParameters(Parameters: ["phone": phone,"amount":amount], encoding: JSONEncoding.default)
+        case let .confirmTransfer(phone, amount,reason):
+            return .requestParameters(Parameters: ["phone": phone,"amount":amount,"reason":reason], encoding: JSONEncoding.default)
         case .getTaxRecord, .deleteTaxRecord:
                 return .requestPlain
         case .addTaxRecord(let taxNumber):

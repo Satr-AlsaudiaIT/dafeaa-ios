@@ -24,44 +24,55 @@ struct QRPaymentBottomSheet: View {
     @State private var currentQRCode: String = ""
     @State private var checkStatusQRCode: String = ""
     @State private var pollingTimer: Timer? = nil
-    @State private var showResult: Bool = false
-    @State private var paymentSuccess: Bool = false
     @State private var showQRSuccess: Bool = false
     @State private var showQRFailure: Bool = false
     @State private var toast: FancyToast? = nil
     @StateObject private var timerManager = QRTimerManager()
     @State private var remainingSecondsTemp: Int = 120
-    
+
+    @State private var selectedReason: TransferReason? = nil
+    @State private var isReasonDropDownOpen: Bool? = false
+
     var body: some View {
-        VStack(spacing: 0) {
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 0) {
             Text("quick_payment".localized())
                 .textModifier(.bold, 24, .black222222)
-
+            
             Text(subtitleText)
                 .textModifier(.plain, 16, .black222222)
                 .padding(.top, 6)
                 .padding(.bottom, 32)
-
+            
             ZStack {
                 RoundedRectangle(cornerRadius: 16)
                     .stroke(style: StrokeStyle(lineWidth: 2, dash: [8]))
                     .fill(.grayF3F3F6)
                     .frame(width: 256, height: 256)
-
+                
                 qrBoxContent
             }
             .frame(width: 256, height: 256)
             .padding(.bottom, 8)
-
-            amountField
-                .padding(.horizontal, 24)
-                .padding(.top, 36)
-                .padding(.bottom, 26)
-
+            
+            VStack(spacing: 0) {
+                TransferReasonDropdown(
+                    selectedReason: $selectedReason,
+                    isOpen: $isReasonDropDownOpen
+                )                    .padding(.top, 30)
+                
+                amountField
+                
+                    .padding(.top, 25)
+            }
+            .padding(.horizontal, 24)
+            .padding(.bottom, 26)
+            
             actionButton
                 .padding(.horizontal, 24)
                 .padding(.bottom, 32)
-        }
+            }.padding(.top,20)
+    }
         .background(Color.white)
         .cornerRadius(24, corners: [.topLeft, .topRight])
         .onDisappear { stopAllTimers() }
@@ -73,11 +84,10 @@ struct QRPaymentBottomSheet: View {
             checkStatusQRCode = data.qrCode ?? ""
             qrImage           = makeQRImage(from: currentQRCode)
             qrState           = .scanning
-            let seconds = data.expiresTime ?? 120
+            let seconds       = data.expiresTime ?? 120
             remainingSecondsTemp = seconds
             startCountdown()
             startPolling()
-
         }
         .onChange(of: timerManager.remainingSeconds) { _, val in
             if val <= 0 && qrState == .scanning {
@@ -88,11 +98,8 @@ struct QRPaymentBottomSheet: View {
         .onChange(of: viewModel.qrStatusResult) { _, status in
             guard let status = status else { return }
             stopAllTimers()
-            if status == "completed" {
-                showQRSuccess = true
-            } else {
-                showQRFailure = true
-            }
+            showQRSuccess = status == "completed"
+            showQRFailure = status != "completed"
             viewModel.qrStatusResult = nil
         }
         .onChange(of: viewModel.isQRCancelled) { _, _ in
@@ -108,7 +115,8 @@ struct QRPaymentBottomSheet: View {
                 get: { showQRSuccess || showQRFailure },
                 set: { _ in }
             ),
-            detents: [.fraction(0.55)]        ) {
+            detents: [.fraction(0.55)]
+        ) {
             VStack(spacing: 20) {
                 Image(showQRSuccess ? .transferSuccess : .transferFailed)
                     .resizable()
@@ -124,26 +132,24 @@ struct QRPaymentBottomSheet: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 16)
 
-                
-                    Button {
-                        UIApplication.shared.dismissAllPresentedViewControllers {
-                            if showQRSuccess { onNavigateToWallet?()}
-                        }
-                    } label: {
-                        Text("close".localized())
-                            .textModifier(.bold, 16, .white)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 52)
-                            .background(Color.black222222)
-                            .cornerRadius(26)
+                Button {
+                    UIApplication.shared.dismissAllPresentedViewControllers {
+                        if showQRSuccess { onNavigateToWallet?() }
                     }
-                    .padding(.horizontal, 24)
-                    .padding(.top, 8)                
+                } label: {
+                    Text("close".localized())
+                        .textModifier(.bold, 16, .white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 52)
+                        .background(Color.black222222)
+                        .cornerRadius(26)
+                }
+                .padding(.horizontal, 24)
+                .padding(.top, 8)
             }
             .padding(.top, 32)
             .padding(.bottom, 40)
             .interactiveDismissDisabled(true)
-
         }
     }
 
@@ -163,7 +169,7 @@ struct QRPaymentBottomSheet: View {
         return String(format: "%02d:%02d", m, s)
     }
 
-    // MARK: - QR Box Content
+    // MARK: - QR Box
 
     @ViewBuilder
     private var qrBoxContent: some View {
@@ -182,7 +188,6 @@ struct QRPaymentBottomSheet: View {
                     Text("wait_enter_amount".localized())
                         .textModifier(.plain, 12, .gray667085)
                 }
-
             case .scanning:
                 if !currentQRCode.isEmpty {
                     QRCodeView(text: currentQRCode)
@@ -190,7 +195,6 @@ struct QRPaymentBottomSheet: View {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .gray))
                 }
-
             case .expired:
                 Button { generateQRCode() } label: {
                     VStack(spacing: 8) {
@@ -207,7 +211,7 @@ struct QRPaymentBottomSheet: View {
         }
     }
 
-    // MARK: - Amount TextField
+    // MARK: - Amount Field
 
     private var amountField: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -234,8 +238,8 @@ struct QRPaymentBottomSheet: View {
                 Image(.riyal).renderingMode(.template)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .foregroundColor(.grayBDBDBD)
-                    .frame(width: 32, height: 33)
+                    .foregroundColor(.black000000)
+                    .frame(width: 18, height: 18)
             }
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
@@ -253,8 +257,8 @@ struct QRPaymentBottomSheet: View {
 
     private var isActionDisabled: Bool {
         let normalized = amountText.westernDigits
-        return qrState == .enterAmount &&
-        (normalized.isEmpty || Double(normalized) == nil || (Double(normalized) ?? 0) <= 0)
+        let hasAmount  = !normalized.isEmpty && (Double(normalized) ?? 0) > 0
+        return qrState == .enterAmount && (!hasAmount || selectedReason == nil)
     }
 
     private var actionButton: some View {
@@ -301,9 +305,11 @@ struct QRPaymentBottomSheet: View {
 
     private func generateQRCode() {
         guard let amount = Double(amountText.westernDigits), amount > 0 else { return }
+        guard selectedReason != nil else { return }
         stopAllTimers()
         qrImage = nil
-        viewModel.generateQR(amount: amountText.westernDigits)
+        viewModel.generateQR(amount: amountText.westernDigits,
+                             reason: selectedReason?.localized ?? "")
     }
 
     private func cancelProcess() {
@@ -311,25 +317,24 @@ struct QRPaymentBottomSheet: View {
         if !checkStatusQRCode.isEmpty {
             viewModel.cancelQR(qrCode: checkStatusQRCode)
         }
-        qrState           = .enterAmount
-        qrImage           = nil
-        currentQRCode     = ""
-        checkStatusQRCode = ""
+        qrState              = .enterAmount
+        qrImage              = nil
+        currentQRCode        = ""
+        checkStatusQRCode    = ""
         remainingSecondsTemp = 120
+        selectedReason       = nil
     }
 
     // MARK: - Timers
 
-    private func startCountdown() {
-        timerManager.start(seconds: remainingSecondsTemp)
-    }
+    private func startCountdown() { timerManager.start(seconds: remainingSecondsTemp) }
 
     private func stopAllTimers() {
         timerManager.stop()
         pollingTimer?.invalidate()
         pollingTimer = nil
     }
-    
+
     private func startPolling() {
         pollingTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
             guard !self.checkStatusQRCode.isEmpty else { return }
@@ -352,4 +357,3 @@ struct QRPaymentBottomSheet: View {
         return UIImage(cgImage: cgImage)
     }
 }
-

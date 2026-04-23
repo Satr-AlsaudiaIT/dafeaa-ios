@@ -12,7 +12,7 @@ enum HomeNetwork {
     case wallet(skip: Int)
     case operations(skip: Int)
     case applePay(amount: Int, token: String)
-    case generateQR(amount: String)
+    case generateQR(amount: String, reason: String)
     case cancelQR(qrCode: String)
     case checkQRStatus(qrCode: String)
     case acceptQR(qrCode: String)
@@ -60,8 +60,8 @@ extension HomeNetwork: TargetType {
                 "token": token
             ]
             return .requestParameters(Parameters:  parameters, encoding: JSONEncoding.default)
-        case .generateQR(let amount):
-            return .requestParameters(Parameters: ["amount": amount], encoding: JSONEncoding.default)
+        case .generateQR(let amount, let reason):
+            return .requestParameters(Parameters: ["amount": amount, "reason": reason], encoding: JSONEncoding.default)
         default:
             return .requestPlain
         }

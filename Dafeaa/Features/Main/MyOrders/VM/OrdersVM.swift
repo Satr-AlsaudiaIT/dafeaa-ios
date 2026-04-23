@@ -227,7 +227,8 @@ final class OrdersVM : ObservableObject {
             shippingCommission: shippingCommision,
             isFreeShipping: isFreeShipping,
             netValue: netValue,
-            shippingCost: shippingCost
+            shippingCost: shippingCost,
+            canCancel: ordersModelV3.data?.canCancel ?? false
             
         )
         

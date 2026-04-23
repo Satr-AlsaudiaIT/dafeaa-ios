@@ -134,7 +134,7 @@ struct OrderBusinessDetailsView: View {
                                     }
                                 }
                                 else if orderData.orderStatus ?? 0 == 2 {
-                                    ReusableButton(buttonText: "Cancel".localized(),isEnabled: true){
+                                    ReusableButton(buttonText: "Cancel".localized(),isEnabled: orderData.canCancel ?? false){
                                         isCancelTapped = true
                                     }
                                     //                                    ReusableButton(buttonText: "onWay".localized(),isEnabled: true,buttonColor: .yellow){

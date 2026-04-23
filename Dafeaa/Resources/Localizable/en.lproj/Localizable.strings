@@ -625,3 +625,11 @@
 "waiting_payment"              = "Waiting for payment to complete...";
 "confirm_payment_biometric"    = "Confirm payment with Face ID or Touch ID";
 "authenticate_to_continue"     = "Open to login";
+"transfer_reason_personal" = "Personal Transfer";
+"transfer_reason_friend_family" = "Transfer to Friend or Family";
+"transfer_reason_debt" = "Debt Repayment";
+"transfer_reason_service" = "Service Payment";
+"transfer_reason_gift" = "Gift";
+"transfer_reason_other" = "Other";
+"transfer_reason" = "Transfer Reason";
+"select_transfer_reason" = "Select Transfer Reason";

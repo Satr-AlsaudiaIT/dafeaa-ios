@@ -27,7 +27,7 @@ struct DropdownSearchTF: View {
     @State var height : CGFloat = 48
     @State var radius :CGFloat = 5
     @State var titleSize: CGFloat = 14
-    @State var image : UIImage = UIImage()
+    @State var image : UIImage? = nil
     var filteredItems: [String] {
         if searchTerm.isEmpty {
             return options
@@ -52,11 +52,15 @@ struct DropdownSearchTF: View {
                 VStack {
                     ZStack {
                         HStack {
-                            Image(uiImage: image)
-                                .renderingMode(.template)
-                                .foregroundColor(Color.yellow)
-                                .frame(width: 20, height: 20)
-                                .padding(.leading,20)
+                            if let image {
+                                Image(uiImage: image)
+                                    .renderingMode(.template)
+                                    .foregroundColor(Color.yellow)
+                                    .frame(width: 20, height: 20)
+                                    .padding(.leading, 20)
+                            } else {
+                                Spacer().frame(width: 16)  
+                            }
                             TextField("", text: selection == "" && !(isOpen ?? false ) ? $searchEmpty: $searchTerm, onEditingChanged: { (editingChanged) in
                                 self.active =  editingChanged ? true:false
                                 self.isOpen = editingChanged ? true:false

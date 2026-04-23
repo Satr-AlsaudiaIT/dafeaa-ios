@@ -27,7 +27,7 @@ protocol MoreAPIProtocol {
     func selectSubscriptionPlan(id:Int, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func updateSecretKey(Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
     func getNameFromPhone(phone:String, Completion: @escaping (Result<GetNameFromPhoneModel?, NSError>) -> Void)
-    func confirmTransfer(phone:String,amount:Double ,Completion: @escaping (Result<ConfirmTransferModel?, NSError>) -> Void)
+    func confirmTransfer(phone:String,amount:Double, reason: String ,Completion: @escaping (Result<ConfirmTransferModel?, NSError>) -> Void)
     func getTaxRecord(completion: @escaping (Result<TaxRecordModel?, NSError>) -> Void)
     func addTaxRecord(taxNumber: String, completion: @escaping (Result<TaxRecordModel?, NSError>) -> Void)
     func deleteTaxRecord(completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
@@ -149,8 +149,8 @@ class MoreAPI: BaseAPI<MoreNetwork>, MoreAPIProtocol
         }
         
     }
-    func confirmTransfer(phone:String,amount:Double ,Completion: @escaping (Result<ConfirmTransferModel?, NSError>) -> Void) {
-        self.fetchData(target: .confirmTransfer(phone: phone, amount: amount), responseClass: ConfirmTransferModel.self) { (result) in
+    func confirmTransfer(phone:String, amount: Double, reason: String, Completion: @escaping (Result<ConfirmTransferModel?, NSError>) -> Void) {
+        self.fetchData(target: .confirmTransfer(phone: phone, amount: amount,reason: reason), responseClass: ConfirmTransferModel.self) { (result) in
             Completion(result)
         }
     }

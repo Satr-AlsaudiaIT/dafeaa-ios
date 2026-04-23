@@ -143,8 +143,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
               let incomingURL = userActivity.webpageURL else {
             return false
         }
-        
-        deepLink(url: incomingURL)
+        NotificationConfigration.shared.firebaseConfigration {
+            DispatchQueue.main.async {
+                self.deepLink(url: incomingURL)
+            }
+        }
         return true
     }
     

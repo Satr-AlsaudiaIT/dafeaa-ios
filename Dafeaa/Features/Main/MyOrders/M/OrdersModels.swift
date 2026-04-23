@@ -59,6 +59,7 @@ struct OrderData: Codable, Identifiable {
     let isFreeShipping: Bool?
     let netValue: Double?
     let shippingCost : Double?
+    let canCancel: Bool?
     
     init(
         id: Int? = nil,
@@ -90,7 +91,8 @@ struct OrderData: Codable, Identifiable {
         shippingCommission: Double? = nil,
         isFreeShipping: Bool? = nil,
         netValue: Double? = nil,
-        shippingCost : Double? = nil
+        shippingCost : Double? = nil,
+        canCancel: Bool? = nil
         
     ) {
         self.id = id
@@ -123,6 +125,7 @@ struct OrderData: Codable, Identifiable {
         self.isFreeShipping = isFreeShipping
         self.netValue = netValue
         self.shippingCost = shippingCost
+        self.canCancel = canCancel
     }
 }
 
@@ -190,6 +193,7 @@ struct OrdersDataV3: Codable {
     let userEmail: String?
     let qrCode: String?
     let canceledBy: String?
+    let canCancel: Bool?
     let address: String?
     let postalCode: String?
     let cityName: String?

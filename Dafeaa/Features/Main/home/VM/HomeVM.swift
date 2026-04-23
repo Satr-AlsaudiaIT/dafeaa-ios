@@ -29,9 +29,9 @@ class HomeVM: ObservableObject {
     @Published var qrCodeData      : QRCodeModel? = nil
     @Published var isQRGenerated   : Bool = false
     @Published var isQRCancelled  : Bool = false
-
+    
     @Published var qrStatusResult  : String? = nil
-
+    
     private var _message                   : String = ""
     private var token                      = ""
     let api                                : HomeAPIProtocol = HomeAPI()
@@ -51,12 +51,12 @@ class HomeVM: ObservableObject {
     @Published var isUserFound: Bool = false
     @Published var isTransferSuccess: Bool = false
     @Published var isTransferFailed: Bool = false
-
+    
     @Published var transferData: ConfirmTransferData = ConfirmTransferData()
     @Published var _isApplePaySuccess = false
-      @Published var applePayTransactionId: String = ""
-      @Published var applePayStatus: String = ""
-      @Published var applePayAmount: Int = 0
+    @Published var applePayTransactionId: String = ""
+    @Published var applePayStatus: String = ""
+    @Published var applePayAmount: Int = 0
     
     //MARK: - APIs
     
@@ -76,7 +76,7 @@ class HomeVM: ObservableObject {
                 self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
             }
         }
-
+        
     }
     
     func notificationsList(skip: Int) {
@@ -93,10 +93,10 @@ class HomeVM: ObservableObject {
                 guard let data = Result?.data else { return }
                 
                 self._notificationsCount = Result?.count ?? 0
-                    if skip == 0 {
-                        self._notifications =   data
-                    } else {
-                        self._notifications.append(contentsOf: data)
+                if skip == 0 {
+                    self._notifications =   data
+                } else {
+                    self._notifications.append(contentsOf: data)
                 }
                 
             case .failure(let error):
@@ -108,7 +108,7 @@ class HomeVM: ObservableObject {
         }
     }
     
-    func validateWithdrawAmount(amount: Double, accountName: String, iban: String, mobile: String, city: String) {
+    func validateWithdrawAmount(amount: Double, accountName: String, iban: String, mobile: String, city: String, reason: String) {
         // Get UDID
         guard let udid = UIDevice.current.identifierForVendor?.uuidString else {
             self.toast = FancyToast(type: .error, title: "Error".localized(), message: "Device ID not found".localized())
@@ -130,13 +130,14 @@ class HomeVM: ObservableObject {
                 "name": accountName,
                 "mobile": mobile,
                 "country": "SA",
-                "city": city
+                "city": city,
+                "reason": reason
             ]
         ]
         
         withdrawAmount(dic: dic)
     }
-
+    
     func withdrawAmount(dic: [String: Any]) {
         self._isLoading = true
         api2.withDrawAmount(dic: dic) { [weak self] (Result) in
@@ -209,7 +210,7 @@ class HomeVM: ObservableObject {
             }
         }
     }
-
+    
     func addAmount(amount: Double, cardNumber: String, cardHolderName: String, month: String, year: String, cvv: String) {
         self._isLoading = true
         
@@ -284,12 +285,12 @@ class HomeVM: ObservableObject {
                     self._offerData = data.data
                     self.showOfferSuccess = true
                 case .failure(_):
-                        self.toast = FancyToast(type: .error, title: "Error".localized(), message: "order_not_found".localized())
+                    self.toast = FancyToast(type: .error, title: "Error".localized(), message: "order_not_found".localized())
                 }
             }
         }
     }
-
+    
     func validateTransferAmount(phone:String,amount: String) {
         if phone.isBlank {
             transferToast = FancyToast(type: .error, title: "Error".localized(), message: "enterPhone".localized())
@@ -325,10 +326,10 @@ class HomeVM: ObservableObject {
         }
     }
     
-    func confirmTransfer(phone:String,amount:Double) {
+    func confirmTransfer(phone:String,amount:Double, reason: String) {
         self._isLoading = true
         isUserFound = false
-        api2.confirmTransfer(phone: phone.normalizePhoneNumber, amount: amount) { [weak self] (Result) in
+        api2.confirmTransfer(phone: phone.normalizePhoneNumber, amount: amount, reason: reason) { [weak self] (Result) in
             guard let self = self else { return }
             self._isLoading = false
             switch Result {
@@ -355,78 +356,78 @@ class HomeVM: ObservableObject {
             }
         }
     }
- 
+    
     
     
     func processApplePay(amount: Double, token: String) {
-          self._isLoading = true
-          
-          // Convert amount to halalas (multiply by 100)
-          let amountInHalalas = Int(amount * 100)
-          
-          api.processApplePay(amount: amountInHalalas, token: token) { [weak self] (Result) in
-              guard let self = self else { return }
-              self._isLoading = false
-              
-              switch Result {
-              case .success(let response):
-                  guard let data = response else { return }
-                  
-                  if data.success == true {
-                      // Store transaction details
-                      self.applePayTransactionId = data.transactionId ?? ""
-                      self.applePayStatus = data.status ?? ""
-                      self.applePayAmount = data.amount ?? 0
-                      
-                      // Check if wallet was charged
-                      if data.walletCharged == true {
-                          // Payment successful and wallet charged
-                          self.toast = FancyToast(
-                              type: .success,
-                              title: "Success".localized(),
-                              message: data.message ?? "Payment completed successfully".localized()
-                          )
-
-                          
-                          DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                              self._isApplePaySuccess = true
-                          }
-                      } else {
-                          self.toast = FancyToast(
-                              type: .info,
-                              title: "Info".localized(),
-                              message: data.message ?? "Payment completed but wallet not charged".localized()
-                          )
-                          
-                          DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                              self._isApplePaySuccess = true
-                          }
-                      }
-                  } else {
-                      // Payment failed
-                      self.toast = FancyToast(
-                          type: .error,
-                          title: "Error".localized(),
-                          message: data.message ?? "Apple Pay payment failed".localized()
-                      )
-                  }
-                  
-              case .failure(let error):
-                  self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
-                  self._isLoading = false
-                  self._isFailed = true
-                  self.toast = FancyToast(
-                      type: .error,
-                      title: "Error".localized(),
-                      message: self._message
-                  )
-              }
-          }
-      }
-    
-    func generateQR(amount: String) {
         self._isLoading = true
-        api.generateQR(amount: amount) { [weak self] result in
+        
+        // Convert amount to halalas (multiply by 100)
+        let amountInHalalas = Int(amount * 100)
+        
+        api.processApplePay(amount: amountInHalalas, token: token) { [weak self] (Result) in
+            guard let self = self else { return }
+            self._isLoading = false
+            
+            switch Result {
+            case .success(let response):
+                guard let data = response else { return }
+                
+                if data.success == true {
+                    // Store transaction details
+                    self.applePayTransactionId = data.transactionId ?? ""
+                    self.applePayStatus = data.status ?? ""
+                    self.applePayAmount = data.amount ?? 0
+                    
+                    // Check if wallet was charged
+                    if data.walletCharged == true {
+                        // Payment successful and wallet charged
+                        self.toast = FancyToast(
+                            type: .success,
+                            title: "Success".localized(),
+                            message: data.message ?? "Payment completed successfully".localized()
+                        )
+                        
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            self._isApplePaySuccess = true
+                        }
+                    } else {
+                        self.toast = FancyToast(
+                            type: .info,
+                            title: "Info".localized(),
+                            message: data.message ?? "Payment completed but wallet not charged".localized()
+                        )
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            self._isApplePaySuccess = true
+                        }
+                    }
+                } else {
+                    // Payment failed
+                    self.toast = FancyToast(
+                        type: .error,
+                        title: "Error".localized(),
+                        message: data.message ?? "Apple Pay payment failed".localized()
+                    )
+                }
+                
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(
+                    type: .error,
+                    title: "Error".localized(),
+                    message: self._message
+                )
+            }
+        }
+    }
+    
+    func generateQR(amount: String, reason: String) {
+        self._isLoading = true
+        api.generateQR(amount: amount, reason: reason) { [weak self] result in
             guard let self = self else { return }
             self._isLoading = false
             switch result {
@@ -439,37 +440,35 @@ class HomeVM: ObservableObject {
             }
         }
     }
-
-    func cancelQR(qrCode: String) {
-        self.isQRCancelled = false
-        api.cancelQR(qrCode: qrCode) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success:
-                self.isQRCancelled = true
-                self.toast = FancyToast(type: .success, title: "success".localized(), message:  "payment_cancelled_success".localized())
-                break
-            case .failure(let error):
-                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
-                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
-            }
-        }
-    }
-    
-    func checkQRStatus(qrCode: String) {
-        api.checkQRStatus(qrCode: qrCode) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let response):
-                guard let status = response?.status else { return }
-                if status == "completed" || status == "failed" {
-                    self.qrStatusResult = status
+        func cancelQR(qrCode: String) {
+            self.isQRCancelled = false
+            api.cancelQR(qrCode: qrCode) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success:
+                    self.isQRCancelled = true
+                    self.toast = FancyToast(type: .success, title: "success".localized(), message:  "payment_cancelled_success".localized())
+                    break
+                case .failure(let error):
+                    self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                    self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
                 }
-            case .failure: break
+            }
+        }
+        
+        func checkQRStatus(qrCode: String) {
+            api.checkQRStatus(qrCode: qrCode) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let response):
+                    guard let status = response?.status else { return }
+                    if status == "completed" || status == "failed" {
+                        self.qrStatusResult = status
+                    }
+                case .failure: break
+                }
             }
         }
     }
-}
-
     
 

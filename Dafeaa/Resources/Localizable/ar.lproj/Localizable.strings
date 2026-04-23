@@ -612,3 +612,11 @@
 "waiting_payment"="بانتظار إتمام الدفع...";
 "confirm_payment_biometric" = "تأكيد الدفع ببصمة الإصبع أو الوجه أو الرقم السري";
 "authenticate_to_continue" = "فتح لسجيل الدخول";
+"transfer_reason_personal" = "تحويل شخصي";
+"transfer_reason_friend_family" = "تحويل لصديق أو عائلة";
+"transfer_reason_debt" = "سداد دين";
+"transfer_reason_service" = "دفع مقابل خدمة";
+"transfer_reason_gift" = "هدية";
+"transfer_reason_other" = "أخرى";
+"transfer_reason" = "سبب التحويل";
+"select_transfer_reason" = "اختر سبب التحويل";
