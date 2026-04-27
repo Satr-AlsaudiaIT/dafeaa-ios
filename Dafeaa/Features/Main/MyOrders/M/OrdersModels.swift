@@ -341,6 +341,8 @@ struct AddressModel: Codable, Equatable {
     let id: Int?
     let countryId: Int?
     let countryName: String?
+    let countryCode: String?
+    let postalCode: String?
     let cityId: Int?
     let cityName: String?
     let districtName: String?

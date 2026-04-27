@@ -157,7 +157,7 @@ class BaseAPI<T: TargetType> {
                     }
                     else {
                         let message = result?.message ?? ""
-                        BiometricAuthManager.shared.authenticate(message: message) { success, wasCancelled in
+                        BiometricAuthManager.shared.authenticate(message: "") { success, wasCancelled in
                             guard success else {
                                 if wasCancelled {
                                     DispatchQueue.main.async {

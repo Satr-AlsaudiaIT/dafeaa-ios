@@ -65,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
         Constants.shouldNavigateToWallet = false
         Constants.lastPaymentStatus = ""
         Constants.lastPayoutStatus  = ""
-        NotificationConfigration.shared.firebaseConfigration()
+//        NotificationConfigration.shared.firebaseConfigration()
         //        checkAppAvailability()
         let window = UIWindow()
         self.window = window

@@ -128,7 +128,7 @@ struct ProfileList: View {
 //                .presentationCornerRadius(24)
 //                .presentationDragIndicator(.visible)
 //        })
-        .appBottomSheet(isPresented: $viewModel.showAddTaxRecordBottomSheet, detents: [.fraction(0.45)]){
+        .customBottomSheet(isPresented: $viewModel.showAddTaxRecordBottomSheet, detents: [.fraction(0.45)]){
             TaxRecordBottomSheet(viewModel: viewModel, taxInput: viewModel.taxRecordNumber, dismiss: $viewModel.showAddTaxRecordBottomSheet)
                 .presentationDetents([.height(320)])
                 .presentationDragIndicator(.visible)

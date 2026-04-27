@@ -47,6 +47,8 @@ struct HomeView: View {
     @State var navigateToPhoneTransfer: Bool = false
 
     @State private var isShowingQRPaymentSheet: Bool = false
+    @State private var showQRSelectionSheet: Bool = false
+    @State private var showQRScannerSheet: Bool = false
     @State private var sliderImages: [String] = [(Constants.shared.isAR ? "Ar1":"En1"), (Constants.shared.isAR ? "Ar2":"En2")]
     @State private var isHiddenPageIndicator: Bool = false
     @State private var isWebImage: Bool = false
@@ -137,9 +139,6 @@ struct HomeView: View {
                         .fill(.clear)
                         .frame(height: UIScreen.main.bounds.height * 0.4 - 39)
                     ZStack(alignment: .top) {
-                        
-                        
-
                         ZStack {
                             Color(.white)
     
@@ -148,15 +147,13 @@ struct HomeView: View {
                                     .frame(height: 32)
                                 
                                 ScrollView(showsIndicators: false) {
-                                    
                                     VStack(spacing: 16) {
-                                        
                                         Button {
-                                            isShowingQRPaymentSheet = true
+                                            showQRSelectionSheet = true
                                         } label: {
                                             HStack(spacing: 12) {
                                                 Spacer()
-                                                Image(.qrPrimary) //
+                                                Image(.qrPrimary)
                                                     .resizable()
                                                     .frame(width: 28, height: 28)
                                                 VStack(alignment: .leading, spacing: 2) {
@@ -177,8 +174,11 @@ struct HomeView: View {
                                                     .fill(.primaryF9CE29.opacity(0.1))
                                                     .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 6)
                                             )
-                                        }  .padding(.horizontal, 20)
-                                            .frame(height:60)
+                                        }
+                                        
+                                        .padding(.horizontal, 20)
+                                        .frame(height:60)
+                                        
                                         HStack(spacing:15) {
                                             Button {
                                                 isPresentBuySheet = true
@@ -192,7 +192,6 @@ struct HomeView: View {
                                                             .resizable()
                                                             .frame(width: 28.05, height: 28)
                                                         Spacer(minLength: 2)
-                                                        
                                                     }
                                                     .padding(.vertical,15)
                                                 }
@@ -207,15 +206,15 @@ struct HomeView: View {
                                                         .fill(Color.white)
                                                         .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
                                                 )
-                                            }.frame(height:60)
+                                            }
+                                            .frame(height:60)
+                                            
                                             Button {
                                                 if businessInfo.rawValue == 0 {
                                                     showCompleteDataPopup = true
-                                                }
-                                                else if businessInfo.rawValue == 1 {
+                                                } else if businessInfo.rawValue == 1 {
                                                     navigateToPendingView = true
-                                                }
-                                                else {
+                                                } else {
                                                     navigateToOffers = true
                                                 }
                                             } label: {
@@ -231,11 +230,9 @@ struct HomeView: View {
                                                         Spacer(minLength: 2)
                                                     }
                                                     .padding(.vertical,15)
-                                                    
                                                 }
                                                 .overlay(
                                                     ZStack {
-                                                        
                                                         RoundedRectangle(cornerRadius: 16)
                                                             .stroke(LinearGradient(colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)], startPoint: .top, endPoint: .bottom), lineWidth: 1)
                                                     }
@@ -249,87 +246,20 @@ struct HomeView: View {
                                             .frame(height:60)
                                         }
                                         .padding(.horizontal, 19)
+                                        
                                         SliderView(
                                             images: $sliderImages,
                                             isHiddenPageIndicator: $isHiddenPageIndicator,
                                             isWebImage: $isWebImage,
                                             isIndicatorSeparated: $isIndicatorSeparated,
-                                            widthFraction: 0.9 )
-                                        
+                                            widthFraction: 0.9
+                                        )
                                         .padding(.vertical,16)
                                         .padding(.bottom,20)
                                         .cornerRadius(12)
-                                        //.allowsHitTesting(false)
-                                        
-                                        
-                                        //                                    HStack(spacing: 12) {
-                                        //                                        // Buy Product
-                                        //                                        Button {
-                                        //                                            isPresentBuySheet = true
-                                        //                                        } label: {
-                                        //                                            HStack {
-                                        //                                                Text("buy_product".localized())
-                                        //                                                    .textModifier(.plain, 16, .black222222)
-                                        //                                                Spacer()
-                                        //                                                Image(.buyProduct)
-                                        //                                                    .resizable()
-                                        //                                                    .frame(width: 28, height: 28)
-                                        //                                            }
-                                        //                                            .padding(15)
-                                        //                                            .overlay(
-                                        //                                                RoundedRectangle(cornerRadius: 10)
-                                        //                                                    .stroke(LinearGradient(
-                                        //                                                        colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)],
-                                        //                                                        startPoint: .top,
-                                        //                                                        endPoint: .bottom
-                                        //                                                    ), lineWidth: 1)
-                                        //                                            )
-                                        //                                            .background(
-                                        //                                                RoundedRectangle(cornerRadius: 10)
-                                        //                                                    .fill(Color.white)
-                                        //                                                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
-                                        //                                            )
-                                        //                                        }
-                                        //
-                                        //                                        // Sell Product
-                                        //                                        Button {
-                                        //                                            if businessInfo.rawValue == 0 {
-                                        //                                                showCompleteDataPopup = true
-                                        //                                            } else if businessInfo.rawValue == 1 {
-                                        //                                                navigateToPendingView = true
-                                        //                                            } else {
-                                        //                                                navigateToOffers = true
-                                        //                                            }
-                                        //                                        } label: {
-                                        //                                            HStack {
-                                        //                                                Text("sell_product".localized())
-                                        //                                                    .textModifier(.plain, 16, .black222222)
-                                        //                                                    .lineLimit(nil)
-                                        //                                                Spacer()
-                                        //                                                Image(.sellProduct)
-                                        //                                                    .resizable()
-                                        //                                                    .frame(width: 28, height: 28)
-                                        //                                            }
-                                        //                                            .padding(15)
-                                        //                                            .overlay(
-                                        //                                                RoundedRectangle(cornerRadius: 10)
-                                        //                                                    .stroke(LinearGradient(
-                                        //                                                        colors: [.primaryF9CE29, .primaryF9CE29.opacity(0.2)],
-                                        //                                                        startPoint: .top,
-                                        //                                                        endPoint: .bottom
-                                        //                                                    ), lineWidth: 1)
-                                        //                                            )
-                                        //                                            .background(
-                                        //                                                RoundedRectangle(cornerRadius: 10)
-                                        //                                                    .fill(Color.white)
-                                        //                                                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
-                                        //                                            )
-                                        //                                        }
-                                        //                                    }
                                     }
                                     .padding(.top, 15)
                                 }
-
                                 Spacer()
                             }
                         }
@@ -374,45 +304,42 @@ struct HomeView: View {
                         Color.black.opacity(0.2)
                         VStack {
                             Spacer()
-                           
-                                ZStack {
-                                    Color(.white)
-                                    VStack (spacing: 20){
-                                        HStack {
-                                            Text("merchants_service_title".localized())
-                                                .textModifier(.plain, 16, .gray666666)
-                                            Spacer()
+                            ZStack {
+                                Color(.white)
+                                VStack(spacing: 20) {
+                                    HStack {
+                                        Text("merchants_service_title".localized())
+                                            .textModifier(.plain, 16, .gray666666)
+                                        Spacer()
+                                    }
+                                    .padding(.top)
+                                    Text("merchants_service_body".localized())
+                                        .textModifier(.plain, 14, .gray666666)
+                                        .multilineTextAlignment(.leading)
+                                        .lineLimit(nil)
+                                    HStack {
+                                        Spacer()
+                                        Button {
+                                            showCompleteDataPopup = false
+                                        } label: {
+                                            Text ("Cancel".localized())
+                                                .textModifier(.plain, 14, .gray666666)
                                         }
-                                        .padding(.top)
-                                        Text("merchants_service_body".localized())
-                                            .textModifier(.plain, 14, .gray666666)
-                                            .multilineTextAlignment(.leading)
-                                            .lineLimit(nil)
-                                        HStack {
-                                            Spacer()
-                                            Button {
-                                                showCompleteDataPopup = false
-                                            } label: {
-                                                Text ("Cancel".localized())
-                                                    .textModifier(.plain, 14, .gray666666)
-                                            }
-                                            .padding(.trailing, 20)
-                                            Button {
-                                                navigateToCompleteProfileView = true
-                                                showCompleteDataPopup = false
-                                            } label: {
-                                                Text ("add_data_button".localized())
-                                                    .textModifier(.plain, 14, .primaryF9CE29)
-                                            }
+                                        .padding(.trailing, 20)
+                                        Button {
+                                            navigateToCompleteProfileView = true
+                                            showCompleteDataPopup = false
+                                        } label: {
+                                            Text ("add_data_button".localized())
+                                                .textModifier(.plain, 14, .primaryF9CE29)
                                         }
                                     }
-                                    .padding(20)
                                 }
-                                .frame(width: UIScreen.main.bounds.width - 40)
-                                .cornerRadius(15)
-                                .fixedSize()
-                                
-                            
+                                .padding(20)
+                            }
+                            .frame(width: UIScreen.main.bounds.width - 40)
+                            .cornerRadius(15)
+                            .fixedSize()
                             Spacer()
                         }
                     }
@@ -421,12 +348,9 @@ struct HomeView: View {
                         showCompleteDataPopup = false
                     }
                 }
-              
-
             }
-            
             .toastView(toast: $viewModel.toast)
-            .onAppear{
+            .onAppear {
                 isViewAppeared = true
                 businessInfo = BusinessInfo(rawValue: self.businessInformationStatus ?? 0) ?? .noFilesUploaded
                 if !Constants.sessionFlag {
@@ -441,17 +365,15 @@ struct HomeView: View {
                 if newValue {
                     viewModel.home()
                     profileViewModel.profile()
-                    
                 }
             })
             .navigationDestination(isPresented: $navigateToCompleteProfileView, destination: {
                 CompleteDataView(phone:Constants.phone)
             })
-            
             .onChange(of: profileViewModel.profileData, { oldValue, newValue in
                 businessInfo = BusinessInfo(rawValue: profileViewModel.profileData?.businessInformationStatus ?? 0) ?? .noFilesUploaded
             })
-            .onDisappear{
+            .onDisappear {
                 isViewAppeared = false
             }
             .refreshable {
@@ -469,170 +391,157 @@ struct HomeView: View {
             .navigationDestination(isPresented: $showClientOfferDetails, destination: {
                 ClientLinkDetailsNew(offerData: offerData)
             })
-            
-            .appBottomSheet(isPresented: $isShowingQRPaymentSheet, detents: [.fraction(0.85)]) {
-                          QRPaymentBottomSheet(
-                              isPresented: $isShowingQRPaymentSheet,
-                              onNavigateToWallet: {
-                                  selectedTab = .wallet
-                              }
-                          )
-                      }
-            .appBottomSheet(isPresented: $showQRDeeplinkSheet, detents: [.fraction(0.55)]) {
-                QRDeeplinkBottomSheet(
-                    isPresented: $showQRDeeplinkSheet,
-                    qrCode: $pendingDeeplinkQRCode,
-                    onSuccess: {
-                        selectedTab = .wallet
-                    }
-                )
-            }
-            .appBottomSheet(isPresented: $isPresentBuySheet, detents: [.fraction(0.45)]) {
-                BuyProductBottomSheet(isShowClientLinkDetails: $showClientOfferDetails, isShowOrderLinkDetails: $showOfferDetails, offerData: $offerData,isSheetPresented: $isPresentBuySheet)
-            }
-            .appBottomSheet(isPresented: $isSheetPresented, detents: [.fraction(0.45)]) {
-                AddWithdrawBottomSheet(actionType: $balanceActionType, amountDouble: $amount, isSheetPresented: $isSheetPresented,navigateToWebView: $navigateToWebView,paymentURL: $paymentURL, navigateToWithDrawView: $navigateToWithDrawView, navigateToAddBalance: $navigateToAddBalance)
-                
-            }
-//            .sheet(isPresented: $showTransferBottomSheet, content: {
-//                TransferBottomSheet(isSheetPresented: $showTransferBottomSheet,amount: $transferBalanceAmount,phoneNumber: $transferBalancePhone, name: $transferBalanceName,isNavigateToTransferView: $isNavigateToTransferView)
-//                    .presentationDetents([.fraction(0.4)])
-//                    .presentationCornerRadius(24)
-//                    .presentationDragIndicator(.visible)
-//                    .onAppear{
-//                        transferBalancePhone = ""
-//                        transferBalanceAmount = ""
-//                        transferBalanceName = ""
-//                    }
-//            })
-//            .navigationDestination(isPresented: $isNavigateToTransferView, destination: {
-//                ConfirmTransferView( balance: String(viewModel.walletAmount),phoneNumber: transferBalancePhone, amount: transferBalanceAmount, name: transferBalanceName)
-//            })
             .navigationDestination(isPresented: $navigateToWebView) {
                 PaymentWebViewContainer(url: paymentURL)
             }
-//            .navigationDestination(isPresented: $navigateToWithDrawView) {
-//                WithdrawDetailsView(
-//                    withdrawAmount: amount
-//                )
-//            }
             .navigationDestination(isPresented: $navigateToAddBalance) {
-                AddBalanceCardDetailsView(
-                    addAmount: amount
+                AddBalanceCardDetailsView(addAmount: amount)
+            }
+            .navigationDestination(isPresented: $navigateToIBANTransfer) {
+                WithdrawDetailsView()
+            }
+            .navigationDestination(isPresented: $navigateToPhoneTransfer) {
+                EnterPhoneTransferDetailsView(phoneNumber: "")
+            }
+            
+            // MARK: - Custom Bottom Sheets
+            .customBottomSheet(isPresented: $showQRSelectionSheet, detents: [.fraction(0.42)]) {
+                QRSelectionBottomSheet(
+                    isPresented: $showQRSelectionSheet,
+                    showGenerateQR: $isShowingQRPaymentSheet,
+                    showScanQR: $showQRScannerSheet
                 )
             }
-            .appBottomSheet(isPresented: $showTransferMethodSheet, detents: [.fraction(0.45)]) {
+
+            // MARK: - QR Scanner Sheet
+            .sheet(isPresented: $showQRScannerSheet) {
+                QRCodeScannerViewHome { code in
+                    showQRScannerSheet = false
+                    Constants.quickQrCode = code
+                    Constants.quickQrCode = extractPaymentCode(from: code)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        handleQRCodeIfNeeded()
+                    }
+                }
+            }
+            .customBottomSheet(isPresented: $isShowingQRPaymentSheet, detents: [.fraction(0.85)]) {
+                QRPaymentBottomSheet(
+                    isPresented: $isShowingQRPaymentSheet,
+                    onNavigateToWallet: { selectedTab = .wallet }
+                )
+            }
+            .customBottomSheet(isPresented: $showQRDeeplinkSheet, detents: [.fraction(0.55)], isDismissOnBackgroundTap: false) {
+                QRDeeplinkBottomSheet(
+                    isPresented: $showQRDeeplinkSheet,
+                    qrCode: $pendingDeeplinkQRCode,
+                    onSuccess: { selectedTab = .wallet }
+                )
+            }
+            .customBottomSheet(isPresented: $isPresentBuySheet, detents: [.fraction(0.45)]) {
+                BuyProductBottomSheet(
+                    isShowClientLinkDetails: $showClientOfferDetails,
+                    isShowOrderLinkDetails: $showOfferDetails,
+                    offerData: $offerData,
+                    isSheetPresented: $isPresentBuySheet
+                )
+            }
+            .customBottomSheet(isPresented: $isSheetPresented, detents: [.fraction(0.45)]) {
+                AddWithdrawBottomSheet(
+                    actionType: $balanceActionType,
+                    amountDouble: $amount,
+                    isSheetPresented: $isSheetPresented,
+                    navigateToWebView: $navigateToWebView,
+                    paymentURL: $paymentURL,
+                    navigateToWithDrawView: $navigateToWithDrawView,
+                    navigateToAddBalance: $navigateToAddBalance
+                )
+            }
+            .customBottomSheet(isPresented: $showTransferMethodSheet, detents: [.fraction(0.45)]) {
                 TransferMethodBottomSheet(
                     isSheetPresented: $showTransferMethodSheet,
                     navigateToIBANTransfer: $navigateToIBANTransfer,
                     navigateToPhoneTransfer: $navigateToPhoneTransfer
                 )
             }
-
-            .navigationDestination(isPresented: $navigateToIBANTransfer) {
-                                WithdrawDetailsView()
-            }
-
-            .navigationDestination(isPresented: $navigateToPhoneTransfer) {
-                EnterPhoneTransferDetailsView(phoneNumber: "")
-            }
         }
     }
 }
 
-/// MARK: - QR Deeplink Handling
-extension HomeView {
-    private func handleQRCodeIfNeeded() {
-        let qrCode = Constants.quickQrCode
-        guard !qrCode.isEmpty else { return }
-        authenticateWithBiometrics(qrCode: qrCode)
-    }
-
-    private func authenticateWithBiometrics(qrCode: String) {
-        let context = LAContext()
-        var error: NSError?
-        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
-            authenticateWithPasscode(qrCode: qrCode)
-            return
-        }
-        context.evaluatePolicy(
-            .deviceOwnerAuthenticationWithBiometrics,
-            localizedReason: "confirm_payment_biometric".localized()
-        ) { success, authError in
-            DispatchQueue.main.async {
-                if success {
-                    Constants.quickQrCode = ""
-                    pendingDeeplinkQRCode = qrCode
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                        showQRDeeplinkSheet = true
-                    }
-                } else if let err = authError as? LAError, err.code == .biometryLockout {
-                    authenticateWithPasscode(qrCode: qrCode)
-                }
-            }
-        }
-    }
-
-    private func authenticateWithPasscode(qrCode: String) {
-        let context = LAContext()
-        context.evaluatePolicy(
-            .deviceOwnerAuthentication,
-            localizedReason: "confirm_payment_biometric".localized()
-        ) { success, _ in
-            DispatchQueue.main.async {
-                if success {
-                    Constants.quickQrCode = ""
-                    pendingDeeplinkQRCode = qrCode
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                        showQRDeeplinkSheet = true
-                    }
-                }
-            }
-        }
-    }
-}
 // MARK: - Previews
 #Preview {
     HomeView(selectedTab: .constant(.home))
 }
 
+// MARK: - QR Deeplink Handling
+extension HomeView {
+    private func handleQRCodeIfNeeded() {
+        let qrCode = Constants.quickQrCode
+        guard !qrCode.isEmpty else { return }
+        // Use the shared manager instead of instantiating LAContext directly
+        BiometricAuthManager.shared.authenticate(message: "confirm_payment_biometric".localized()) { success, _ in
+            if success {
+                self.pendingDeeplinkQRCode = qrCode
+                Constants.quickQrCode = ""
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                    self.showQRDeeplinkSheet = true
+                }
+            } else {
+                Constants.quickQrCode = ""
+            }
+        }
+    }
+    
+    private func extractPaymentCode(from scannedString: String) -> String {
+        guard let urlComponents = URLComponents(string: scannedString) else {
+            return scannedString
+        }
+        
+        let pathComponents = urlComponents.path.split(separator: "/")
+        
+        if pathComponents.count >= 2, pathComponents[0] == "payments" {
+            return String(pathComponents[1])
+        }
+        else if pathComponents.count >= 3, pathComponents[0] == "offers", pathComponents[1] == "payments" {
+            return String(pathComponents[2])
+        }
+        
+        return scannedString
+    }
+}
 
 struct LastProcessNavView: View {
-    var title    : String
+    var title: String
     @Binding var selectedTab: TabBarView.Tab
-    var isShow   : Bool = true
+    var isShow: Bool = true
+    
     var body: some View {
-        HStack{
+        HStack {
             Image(.doubleArrow)
             Text(title)
-                .textModifier(.plain, 18, .black1E1E1E
-                )
+                .textModifier(.plain, 18, .black1E1E1E)
             Spacer()
-            if  isShow {
+            if isShow {
                 Button {
-//                    selectedTab = .processes
+                    // selectedTab = .processes
                 } label: {
                     Image(.leftArrow)
-                    
                 }
             }
-            
         }
     }
 }
 
 struct EmptyCostumeView: View {
-    var message  : String = "thereIsNoData".localized()
+    var message: String = "thereIsNoData".localized()
+    
     var body: some View {
-        VStack{
+        VStack {
             Spacer()
             Image(.empty).resizable()
-                .frame(width: 147, height:  132)
+                .frame(width: 147, height: 132)
             Text(message)
-                .textModifier(.plain, 14, .gray919191 )
+                .textModifier(.plain, 14, .gray919191)
             Spacer()
-            
         }
     }
 }
-

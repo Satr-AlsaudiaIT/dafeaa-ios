@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import LocalAuthentication
 
 struct WalletView: View {
     @StateObject var viewModel = WalletVM()
@@ -116,8 +115,7 @@ struct WalletView: View {
                     ProgressView().hidden()
                 }
             }
-
-            .appBottomSheet(isPresented: $isSheetPresented, detents: [.fraction(0.45)]) {
+            .customBottomSheet(isPresented: $isSheetPresented, detents: [.fraction(0.45)]) {
                 AddWithdrawBottomSheet(
                     actionType: $balanceActionType,
                     amountDouble: $amount,
@@ -156,7 +154,7 @@ struct WalletView: View {
             .navigationDestination(isPresented: $navigateToAddBalance) {
                 AddBalanceCardDetailsView(addAmount: amount)
             }
-            .appBottomSheet(isPresented: $showTransferMethodSheet, detents: [.fraction(0.45)]) {
+            .customBottomSheet(isPresented: $showTransferMethodSheet, detents: [.fraction(0.45)]) {
                 TransferMethodBottomSheet(
                     isSheetPresented: $showTransferMethodSheet,
                     navigateToIBANTransfer: $navigateToIBANTransfer,

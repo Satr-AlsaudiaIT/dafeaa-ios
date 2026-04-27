@@ -350,29 +350,37 @@ struct WithdrawDetailsView: View {
     }
 
     private func authenticateWithBiometrics() {
-        let context = LAContext()
-        var error: NSError?
-        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
-            authenticateWithPasscode()
-            return
-        }
-        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "confirm_payment_biometric".localized()) { success, authError in
-            DispatchQueue.main.async {
-                if success { callWithdrawAPI() }
-                else if let err = authError as? LAError, err.code == .biometryLockout { authenticateWithPasscode() }
+
+            BiometricAuthManager.shared.authenticate(message: "confirm_payment_biometric".localized()) { success, _ in
+                if success {
+                    self.callWithdrawAPI()
+                }
             }
         }
-    }
-
-    private func authenticateWithPasscode() {
-        let context = LAContext()
-        context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "confirm_payment_biometric".localized()) { success, _ in
-            DispatchQueue.main.async {
-                if success { callWithdrawAPI() }
-            }
-        }
-    }
-
+        
+//    private func authenticateWithBiometrics() {
+//        let context = LAContext()
+//        var error: NSError?
+//        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
+//            authenticateWithPasscode()
+//            return
+//        }
+//        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "confirm_payment_biometric".localized()) { success, authError in
+//            DispatchQueue.main.async {
+//                if success { callWithdrawAPI() }
+//                else if let err = authError as? LAError, err.code == .biometryLockout { authenticateWithPasscode() }
+//            }
+//        }
+//    }
+//
+//    private func authenticateWithPasscode() {
+//        let context = LAContext()
+//        context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "confirm_payment_biometric".localized()) { success, _ in
+//            DispatchQueue.main.async {
+//                if success { callWithdrawAPI() }
+//            }
+//        }
+//    }
     private func callWithdrawAPI() {
         let amount = Double(withdrawAmount.convertDigitsToEng) ?? 0
         withdrawViewModel.validateWithdrawAmount(

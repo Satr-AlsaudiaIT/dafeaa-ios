@@ -4,13 +4,17 @@
 //
 //  Created by AMNY on 08/04/2026.
 //
-
 import SwiftUI
 
 enum QRPaymentState {
     case enterAmount
     case scanning
     case expired
+}
+
+enum QRPaymentFormField {
+    case reason
+    case amount
 }
 
 struct QRPaymentBottomSheet: View {
@@ -32,47 +36,108 @@ struct QRPaymentBottomSheet: View {
 
     @State private var selectedReason: TransferReason? = nil
     @State private var isReasonDropDownOpen: Bool? = false
+    
+    @FocusState private var focusedField: QRPaymentFormField?
+    
+    @State private var amountError: String = ""
+    @State private var reasonError: String = ""
 
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: 0) {
-            Text("quick_payment".localized())
-                .textModifier(.bold, 24, .black222222)
-            
-            Text(subtitleText)
-                .textModifier(.plain, 16, .black222222)
-                .padding(.top, 6)
-                .padding(.bottom, 32)
-            
-            ZStack {
-                RoundedRectangle(cornerRadius: 16)
-                    .stroke(style: StrokeStyle(lineWidth: 2, dash: [8]))
-                    .fill(.grayF3F3F6)
+        ScrollViewReader { proxy in
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 0) {
+                    Text("quick_payment".localized())
+                        .textModifier(.bold, 24, .black222222)
+                    
+                    Text(subtitleText)
+                        .textModifier(.plain, 16, .black222222)
+                        .padding(.top, 6)
+                        .padding(.bottom, 32)
+                    
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(style: StrokeStyle(lineWidth: 2, dash: [8]))
+                            .fill(.grayF3F3F6)
+                            .frame(width: 256, height: 256)
+                        
+                        qrBoxContent
+                    }
                     .frame(width: 256, height: 256)
-                
-                qrBoxContent
+                    .padding(.bottom, 8)
+                    
+                    VStack(alignment: .leading, spacing: 0) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            TransferReasonDropdown(
+                                selectedReason: $selectedReason,
+                                isOpen: $isReasonDropDownOpen
+                            )
+                            .focused($focusedField, equals: .reason)
+                            .disabled(qrState == .scanning)
+                            .id("ReasonDropdown")
+                            .onChange(of: selectedReason) { _, _ in
+                                reasonError = ""
+                            }
+                            
+                            if !reasonError.isEmpty {
+                                Text(reasonError)
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.red)
+                                    .padding(.top, 2)
+                            }
+                        }
+                        .padding(.top, 30)
+                        
+                        amountField
+                            .id("AmountField")
+                            .padding(.top, 25)
+                    }
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 26)
+                    
+                    actionButton
+                        .padding(.horizontal, 24)
+                        .padding(.bottom, 32)
+                        
+                    if isReasonDropDownOpen == true || focusedField != nil {
+                        Color.clear.frame(height: 350)
+                    }
+                }
+                .padding(.top, 20)
             }
-            .frame(width: 256, height: 256)
-            .padding(.bottom, 8)
-            
-            VStack(spacing: 0) {
-                TransferReasonDropdown(
-                    selectedReason: $selectedReason,
-                    isOpen: $isReasonDropDownOpen
-                )                    .padding(.top, 30)
-                
-                amountField
-                
-                    .padding(.top, 25)
+            .scrollDismissesKeyboard(.interactively)
+            .simultaneousGesture(
+                TapGesture().onEnded {
+                    hideKeyboard()
+                }
+            )
+            .onChange(of: isReasonDropDownOpen) { _, isOpen in
+                if isOpen == true {
+                    focusedField = .reason
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        withAnimation(.easeOut(duration: 0.3)) {
+                            proxy.scrollTo("ReasonDropdown", anchor: .top)
+                        }
+                    }
+                }
             }
-            .padding(.horizontal, 24)
-            .padding(.bottom, 26)
-            
-            actionButton
-                .padding(.horizontal, 24)
-                .padding(.bottom, 32)
-            }.padding(.top,20)
-    }
+            .onChange(of: focusedField) { _, newFocus in
+                if newFocus == .amount {
+                    isReasonDropDownOpen = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        withAnimation(.easeOut(duration: 0.3)) {
+                            proxy.scrollTo("AmountField", anchor: .center)
+                        }
+                    }
+                } else if newFocus == .reason {
+                    isReasonDropDownOpen = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        withAnimation(.easeOut(duration: 0.3)) {
+                            proxy.scrollTo("ReasonDropdown", anchor: .top)
+                        }
+                    }
+                }
+            }
+        }
         .background(Color.white)
         .cornerRadius(24, corners: [.topLeft, .topRight])
         .onDisappear { stopAllTimers() }
@@ -110,12 +175,13 @@ struct QRPaymentBottomSheet: View {
             }
         }
         .toastView(toast: $toast)
-        .appBottomSheet(
+        .customBottomSheet(
             isPresented: Binding(
                 get: { showQRSuccess || showQRFailure },
                 set: { _ in }
             ),
-            detents: [.fraction(0.55)]
+            detents: [.fraction(0.55)],
+            isDismissOnBackgroundTap: false
         ) {
             VStack(spacing: 20) {
                 Image(showQRSuccess ? .transferSuccess : .transferFailed)
@@ -149,7 +215,6 @@ struct QRPaymentBottomSheet: View {
             }
             .padding(.top, 32)
             .padding(.bottom, 40)
-            .interactiveDismissDisabled(true)
         }
     }
 
@@ -221,6 +286,7 @@ struct QRPaymentBottomSheet: View {
             HStack {
                 if #available(iOS 26.0, *) {
                     TextField("0.00", text: $amountText)
+                        .focused($focusedField, equals: .amount)
                         .keyboardType(.decimalPad)
                         .multilineTextAlignment(strategy: .layoutBased)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -228,6 +294,7 @@ struct QRPaymentBottomSheet: View {
                         .disabled(qrState == .scanning)
                 } else {
                     TextField("0.00", text: $amountText)
+                        .focused($focusedField, equals: .amount)
                         .keyboardType(.decimalPad)
                         .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -250,6 +317,16 @@ struct QRPaymentBottomSheet: View {
                     .frame(height: 2),
                 alignment: .bottom
             )
+            .onChange(of: amountText) { _, _ in
+                amountError = ""
+            }
+            
+            if !amountError.isEmpty {
+                Text(amountError)
+                    .font(.system(size: 12))
+                    .foregroundColor(.red)
+                    .padding(.top, 2)
+            }
         }
     }
 
@@ -304,8 +381,21 @@ struct QRPaymentBottomSheet: View {
     }
 
     private func generateQRCode() {
-        guard let amount = Double(amountText.westernDigits), amount > 0 else { return }
-        guard selectedReason != nil else { return }
+        let amount = Double(amountText.westernDigits) ?? 0
+        var hasError = false
+        
+        if amount <= 0 {
+            amountError = "amount_validation".localized()
+            hasError = true
+        }
+        
+        if selectedReason == nil {
+            reasonError = "select_transfer_reason".localized()
+            hasError = true
+        }
+        
+        guard !hasError else { return }
+        
         stopAllTimers()
         qrImage = nil
         viewModel.generateQR(amount: amountText.westernDigits,
@@ -323,6 +413,8 @@ struct QRPaymentBottomSheet: View {
         checkStatusQRCode    = ""
         remainingSecondsTemp = 120
         selectedReason       = nil
+        amountError          = ""
+        reasonError          = ""
     }
 
     // MARK: - Timers
@@ -355,5 +447,12 @@ struct QRPaymentBottomSheet: View {
         let context = CIContext()
         guard let cgImage = context.createCGImage(scaled, from: scaled.extent) else { return nil }
         return UIImage(cgImage: cgImage)
+    }
+
+    private func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        if focusedField != nil {
+            focusedField = nil
+        }
     }
 }

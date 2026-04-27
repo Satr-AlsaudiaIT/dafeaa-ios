@@ -380,7 +380,9 @@
 "tax_record_required" = " الرقم الضريبي مطلوب.";
 "tax_record_numbers_only" = "يجب أن يحتوي الرقم الضريبي على أرقام فقط.";
 "tax_record_invalid" = "الرقم الضريبي غير صالح.";
-
+"delivery_address" = "عنوان التوصيل";
+"mobile_number_label" = "رقم الموبايل:";
+"address_label" = "العنوان:";
 //MARK: - Withdraws
 "withdrawsProcess" = "عمليات سحب الرصيد";
 "withdrawProcess" = "عملية سحب";
@@ -429,7 +431,7 @@
 "Account Name" = "اسم الحساب";
 "ibanValidation" = "يرجى إدخال رقم IBAN";
 "accountNameValidation" = "يرجى إدخال اسم الحساب";
-"invalidSaudiIBAN" = "يرجى إدخال رقم IBAN سعودي صحيح (24 حرف يبدأ بـ SA)";
+"invalidSaudiIBAN" = "رقم الآيبان غير صحيح. يجب أن يبدأ بـ SA متبوعاً بـ 22 رقماً.";
 
 //MARK: - withdraw
 "Payout" = "الدفع";
@@ -620,3 +622,6 @@
 "transfer_reason_other" = "أخرى";
 "transfer_reason" = "سبب التحويل";
 "select_transfer_reason" = "اختر سبب التحويل";
+"pay_or_receive_qr" = "الدفع أو الاستلام عبر QR";
+"generate_qr" = "إنشاء رمز QR";
+"scan_qr" = "مسح رمز QR";

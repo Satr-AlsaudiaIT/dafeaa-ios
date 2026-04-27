@@ -381,7 +381,9 @@
 "tax_record_required" = "Tax number is required.";
 "tax_record_numbers_only" = "Tax number must contain digits only.";
 "tax_record_invalid" = "Tax number is invalid.";
-
+"delivery_address" = "Delivery Address";
+"mobile_number_label" = "Mobile Number:";
+"address_label" = "Address:";
 //MARK: - Withdraws
 "withdrawsProcess" = "Withdrawal Transactions";
 "withdrawProcess" = "Withdrawal Process";
@@ -431,7 +433,7 @@
 "Confirm" = "Confirm";
 "ibanValidation" = "Please enter IBAN number";
 "accountNameValidation" = "Please enter account name";
-"invalidSaudiIBAN" = "Please enter a valid Saudi IBAN (24 characters starting with SA)";
+"invalidSaudiIBAN" = "The IBAN is incorrect. It must start with 'SA' followed by 22 digits.";
 
 //MARK: - Withdraw
 "Payout" = "Payout";
@@ -633,3 +635,6 @@
 "transfer_reason_other" = "Other";
 "transfer_reason" = "Transfer Reason";
 "select_transfer_reason" = "Select Transfer Reason";
+"pay_or_receive_qr" = "Pay or Receive via QR";
+"generate_qr" = "Generate QR Code";
+"scan_qr" = "Scan QR Code";

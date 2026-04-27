@@ -67,7 +67,7 @@ struct AddEditIBANView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         CustomMainTextField(
                             text: $ibanNumber,
-                            placeHolder: "IBAN Number"
+                            placeHolder: "IBAN Number",maxLength: 24
                         )
                         .focused($focusedField, equals: .ibanNumber)
                         .onChange(of: ibanNumber) { _, newValue in
@@ -178,7 +178,7 @@ struct AddEditIBANView: View {
         if isFormValid {
             viewModel.validateIBAN(
                 id: ibanToEdit?.id,
-                iban: ibanNumber,
+                iban: ibanNumber.uppercased(),
                 name: accountName
             )
         }

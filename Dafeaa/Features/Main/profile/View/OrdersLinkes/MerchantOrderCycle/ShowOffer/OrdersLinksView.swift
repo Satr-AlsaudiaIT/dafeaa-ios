@@ -39,7 +39,7 @@ struct OrdersOffersLinksView: View {
                             }
                         }
                         else {
-                        ScrollView {
+                            ScrollView(.vertical, showsIndicators: false) {
                             VStack(spacing: 17) {
                                 // Bind directly to viewModel._offersList
                                 ForEach(viewModel._offersList, id: \.id) { offer in
@@ -93,7 +93,7 @@ struct OrdersOffersLinksView: View {
             isShowActionBottomSheet = false
             viewModel._isSuccess = false
         })
-            .appBottomSheet(isPresented: $isShowActionBottomSheet, detents: [.fraction(0.32)]) {
+            .customBottomSheet(isPresented: $isShowActionBottomSheet, detents: [.fraction(0.32)]) {
             BottomSheetLinkActionsView(offer: selectedOffer, toast: $toast, isShow: $isShowActionBottomSheet, onDelete: {
                 viewModel.deleteOffer(id: selectedOffer?.id ?? 0)
             }

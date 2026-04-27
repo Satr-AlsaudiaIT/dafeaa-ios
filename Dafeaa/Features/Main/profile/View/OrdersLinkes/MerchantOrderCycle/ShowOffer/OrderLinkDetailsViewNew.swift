@@ -252,12 +252,18 @@ struct OrderLinkDetailsViewNew: View {
                                             selectedCompany: $selectedShippingCompany,
                                             availableCompanies: shippingCompanies,
                                             showRadioButtons: false
-                                        )
+                                        ).padding(1)
                                         .padding(.top, 8)
                                     }
                                     
                                     if let data = viewModel.offersData {
                                         OfferPriceBreakdownView(offerData: data)
+                                            .padding(1)
+                                        if data.address != nil {
+                                            DeliveryAddressView(offerData: data)
+                                                .padding(.top, 8)
+                                                .padding(1)
+                                        }
                                     }
                                     
                                     //                                PaymentInfoView(breakdown: PaymentDetails(commission: Double(linkDetails.commissionRatio ?? "0" ) ?? 0, commissionMaxPrice: Double(linkDetails.maxCommissionValue ?? "0") ?? 0),isMerchantOfferDetails: true, itemsPrice: $totalPrice)
@@ -729,4 +735,67 @@ struct OfferPriceBreakdownView: View {
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
+}
+// MARK: - DeliveryAddressView
+struct DeliveryAddressView: View {
+    let offerData: ShowOfferData
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            Text("delivery_address".localized())
+                .textModifier(.bold, 16, .black222222)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(alignment: .top, spacing: 4) {
+                    Text("address_label".localized())
+                        .textModifier(.bold, 13, .gray979797)
+                    
+                    Text(buildConcatenatedAddress(model: offerData.address))
+                        .textModifier(.bold, 13, .gray979797)
+                        .lineLimit(nil)
+                }
+            }
+            .padding(16)
+            .padding(.horizontal,5)
+
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            .cornerRadius(8)
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.primaryF9CE29.opacity(0.1))
+                    .stroke(Color.primaryF9CE29, lineWidth: 1)
+            )
+        }
+        .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft : .leftToRight)
+    }
+    
+    private func buildConcatenatedAddress(model: AddressModel?) -> String {
+        guard let addressDetails = model else {
+            return ""
+        }
+        
+        var addressComponents: [String] = []
+
+        if let countryCode = addressDetails.countryCode, !countryCode.isBlank {
+            addressComponents.append(countryCode)
+        }
+        
+        if let cityName = addressDetails.cityName, !cityName.isBlank {
+            addressComponents.append(cityName)
+        }
+        
+        if let address = addressDetails.address, !address.isBlank {
+            addressComponents.append(address)
+        }
+        
+        if let postalCode = addressDetails.postalCode, !postalCode.isBlank {
+            addressComponents.append(postalCode)
+        }
+        
+        
+        return addressComponents.joined(separator: ", ")
+    }
+
 }

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import LocalAuthentication
 import AVFoundation
 
 enum bottomSheetAction {
@@ -85,9 +84,7 @@ struct AddWithdrawBottomSheet: View {
                 }
             })
             .padding()
-            .background(Color.white)
-            .cornerRadius(24)
-            .frame(height: UIScreen.main.bounds.height * 0.6)
+            
             if viewModel.isLoading {
                 ProgressView("Loading...".localized())
                     .foregroundColor(.white)

@@ -15,6 +15,8 @@ class BiometricAuthManager {
 
     func authenticate(message: String = "", completion: @escaping (Bool, Bool) -> Void) {
         DispatchQueue.main.async {
+            // If already authenticating, just add the new request to the queue.
+            // This prevents overlapping prompts!
             if self.isAuthenticating {
                 self.pendingCompletions.append(completion)
                 return
@@ -27,29 +29,12 @@ class BiometricAuthManager {
 
     private func performAuthentication(message: String) {
         let context = LAContext()
-        var error: NSError?
-
-        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
-            performPasscodeAuthentication(message: message)
-            return
-        }
-
-        context.evaluatePolicy(
-            .deviceOwnerAuthenticationWithBiometrics,
-            localizedReason:"authenticate_to_continue".localized()
-        ) { success, error in
-            DispatchQueue.main.async {
-                let wasCancelled = (error as? LAError)?.code == .userCancel
-                self.finishAuthentication(success: success, wasCancelled: wasCancelled, message: message)
-            }
-        }
-    }
-
-    private func performPasscodeAuthentication(message: String) {
-        let context = LAContext()
+        let reason = message.isEmpty ? "authenticate_to_continue".localized() : message
+        
+        // .deviceOwnerAuthentication automatically handles biometrics AND passcode fallback natively
         context.evaluatePolicy(
             .deviceOwnerAuthentication,
-            localizedReason: "authenticate_to_continue".localized() 
+            localizedReason: reason
         ) { success, error in
             DispatchQueue.main.async {
                 let wasCancelled = (error as? LAError)?.code == .userCancel
@@ -62,6 +47,7 @@ class BiometricAuthManager {
         isAuthenticating = false
         let completions = pendingCompletions
         pendingCompletions = []
+        // Fire all queued actions (e.g., both the 401 refresh AND the deeplink logic)
         completions.forEach { $0(success, wasCancelled) }
     }
 }

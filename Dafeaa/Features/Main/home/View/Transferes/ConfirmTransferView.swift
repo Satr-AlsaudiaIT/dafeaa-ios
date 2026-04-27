@@ -180,47 +180,60 @@ struct ConfirmTransferView: View {
 
     // MARK: - Biometrics
     private func authenticateWithBiometrics() {
-        let context = LAContext()
-        var error: NSError?
-        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
-            authenticateWithPasscode()
-            return
-        }
-        context.evaluatePolicy(
-            .deviceOwnerAuthenticationWithBiometrics,
-            localizedReason: "confirm_payment_biometric".localized()
-        ) { success, authError in
-            DispatchQueue.main.async {
+            BiometricAuthManager.shared.authenticate(message: "confirm_payment_biometric".localized()) { success, _ in
                 if success {
-                    viewModel.confirmTransfer(
-                        phone: phoneNumber.normalizePhoneNumber,
-                        amount: total,
-                        reason: reason
-                    )
-                } else if let err = authError as? LAError, err.code == .biometryLockout {
-                    authenticateWithPasscode()
-                }
-            }
-        }
-    }
-
-    private func authenticateWithPasscode() {
-        let context = LAContext()
-        context.evaluatePolicy(
-            .deviceOwnerAuthentication,
-            localizedReason: "confirm_payment_biometric".localized()
-        ) { success, _ in
-            DispatchQueue.main.async {
-                if success {
-                    viewModel.confirmTransfer(
-                        phone: phoneNumber.normalizePhoneNumber,
-                        amount: total,
-                        reason: reason
+                    self.viewModel.confirmTransfer(
+                        phone: self.phoneNumber.normalizePhoneNumber,
+                        amount: self.total,
+                        reason: self.reason
                     )
                 }
             }
         }
-    }
+        
+        // You can safely delete the old `authenticateWithPasscode()` method in this file.
+//    private func authenticateWithBiometrics() {
+//        let context = LAContext()
+//        var error: NSError?
+//        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
+//            authenticateWithPasscode()
+//            return
+//        }
+//        context.evaluatePolicy(
+//            .deviceOwnerAuthenticationWithBiometrics,
+//            localizedReason: "confirm_payment_biometric".localized()
+//        ) { success, authError in
+//            DispatchQueue.main.async {
+//                if success {
+//                    viewModel.confirmTransfer(
+//                        phone: phoneNumber.normalizePhoneNumber,
+//                        amount: total,
+//                        reason: reason
+//                    )
+//                } else if let err = authError as? LAError, err.code == .biometryLockout {
+//                    authenticateWithPasscode()
+//                }
+//            }
+//        }
+//    }
+//
+//    private func authenticateWithPasscode() {
+//        let context = LAContext()
+//        context.evaluatePolicy(
+//            .deviceOwnerAuthentication,
+//            localizedReason: "confirm_payment_biometric".localized()
+//        ) { success, _ in
+//            DispatchQueue.main.async {
+//                if success {
+//                    viewModel.confirmTransfer(
+//                        phone: phoneNumber.normalizePhoneNumber,
+//                        amount: total,
+//                        reason: reason
+//                    )
+//                }
+//            }
+//        }
+//    }
 }
 
 #Preview { ConfirmTransferView() }

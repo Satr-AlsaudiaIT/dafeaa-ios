@@ -149,7 +149,7 @@ struct ProfileDetailView:  View {
         .onChange(of: viewModel.profileData?.secretKey ?? "", { _, newValue in
             secretKey = newValue
         })
-        .appBottomSheet(isPresented: $showDeveloperKeyBottomSheet, detents: [.medium,.large]){
+        .customBottomSheet(isPresented: $showDeveloperKeyBottomSheet, detents: [.medium,.large]){
             DeveloperKeyBottomSheet(isSheetPresented: $showDeveloperKeyBottomSheet, profileID: $profileId, secretKey: $secretKey )
 
         }

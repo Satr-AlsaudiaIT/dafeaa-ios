@@ -10,25 +10,65 @@ import UIKit
 
 extension String {
     var isValidSaudiIBAN: Bool {
-        // Remove spaces and convert to uppercase
+        // 1. Remove any whitespaces and convert the string to uppercase
         let cleanedIBAN = self.replacingOccurrences(of: " ", with: "").uppercased()
         
-        // Saudi IBAN format:
-        // - 2 letter country code (SA)
-        // - 2 digit check number
-        // - 2 digits bank code
-        // - 18 digit account number
-        // Total: 24 characters
-        let saudiIBANPattern = "^SA[0-9]{2}[0-9]{2}[0-9]{18}$"
-        let predicate = NSPredicate(format: "SELF MATCHES %@", saudiIBANPattern)
-        
-        guard predicate.evaluate(with: cleanedIBAN) else {
+        // 2. Basic format validation:
+        // Must start with "SA" followed by exactly 22 alphanumeric characters (24 characters total)
+        let pattern = "^SA[A-Z0-9]{22}$"
+        guard cleanedIBAN.range(of: pattern, options: .regularExpression) != nil else {
             return false
         }
         
-        // Additional check: Verify it's exactly 24 characters
-        return cleanedIBAN.count == 24
+        // 3. Rearrange the IBAN: Move the first 4 characters to the end of the string
+        let splitIndex = cleanedIBAN.index(cleanedIBAN.startIndex, offsetBy: 4)
+        let rearranged = String(cleanedIBAN[splitIndex...]) + String(cleanedIBAN[..<splitIndex])
+        
+        // 4. Convert letters to numeric values (A = 10, B = 11, ..., Z = 35)
+        var numericIban = ""
+        for char in rearranged {
+            if char.isNumber {
+                numericIban.append(char)
+            } else if let asciiValue = char.asciiValue {
+                // Calculate the numeric value for uppercase letters (ASCII 'A' is 65)
+                let numericValue = Int(asciiValue) - 65 + 10
+                numericIban.append(String(numericValue))
+            }
+        }
+        
+        // 5. Apply the MOD-97 algorithm
+        // Processing digit by digit to prevent integer overflow (since the number is too large)
+        var remainder = 0
+        for char in numericIban {
+            if let digit = char.wholeNumberValue {
+                remainder = (remainder * 10 + digit) % 97
+            }
+        }
+        
+        // 6. A valid IBAN must leave a remainder of exactly 1
+        return remainder == 1
     }
+    
+    //    var isValidSaudiIBAN: Bool {
+//        // Remove spaces and convert to uppercase
+//        let cleanedIBAN = self.replacingOccurrences(of: " ", with: "").uppercased()
+//        
+//        // Saudi IBAN format:
+//        // - 2 letter country code (SA)
+//        // - 2 digit check number
+//        // - 2 digits bank code
+//        // - 18 digit account number
+//        // Total: 24 characters
+//        let saudiIBANPattern = "^SA[0-9]{2}[0-9]{2}[0-9]{18}$"
+//        let predicate = NSPredicate(format: "SELF MATCHES %@", saudiIBANPattern)
+//        
+//        guard predicate.evaluate(with: cleanedIBAN) else {
+//            return false
+//        }
+//        
+//        // Additional check: Verify it's exactly 24 characters
+//        return cleanedIBAN.count == 24
+//    }
 }
 
 
