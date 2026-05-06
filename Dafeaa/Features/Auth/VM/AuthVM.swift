@@ -33,6 +33,10 @@ class AuthVM: ObservableObject {
     @Published private var _cities: [CountryCityModelData] = []
     @Published private var _citiesNames: [String] = []
     @Published var isLoginSuccess: Bool = false
+    // NEW: login OTP navigation flag
+    @Published var _isLoginOTPRequired = false
+    @Published var _isLoginOTPVerified = false
+    
     private var isFromGuestModeLogin: Bool = false
     private var _message: String = ""
     private var token = ""
@@ -81,9 +85,6 @@ class AuthVM: ObservableObject {
     }
     
     func validateRegister(photo: UIImage?, name: String, email: String, phone: String, accountType: AccountTypeOption, password: String, confirmPassword: String, isAgreeChecked:Bool) {
-//        if photo == nil {
-//            toast = FancyToast(type: .error, title: "Error".localized(), message: "EnterUserPhoto".localized())
-//        } else
         if name.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterUserName".localized())
         }
@@ -185,6 +186,19 @@ class AuthVM: ObservableObject {
         }
     }
     
+    // NEW: validate OTP for login flow
+    func validateLoginOTP(phone: String, code: String) {
+        if code.isBlank {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "EnterThecode".localized())
+        } else if code.count != 4 {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "Enter4DigitCode".localized())
+        } else {
+            let verifyDic: [String: Any] = ["phone": phone.convertDigitsToEng,
+                                            "code": code.convertDigitsToEng]
+            verifyLoginOTP(for: verifyDic)
+        }
+    }
+    
     func validateForgetPasswordPhone(phone: String) {
         if phone.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPhone".localized())
@@ -241,7 +255,9 @@ class AuthVM: ObservableObject {
                 self._isFailed = false
                 if let response = response {
                     self.handleLoginSuccess(response)
-                    self.profile()
+                    // CHANGED: navigate to OTP instead of calling profile()
+                    // Backend already sends code on login 200
+                    self._isLoginOTPRequired = true
                 }
 //                    self.logIn(response:response, phone: phone)
 //                }
@@ -254,6 +270,31 @@ class AuthVM: ObservableObject {
                     self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
                 }
                 
+            }
+        }
+    }
+    
+    // NEW: same verify API, but on success → profile() → home
+    private func verifyLoginOTP(for dic: [String:Any]) {
+        self._isLoading = true
+        api.verify(dic: dic) {(result) in
+            switch result {
+            case .success(let response):
+                self._message = response?.message ?? ""
+                self._isLoading = false
+                self._isFailed = false
+                
+                if let response = response {
+                    self.handleLoginSuccess(response)
+    
+                }
+                // OTP verified → navigate to QuickPasscode screen
+                QuickPasscodeManager.shared.hasPasscode ? ( self.profile()):( self._isLoginOTPVerified = true)
+            case .failure(let error):
+                self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
+                self._isLoading = false
+                self._isFailed = true
+                self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
             }
         }
     }
@@ -350,8 +391,13 @@ class AuthVM: ObservableObject {
                 if let phone = dic["phone"] as? String {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2){
                         self._isCheckCodeSuccess = true
-                        self.logIn(response:response, phone: phone)
-                    }}
+                            self.handleLoginSuccess(response)
+            
+                        // OTP verified → navigate to QuickPasscode screen
+                        QuickPasscodeManager.shared.hasPasscode ? ( self.logIn(response:response, phone: phone)):( self._isLoginOTPVerified = true)
+                        
+                    }
+                }
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
@@ -390,7 +436,6 @@ class AuthVM: ObservableObject {
                 self._message = response?.message ?? ""
                 self._isLoading = false
                 self._isFailed = false
-//                self.toast = FancyToast(type: .success, title: "Success".localized(), message: self._message)
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2){
                     self._isVerifyCodeSuccess = true
@@ -465,8 +510,11 @@ class AuthVM: ObservableObject {
                 Constants.phone = response?.data?.phone ?? ""
                 Constants.userName = response?.data?.name ?? ""
                 GenericUserDefault.shared.setValue(response?.data?.id ?? 0, Constants.shared.userId)
+                Constants.isFinancialInfoCompleted = response?.data?.isFinancialInfoCompleted ?? false
                 GenericUserDefault.shared.setValue(response?.data?.businessInformationStatus, Constants.shared.businessInformationStatus)
                 GenericUserDefault.shared.setValue(response?.data?.activeNotification ?? 0, Constants.shared.activeNotification)
+                GenericUserDefault.shared.setValue(response?.data?.profileImage ?? "", Constants.shared.userImage)
+
                 self.isLoginSuccess = true
                 if !self.isFromGuestModeLogin {
                     MOLH.reset()
@@ -486,7 +534,8 @@ class AuthVM: ObservableObject {
         GenericUserDefault.shared.setValue(response.accessToken ?? "", Constants.shared.token)
         Constants.accountStatus = response.data?.status ?? 2
         GenericUserDefault.shared.setValue(response.data?.id ?? 0, Constants.shared.userId)
-        
+        Constants.isFinancialInfoCompleted = response.data?.isFinancialInfoCompleted ?? false
+
         if response.data?.uncompletedData == 1 {
             sendCode(for: ["phone":phone ,"usage":"verify"])
         }
@@ -569,4 +618,3 @@ class AuthVM: ObservableObject {
     }
     
 }
-

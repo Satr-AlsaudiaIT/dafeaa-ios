@@ -7,52 +7,46 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct TabBarView: View {
     @State var selectedTab: Tab = .home
     private let userType: Int = GenericUserDefault.shared.getValue(Constants.shared.userType) as? Int ?? 0
     @EnvironmentObject var navigationHelper: NavigationHelper
-    @State private var isLoading : Bool = false
+    @State private var isLoading: Bool = false
+
+    @State private var showProfileIncompletePopup: Bool = false
+    @State private var shouldOpenProfileDetail: Bool = false
+    
+    // MARK: - Navigation States
+    @State private var navigateToCompleteProfile: Bool = false
+    // Note: navigateToWallet is removed because it will be a normal tab again!
+    
     enum Tab: CaseIterable {
         case home, wallet, myOrders, profile
 
         var icon: Image {
             switch self {
-            case .home:
-                return Image(.home)
-            case .wallet:
-                return Image(.wallet)
-            case .myOrders:
-                return Image(.bag)
-            case .profile:
-                return Image(.profile)
+            case .home:    return Image(.home)
+            case .wallet:  return Image(.wallet)
+            case .myOrders: return Image(.bag)
+            case .profile: return Image(.profile)
             }
         }
 
         var selectedIcon: Image {
             switch self {
-            case .home:
-                return Image(.homeFill)
-            case .wallet:
-                return Image(.walletFill)
-            case .myOrders:
-                return Image(.bagFill)
-            case .profile:
-                return Image(.profileFill)
+            case .home:    return Image(.homeFill)
+            case .wallet:  return Image(.walletFill)
+            case .myOrders: return Image(.bagFill)
+            case .profile: return Image(.profileFill)
             }
         }
 
         func title(userType: Int) -> String {
             switch self {
-            case .home:
-                return "home".localized()
-            case .wallet:
-                return "wallet".localized()
-            case .myOrders:
-                return userType == 1 ? "myOrders".localized() : "orders".localized()
-            case .profile:
-                return "profile".localized()
+            case .home:     return "home".localized()
+            case .wallet:   return "wallet".localized()
+            case .myOrders: return userType == 1 ? "myOrders".localized() : "orders".localized()
+            case .profile:  return "profile".localized()
             }
         }
     }
@@ -65,8 +59,11 @@ struct TabBarView: View {
                         Group {
                             switch selectedTab {
                             case .home:
-                                HomeView(selectedTab: $selectedTab)
-                                    .padding(.bottom,80)
+                                HomeView(
+                                    selectedTab: $selectedTab,
+                                    showProfileIncompletePopup: $showProfileIncompletePopup
+                                )
+                                .padding(.bottom, 80)
                             case .wallet:
                                 WalletView(selectedTab: $selectedTab)
                                     .padding(.bottom,80)
@@ -79,9 +76,22 @@ struct TabBarView: View {
                             }
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        
-                        CustomTabBar(selectedTab: $selectedTab, userType: userType)
-                        
+
+                        CustomTabBar(
+                            selectedTab: $selectedTab,
+                            userType: userType,
+                            onTabTapped: { tab in
+                                // MARK: - Intercept Wallet Tab
+                                if tab == .wallet {
+                                    if !Constants.isFinancialInfoCompleted {
+                                        showProfileIncompletePopup = true
+                                        return false
+                                    }
+                                    return true
+                                }
+                                return true
+                            }
+                        )
                     }
                 }
                 if isLoading {
@@ -91,15 +101,26 @@ struct TabBarView: View {
                             .foregroundColor(.white)
                             .progressViewStyle(WithBackgroundProgressViewStyle())
                         Spacer()
-                        
                     }
                 }
+
+                // MARK: - Profile Incomplete Popup
+                ProfileIncompletePopup(
+                    isPresented: $showProfileIncompletePopup,
+                    onCompleteProfile: {
+                        navigateToCompleteProfile = true
+                    }
+                )
             }
             .edgesIgnoringSafeArea(.bottom)
             .onAppear {
-                
-                        checkPaymentStatus()
-                    }
+                checkPaymentStatus()
+            }
+            
+            // MARK: - Navigations
+            .navigationDestination(isPresented: $navigateToCompleteProfile) {
+                ProfileDetailView()
+            }
             .navigationDestination(isPresented: $navigationHelper.navigateToClientOrder) {
                 OrderClientDetailsView(orderID: navigationHelper.actionId)
             }
@@ -126,6 +147,7 @@ struct TabBarView: View {
 struct CustomTabBar: View {
     @Binding var selectedTab: TabBarView.Tab
     let userType: Int
+    var onTabTapped: ((TabBarView.Tab) -> Bool)?
 
     var body: some View {
         HStack {
@@ -133,6 +155,9 @@ struct CustomTabBar: View {
                 Spacer()
 
                 Button(action: {
+                    if let onTabTapped = onTabTapped, !onTabTapped(tab) {
+                        return
+                    }
                     selectedTab = tab
                 }) {
                     VStack(spacing: 4) {
@@ -148,8 +173,8 @@ struct CustomTabBar: View {
                                 .frame(width: 24, height: 24)
                         }
 
-                        Text(tab.title(userType: userType)) // Pass userType here
-                            .font(.custom("BahijTheSansArabicPlain", size: 12)) // Apply custom font
+                        Text(tab.title(userType: userType))
+                            .font(.custom("BahijTheSansArabicPlain", size: 12))
                             .foregroundColor(selectedTab == tab ? .primaryF9CE29 : .gray)
                     }
                     .padding(.bottom,20)
@@ -157,7 +182,6 @@ struct CustomTabBar: View {
 
                 Spacer()
             }
-            
         }
         .padding(.top, 15)
         .background(Color.white)

@@ -1,5 +1,5 @@
 //
-//  ProfileDetailView.swift
+//  ProfilePersonalView.swift
 //  Dafeaa
 //
 //  Created by AMNY on 12/10/2024.
@@ -7,11 +7,16 @@
 
 import SwiftUI
 
-struct ProfileDetailView:  View {
+struct ProfilePersonalView:  View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel = MoreVM()
+    
+    // MARK: - State Variables
     @State private var name : String =  ""
     @State private var email:String = ""
+    @State private var phoneNumber: String = ""
+    @State private var selectedCountryCode: String = "" 
+    
     @State private var selectedProfileImage: UIImage?
     @State private var selectedProfileImageURL: String? = ""
     @State private var showChangePassword : Bool = false
@@ -20,6 +25,7 @@ struct ProfileDetailView:  View {
     @State private var showDeveloperKeyBottomSheet : Bool = false
     @State var profileId : String = ""
     @State var secretKey : String = ""
+    
     var body: some View {
         ZStack{
             VStack(spacing: 0){
@@ -29,77 +35,48 @@ struct ProfileDetailView:  View {
                 VStack{
                     VStack(alignment: .leading,spacing: 24) {
                         ScrollView {
-                            VStack(alignment:.leading, spacing: 8) {
+                            VStack(alignment:.leading, spacing: 16) {
                                 HStack {
                                     Spacer()
-                                        ProfileImageView(selectedImage: $selectedProfileImage, imageURL: $selectedProfileImageURL, isShowFromEdit: true)
-                                    
+                                    ProfileImageView(selectedImage: $selectedProfileImage, imageURL: $selectedProfileImageURL, isShowFromEdit: true)
                                     Spacer()
                                 }.padding(.bottom, 16)
-                                CustomMainTextField(text: $name, placeHolder: "Name", image: .nameTFIcon)
-                                    .focused($focusedField, equals: .userName)
+                                
+                                // MARK: - Name Field
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text("Name".localized())
+                                        .textModifier(.bold, 15, .black000000)
+                                    
+                                    CustomMainTextField(text: $name, placeHolder: "Name", image: .nameTFIcon)
+                                        .focused($focusedField, equals: .userName)
+                                }
+                                
                                 if email != "" {
-                                    CustomMainTextField(text: $email, placeHolder: "Email", image: .mailTFIcon)
-                                        .focused($focusedField, equals: .email)
-                                }
-                                VStack(spacing: 20){
-                                    Button {
-                                        showChangePassword = true
-                                    } label: {
-                                        HStack(spacing:12) {
-                                            Image(.changePassword)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                                .frame(width: 28, height: 28)
-                                            
-                                            Text("changePassword".localized())
-                                                .textModifier(.plain, 16, .black194558)
-                                            Spacer()
-                                            
-                                            Image(.iconArrowNav)
-                                                .frame(width: 32, height: 32)
-                                                .foregroundColor(Color(.black194558))
-                                        }
-                                        .frame(height: 32)
-                                    }
-                                    Button {
-                                        showDeveloperKeyBottomSheet = true
-                                    } label: {
-                                        HStack(spacing:12) {
-                                            Image(.developersKey)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                                .frame(width: 28, height: 28)
-                                            
-                                            Text("developerKeys".localized())
-                                                .textModifier(.plain, 16, .black194558)
-                                            Spacer()
-                                            
-                                            Image(.iconArrowNav)
-                                                .frame(width: 32, height: 32)
-                                                .foregroundColor(Color(.black194558))
-                                        }
-                                        .frame(height: 32)
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        Text("Email".localized())
+                                            .textModifier(.bold, 15, .black000000)
+
+                                        CustomMainTextField(text: $email, placeHolder: "Email", image: .mailTFIcon)
+                                            .focused($focusedField, equals: .email)
                                     }
                                 }
-                                .padding(.top)
-//                                Button(action: {
-//                                    // Handle forgot password action
-//                                    showChangePassword = true
-//                                }) {
-//                                    Text("changePassword".localized())
-//                                        .textModifier(.plain, 15, .gray)
-//                                        .frame(maxWidth:.infinity,alignment: .trailing)
-//                                }
+                                
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text("phoneNumber".localized())
+                                        .textModifier(.bold, 15, .black000000)
+
+                                    PhoneNumberField(
+                                        phoneNumber: $phoneNumber,
+                                        selectedCountryCode: $selectedCountryCode,
+                                        image: .mobile
+                                    )
+                                    .focused($focusedField, equals: .phone)
+                                    .id(FormField.phone)
+                                    .disabled(true)
+                                    .opacity(0.6)
+                                }
                             }
-                            
-//                            
-//                            .navigationDestination(isPresented: $showChangePassword) {
-//                                ChangePasswordView()
-//                            }
-                            
                         }
-                        
                     }
                     Spacer()
                     ReusableButton(buttonText: "saveBtn",isEnabled: (name != viewModel.profileData?.name ?? "")||(email != viewModel.profileData?.email ?? "") || (selectedProfileImage != nil) ){
@@ -114,7 +91,7 @@ struct ProfileDetailView:  View {
                     }
                     Spacer()
                     Button(action: {
-                           showPerviousTextField()
+                        showPerviousTextField()
                     }, label: {
                         Image(systemName: "chevron.up").foregroundColor(.blue)
                     })
@@ -140,8 +117,10 @@ struct ProfileDetailView:  View {
         .onAppear(){   viewModel.profile()
                        AppState.shared.swipeEnabled = true }
         .onReceive(viewModel.$_getData){ value in
-            if value { name                    = viewModel.profileData?.name ?? ""
+            if value {
+                name                    = viewModel.profileData?.name ?? ""
                 email                   = viewModel.profileData?.email ?? ""
+                phoneNumber             = viewModel.profileData?.phone ?? "" // Fetch phone data
                 selectedProfileImageURL = viewModel.profileData?.profileImage ?? ""
                 self.isDataLoaded = true
             } }
@@ -151,13 +130,12 @@ struct ProfileDetailView:  View {
         })
         .customBottomSheet(isPresented: $showDeveloperKeyBottomSheet, detents: [.medium,.large]){
             DeveloperKeyBottomSheet(isSheetPresented: $showDeveloperKeyBottomSheet, profileID: $profileId, secretKey: $secretKey )
-
         }
         .navigationDestination(isPresented: $showChangePassword) {
             ChangePasswordView()
         }
-
     }
+    
     func showNextTextField(){
         switch focusedField {
         case .userName:
@@ -178,7 +156,7 @@ struct ProfileDetailView:  View {
     }
     
     enum FormField {
-        case userName, email
+        case userName, email, phone
     }
     
     
@@ -190,6 +168,5 @@ struct ProfileDetailView:  View {
 }
 
 #Preview {
-    ProfileDetailView()
+    ProfilePersonalView()
 }
-

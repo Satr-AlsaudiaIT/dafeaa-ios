@@ -464,6 +464,11 @@ struct AddOfferViewNew: View {
                     Spacer()
                 }
             }
+            .onAppear {
+                if selectedDeliveryDate == nil {
+                    selectedDeliveryDate = minSelectableDate
+                }
+            }
             .frame(height: UIScreen.main.bounds.height * 0.70)
             .background(Color.white)
             .cornerRadius(14)

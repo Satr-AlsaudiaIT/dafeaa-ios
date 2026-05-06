@@ -43,5 +43,7 @@
 	</dict>
 	<key>UIDesignRequiresCompatibility</key>
 	<true/>
+	<key>UIFileSharingEnabled</key>
+	<true/>
 </dict>
 </plist>

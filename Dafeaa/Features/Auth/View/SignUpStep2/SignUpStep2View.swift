@@ -115,7 +115,7 @@ struct SignUpStep2View: View {
                                        viewModel.validateRegister(photo: selectedProfileImage, name: name, email: email, phone: phoneNumber.normalizePhoneNumber, accountType: selectedOption, password: password, confirmPassword: confirmPassword, isAgreeChecked: isAgreeChecked)
                                    }
                                    .navigationDestination(isPresented: $viewModel._isSignUpSuccess) {
-                                       OTPConfirmationView(phone: phoneNumber.normalizePhoneNumber, isForgetPassword: false)
+                                       OTPConfirmationView(phone: phoneNumber.normalizePhoneNumber, isLoginOTP: true)
                                    }
                                    
                                    HStack {

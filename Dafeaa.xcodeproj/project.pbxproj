@@ -140,7 +140,6 @@
 		183443552D6B9509001E5EAE /* ProfileList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183443542D6B9509001E5EAE /* ProfileList.swift */; };
 		1835ECF42CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1835ECF32CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift */; };
 		1835ECF72CCF9B81007EEAC1 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1835ECF62CCF9B81007EEAC1 /* NotificationsView.swift */; };
-		184869672D57F09F0054BC26 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 184869662D57F09F0054BC26 /* GoogleService-Info.plist */; };
 		1851FA5B2D80A3A200C44A53 /* Bahij-Plain.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1851FA5A2D80A3A200C44A53 /* Bahij-Plain.ttf */; };
 		1859135D2DBFD7D10035D6EF /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1859135C2DBFD7D10035D6EF /* SuccessView.swift */; };
 		1859135F2DBFDBEC0035D6EF /* FailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1859135E2DBFDBEC0035D6EF /* FailedView.swift */; };
@@ -193,6 +192,14 @@
 		18C6DD082F26235F0004A2A6 /* GooglePlacesAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C6DD072F26235F0004A2A6 /* GooglePlacesAPIService.swift */; };
 		18C8A9C52DBE4B0D00A2AB42 /* DeveloperKeyBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C8A9C42DBE4B0D00A2AB42 /* DeveloperKeyBottomSheet.swift */; };
 		18C8A9C82DBE75AB00A2AB42 /* ConfirmTransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C8A9C72DBE75AB00A2AB42 /* ConfirmTransferView.swift */; };
+		18D0E7B82FAB5E97002DAA46 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18D0E7B72FAB5E97002DAA46 /* GoogleService-Info.plist */; };
+		18D0E7BB2FAB927B002DAA46 /* QuickPasscodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0E7BA2FAB927B002DAA46 /* QuickPasscodeView.swift */; };
+		18D0E7C02FABAFC0002DAA46 /* PasscodeChallengeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0E7BF2FABAFC0002DAA46 /* PasscodeChallengeViewController.swift */; };
+		18D142A62F9F943000952467 /* ProfileCompletionGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D142A52F9F943000952467 /* ProfileCompletionGuard.swift */; };
+		18D142A82F9FD85100952467 /* ProfilePersonalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D142A72F9FD85100952467 /* ProfilePersonalView.swift */; };
+		18D142AE2FA0007B00952467 /* FinancialInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D142AD2FA0007B00952467 /* FinancialInfoResponse.swift */; };
+		18D142B02FA0012200952467 /* FinancialsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D142AF2FA0012200952467 /* FinancialsVM.swift */; };
+		18D142B22FA0016900952467 /* ProfileFinancialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D142B12FA0016900952467 /* ProfileFinancialsView.swift */; };
 		18D3655B2CD27CF000D50A34 /* AddEditAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D3655A2CD27CF000D50A34 /* AddEditAddressView.swift */; };
 		18D3655D2CD81E8300D50A34 /* PathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D3655C2CD81E8300D50A34 /* PathView.swift */; };
 		18D428602CE676F70059CAF4 /* WithdrawsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4285F2CE676F70059CAF4 /* WithdrawsView.swift */; };
@@ -400,7 +407,6 @@
 		183443542D6B9509001E5EAE /* ProfileList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileList.swift; sourceTree = "<group>"; };
 		1835ECF32CCE9DC8007EEAC1 /* AddWithdrawButtomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWithdrawButtomSheet.swift; sourceTree = "<group>"; };
 		1835ECF62CCF9B81007EEAC1 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
-		184869662D57F09F0054BC26 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1851FA5A2D80A3A200C44A53 /* Bahij-Plain.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bahij-Plain.ttf"; sourceTree = "<group>"; };
 		1859135C2DBFD7D10035D6EF /* SuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
 		1859135E2DBFDBEC0035D6EF /* FailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedView.swift; sourceTree = "<group>"; };
@@ -452,6 +458,14 @@
 		18C6DD072F26235F0004A2A6 /* GooglePlacesAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesAPIService.swift; sourceTree = "<group>"; };
 		18C8A9C42DBE4B0D00A2AB42 /* DeveloperKeyBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperKeyBottomSheet.swift; sourceTree = "<group>"; };
 		18C8A9C72DBE75AB00A2AB42 /* ConfirmTransferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmTransferView.swift; sourceTree = "<group>"; };
+		18D0E7B72FAB5E97002DAA46 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		18D0E7BA2FAB927B002DAA46 /* QuickPasscodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickPasscodeView.swift; sourceTree = "<group>"; };
+		18D0E7BF2FABAFC0002DAA46 /* PasscodeChallengeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeChallengeViewController.swift; sourceTree = "<group>"; };
+		18D142A52F9F943000952467 /* ProfileCompletionGuard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCompletionGuard.swift; sourceTree = "<group>"; };
+		18D142A72F9FD85100952467 /* ProfilePersonalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePersonalView.swift; sourceTree = "<group>"; };
+		18D142AD2FA0007B00952467 /* FinancialInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialInfoResponse.swift; sourceTree = "<group>"; };
+		18D142AF2FA0012200952467 /* FinancialsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialsVM.swift; sourceTree = "<group>"; };
+		18D142B12FA0016900952467 /* ProfileFinancialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFinancialsView.swift; sourceTree = "<group>"; };
 		18D3655A2CD27CF000D50A34 /* AddEditAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditAddressView.swift; sourceTree = "<group>"; };
 		18D3655C2CD81E8300D50A34 /* PathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathView.swift; sourceTree = "<group>"; };
 		18D4285F2CE676F70059CAF4 /* WithdrawsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawsView.swift; sourceTree = "<group>"; };
@@ -564,7 +578,7 @@
 				187607BF2CE0072D00F4D261 /* DafeaaRelease.entitlements */,
 				18277ECD2CB3AD140020A647 /* NavigationPath.swift */,
 				14E67A6F2CAC60D200C10AB5 /* Info.plist */,
-				184869662D57F09F0054BC26 /* GoogleService-Info.plist */,
+				18D0E7B72FAB5E97002DAA46 /* GoogleService-Info.plist */,
 				1820E2842CB9050000627DF9 /* Application */,
 				14E67A582CAC5E0E00C10AB5 /* Helper */,
 				14E67AE92CADB0C300C10AB5 /* Resources */,
@@ -860,6 +874,7 @@
 				18B8D56F2CC02E6200C2676C /* LottieAnimationView.swift */,
 				18E31A452F97BAB500DF9768 /* TransferReason.swift */,
 				18E31A472F97BAF400DF9768 /* TransferReasonDropdown.swift */,
+				18D142A52F9F943000952467 /* ProfileCompletionGuard.swift */,
 				181358A82F81575A00400203 /* ConfirmationAlert.swift */,
 				18277EBE2CB2B9AC0020A647 /* PhoneNumberRepresenter.swift */,
 				14E67A822CAC643A00C10AB5 /* AutoSlider */,
@@ -1147,10 +1162,8 @@
 		1820E2C42CBAAC2800627DF9 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				18F9FB7C2F4F989C005C1224 /* TaxRecordBottomSheet.swift */,
-				1820E2C62CBAAC4E00627DF9 /* ProfileDetailView.swift */,
-				1820E2BD2CBA98A600627DF9 /* ProfileView.swift */,
-				183443542D6B9509001E5EAE /* ProfileList.swift */,
+				18D142AC2FA0006300952467 /* View */,
+				18D142AB2FA0005900952467 /* Model */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1207,6 +1220,7 @@
 			children = (
 				18FAE1902F06608500DE9128 /* IBANVM.swift */,
 				1820E2D72CBBB22600627DF9 /* MoreVM.swift */,
+				18D142AF2FA0012200952467 /* FinancialsVM.swift */,
 			);
 			path = VM;
 			sourceTree = "<group>";
@@ -1271,6 +1285,7 @@
 		18277ECA2CB3A47D0020A647 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				18D0E7BC2FAB9296002DAA46 /* QuickPasscode */,
 				18277EB52CB2B1B40020A647 /* SignUpStep2 */,
 				18277EC62CB3A3F80020A647 /* SignUpStep1 */,
 				18277EB42CB2B1A70020A647 /* Login */,
@@ -1441,6 +1456,36 @@
 				189962E02F0A6775005E833C /* WithdrawDetailsView.swift */,
 			);
 			path = Transferes;
+			sourceTree = "<group>";
+		};
+		18D0E7BC2FAB9296002DAA46 /* QuickPasscode */ = {
+			isa = PBXGroup;
+			children = (
+				18D0E7BA2FAB927B002DAA46 /* QuickPasscodeView.swift */,
+				18D0E7BF2FABAFC0002DAA46 /* PasscodeChallengeViewController.swift */,
+			);
+			path = QuickPasscode;
+			sourceTree = "<group>";
+		};
+		18D142AB2FA0005900952467 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				18D142AD2FA0007B00952467 /* FinancialInfoResponse.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		18D142AC2FA0006300952467 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				18F9FB7C2F4F989C005C1224 /* TaxRecordBottomSheet.swift */,
+				1820E2C62CBAAC4E00627DF9 /* ProfileDetailView.swift */,
+				18D142A72F9FD85100952467 /* ProfilePersonalView.swift */,
+				18D142B12FA0016900952467 /* ProfileFinancialsView.swift */,
+				1820E2BD2CBA98A600627DF9 /* ProfileView.swift */,
+				183443542D6B9509001E5EAE /* ProfileList.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		18D4285E2CE676960059CAF4 /* WithdrawView */ = {
@@ -1698,7 +1743,7 @@
 				14E67B172CADB73E00C10AB5 /* Poppins-Regular.ttf in Resources */,
 				14E67B192CADB73E00C10AB5 /* Poppins-Thin.ttf in Resources */,
 				14E67B182CADB73E00C10AB5 /* Poppins-SemiBold.ttf in Resources */,
-				184869672D57F09F0054BC26 /* GoogleService-Info.plist in Resources */,
+				18D0E7B82FAB5E97002DAA46 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1863,6 +1908,7 @@
 				18F81CE72D907B6F00B732D7 /* BottomSheetLinkActionsView.swift in Sources */,
 				18F9FB9A2F5E2989005C1224 /* PaymentInfoClient.swift in Sources */,
 				14E67A652CAC5E3400C10AB5 /* MOLH-dummy.m in Sources */,
+				18D142A62F9F943000952467 /* ProfileCompletionGuard.swift in Sources */,
 				14E67AD32CAC643B00C10AB5 /* NetWorkHelper.swift in Sources */,
 				14E67ACE2CAC643B00C10AB5 /* UploadImage.swift in Sources */,
 				18086A832CCC246800F5C2F8 /* HomeAppNetwork.swift in Sources */,
@@ -1884,6 +1930,7 @@
 				1813590F2F8E25E700400203 /* QRTimerManager.swift in Sources */,
 				18F9FB982F5E2848005C1224 /* PaymentInfoOwner.swift in Sources */,
 				189962E32F0A9A37005E833C /* AddBalanceCardDetailsView.swift in Sources */,
+				18D142B02FA0012200952467 /* FinancialsVM.swift in Sources */,
 				18E676872DBD63F20043B84B /* BuyProductBottomSheet.swift in Sources */,
 				1820E2C92CBAAC6600627DF9 /* SavedAddressesView.swift in Sources */,
 				181358A92F81575A00400203 /* ConfirmationAlert.swift in Sources */,
@@ -1909,6 +1956,7 @@
 				1891B9212F0D3DE600A6FF08 /* MapSearchView.swift in Sources */,
 				18929A5A2F202023002CEC17 /* PhoneTransferSelectionView.swift in Sources */,
 				1820E2DC2CBBB26F00627DF9 /* MoreAppNetwork.swift in Sources */,
+				18D0E7C02FABAFC0002DAA46 /* PasscodeChallengeViewController.swift in Sources */,
 				1813590D2F8CEE3700400203 /* QRDeeplinkBottomSheet.swift in Sources */,
 				1820E2DD2CBBB26F00627DF9 /* MoreAppAPI.swift in Sources */,
 				1820E2A82CB905F800627DF9 /* AuthAppNetwork.swift in Sources */,
@@ -1918,6 +1966,7 @@
 				14E67AD22CAC643B00C10AB5 /* NotificationLoggerVC.swift in Sources */,
 				1820E2832CB904F500627DF9 /* Constants.swift in Sources */,
 				18086A672CCB81F000F5C2F8 /* OrdersAppNetwork.swift in Sources */,
+				18D142AE2FA0007B00952467 /* FinancialInfoResponse.swift in Sources */,
 				14E67AC02CAC643B00C10AB5 /* Date+ext.swift in Sources */,
 				14E67AC32CAC643B00C10AB5 /* UIColor.swift in Sources */,
 				14E67A6C2CAC5E3400C10AB5 /* MOLHSizable.swift in Sources */,
@@ -1982,6 +2031,7 @@
 				14E67ADC2CAC643B00C10AB5 /* MainAppSecuredTF.swift in Sources */,
 				18C8A9C52DBE4B0D00A2AB42 /* DeveloperKeyBottomSheet.swift in Sources */,
 				18086A6A2CCB847800F5C2F8 /* OrdersModels.swift in Sources */,
+				18D0E7BB2FAB927B002DAA46 /* QuickPasscodeView.swift in Sources */,
 				181358F02F88098400400203 /* QRCodeModel.swift in Sources */,
 				18F54E882CCD1C0300462383 /* WalletModel.swift in Sources */,
 				18086A632CCB7F4800F5C2F8 /* OrdersVM.swift in Sources */,
@@ -1990,6 +2040,7 @@
 				14E67AE72CAC643B00C10AB5 /* DocumentPickerView.swift in Sources */,
 				18E31A1E2F96085000DF9768 /* BiometricAuthManager.swift in Sources */,
 				18277EC32CB306990020A647 /* SignUpStep1View.swift in Sources */,
+				18D142B22FA0016900952467 /* ProfileFinancialsView.swift in Sources */,
 				18F54E792CCCFE7A00462383 /* OrderComponentsView.swift in Sources */,
 				1859135D2DBFD7D10035D6EF /* SuccessView.swift in Sources */,
 				1820E2822CB904F500627DF9 /* DafeaaApp.swift in Sources */,
@@ -2018,6 +2069,7 @@
 				18D428602CE676F70059CAF4 /* WithdrawsView.swift in Sources */,
 				18086A822CCC246800F5C2F8 /* HomeAppAPI.swift in Sources */,
 				18F9FB7D2F4F989C005C1224 /* TaxRecordBottomSheet.swift in Sources */,
+				18D142A82F9FD85100952467 /* ProfilePersonalView.swift in Sources */,
 				14E67ADF2CAC643B00C10AB5 /* LogoView.swift in Sources */,
 				180DDD012CDA91540002F6F1 /* ScanQRCodeView.swift in Sources */,
 				187607B82CDFCA3A00F4D261 /* ProductDetailsPopUp.swift in Sources */,
@@ -2205,7 +2257,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/Dafeaa.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
@@ -2213,6 +2265,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Dafeaa/Info.plist;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Dafeaa need access to your camera library to add picture to the profile.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Dafeaa need access to your Contacts in order to select contact .";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "We use Face ID to confirm your identity during payment";
@@ -2232,7 +2285,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Dafeaa.Plantech;
 				PRODUCT_NAME = "DAFEA | دافع";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2251,7 +2304,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/DafeaaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
@@ -2259,6 +2312,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Dafeaa/Info.plist;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Dafeaa need access to your camera library to add picture to the profile.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Dafeaa need access to your Contacts in order to select contact .";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "We use Face ID to confirm your identity during payment";
@@ -2278,7 +2332,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Dafeaa.Plantech;
 				PRODUCT_NAME = "DAFEA | دافع";
 				PROVISIONING_PROFILE_SPECIFIER = "";

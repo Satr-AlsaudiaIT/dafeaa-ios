@@ -15,21 +15,22 @@ import SwiftUI
 struct DropdownSearchTF: View {
     @State private var selection = ""
     @State private var searchTerm = ""
-    @State private var searchEmpty = ""
-    @State var placeHolder:String
+    @State var placeHolder: String
     @Binding var isOpen: Bool?
-    @State private var active :Bool = false
-    @Binding var text : String
-    private var idiom : UIUserInterfaceIdiom {UIDevice.current.userInterfaceIdiom }
+    @State private var active: Bool = false
+    @Binding var text: String
+    
     var title: String
     @Binding var options: [String]
-    var submitLabel: SubmitLabel
-    @State var height : CGFloat = 48
-    @State var radius :CGFloat = 5
+    var submitLabel: SubmitLabel = .done
+    @State var height: CGFloat = 48
+    @State var radius: CGFloat = 5
     @State var titleSize: CGFloat = 14
-    @State var image : UIImage? = nil
+    @State var image: UIImage? = nil
+    var isSearchable: Bool = true
+    
     var filteredItems: [String] {
-        if searchTerm.isEmpty {
+        if searchTerm.isEmpty || !isSearchable {
             return options
         } else {
             return options.filter { $0.localizedCaseInsensitiveContains(searchTerm) }
@@ -37,130 +38,127 @@ struct DropdownSearchTF: View {
     }
     
     var body: some View {
-        VStack (alignment: .leading, spacing: 0) {
-            ZStack(alignment: .leading ){
-                ZStack{
-                    HStack {
-                        Text("")
-                        Spacer()
+        VStack(alignment: .leading, spacing: 0) {
+            ZStack(alignment: .leading) {
+                RoundedRectangle(cornerRadius: radius)
+                    .fill(Color(.grayF6F6F6))
+                    .frame(height: height)
+                
+                HStack {
+                    if let image {
+                        Image(uiImage: image)
+                            .renderingMode(.template)
+                            .foregroundColor(Color.yellow)
+                            .frame(width: 20, height: 20)
+                            .padding(.leading, 20)
+                    } else {
+                        Spacer().frame(width: 16)
                     }
+                    
+                    if isSearchable {
+                        TextField(placeHolder.localized(), text: $searchTerm, onEditingChanged: { editingChanged in
+                            self.active = editingChanged
+                            self.isOpen = editingChanged
+                        })
+                        .foregroundColor(text.isEmpty ? .grayB5B5B5 : .black)
+                        .font(.system(size: titleSize))
+                        .submitLabel(submitLabel)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                        .onTapGesture {
+                            searchTerm = ""
+                            isOpen = true
+                            active = true
+                        }
+                    } else {
+                        Button(action: {
+                            hideKeyboard()
+                            withAnimation {
+                                isOpen = !(isOpen ?? false)
+                                active = isOpen ?? false
+                                searchTerm = ""
+                            }
+                        }) {
+                            Text(text.isEmpty ? placeHolder.localized() : text)
+                                .foregroundColor(text.isEmpty ? Color(.grayB5B5B5) : Color(.black))
+                                .font(.system(size: titleSize))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.down")
+                        .foregroundColor(.grayB5B5B5)
+                        .padding(.trailing, 15)
+                        .rotationEffect(.degrees((isOpen ?? false) ? 180 : 0))
                 }
                 .frame(height: height)
-                .background(Color(.grayF6F6F6))
-                .cornerRadius(radius)
-                    
-                VStack {
-                    ZStack {
-                        HStack {
-                            if let image {
-                                Image(uiImage: image)
-                                    .renderingMode(.template)
-                                    .foregroundColor(Color.yellow)
-                                    .frame(width: 20, height: 20)
-                                    .padding(.leading, 20)
-                            } else {
-                                Spacer().frame(width: 16)  
-                            }
-                            TextField("", text: selection == "" && !(isOpen ?? false ) ? $searchEmpty: $searchTerm, onEditingChanged: { (editingChanged) in
-                                self.active =  editingChanged ? true:false
-                                self.isOpen = editingChanged ? true:false
-                            })
-                            .foregroundColor(text.isEmpty ? .grayB5B5B5 : .black)
-                            .placeholder(when: selection == "") {
-                                Text(selection == "" && !(isOpen ?? false) ? placeHolder: selection).foregroundColor(Color(.lightGray))
-                            }
-                            .background(Color.init(.clear))
-//                            .cornerRadius(5)
-//                            .padding(.leading,10)
-                            .font(.custom(AppFonts.shared.name(AppFontsTypes.plain), size: 14))
-                            .foregroundColor(.grayB5B5B5)
-                            .submitLabel(submitLabel)
-                            .textInputAutocapitalization(.never)
-                            .autocorrectionDisabled()
-                            .onTapGesture {
-                                searchTerm = ""
-                                selection = ""
-                                isOpen = true
-                                active = true
-                            }
-                            Spacer()
-                            Image(systemName: "chevron.down")
-                                .textModifier(.plain, 15,.black)
-
-                                .padding(.trailing,15)
-                        }
-                    }
-                    .frame(height: height)
-                    .animation(.default,value: 2)
-                    .cornerRadius(5)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 5)
-                            .stroke(Color(active ? .primary : .clear ), lineWidth: 1)
-                    )
-                }
-            }
-            
-            if isOpen ?? false {
-                VStack{
-                   
-                    ScrollView {
-                        VStack(alignment: .leading, spacing: 0) {
-//                            Color(Asset.white.color)
-                            ForEach(filteredItems, id: \.self) { option in
-                                Button(action: {
-                                    selection = option
-                                    isOpen = false
-                                    active = false
-                                    searchTerm = selection
-                                    text = selection
-                                    hideKeyboard()
-                                }) {
-                                    VStack {
-                                        HStack {
-                                            Text(String(describing: option))
-                                                .foregroundColor(.black)
-                                                .padding(.leading)
-                                                .padding(.top,4)
-                                            //    .cornerRadius(8)
-                                            Spacer()
-                                        }
-                                        Divider()
-                                            .padding(.vertical, 2)
-                                    }
-                                    }
-//
-                            }
-                        }
-                        .padding(.horizontal, 4)
-                        .cornerRadius(5)
-                      
-//                        .shadow(radius: 4)
-                        
-                    }
-                    .frame(height: filteredItems.count < 5 ? CGFloat((filteredItems.count * 40)) : 150)
-                    .cornerRadius(8)
-                }
-                .padding(.top, 0)
-                .cornerRadius(5)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(Color(.grayAAAAAA), lineWidth: 0.3)
+                    RoundedRectangle(cornerRadius: radius)
+                        .stroke(Color(active ? .primary : .clear), lineWidth: 1)
                 )
-                .onDisappear{
-                    if selection == "" {
-                        text = ""
+            }
+            .onTapGesture {
+                if !isSearchable {
+                    hideKeyboard()
+                    withAnimation {
+                        isOpen = !(isOpen ?? false)
+                        active = isOpen ?? false
                         searchTerm = ""
                     }
                 }
             }
+            
+            if isOpen ?? false {
+                VStack {
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 0) {
+                            ForEach(filteredItems, id: \.self) { option in
+                                Button(action: {
+                                    selection = option
+                                    text = option
+                                    searchTerm = option
+                                    withAnimation {
+                                        isOpen = false
+                                        active = false
+                                    }
+                                    hideKeyboard()
+                                }) {
+                                    VStack {
+                                        HStack {
+                                            Text(option)
+                                                .foregroundColor(.black)
+                                                .padding(.leading)
+                                                .padding(.top, 4)
+                                            Spacer()
+                                        }
+                                        Divider().padding(.vertical, 2)
+                                    }
+                                }
+                            }
+                        }
+                        .padding(.horizontal, 4)
+                    }
+                    .frame(height: filteredItems.count < 5 ? CGFloat((filteredItems.count * 40)) : 150)
+                }
+                .background(Color.white)
+                .cornerRadius(radius)
+                .overlay(
+                    RoundedRectangle(cornerRadius: radius)
+                        .stroke(Color(.grayAAAAAA), lineWidth: 0.3)
+                )
+                .padding(.top, 4)
+            }
         }
-//        .padding([.leading,.trailing])
-        .onChange(of: text, { _, _ in
-            selection = text
-            searchTerm = text
-        })
-        .onAppear{
-            if !text.isBlank{
+        .onChange(of: text) { _, newValue in
+            selection = newValue
+            if isSearchable && !(isOpen ?? false) {
+                searchTerm = newValue
+            }
+        }
+        .onAppear {
+            if !text.isEmpty {
                 selection = text
                 searchTerm = text
             }

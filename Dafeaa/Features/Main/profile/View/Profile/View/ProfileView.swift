@@ -75,11 +75,11 @@ struct ProfileView: View {
                                 label: "profile",
                                 image: Image(.iconProfile)
                             )
-                            NavigationLinkComponent(
-                                destination: ProfileList(profileId: viewModel.profileData?.profileId ?? "",secretKey: viewModel.profileData?.secretKey ?? ""),
-                                label: "accounts_address",
-                                image: Image(.iconMange)
-                            )
+//                            NavigationLinkComponent(
+//                                destination: ProfileList(profileId: viewModel.profileData?.profileId ?? "",secretKey: viewModel.profileData?.secretKey ?? ""),
+//                                label: "accounts_address",
+//                                image: Image(.iconMange)
+//                            )
                             NavigationLinkComponent(
                                 destination: OrdersOffersLinksView(),
                                 label: "offers",

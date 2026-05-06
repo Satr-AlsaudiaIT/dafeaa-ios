@@ -31,11 +31,11 @@ struct ProfileList: View {
 //                            image: Image(.iconProfile)
 //                        )
                         
-                        NavigationLinkComponent(
-                            destination: SavedAddressesView(selectedAddressId: $selectedAddressId, selectedAddress: $selectedAddress,initSelectedAddressId: selectedAddressId),
-                            label: "Saved Addresses",
-                            image: Image(.iconAddress)
-                        )
+//                        NavigationLinkComponent(
+//                            destination: SavedAddressesView(selectedAddressId: $selectedAddressId, selectedAddress: $selectedAddress,initSelectedAddressId: selectedAddressId),
+//                            label: "Saved Addresses",
+//                            image: Image(.iconAddress)
+//                        )
                         NavigationLinkComponent(
                             destination: SavedIBANsView(),
                             label: "Saved IBANs",

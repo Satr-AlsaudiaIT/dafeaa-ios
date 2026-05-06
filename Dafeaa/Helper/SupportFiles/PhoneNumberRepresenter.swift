@@ -33,6 +33,7 @@ struct ButtonWithImageView: View {
             Button(action: action) {
                 HStack(spacing: 10) {
                     Image(imageName)
+                        .resizable()
                         .frame(width: 20, height: 20)
                     
                     VStack(alignment: .leading, spacing: 2) {
@@ -56,7 +57,7 @@ struct ButtonWithImageView: View {
                 }
                 .frame(height: 60)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 10)
+                .padding(.horizontal, 16)
             }
             
             if showCopyIcon, let onCopy = onCopy {

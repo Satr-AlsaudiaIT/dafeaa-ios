@@ -109,6 +109,10 @@ struct LoginView: View {
                 }
                 .onAppear(perform: subscribeToKeyboardEvents) // Listen for keyboard events
                 .onDisappear(perform: unsubscribeFromKeyboardEvents)
+                // NEW: login OTP → navigate to OTP with isLoginOTP flag
+                .navigationDestination(isPresented: $viewModel._isLoginOTPRequired) {
+                    OTPConfirmationView(phone: phoneNumber.normalizePhoneNumber, isLoginOTP: true)
+                }
                 .navigationDestination(isPresented: $viewModel._isSendCodeSuccess) {
                     OTPConfirmationView(phone: phoneNumber.normalizePhoneNumber)
                 }

@@ -309,13 +309,17 @@ final class OrdersVM : ObservableObject {
         }
     }
 //merchentOffers
-    func offers(skip: Int) {
-        if skip == 0 { hasMoreData = true ; self._offersList.removeAll()}
-        if self._offersList.count >= self._offersListCount{
-            self.hasMoreData = false
+    func offers(skip: Int, animated: Bool = true) {
+        if skip == 0 {
+            _isLoading = animated ;
+            hasMoreData = true ;
+            animated ? (self._offersList.removeAll()):()
+        } else {
+            if self._offersList.count >= self._offersListCount{
+                self.hasMoreData = false
+            }
         }
         guard hasMoreData  else { _isLoading = false ;return }
-        _isLoading = true
         api.offers(skip: skip) { [weak self] (Result) in
             guard let self = self else { return }
             self._isLoading = false
@@ -365,6 +369,7 @@ final class OrdersVM : ObservableObject {
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
                 self._isFailed = true
+                self._isSuccess = true 
                 self.toast = FancyToast(type: .error, title: "Error".localized(), message: self._message)
             }
         }

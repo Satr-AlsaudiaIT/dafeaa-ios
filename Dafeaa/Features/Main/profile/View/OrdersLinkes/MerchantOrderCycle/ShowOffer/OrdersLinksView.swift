@@ -26,7 +26,7 @@ struct OrdersOffersLinksView: View {
                         self.presentationMode.wrappedValue.dismiss()
                     }
                     ZStack(alignment: .bottom) {
-                        if viewModel._offersList.isEmpty {
+                        if viewModel.offersList.isEmpty {
                             VStack {
                                 Spacer()
                                 VStack {
@@ -40,15 +40,15 @@ struct OrdersOffersLinksView: View {
                         }
                         else {
                             ScrollView(.vertical, showsIndicators: false) {
-                            VStack(spacing: 17) {
+                                LazyVStack(spacing: 17) {
                                 // Bind directly to viewModel._offersList
-                                ForEach(viewModel._offersList, id: \.id) { offer in
+                                ForEach(viewModel.offersList, id: \.id) { offer in
                                     OfferComponent(offer: offer, onThreeDotsTap: {
                                         self.isShowActionBottomSheet = true
                                         selectedOffer = offer
                                     })
                                     .onAppear {
-                                        if offer.id == viewModel._offersList.last?.id {
+                                        if offer.id == viewModel.offersList.last?.id {
                                             loadMoreOrdersIfNeeded()
                                         }
                                     }
@@ -101,18 +101,18 @@ struct OrdersOffersLinksView: View {
         }
         .onAppear {
             moreViewModel.addressesList(isLoading: false)
-            viewModel.offers(skip: 0)
+            viewModel.offers(skip: 0,animated: true)
             AppState.shared.swipeEnabled = true
         }
-        .onDisappear {
-            viewModel._offersList.removeAll()
-        }
+//        .onDisappear {
+//            viewModel._offersList.removeAll()
+//        }
     }
     
     
     private func loadMoreOrdersIfNeeded() {
         if viewModel.hasMoreData && !viewModel.isLoading {
-            viewModel.offers(skip: viewModel._offersList.count)
+            viewModel.offers(skip: viewModel.offersList.count)
         }
     }
 }

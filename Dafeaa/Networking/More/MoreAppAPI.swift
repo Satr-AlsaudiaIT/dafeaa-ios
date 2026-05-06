@@ -31,6 +31,8 @@ protocol MoreAPIProtocol {
     func getTaxRecord(completion: @escaping (Result<TaxRecordModel?, NSError>) -> Void)
     func addTaxRecord(taxNumber: String, completion: @escaping (Result<TaxRecordModel?, NSError>) -> Void)
     func deleteTaxRecord(completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
+    func getFinancialInfo(Completion: @escaping (Result<FinancialInfoResponse?, NSError>) -> Void)
+    func updateFinancialInfo(incomeSource: Int, incomeRange: Int, taxResidency: Bool, isPep: Bool, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void)
 }
 
 
@@ -178,4 +180,16 @@ extension MoreAPI {
             completion(result)
         }
     }
+    
+    func getFinancialInfo(Completion: @escaping (Result<FinancialInfoResponse?, NSError>) -> Void) {
+            self.fetchData(target: .getFinancialInfo, responseClass: FinancialInfoResponse.self) { result in
+                Completion(result)
+            }
+        }
+        
+        func updateFinancialInfo(incomeSource: Int, incomeRange: Int, taxResidency: Bool, isPep: Bool, Completion: @escaping (Result<GeneralModel?, NSError>) -> Void) {
+            self.fetchData(target: .updateFinancialInfo(incomeSource: incomeSource, incomeRange: incomeRange, taxResidency: taxResidency, isPep: isPep), responseClass: GeneralModel.self) { result in
+                Completion(result)
+            }
+        }
 }

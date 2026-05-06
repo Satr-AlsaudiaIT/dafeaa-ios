@@ -123,6 +123,7 @@ struct LoginData:Codable, Equatable {
     let subscriptionPlan, subscriptionPlanEndDate: String?
     let profileId: String?
     var secretKey : String? = nil
+    var isFinancialInfoCompleted: Bool?
 }
 
 // MARK: - RefreshTokenModel

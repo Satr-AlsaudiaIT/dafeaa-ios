@@ -153,48 +153,10 @@ class BaseAPI<T: TargetType> {
                 guard let data = responseData else { return }
                 decode(fromData: data, toObject: BaseNetworkResponseErrorModel.self) { result, error in
                     if targetPath == "auth/login" {
-                        completion(false,result?.message)
+                        completion(false, result?.message)
+                    } else {
+                        self.handleSessionExpiry(onRetry: onRetry)
                     }
-                    else {
-                        let message = result?.message ?? ""
-                        BiometricAuthManager.shared.authenticate(message: "") { success, wasCancelled in
-                            guard success else {
-                                if wasCancelled {
-                                    DispatchQueue.main.async {
-                                        UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                            exit(0)
-                                        }
-                                    }
-                                }
-                                return
-                            }
-                            let storedRefresh = Constants.refreshToken
-                            guard !storedRefresh.isEmpty else {
-                                GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
-                                GenericUserDefault.shared.setValue("", Constants.shared.token)
-                                MOLH.reset()
-                                return
-                            }
-                            AuthAPI().refreshToken(refreshToken: storedRefresh) { refreshResult in
-                                switch refreshResult {
-                                case .success(let model):
-                                    if let newToken = model?.accessToken {
-                                        GenericUserDefault.shared.setValue(newToken, Constants.shared.token)
-                                    }
-                                    if let newRefresh = model?.refreshToken {
-                                        Constants.refreshToken = newRefresh
-                                    }
-                                    onRetry?()
-                                case .failure:
-                                    GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
-                                    GenericUserDefault.shared.setValue("", Constants.shared.token)
-                                    MOLH.reset()
-                                }
-                            }
-                        }
-                    }
-                    
                 }
             case 403:
                 guard let data = responseData else { return }
@@ -230,6 +192,65 @@ class BaseAPI<T: TargetType> {
             GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
             GenericUserDefault.shared.setValue("", Constants.shared.token)
             MOLH.reset()
+        }
+    }
+    
+    // MARK: - Session Expiry: Biometric → Passcode → Login
+    private func handleSessionExpiry(onRetry: (() -> Void)?) {
+        let isBiometricOn = UserDefaults.standard.bool(forKey: Constants.shared.biometricKey)
+        let hasPasscode = QuickPasscodeManager.shared.hasPasscode
+        
+        if isBiometricOn {
+            // Step 1: Try biometric
+            BiometricAuthManager.shared.authenticate(message: "") { success, wasCancelled in
+                if success {
+                    self.attemptRefreshToken(onRetry: onRetry)
+                } else if hasPasscode {
+                    // Biometric failed/dismissed → fall back to passcode
+                    self.showPasscodeChallenge(onRetry: onRetry)
+                } else {
+                    // No passcode fallback → go to login
+                    self.forceLogout()
+                }
+            }
+        } else if hasPasscode {
+            // Biometric off, passcode on → show passcode directly
+            showPasscodeChallenge(onRetry: onRetry)
+        } else {
+            // Both off → go to login
+            forceLogout()
+        }
+    }
+    
+    private func showPasscodeChallenge(onRetry: (() -> Void)?) {
+        PasscodeChallengePresenter.show { success in
+            if success {
+                self.attemptRefreshToken(onRetry: onRetry)
+            } else {
+                self.forceLogout()
+            }
+        }
+    }
+    
+    private func attemptRefreshToken(onRetry: (() -> Void)?) {
+        let storedRefresh = Constants.refreshToken
+        guard !storedRefresh.isEmpty else {
+            forceLogout()
+            return
+        }
+        AuthAPI().refreshToken(refreshToken: storedRefresh) { refreshResult in
+            switch refreshResult {
+            case .success(let model):
+                if let newToken = model?.accessToken {
+                    GenericUserDefault.shared.setValue(newToken, Constants.shared.token)
+                }
+                if let newRefresh = model?.refreshToken {
+                    Constants.refreshToken = newRefresh
+                }
+                onRetry?()
+            case .failure:
+                self.forceLogout()
+            }
         }
     }
     

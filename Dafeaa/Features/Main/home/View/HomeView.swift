@@ -11,20 +11,19 @@ import LocalAuthentication
 
 struct HomeView: View {
     @StateObject var viewModel = HomeVM()
-    @Binding var selectedTab : TabBarView.Tab
+    @Binding var selectedTab: TabBarView.Tab
     @State var isSheetPresented: Bool = false
     @State var isNotificationPresented: Bool = false
-    @State var navigateToWebView : Bool = false
-    @State var paymentURL : String = ""
-    @State var amount:Double = 0.0
-    @State private var balanceActionType : bottomSheetAction?
+    @State var navigateToWebView: Bool = false
+    @State var paymentURL: String = ""
+    @State var amount: Double = 0.0
+    @State private var balanceActionType: bottomSheetAction?
     @State private var isViewAppeared: Bool = false
-    //    @State private var isGoingToOfferScreen: Bool = false
     @State private var isPresentBuySheet: Bool = false
     let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
     let businessInformationStatus = GenericUserDefault.shared.getValue(Constants.shared.businessInformationStatus) as? Int ?? nil
     @State var unreadCount: Int = 0
-    @State var unReadNotificationCount: String  = UserDefaults.standard.value(forKey: Constants.shared.unReadNotificationCount) as? String ?? ""
+    @State var unReadNotificationCount: String = UserDefaults.standard.value(forKey: Constants.shared.unReadNotificationCount) as? String ?? ""
     @State var showClientOfferDetails: Bool = false
     @State var showOfferDetails: Bool = false
     @State var offerData: ShowOfferData? = nil
@@ -34,22 +33,23 @@ struct HomeView: View {
     @State private var navigateToOffers: Bool = false
     @StateObject var profileViewModel = MoreVM()
     @State private var navigateToCompleteProfileView: Bool = false
-    @State var showTransferBottomSheet : Bool = false
-    @State var isNavigateToTransferView : Bool = false
-    @State var transferBalancePhone : String = ""
-    @State var transferBalanceName : String = ""
+    @State var showTransferBottomSheet: Bool = false
+    @State var isNavigateToTransferView: Bool = false
+    @State var transferBalancePhone: String = ""
+    @State var transferBalanceName: String = ""
     @State var navigateToWithDrawView: Bool = false
     @State var navigateToAddBalance: Bool = false
 
-    @State var transferBalanceAmount : String = ""
+    @State var transferBalanceAmount: String = ""
     @State var showTransferMethodSheet: Bool = false
     @State var navigateToIBANTransfer: Bool = false
     @State var navigateToPhoneTransfer: Bool = false
-
+    @State var navigateToCompleteProfile: Bool = false
+    @Binding var showProfileIncompletePopup: Bool
     @State private var isShowingQRPaymentSheet: Bool = false
     @State private var showQRSelectionSheet: Bool = false
     @State private var showQRScannerSheet: Bool = false
-    @State private var sliderImages: [String] = [(Constants.shared.isAR ? "Ar1":"En1"), (Constants.shared.isAR ? "Ar2":"En2")]
+    @State private var sliderImages: [String] = [(Constants.shared.isAR ? "Ar1" : "En1"), (Constants.shared.isAR ? "Ar2" : "En2")]
     @State private var isHiddenPageIndicator: Bool = false
     @State private var isWebImage: Bool = false
     @State private var isIndicatorSeparated: Bool = true
@@ -73,7 +73,7 @@ struct HomeView: View {
                             HStack {
                                 Image(.splashLogoWithoutName)
                                     .resizable()
-                                    .frame(width: 27.23,height: 32)
+                                    .frame(width: 27.23, height: 32)
                                 Spacer()
                                 Image(.logoName)
                                 Spacer()
@@ -82,7 +82,7 @@ struct HomeView: View {
                                 } label: {
                                     ZStack {
                                         Image(.notificationIcon)
-                                        
+
                                         if unreadCount > 0 {
                                             VStack {
                                                 HStack {
@@ -91,7 +91,7 @@ struct HomeView: View {
                                                         Circle()
                                                             .fill(Color.red)
                                                             .frame(width: 20, height: 20)
-                                                        
+
                                                         Text("\(unreadCount > 99 ? "99+" : "\(unreadCount)")")
                                                             .font(.system(size: 10))
                                                             .foregroundColor(.white)
@@ -105,34 +105,64 @@ struct HomeView: View {
                                         }
                                     }
                                     .fixedSize()
-                                }.navigationDestination(isPresented: $isNotificationPresented){ NotificationsView(selectedTab: $selectedTab)}
-                                
+                                }.navigationDestination(isPresented: $isNotificationPresented) { NotificationsView(selectedTab: $selectedTab) }
                             }
-                            .padding(.horizontal,24)
-                            .padding(.top,24)
-                            
-                            VStack {
-                                HStack(spacing: 5) {
-                                    Text(String(format: "%.1f",viewModel.walletAmount))
-                                        .textModifier(.plain, 36, .black030319)
-                                    Image(.riyal)
-                                         .resizable()
-                                         .aspectRatio(contentMode: .fit)
-                                         .foregroundColor(.black010202)
-                                         .frame(width: 30)
-                                         .padding(.trailing, 10)
+                            .padding(.horizontal, 24)
+                            .padding(.top, 24)
+
+                            if Constants.isFinancialInfoCompleted {
+                                // MARK: - Balance (shown only when profile is complete)
+                                VStack {
+                                    HStack(spacing: 5) {
+                                        Text(String(format: "%.1f", viewModel.walletAmount))
+                                            .textModifier(.plain, 36, .black030319)
+                                        Image(.riyal)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .foregroundColor(.black010202)
+                                            .frame(width: 30)
+                                            .padding(.trailing, 10)
+                                    }
+                                    .environment(\.layoutDirection, .rightToLeft)
                                 }
-                                .environment(\.layoutDirection, .rightToLeft)
+                                .padding(.top, 20)
+                                Text("yourBalance".localized())
+                                    .textModifier(.plain, 16, .black222222)
+                            } else {
+                                // MARK: - Account Not Verified Banner
+                                Button {
+                                    navigateToCompleteProfile = true
+                                } label: {
+                                    HStack (spacing: 16){
+                                        Image(.report)
+                                            .resizable()
+                                            .frame(width: 20, height: 20)
+                                        VStack(alignment: .leading, spacing: 4) {
+                                            Text("account_not_verified_title".localized())
+                                                .textModifier(.bold, 14, .black222222)
+                                            Text("complete_data_subtitle".localized())
+                                                .textModifier(.plain, 10, .black222222)
+                                        }
+                                        Spacer()
+                                        Image(systemName: Constants.shared.isAR ? "chevron.left" : "chevron.right")
+                                            .foregroundColor(.black222222)
+                                    }
+                                    .padding(.leading, 16)
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 16)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .fill(Color.primaryFFF5CE)
+                                    )
+                                }
+                                .padding(.horizontal, 24)
+                                .padding(.top, 40)
                             }
-                            .padding(.top,20)
-                            Text("yourBalance".localized())
-                                .textModifier(.plain, 16, .black222222)
                         }
-                        
                     }
                     Spacer()
                 }
-                
+
                 //MARK: - lowerView
                 VStack {
                     Rectangle()
@@ -141,15 +171,19 @@ struct HomeView: View {
                     ZStack(alignment: .top) {
                         ZStack {
                             Color(.white)
-    
+
                             VStack(spacing: 17) {
                                 Rectangle().fill(.white)
                                     .frame(height: 32)
-                                
+
                                 ScrollView(showsIndicators: false) {
                                     VStack(spacing: 16) {
                                         Button {
-                                            showQRSelectionSheet = true
+                                            if Constants.isFinancialInfoCompleted {
+                                                showQRSelectionSheet = true
+                                            } else {
+                                                showProfileIncompletePopup = true
+                                            }
                                         } label: {
                                             HStack(spacing: 12) {
                                                 Spacer()
@@ -164,7 +198,7 @@ struct HomeView: View {
                                                 }
                                                 Spacer()
                                             }
-                                            .padding(.vertical,9)
+                                            .padding(.vertical, 9)
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 16)
                                                     .stroke(.primaryF9CE29, lineWidth: 1)
@@ -175,13 +209,16 @@ struct HomeView: View {
                                                     .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 6)
                                             )
                                         }
-                                        
                                         .padding(.horizontal, 20)
-                                        .frame(height:60)
-                                        
-                                        HStack(spacing:15) {
+                                        .frame(height: 60)
+
+                                        HStack(spacing: 15) {
                                             Button {
-                                                isPresentBuySheet = true
+                                                if Constants.isFinancialInfoCompleted {
+                                                    isPresentBuySheet = true
+                                                } else {
+                                                    showProfileIncompletePopup = true
+                                                }
                                             } label: {
                                                 ZStack {
                                                     HStack(spacing: 5) {
@@ -193,7 +230,7 @@ struct HomeView: View {
                                                             .frame(width: 28.05, height: 28)
                                                         Spacer(minLength: 2)
                                                     }
-                                                    .padding(.vertical,15)
+                                                    .padding(.vertical, 15)
                                                 }
                                                 .overlay(
                                                     ZStack {
@@ -207,15 +244,20 @@ struct HomeView: View {
                                                         .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
                                                 )
                                             }
-                                            .frame(height:60)
-                                            
+                                            .frame(height: 60)
+
                                             Button {
-                                                if businessInfo.rawValue == 0 {
-                                                    showCompleteDataPopup = true
-                                                } else if businessInfo.rawValue == 1 {
-                                                    navigateToPendingView = true
+
+                                                if Constants.isFinancialInfoCompleted {
+                                                    if businessInfo.rawValue == 0 {
+                                                        showCompleteDataPopup = true
+                                                    } else if businessInfo.rawValue == 1 {
+                                                        navigateToPendingView = true
+                                                    } else {
+                                                        navigateToOffers = true
+                                                    }
                                                 } else {
-                                                    navigateToOffers = true
+                                                    showProfileIncompletePopup = true
                                                 }
                                             } label: {
                                                 ZStack {
@@ -229,7 +271,7 @@ struct HomeView: View {
                                                             .frame(width: 28.05, height: 28)
                                                         Spacer(minLength: 2)
                                                     }
-                                                    .padding(.vertical,15)
+                                                    .padding(.vertical, 15)
                                                 }
                                                 .overlay(
                                                     ZStack {
@@ -243,10 +285,10 @@ struct HomeView: View {
                                                         .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
                                                 )
                                             }
-                                            .frame(height:60)
+                                            .frame(height: 60)
                                         }
                                         .padding(.horizontal, 19)
-                                        
+
                                         SliderView(
                                             images: $sliderImages,
                                             isHiddenPageIndicator: $isHiddenPageIndicator,
@@ -254,8 +296,8 @@ struct HomeView: View {
                                             isIndicatorSeparated: $isIndicatorSeparated,
                                             widthFraction: 0.9
                                         )
-                                        .padding(.vertical,16)
-                                        .padding(.bottom,20)
+                                        .padding(.vertical, 16)
+                                        .padding(.bottom, 20)
                                         .cornerRadius(12)
                                     }
                                     .padding(.top, 15)
@@ -272,7 +314,11 @@ struct HomeView: View {
                                 Color(.white)
                                 HStack {
                                     WalletButton(buttonText: "transferBalance".localized(), image: .transferBalance) {
-                                        showTransferMethodSheet = true
+                                        if Constants.isFinancialInfoCompleted {
+                                            showTransferMethodSheet = true
+                                        } else {
+                                            showProfileIncompletePopup = true
+                                        }
                                     }
                                     Spacer()
                                     Rectangle()
@@ -280,8 +326,12 @@ struct HomeView: View {
                                         .frame(width: 2, height: 24)
                                     Spacer()
                                     WalletButton(buttonText: "addBalance".localized(), image: .addBalance) {
-                                        balanceActionType = .addBalance
-                                        isSheetPresented = true
+                                        if Constants.isFinancialInfoCompleted {
+                                            balanceActionType = .addBalance
+                                            isSheetPresented = true
+                                        } else {
+                                            showProfileIncompletePopup = true
+                                        }
                                     }
                                 }
                                 .padding(.horizontal, 24)
@@ -298,56 +348,6 @@ struct HomeView: View {
                 }
                 .edgesIgnoringSafeArea(.top)
 
-                // MARK: - Complete Data Popup
-                if showCompleteDataPopup {
-                    ZStack {
-                        Color.black.opacity(0.2)
-                        VStack {
-                            Spacer()
-                            ZStack {
-                                Color(.white)
-                                VStack(spacing: 20) {
-                                    HStack {
-                                        Text("merchants_service_title".localized())
-                                            .textModifier(.plain, 16, .gray666666)
-                                        Spacer()
-                                    }
-                                    .padding(.top)
-                                    Text("merchants_service_body".localized())
-                                        .textModifier(.plain, 14, .gray666666)
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(nil)
-                                    HStack {
-                                        Spacer()
-                                        Button {
-                                            showCompleteDataPopup = false
-                                        } label: {
-                                            Text ("Cancel".localized())
-                                                .textModifier(.plain, 14, .gray666666)
-                                        }
-                                        .padding(.trailing, 20)
-                                        Button {
-                                            navigateToCompleteProfileView = true
-                                            showCompleteDataPopup = false
-                                        } label: {
-                                            Text ("add_data_button".localized())
-                                                .textModifier(.plain, 14, .primaryF9CE29)
-                                        }
-                                    }
-                                }
-                                .padding(20)
-                            }
-                            .frame(width: UIScreen.main.bounds.width - 40)
-                            .cornerRadius(15)
-                            .fixedSize()
-                            Spacer()
-                        }
-                    }
-                    .edgesIgnoringSafeArea(.all)
-                    .onTapGesture {
-                        showCompleteDataPopup = false
-                    }
-                }
             }
             .toastView(toast: $viewModel.toast)
             .onAppear {
@@ -368,7 +368,7 @@ struct HomeView: View {
                 }
             })
             .navigationDestination(isPresented: $navigateToCompleteProfileView, destination: {
-                CompleteDataView(phone:Constants.phone)
+                CompleteDataView(phone: Constants.phone)
             })
             .onChange(of: profileViewModel.profileData, { oldValue, newValue in
                 businessInfo = BusinessInfo(rawValue: profileViewModel.profileData?.businessInformationStatus ?? 0) ?? .noFilesUploaded
@@ -403,7 +403,7 @@ struct HomeView: View {
             .navigationDestination(isPresented: $navigateToPhoneTransfer) {
                 EnterPhoneTransferDetailsView(phoneNumber: "")
             }
-            
+
             // MARK: - Custom Bottom Sheets
             .customBottomSheet(isPresented: $showQRSelectionSheet, detents: [.fraction(0.42)]) {
                 QRSelectionBottomSheet(
@@ -412,8 +412,6 @@ struct HomeView: View {
                     showScanQR: $showQRScannerSheet
                 )
             }
-
-            // MARK: - QR Scanner Sheet
             .sheet(isPresented: $showQRScannerSheet) {
                 QRCodeScannerViewHome { code in
                     showQRScannerSheet = false
@@ -463,13 +461,16 @@ struct HomeView: View {
                     navigateToPhoneTransfer: $navigateToPhoneTransfer
                 )
             }
+            .navigationDestination(isPresented: $navigateToCompleteProfile) {
+                ProfileDetailView()
+            }
         }
     }
 }
 
 // MARK: - Previews
 #Preview {
-    HomeView(selectedTab: .constant(.home))
+    HomeView(selectedTab: .constant(.home), showProfileIncompletePopup: .constant(false))
 }
 
 // MARK: - QR Deeplink Handling
@@ -477,7 +478,6 @@ extension HomeView {
     private func handleQRCodeIfNeeded() {
         let qrCode = Constants.quickQrCode
         guard !qrCode.isEmpty else { return }
-        // Use the shared manager instead of instantiating LAContext directly
         BiometricAuthManager.shared.authenticate(message: "confirm_payment_biometric".localized()) { success, _ in
             if success {
                 self.pendingDeeplinkQRCode = qrCode
@@ -490,50 +490,27 @@ extension HomeView {
             }
         }
     }
-    
+
     private func extractPaymentCode(from scannedString: String) -> String {
         guard let urlComponents = URLComponents(string: scannedString) else {
             return scannedString
         }
-        
+
         let pathComponents = urlComponents.path.split(separator: "/")
-        
+
         if pathComponents.count >= 2, pathComponents[0] == "payments" {
             return String(pathComponents[1])
-        }
-        else if pathComponents.count >= 3, pathComponents[0] == "offers", pathComponents[1] == "payments" {
+        } else if pathComponents.count >= 3, pathComponents[0] == "offers", pathComponents[1] == "payments" {
             return String(pathComponents[2])
         }
-        
-        return scannedString
-    }
-}
 
-struct LastProcessNavView: View {
-    var title: String
-    @Binding var selectedTab: TabBarView.Tab
-    var isShow: Bool = true
-    
-    var body: some View {
-        HStack {
-            Image(.doubleArrow)
-            Text(title)
-                .textModifier(.plain, 18, .black1E1E1E)
-            Spacer()
-            if isShow {
-                Button {
-                    // selectedTab = .processes
-                } label: {
-                    Image(.leftArrow)
-                }
-            }
-        }
+        return scannedString
     }
 }
 
 struct EmptyCostumeView: View {
     var message: String = "thereIsNoData".localized()
-    
+
     var body: some View {
         VStack {
             Spacer()

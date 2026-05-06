@@ -13,6 +13,10 @@ struct SettingsView: View {
     @StateObject var viewModel = MoreVM()
     @State private var showingLanguageActionSheet = false
     @State private var isSwitchOn: Bool = false
+    @State private var isBiometricOn: Bool = false
+    @State private var isQuickPasscodeOn: Bool = false
+    @State private var showQuickPasscodeSetup: Bool = false
+
     @State private var isActiveActionSheet = false
     @State private var activeActionSheet: ActiveSheet?
     @State private var showChangePassword : Bool = false
@@ -58,7 +62,66 @@ struct SettingsView: View {
                         }
                         .frame(height: 56)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, 24)
+                        .padding(.leading, 16)
+                        .background(Color(.grayF6F6F6))
+                        .cornerRadius(5)
+                        
+                        // MARK: - Quick Passcode Toggle
+                        HStack {
+                            Image(systemName: "lock.shield")
+                                .resizable()
+                                .foregroundColor(.yellow)
+                                .frame(width: 17, height: 20)
+                            
+                            Text("enable_quick_passcode".localized())
+                                .textModifier(.plain, 14, .black292D32)
+                            
+                            Spacer()
+                           
+                            Button {
+                                if isQuickPasscodeOn {
+                                    isQuickPasscodeOn = false
+                                } else {
+                                    if QuickPasscodeManager.shared.hasPasscode {
+                                        isQuickPasscodeOn = true
+                                    } else {
+                                        showQuickPasscodeSetup = true
+                                        }
+                                    }
+                            } label: {
+                                Image(isQuickPasscodeOn ? .toggleOn:.toggleOff)
+                                    .padding(.trailing, isQuickPasscodeOn ? 16:12)
+                            }
+                        }
+                        .frame(height: 56)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading, 16)
+                        .background(Color(.grayF6F6F6))
+                        .cornerRadius(5)
+                        
+                        // MARK: - Biometric Toggle
+                        HStack {
+                            Image(systemName: "lock.shield")
+                                .resizable()
+                                .foregroundColor(.yellow)
+                                .frame(width: 17, height: 20)
+                            
+                            Text("enable_biometric_authentication".localized())
+                                .textModifier(.plain, 14, .black292D32)
+                            
+                            Spacer()
+                           
+                            Button {
+                                isBiometricOn.toggle()
+                                UserDefaults.standard.set(isBiometricOn, forKey: Constants.shared.biometricKey)
+                            } label: {
+                                Image(isBiometricOn ? .toggleOn:.toggleOff)
+                                    .padding(.trailing, isBiometricOn ? 16:12)
+                            }
+                        }
+                        .frame(height: 56)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading, 16)
                         .background(Color(.grayF6F6F6))
                         .cornerRadius(5)
 //                        ButtonWithImageView(imageName: .changePassword, trailingImageName:.sideArrow, text: "changePassword".localized()){
@@ -124,7 +187,12 @@ struct SettingsView: View {
 //        })
         .toastView(toast: $viewModel.toast)
         .navigationBarHidden(true)
+        .navigationDestination(isPresented: $showQuickPasscodeSetup) {
+            SettingsQuickPasscodeSetupView(isQuickPasscodeOn: $isQuickPasscodeOn)
+        }
         .onAppear(){
+            isBiometricOn = UserDefaults.standard.bool(forKey: Constants.shared.biometricKey)
+            isQuickPasscodeOn = QuickPasscodeManager.shared.hasPasscode
             isSwitchOn =  UserDefaults.standard.value(forKey: Constants.shared.activeNotification) as? Int ?? 0 == 1 ? true : false
             AppState.shared.swipeEnabled = true
             viewModel.profile(false)

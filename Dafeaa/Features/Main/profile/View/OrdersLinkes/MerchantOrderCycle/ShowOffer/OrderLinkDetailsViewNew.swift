@@ -201,6 +201,7 @@ struct OrderLinkDetailsViewNew: View {
                                                                 .fixedSize()
                                                             Image(.riyal)
                                                                 .resizable()
+                                                                .resizable()
                                                                 .aspectRatio(contentMode: .fit)
                                                                 .foregroundColor((product.offerPrice == 0 || product.offerPrice == nil) ? .black010202 : .black010202.opacity(0.6))
                                                                 .frame(width: (product.offerPrice == 0 || product.offerPrice == nil) ? 11 : 16)

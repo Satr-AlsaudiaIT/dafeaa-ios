@@ -12,6 +12,7 @@ import IQKeyboardManagerSwift
 import FirebaseCore
 import GoogleMaps
 import GooglePlaces
+import FirebaseMessaging
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
@@ -29,6 +30,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
         setUpDidFinishLaunch()
         
         return true
+    }
+    
+    // MARK: - APNs token → Firebase (REQUIRED for push delivery)
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
+        let tokenString = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+        print("✅ APNs token registered: \(tokenString)")
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("❌ APNs registration failed: \(error.localizedDescription)")
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -79,6 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
                 .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft:.leftToRight)
             )
         } else if token != ""  {
+            NotificationConfigration.shared.firebaseConfigration()
             if resetFromLoginLink {
                 let userId = GenericUserDefault.shared.getValue(Constants.shared.userId) as? Int ?? 0
                 // ✅ Decode from Data

@@ -23,7 +23,7 @@ struct WalletView: View {
     @State var showTransferMethodSheet: Bool = false
     @State var navigateToIBANTransfer: Bool = false
     @State var navigateToPhoneTransfer: Bool = false
-
+    
     var body: some View {
         NavigationStack {
             //MARK: - upperView
@@ -47,7 +47,7 @@ struct WalletView: View {
                             }
                             .environment(\.layoutDirection, .rightToLeft)
                         }
-
+                        
                         //MARK: - Wallet Buttons
                         ZStack {
                             Color.white
@@ -85,6 +85,7 @@ struct WalletView: View {
                             } else {
                                 ScrollView(showsIndicators: false) {
                                     VStack(spacing: 17) {
+                                        LastProcessNavView(title: "lastTransactions".localized(), selectedTab: $selectedTab, viewModel: viewModel)
                                         LazyVStack(spacing: 8) {
                                             ForEach(0..<viewModel.processList.count, id: \.self) { index in
                                                 ProcessComponent(process: viewModel.processList[index])
@@ -106,7 +107,7 @@ struct WalletView: View {
                     .padding([.leading, .trailing, .top], 24)
                     .padding(.bottom, 2)
                 }
-
+                
                 if viewModel.isLoading {
                     ProgressView("Loading...".localized())
                         .foregroundColor(.white)
@@ -126,25 +127,25 @@ struct WalletView: View {
                     navigateToAddBalance: $navigateToAddBalance
                 )
             }
-
-
+            
+            
             .toastView(toast: $viewModel.toast)
             .popupView(popup: $popupMessage)
             .navigationBarHidden(true)
             .onAppear {
-//                isViewAppeared = true
+                //                isViewAppeared = true
                 viewModel.wallet(skip: 0)
                 checkPaymentStatus()
             }
             .onDisappear {
                 isViewAppeared = false
             }
-//            .onChange(of: isViewAppeared) { _, newValue in
-//                if newValue {
-//                    viewModel.wallet(skip: 0)
-//                }
-//            }
-
+            //            .onChange(of: isViewAppeared) { _, newValue in
+            //                if newValue {
+            //                    viewModel.wallet(skip: 0)
+            //                }
+            //            }
+            
             .navigationDestination(isPresented: $navigateToWebView) {
                 PaymentWebViewContainer(url: paymentURL)
             }
@@ -161,20 +162,25 @@ struct WalletView: View {
                     navigateToPhoneTransfer: $navigateToPhoneTransfer
                 )
             }
-
+            
             .navigationDestination(isPresented: $navigateToIBANTransfer) {
                 WithdrawDetailsView()
             }
-
+            
             .navigationDestination(isPresented: $navigateToPhoneTransfer) {
                 EnterPhoneTransferDetailsView(phoneNumber: "")
-
+                
             }
+            //            .sheet(isPresented: $viewModel.showShareSheet) {
+            //                if let fileURL = viewModel.exportedFileURL {
+            //                    ShareSheet(activityItems: [fileURL])
+            //                }
+            //            }
         }
     }
     
     // MARK: - Private Methods
-
+    
     private func loadMoreOrdersIfNeeded() {
         if viewModel.hasMoreData && !viewModel.isLoading {
             viewModel.wallet(skip: viewModel.processList.count)
@@ -213,9 +219,44 @@ struct WalletView: View {
         }
     }
     
-
+    
 }
 
 #Preview {
     WalletView(selectedTab: .constant(.home))
+}
+
+struct LastProcessNavView: View {
+    var title: String
+    @Binding var selectedTab: TabBarView.Tab
+    var isShow: Bool = true
+    @ObservedObject var viewModel: WalletVM
+    
+    var body: some View {
+        HStack {
+            Image(.doubleArrow)
+            Text(title)
+                .textModifier(.bold, 18, .black000000)
+            Spacer()
+            
+            Button(action: {
+                viewModel.exportWalletOperations()
+            }) {
+                HStack(spacing: 5) {
+                    Text("download".localized())
+                        .textModifier(.bold, 14, .black000000)
+                    
+                    if viewModel.isExporting {
+                        ProgressView()
+                            .scaleEffect(0.8)
+                    } else {
+                        Image(.download)
+                    }
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+            }
+            .disabled(viewModel.isExporting)
+        }
+    }
 }

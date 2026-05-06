@@ -34,6 +34,8 @@ enum MoreNetwork
     case getTaxRecord
     case addTaxRecord(taxNumber: String)
     case deleteTaxRecord
+    case getFinancialInfo
+    case updateFinancialInfo(incomeSource: Int, incomeRange: Int, taxResidency: Bool, isPep: Bool)
 }
 
 extension MoreNetwork: TargetType
@@ -42,7 +44,7 @@ extension MoreNetwork: TargetType
         switch self {
         case .withDraw,.addAmountToWallet:
             return "https://dafeaa-backend.deplanagency.com/api/moyasar/"
-        case .getTaxRecord,.addTaxRecord, . deleteTaxRecord :
+        case .getTaxRecord,.addTaxRecord, .deleteTaxRecord, .getFinancialInfo, .updateFinancialInfo :
             return Constants.shared.baseURLV1
         default:
             return Constants.shared.baseURL
@@ -75,7 +77,8 @@ extension MoreNetwork: TargetType
         case .confirmTransfer               : return "wallet/transfer"
         case .getTaxRecord, .addTaxRecord,
                 .deleteTaxRecord            :return "tax-record"
-
+        case .getFinancialInfo, .updateFinancialInfo:
+                return "financial-information"
         }
     }
     
@@ -83,8 +86,7 @@ extension MoreNetwork: TargetType
     {
         switch self  {
         case.changePassword, .contactUs, .logOut, .notifyOnOff,.createAddress,
-                .withDraw, .addAmountToWallet, .selectSubscriptionPlan
-            ,.updateSecretKey,.confirmTransfer, .addTaxRecord:                    return .post
+                .withDraw, .addAmountToWallet, .selectSubscriptionPlan, .updateSecretKey, .confirmTransfer, .addTaxRecord, .updateFinancialInfo:                    return .post
         case .address(_, let method, _):                                          return method
         case .deleteAccount, .deleteTaxRecord:                                    return .delete
         default:                                                                  return .get
@@ -118,7 +120,14 @@ extension MoreNetwork: TargetType
         case .logOut:
             let UUIDValue = UIDevice.current.identifierForVendor!.uuidString
             return .requestParameters(Parameters: ["device_id":UUIDValue], encoding: JSONEncoding.default)
-
+        case .updateFinancialInfo(let incomeSource, let incomeRange, let taxResidency, let isPep):
+                let params: [String: Any] = [
+                    "income_source": incomeSource,
+                    "income_range": incomeRange,
+                    "tax_residency": taxResidency,
+                    "is_pep": isPep
+                ]
+                return .requestParameters(Parameters: params, encoding: JSONEncoding.default)
         default:
             return .requestPlain
             

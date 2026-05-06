@@ -16,6 +16,8 @@ struct OTPConfirmationView: View {
     @State var isForgetPassword: Bool = false
     @State var isLogoutFromDevices: Bool = false
     @State var code: String = ""
+    // NEW: login OTP params
+    var isLoginOTP: Bool = false
     @StateObject var viewModel = AuthVM()
     @State private var pins: [PinInfo] = [
         PinInfo(pin: "", focus: .pinOne),
@@ -24,9 +26,11 @@ struct OTPConfirmationView: View {
         PinInfo(pin: "", focus: .pinFour)
     ]
     @State private var timer: Timer?
-    @State private var secondsRemaining = 120 // 2 minutes in seconds
+    @State private var secondsRemaining = 60 // in seconds
     @State private var showResendButton = false
+    @State private var goToQuickPasscode = false
     @FocusState private var pinFocusState: FocusPin?
+    
     var body: some View {
         ZStack{
             VStack {
@@ -105,7 +109,11 @@ struct OTPConfirmationView: View {
                                 code += "\(pins[index].pin)"
                             }
                             print("OTP Code: \(code)")
-                            if isChangePhone {
+                            
+                            if isLoginOTP {
+                                // NEW: login OTP → uses same verify API, then profile → home
+                                viewModel.validateLoginOTP(phone: phone.normalizePhoneNumber, code: code)
+                            } else if isChangePhone {
                                 viewModel.validateChangePhoneCode(phone: phone.normalizePhoneNumber, password: password, code: code, expireAuth: isLogoutFromDevices ?  1 : 0)
                             } else {
                                 viewModel.validateVerify(phone: phone.normalizePhoneNumber, code: code, isForgetPassword: isForgetPassword)
@@ -118,18 +126,32 @@ struct OTPConfirmationView: View {
                         .navigationDestination(isPresented: $viewModel._hasUnCompletedData) {
                             CompleteDataView(phone: phone.normalizePhoneNumber)
                         }
-                        
-                        HStack {
-                            Text("didn'tReceiveCode?".localized())
-                                .textModifier(.plain, 16, .black222222)
-                            Button(action: {
-                                viewModel.sendCode(for: ["phone":phone,"usage":isForgetPassword ?"forget_password":"verify"])
-                            }) {
-                                Text("resendCode".localized())
-                                    .textModifier(.plain, 16, Color(.primary))
-                            }
+                        .navigationDestination(isPresented: $goToQuickPasscode) {
+                            QuickPasscodeView(phone: phone, activeVM: viewModel)
                         }
-                        .padding(.top, 24)
+                        
+                        if showResendButton {
+                            HStack {
+                                Text("didn'tReceiveCode?".localized())
+                                    .textModifier(.plain, 16, .black222222)
+                                Button(action: {
+                                    if isLoginOTP {
+                                        viewModel.sendCode(for: ["phone": phone, "usage": "verify"])
+                                    } else {
+                                        viewModel.sendCode(for: ["phone":phone,"usage":isForgetPassword ?"forget_password":"verify"])
+                                    }
+                                    startTimer()
+                                }) {
+                                    Text("resendCode".localized())
+                                        .textModifier(.plain, 16, Color(.primary))
+                                }
+                            }
+                            .padding(.top, 24)
+                        } else {
+                            Text("resendIn".localized() + " " + formattedTime)
+                                .textModifier(.plain, 16, .gray666666)
+                                .padding(.top, 24)
+                        }
                         
                         Spacer()
                     }
@@ -156,6 +178,36 @@ struct OTPConfirmationView: View {
         }
         .navigationBarHidden(true)
         .toastView(toast: $viewModel.toast)
+        .onChange(of: viewModel._isLoginOTPVerified) { _, success in
+            if success && isLoginOTP {
+                viewModel._isLoginOTPVerified = false
+                goToQuickPasscode = true
+            }
+        }
+        .onAppear { startTimer() }
+        .onDisappear { timer?.invalidate(); timer = nil }
+    }
+    
+    // MARK: - Timer
+    private var formattedTime: String {
+        let minutes = secondsRemaining / 60
+        let seconds = secondsRemaining % 60
+        return String(format: "%02d:%02d", minutes, seconds)
+    }
+    
+    private func startTimer() {
+        showResendButton = false
+        secondsRemaining = 60
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            if secondsRemaining > 0 {
+                secondsRemaining -= 1
+            } else {
+                timer?.invalidate()
+                timer = nil
+                showResendButton = true
+            }
+        }
     }
 }
 

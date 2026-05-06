@@ -46,7 +46,7 @@ struct QRPaymentBottomSheet: View {
         ScrollViewReader { proxy in
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
-                    Text("quick_payment".localized())
+                    Text("quick_receive".localized())
                         .textModifier(.bold, 24, .black222222)
                     
                     Text(subtitleText)
@@ -66,30 +66,36 @@ struct QRPaymentBottomSheet: View {
                     .padding(.bottom, 8)
                     
                     VStack(alignment: .leading, spacing: 0) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            TransferReasonDropdown(
-                                selectedReason: $selectedReason,
-                                isOpen: $isReasonDropDownOpen
-                            )
-                            .focused($focusedField, equals: .reason)
-                            .disabled(qrState == .scanning)
-                            .id("ReasonDropdown")
-                            .onChange(of: selectedReason) { _, _ in
-                                reasonError = ""
+                        if qrState == .enterAmount {
+                            // MARK: - Input Fields (Before Success)
+                            VStack(alignment: .leading, spacing: 4) {
+                                TransferReasonDropdown(
+                                    selectedReason: $selectedReason,
+                                    isOpen: $isReasonDropDownOpen
+                                )
+                                .focused($focusedField, equals: .reason)
+                                .id("ReasonDropdown")
+                                .onChange(of: selectedReason) { _, _ in
+                                    reasonError = ""
+                                }
+                                
+                                if !reasonError.isEmpty {
+                                    Text(reasonError)
+                                        .font(.system(size: 12))
+                                        .foregroundColor(.red)
+                                        .padding(.top, 2)
+                                }
                             }
+                            .padding(.top, 30)
                             
-                            if !reasonError.isEmpty {
-                                Text(reasonError)
-                                    .font(.system(size: 12))
-                                    .foregroundColor(.red)
-                                    .padding(.top, 2)
-                            }
+                            amountField
+                                .id("AmountField")
+                                .padding(.top, 25)
+                        } else {
+                            // MARK: - Summary Details (After Success)
+                            paymentSummaryView
+                                .padding(.top, 30)
                         }
-                        .padding(.top, 30)
-                        
-                        amountField
-                            .id("AmountField")
-                            .padding(.top, 25)
                     }
                     .padding(.horizontal, 24)
                     .padding(.bottom, 26)
@@ -330,6 +336,40 @@ struct QRPaymentBottomSheet: View {
         }
     }
 
+    // MARK: - Payment Summary View
+
+    private var paymentSummaryView: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("transfer_details".localized() + ":")
+                .textModifier(.bold, 16, .black222222)
+            
+            Divider()
+                .background(Color.grayE7E7E7)
+            
+            HStack(spacing: 4) {
+                Text("transfer_reason".localized() + ":")
+                    .textModifier(.bold, 14, .black222222)
+                Text(selectedReason?.localized ?? "")
+                    .textModifier(.bold, 14, .black222222)
+            }
+            
+            HStack(spacing: 4) {
+                Text("amount".localized() + ":")
+                    .textModifier(.bold, 14, .black222222)
+                Text("\(amountText) ")
+                    .textModifier(.bold, 14, .black222222)
+                Image(.riyal)
+                    .renderingMode(.template)
+                    .resizable()
+                    .frame(width: 25, height: 20)
+                    .foregroundColor(.black222222)
+                    
+                
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
     // MARK: - Action Button
 
     private var isActionDisabled: Bool {

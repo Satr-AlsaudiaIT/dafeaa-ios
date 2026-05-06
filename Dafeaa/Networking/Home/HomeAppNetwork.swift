@@ -16,13 +16,14 @@ enum HomeNetwork {
     case cancelQR(qrCode: String)
     case checkQRStatus(qrCode: String)
     case acceptQR(qrCode: String)
+    case exportOperations
 }
 
 extension HomeNetwork: TargetType {
     var baseURL: String {
         switch self {
             
-        case .applePay, .generateQR, .cancelQR, .checkQRStatus, .acceptQR:
+        case .applePay, .generateQR, .cancelQR, .checkQRStatus, .acceptQR,.exportOperations:
             return Constants.shared.baseURLV1
         default  :
             return Constants.shared.baseURL
@@ -39,6 +40,7 @@ extension HomeNetwork: TargetType {
         case .cancelQR(let qrCode):         return "wallet-transfers/cancel/\(qrCode)"
         case .checkQRStatus(let qrCode):    return "wallet-transfer/\(qrCode)"
         case .acceptQR(qrCode: let qrCode): return "wallet-transfer/accept/\(qrCode)"
+        case .exportOperations:             return "wallet/export?type=operation" 
         }
     }
     

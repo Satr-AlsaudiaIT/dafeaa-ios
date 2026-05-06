@@ -53,7 +53,9 @@ class Constants {
     let subPlanId = "subPlanId"
     let activeNotification = "activeNotification"
     let offerDataAfterLoginResetFromLink = "offerDataAfterLoginResetFromLink"
-
+    let biometricKey = "biometricAuthEnabled"
+    let userImage = "userImage"
+    
     static let ARAB_NATIONAL_BANK_CODE = "30"  // البنك العربي الوطني
     static let WITHDRAW_THRESHOLD: Double = 20000.0  // SAR
     static var qrAuthAlreadyConfirmed: Bool = false
@@ -66,6 +68,17 @@ class Constants {
         set(token) {
             let ud = UserDefaults.standard
             ud.set(token, forKey: "accountStatus")
+        }
+    }
+    
+    static var isFinancialInfoCompleted: Bool {
+        get {
+            let ud = UserDefaults.standard
+            return ud.value(forKey: "isFinancialInfoCompleted") as? Bool ?? false
+        }
+        set(token) {
+            let ud = UserDefaults.standard
+            ud.set(token, forKey: "isFinancialInfoCompleted")
         }
     }
     

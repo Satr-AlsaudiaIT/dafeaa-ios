@@ -13,10 +13,27 @@ class BiometricAuthManager {
     private var isAuthenticating = false
     private var pendingCompletions: [(Bool, Bool) -> Void] = []
 
+    /// Check if device has biometric capability (Face ID or Touch ID)
+    var isBiometricAvailable: Bool {
+        let context = LAContext()
+        var error: NSError?
+        return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
+    }
+    
+    /// Returns "Face ID" or "Touch ID" based on device
+    var biometricType: String {
+        let context = LAContext()
+        _ = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+        switch context.biometryType {
+        case .faceID: return "Face ID"
+        case .touchID: return "Touch ID"
+        case .opticID: return "Optic ID"
+        default: return "Biometric"
+        }
+    }
+
     func authenticate(message: String = "", completion: @escaping (Bool, Bool) -> Void) {
         DispatchQueue.main.async {
-            // If already authenticating, just add the new request to the queue.
-            // This prevents overlapping prompts!
             if self.isAuthenticating {
                 self.pendingCompletions.append(completion)
                 return
@@ -29,25 +46,28 @@ class BiometricAuthManager {
 
     private func performAuthentication(message: String) {
         let context = LAContext()
+        
+        // No fallback to device passcode — biometric only
+        context.localizedFallbackTitle = ""
+        
         let reason = message.isEmpty ? "authenticate_to_continue".localized() : message
         
-        // .deviceOwnerAuthentication automatically handles biometrics AND passcode fallback natively
+        // .deviceOwnerAuthenticationWithBiometrics = biometric ONLY (no device passcode)
         context.evaluatePolicy(
-            .deviceOwnerAuthentication,
+            .deviceOwnerAuthenticationWithBiometrics,
             localizedReason: reason
         ) { success, error in
             DispatchQueue.main.async {
                 let wasCancelled = (error as? LAError)?.code == .userCancel
-                self.finishAuthentication(success: success, wasCancelled: wasCancelled, message: message)
+                self.finishAuthentication(success: success, wasCancelled: wasCancelled)
             }
         }
     }
 
-    private func finishAuthentication(success: Bool, wasCancelled: Bool, message: String) {
+    private func finishAuthentication(success: Bool, wasCancelled: Bool) {
         isAuthenticating = false
         let completions = pendingCompletions
         pendingCompletions = []
-        // Fire all queued actions (e.g., both the 401 refresh AND the deeplink logic)
         completions.forEach { $0(success, wasCancelled) }
     }
 }

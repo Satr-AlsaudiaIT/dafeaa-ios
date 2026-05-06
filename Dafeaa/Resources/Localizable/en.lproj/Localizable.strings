@@ -83,6 +83,26 @@
 "resetPassword" = "Reset Password";
 "resetPasswordSubTitle" = "Please enter your new password twice to confirm the change.";
 "saveBtn" = "Save changes";
+"resendIn" = "Resend in";
+
+// MARK: - Quick Passcode
+"quickPasscodeTitle" = "Quick passcode";
+"setQuickPasscode" = "Set quick passcode";
+"setQuickPasscodeSubTitle" = "Please enter a quick passcode to use for financial operations to verify identity";
+"confirmQuickPasscode" = "Confirm quick passcode";
+"skip" = "Skip";
+"pleaseEnter6Digits" = "Please enter 6 digits";
+"passcodeMismatch" = "Passcodes do not match, try again";
+"passcodeSetSuccess" = "Passcode set successfully";
+"passcodeSaveFailed" = "Failed to save passcode";
+"changePasscode" = "Change passcode";
+"enterCurrentPasscode" = "Enter current passcode";
+"enterCurrentPasscodeSubtitle" = "Enter your current passcode to continue";
+"confirmPasscodeSubtitle" = "Re-enter your new passcode to confirm";
+"passcodeChangedSuccess" = "Passcode changed successfully";
+"enable_quick_passcode" = "Enable quick passcode";
+"welcome" = "Welcome";
+"forgotQuickPasscode" = "Forgot quick passcode?";
 
 //MARK: -TaBar
 "myAccount"="My Account";
@@ -636,5 +656,46 @@
 "transfer_reason" = "Transfer Reason";
 "select_transfer_reason" = "Select Transfer Reason";
 "pay_or_receive_qr" = "Pay or Receive via QR";
-"generate_qr" = "Generate QR Code";
-"scan_qr" = "Scan QR Code";
+"generate_qr" = "Generate QR Code to Receive";
+"scan_qr" = "Scan QR Code to Pay";
+"transfer_details" = "Transfer Details";
+"transfer_reason" = "Transfer Reason";
+"amount" = "Amount";
+"quick_receive" = "Quick Receive";
+
+//MARK: - incomplete profile
+"account_not_verified_title" = "Account Not Verified";
+"account_not_verified_body" = "You cannot use this service until you complete the required data";
+"complete_data_button" = "Complete Data";
+"later_button" = "Later";
+"complete_data_subtitle" = "Complete your data to access all services";
+"download" = "Download";
+"file_saved_success" = "File saved to Files app successfully.";
+"unknown_download_error" = "An unknown error occurred while saving the file.";
+"not_verified" = "Not Verified";
+"financials" = "Financials info";
+"income_source" = "Income Source";
+"select_income_source" = "Select Income Source";
+"income_range" = "Monthly Income Range";
+"select_income_range" = "Select Average Income";
+"tax_residency_question" = "Tax Residency (Yes / No)";
+"pep_question" = "Are you a Politically Exposed Person (PEP)?";
+"select" = "Select";
+"yes" = "Yes";
+"no" = "No";
+"required_field" = "This field is required";
+"please_fill_all_fields" = "Please fill all fields";
+"account_verified_success" = "Your account has been verified successfully.";
+"income_salary" = "Salary";
+"income_freelance" = "Freelance";
+"income_trade" = "Trade";
+"income_investment" = "Investment";
+"income_family_support" = "Family Support";
+"income_other" = "Other";
+"range_less_5000" = "< 5,000";
+"range_5000_10000" = "5,000 - 10,000";
+"range_10000_20000" = "10,000 - 20,000";
+"range_more_20000" = "> 20,000";
+"Saved successfully" = "Saved successfully";
+//enable_biometric_authentication
+"enable_biometric_authentication"="Enable Biometric Authentication";

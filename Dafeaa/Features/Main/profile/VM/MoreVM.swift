@@ -106,10 +106,10 @@ final class MoreVM : ObservableObject {
     func validateEditProfile(name: String, email: String, image: UIImage?) {
         if name.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterUserName".localized())
-        } else if email.isBlank {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterEmail".localized())
-        } else if !email.isEmail {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidEmail".localized())
+//        } else if email.isBlank {
+//            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterEmail".localized())
+//        } else if !email.isEmail {
+//            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidEmail".localized())
         }else {
             var dic = [
                 "_method" : "put"]
@@ -194,7 +194,9 @@ final class MoreVM : ObservableObject {
                 Constants.userName = response?.data?.name ?? ""
                 GenericUserDefault.shared.setValue(response?.data?.id ?? 0, Constants.shared.userId)
                 GenericUserDefault.shared.setValue(response?.data?.businessInformationStatus, Constants.shared.businessInformationStatus)
+                Constants.isFinancialInfoCompleted = response?.data?.isFinancialInfoCompleted ?? false
                 GenericUserDefault.shared.setValue(response?.data?.activeNotification ?? 0, Constants.shared.activeNotification)
+                GenericUserDefault.shared.setValue(response?.data?.profileImage ?? "", Constants.shared.userImage)
 
                 self._isActive = Constants.accountStatus == 2 ? true : false
 

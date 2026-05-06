@@ -41,7 +41,8 @@ struct TransferReasonDropdown: View {
                 title: "transfer_reason".localized(),
                 options: .constant(displayList),
                 submitLabel: .done,
-                titleSize: 15
+                titleSize: 15,
+                isSearchable: false
                 
             )
             .onChange(of: isOpen) { _, newValue in

@@ -84,6 +84,26 @@
 "resetPassword" = "إعادة تعيين كلمة المرور";
 "resetPasswordSubTitle" = "برجاء إدخال كلمة المرور الجديدة مرتين لتأكيد تغيير كلمة مرور حسابكم لدينا.";
 "saveBtn" = "حفظ التعديلات";
+"resendIn" = "إعادة الإرسال خلال";
+
+// MARK: - Quick Passcode
+"quickPasscodeTitle" = "رمز الدخول السريع";
+"setQuickPasscode" = "تثبيت رمز الدخول السريع";
+"setQuickPasscodeSubTitle" = "برجاء ادخال رمز دخول سريع لاستخدامه في تنفيذ العمليات المالية لتأكيد الهوية";
+"confirmQuickPasscode" = "تأكيد رمز الدخول السريع";
+"skip" = "تخطي";
+"pleaseEnter6Digits" = "برجاء ادخال ٦ أرقام";
+"passcodeMismatch" = "رمز الدخول غير متطابق، حاول مرة أخرى";
+"passcodeSetSuccess" = "تم تثبيت رمز الدخول بنجاح";
+"passcodeSaveFailed" = "فشل في حفظ رمز الدخول";
+"changePasscode" = "تغيير رمز الدخول";
+"enterCurrentPasscode" = "ادخل رمز الدخول الحالي";
+"enterCurrentPasscodeSubtitle" = "ادخل رمز الدخول الحالي للمتابعة";
+"confirmPasscodeSubtitle" = "أعد إدخال رمز الدخول الجديد للتأكيد";
+"passcodeChangedSuccess" = "تم تغيير رمز الدخول بنجاح";
+"enable_quick_passcode" = "تفعيل الرمز السري السريع";
+"welcome" = "مرحباً";
+"forgotQuickPasscode" = "نسيت رمز الدخول السريع؟";
 
 //MARK: -TabBar
 "myAccount"="حسابي";
@@ -623,5 +643,46 @@
 "transfer_reason" = "سبب التحويل";
 "select_transfer_reason" = "اختر سبب التحويل";
 "pay_or_receive_qr" = "الدفع أو الاستلام عبر QR";
-"generate_qr" = "إنشاء رمز QR";
-"scan_qr" = "مسح رمز QR";
+"generate_qr" = " إنشاء رمز QR للإستلام";
+"scan_qr" = "مسح رمز QR للدفع";
+"transfer_details" = "تفاصيل التحويل";
+"transfer_reason" = "سبب التحويل";
+"amount" = "المبلغ";
+"quick_receive" = "إستلام سريع";
+
+//MARK: - incomplete profile
+"account_not_verified_title" = "الحساب غير موثق";
+"account_not_verified_body" = "لن تتمكن من استخدام هذه الخدمة حتى إكمال البيانات المطلوبة";
+"complete_data_button" = "إكمال البيانات";
+"later_button" = "لاحقا";
+"complete_data_subtitle" = "أكمل بياناتك للوصول إلى جميع الخدمات";
+"download" = "تحميل";
+"file_saved_success" = "تم حفظ الملف في تطبيق الملفات بنجاح.";
+"unknown_download_error" = "حدث خطأ غير معروف أثناء حفظ الملف.";
+"not_verified" = "غير موثق";
+"financials" = "البيانات المالية";
+"income_source" = "مصدر الدخل";
+"select_income_source" = "اختر مصدر الدخل";
+"income_range" = "نطاق الدخل الشهري";
+"select_income_range" = "اختر متوسط الدخل";
+"tax_residency_question" = "الإقامة الضريبية (نعم / لا)";
+"pep_question" = "هل أنت شخص معرض سياسياً (PEP)";
+"select" = "اختر";
+"yes" = "نعم";
+"no" = "لا";
+"required_field" = "هذا الحقل مطلوب";
+"please_fill_all_fields" = "يرجى تعبئة جميع الحقول";
+"account_verified_success" = "تم توثيق حسابك بنجاح";
+"income_salary" = "راتب";
+"income_freelance" = "عمل حر";
+"income_trade" = "تجارة";
+"income_investment" = "استثمار";
+"income_family_support" = "إعانة عائلية";
+"income_other" = "أخرى";
+"range_less_5000" = " أقل من 5,000 ريال";
+"range_5000_10000" = "5,000 - 10,000";
+"range_10000_20000" = "10,000 - 20,000";
+"range_more_20000" = " أكثر من 20,000";
+"Saved successfully" = "تم الحفظ بنجاح";
+//enable_biometric_authentication
+"enable_biometric_authentication"="تفعيل المصادقة البيومترية";
