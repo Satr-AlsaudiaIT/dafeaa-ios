@@ -104,6 +104,9 @@
 "enable_quick_passcode" = "تفعيل الرمز السري السريع";
 "welcome" = "مرحباً";
 "forgotQuickPasscode" = "نسيت رمز الدخول السريع؟";
+"changeQuickPasscode" = "تغيير الرمز السري السريع";
+"incorrectPasscode" = "رمز الدخول غير صحيح";
+"attemptsRemaining" = "محاولات متبقية";
 
 //MARK: -TabBar
 "myAccount"="حسابي";
@@ -632,8 +635,8 @@
 "close"                  = "إغلاق";
 "transfer_success_body_other"="تم تحويل المبلغ بنجاح للطرف الآخر";
 "waiting_payment"="بانتظار إتمام الدفع...";
-"confirm_payment_biometric" = "تأكيد الدفع ببصمة الإصبع أو الوجه أو الرقم السري";
-"authenticate_to_continue" = "فتح لسجيل الدخول";
+"confirm_payment_biometric" = " المصادقة لتأكيد الدفع";
+"authenticate_to_continue"="مرحبًا بعودتك، ";
 "transfer_reason_personal" = "تحويل شخصي";
 "transfer_reason_friend_family" = "تحويل لصديق أو عائلة";
 "transfer_reason_debt" = "سداد دين";

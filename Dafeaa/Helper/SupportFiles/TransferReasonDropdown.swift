@@ -14,6 +14,7 @@ struct TransferReasonDropdown: View {
 
     @Binding var selectedReason: TransferReason?
     @Binding var isOpen: Bool?
+    var maxDropdownHeight: CGFloat = 150
 
     // Derived display text — empty string when nothing is selected
     private var selectedText: Binding<String> {
@@ -42,8 +43,8 @@ struct TransferReasonDropdown: View {
                 options: .constant(displayList),
                 submitLabel: .done,
                 titleSize: 15,
-                isSearchable: false
-                
+                isSearchable: false,
+                maxListHeight: maxDropdownHeight
             )
             .onChange(of: isOpen) { _, newValue in
                 if newValue == true {

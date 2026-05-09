@@ -103,6 +103,9 @@
 "enable_quick_passcode" = "Enable quick passcode";
 "welcome" = "Welcome";
 "forgotQuickPasscode" = "Forgot quick passcode?";
+"changeQuickPasscode" = "Change quick passcode";
+"incorrectPasscode" = "Incorrect passcode";
+"attemptsRemaining" = "attempts remaining";
 
 //MARK: -TaBar
 "myAccount"="My Account";
@@ -645,8 +648,8 @@
 "close"                        = "Close";
 "transfer_success_body_other"  = "The amount has been successfully transferred to the other party";
 "waiting_payment"              = "Waiting for payment to complete...";
-"confirm_payment_biometric"    = "Confirm payment with Face ID or Touch ID";
-"authenticate_to_continue"     = "Open to login";
+"confirm_payment_biometric"    = "Authenticate to confirm payment ";
+"authenticate_to_continue"     = "Welcome back, ";
 "transfer_reason_personal" = "Personal Transfer";
 "transfer_reason_friend_family" = "Transfer to Friend or Family";
 "transfer_reason_debt" = "Debt Repayment";

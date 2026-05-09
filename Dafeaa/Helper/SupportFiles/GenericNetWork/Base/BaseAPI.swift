@@ -1,19 +1,19 @@
 //
 //  BaseAPI.swift
-
 //
 
 import Foundation
 import Alamofire
-//import MOLH
+
+private final class SessionExpiryState {
+    static var isHandlingExpiry = false
+    static var pendingRetries: [(() -> Void)] = []
+}
 
 class BaseAPI<T: TargetType> {
     typealias networkResultCompletion<M:Decodable> = (Result<M?, NSError>) -> Void
-    
     typealias networkCompletionError = (NSError) -> Void
-    
     typealias decodingCompletion<M:Codable> = (_ response:M?, _ error:NSError?) -> Void
-    
     typealias unAuthorizedCompletion = (NSError) -> Void
     
     func fetchData<M: Codable>(target: T, responseClass: M.Type, bool: Bool? = true, completion:@escaping (Result<M?, NSError>) -> Void) {
@@ -21,9 +21,8 @@ class BaseAPI<T: TargetType> {
         let method = Alamofire.HTTPMethod(rawValue: target.methods.rawValue)
         let headers = Alamofire.HTTPHeaders(target.headers ?? [:])
         let params = buildParams(task: target.task)
-     
-
-        AF.request(target.baseURL + target.path, method: method, parameters: params.0, encoding:  params.1, headers:  headers,
+        
+        AF.request(target.baseURL + target.path, method: method, parameters: params.0, encoding: params.1, headers: headers,
                    requestModifier: { $0.timeoutInterval = 30 }).responseJSON { (response) in
             print("status is -----------:> \(response.response?.statusCode ?? 0)")
             print("url is -----------:>\(target.baseURL)/ \(target.path)")
@@ -31,9 +30,9 @@ class BaseAPI<T: TargetType> {
             print("response is -----------:> \(response)")
             let notificationCount = response.response?.headers["X-Unread-Notifications-Count"]
             UserDefaults.standard.set(notificationCount, forKey: Constants.shared.unReadNotificationCount)
-               let headerActive = response.response?.headers["X-Active-Notification"]  ?? ""
+            let headerActive = response.response?.headers["X-Active-Notification"] ?? ""
             UserDefaults.standard.set(headerActive, forKey: Constants.shared.activeNotification)
-
+            
             debugPrint(response)
             guard response.error == nil else {
                 self.handleUrlError(target, error: response.error, completion: { Error in
@@ -44,46 +43,40 @@ class BaseAPI<T: TargetType> {
             }
             
             let onRetry: () -> Void = {
-                            self.fetchData(target: target, responseClass: responseClass, bool: bool, completion: completion)
-                        }
+                self.fetchData(target: target, responseClass: responseClass, bool: bool, completion: completion)
+            }
             
-            self.handleUrlStatusCode(targetPath : target.path,responseData: response.data,code: response.response?.statusCode, onRetry: onRetry){ isSuccess,error  in
+            self.handleUrlStatusCode(targetPath: target.path, responseData: response.data, code: response.response?.statusCode, onRetry: onRetry) { isSuccess, error in
                 
                 guard isSuccess else {
                     if error == "Unauthenticated." {
-                        completion(.failure(NSError(domain: target.baseURL, code: 401, userInfo: [NSLocalizedDescriptionKey:error ?? ""])))
-                        
+                        completion(.failure(NSError(domain: target.baseURL, code: 401, userInfo: [NSLocalizedDescriptionKey: error ?? ""])))
                     }
                     if target.path == "wallet/transfer" {
                         guard let data = response.data else { return }
                         self.decode(fromData: data, toObject: responseClass, completion: { object, error in
-                            guard let object = object , error == nil else {
+                            guard let object = object, error == nil else {
                                 completion(.failure(error!))
                                 return
                             }
-                            
                             print("result is:- \(object)")
-                            
                             completion(.success(object))
                         })
                     }
-                    completion(.failure(NSError(domain: target.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey:error ?? ""])))
+                    completion(.failure(NSError(domain: target.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey: error ?? ""])))
                     return
                 }
                 
                 guard let data = response.data else { return }
                 
                 self.decode(fromData: data, toObject: responseClass, completion: { object, error in
-                    guard let object = object , error == nil else {
+                    guard let object = object, error == nil else {
                         completion(.failure(error!))
                         return
                     }
-                    
                     print("result is:- \(object)")
-                    
                     completion(.success(object))
                 })
-                
             }
         }
     }
@@ -91,12 +84,11 @@ class BaseAPI<T: TargetType> {
     private func buildParams(task: Task) -> (params:[String: Any], encodingType: ParameterEncoding) {
         switch task {
         case .requestPlain:
-            return ([:],URLEncoding.default)
+            return ([:], URLEncoding.default)
         case .requestParameters(Parameters: let parameters, encoding: let encoding):
-            return (parameters,encoding)
+            return (parameters, encoding)
         }
     }
-      
     
     func fetchApplePayData<M: Codable>(target: T, responseClass: M.Type, completion: @escaping (Result<M?, NSError>) -> Void) {
         
@@ -111,21 +103,18 @@ class BaseAPI<T: TargetType> {
             print("Apple Pay Response - Status Code: \(response.response?.statusCode ?? 0)")
             print("Apple Pay Response - Data: \(response)")
             
-            // Handle network errors
             guard response.error == nil else {
                 let error = response.error! as NSError
                 completion(.failure(error))
                 return
             }
             
-            // Always try to decode the response, even if status code is not 200
             guard let data = response.data else {
                 let error = NSError(domain: target.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey: "No data received from server"])
                 completion(.failure(error))
                 return
             }
             
-            // Decode the response
             do {
                 let decoder = JSONDecoder()
                 let decodedObject = try decoder.decode(M.self, from: data)
@@ -139,54 +128,48 @@ class BaseAPI<T: TargetType> {
         }
     }
     
-    private func handleUrlStatusCode(targetPath: String ,responseData:Data?,code:Int?, onRetry: (() -> Void)? = nil, completion:@escaping(Bool,String?)->Void){
-            
-            guard let statusCode = code else {
-                print("there is no status code")
-                return
-            }
-            
-            switch statusCode {
-            case 200,201:
-                completion(true,nil)
-            case 401:
-                guard let data = responseData else { return }
-                decode(fromData: data, toObject: BaseNetworkResponseErrorModel.self) { result, error in
-                    if targetPath == "auth/login" {
-                        completion(false, result?.message)
-                    } else {
-                        self.handleSessionExpiry(onRetry: onRetry)
-                    }
-                }
-            case 403:
-                guard let data = responseData else { return }
-                decode(fromData: data, toObject: BaseNetworkResponseErrorModel.self) { result, error in
-                    if targetPath == "auth/login" {
-                        GenericUserDefault.shared.setValue(true, Constants.shared.needsVerification)
-                        completion(false,result?.message)
-                    }
-                    else {
-                        GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
-                        GenericUserDefault.shared.setValue("", Constants.shared.token)
-                        MOLH.reset()
-//                        UnauthorizedVC.shared.unAuthorized()
-                    }
-
-                }
-                completion(false,nil)
-            default:
-                guard let data = responseData else { return }
-                decode(fromData: data, toObject: BaseNetworkResponseErrorModel.self) { result, error in
-//                    if result?.message == "invalid request token,please login again" {
-//                        GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
-//                        GenericUserDefault.shared.setValue("", Constants.shared.token)
-//                        MOLH.reset()
-//                    }
-                    completion(false,result?.message)
-                }
-            }
+    // MARK: - Status Code Handling
+    
+    private func handleUrlStatusCode(targetPath: String, responseData: Data?, code: Int?, onRetry: (() -> Void)? = nil, completion: @escaping (Bool, String?) -> Void) {
+        
+        guard let statusCode = code else {
+            print("there is no status code")
+            return
         }
         
+        switch statusCode {
+        case 200, 201:
+            completion(true, nil)
+        case 401:
+            guard let data = responseData else { return }
+            decode(fromData: data, toObject: BaseNetworkResponseErrorModel.self) { result, error in
+                if targetPath == "auth/login" {
+                    completion(false, result?.message)
+                } else {
+                    self.handleSessionExpiry(onRetry: onRetry)
+                }
+            }
+        case 403:
+            guard let data = responseData else { return }
+            decode(fromData: data, toObject: BaseNetworkResponseErrorModel.self) { result, error in
+                if targetPath == "auth/login" {
+                    GenericUserDefault.shared.setValue(true, Constants.shared.needsVerification)
+                    completion(false, result?.message)
+                } else {
+                    self.forceLogout()
+                }
+            }
+            completion(false, nil)
+        default:
+            guard let data = responseData else { return }
+            decode(fromData: data, toObject: BaseNetworkResponseErrorModel.self) { result, error in
+                completion(false, result?.message)
+            }
+        }
+    }
+    
+    // MARK: - Session Expiry (Single Challenge, Queue All Retries)
+    
     private func forceLogout() {
         DispatchQueue.main.async {
             GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
@@ -195,47 +178,30 @@ class BaseAPI<T: TargetType> {
         }
     }
     
-    // MARK: - Session Expiry: Biometric → Passcode → Login
     private func handleSessionExpiry(onRetry: (() -> Void)?) {
-        let isBiometricOn = UserDefaults.standard.bool(forKey: Constants.shared.biometricKey)
-        let hasPasscode = QuickPasscodeManager.shared.hasPasscode
-        
-        if isBiometricOn {
-            // Step 1: Try biometric
-            BiometricAuthManager.shared.authenticate(message: "") { success, wasCancelled in
+        DispatchQueue.main.async {
+            if let onRetry = onRetry {
+                SessionExpiryState.pendingRetries.append(onRetry)
+            }
+            
+            guard !SessionExpiryState.isHandlingExpiry else { return }
+            SessionExpiryState.isHandlingExpiry = true
+            
+            // Use the full chain from BiometricAuthManager
+            BiometricAuthManager.shared.authenticateWithFullChain(message: "authenticate_to_continue".localized()) { success in
                 if success {
-                    self.attemptRefreshToken(onRetry: onRetry)
-                } else if hasPasscode {
-                    // Biometric failed/dismissed → fall back to passcode
-                    self.showPasscodeChallenge(onRetry: onRetry)
+                    self.attemptRefreshAndFlush()
                 } else {
-                    // No passcode fallback → go to login
-                    self.forceLogout()
+                    self.flushAndLogout()
                 }
             }
-        } else if hasPasscode {
-            // Biometric off, passcode on → show passcode directly
-            showPasscodeChallenge(onRetry: onRetry)
-        } else {
-            // Both off → go to login
-            forceLogout()
         }
     }
     
-    private func showPasscodeChallenge(onRetry: (() -> Void)?) {
-        PasscodeChallengePresenter.show { success in
-            if success {
-                self.attemptRefreshToken(onRetry: onRetry)
-            } else {
-                self.forceLogout()
-            }
-        }
-    }
-    
-    private func attemptRefreshToken(onRetry: (() -> Void)?) {
+    private func attemptRefreshAndFlush() {
         let storedRefresh = Constants.refreshToken
         guard !storedRefresh.isEmpty else {
-            forceLogout()
+            flushAndLogout()
             return
         }
         AuthAPI().refreshToken(refreshToken: storedRefresh) { refreshResult in
@@ -247,12 +213,27 @@ class BaseAPI<T: TargetType> {
                 if let newRefresh = model?.refreshToken {
                     Constants.refreshToken = newRefresh
                 }
-                onRetry?()
+                DispatchQueue.main.async {
+                    let retries = SessionExpiryState.pendingRetries
+                    SessionExpiryState.pendingRetries = []
+                    SessionExpiryState.isHandlingExpiry = false
+                    retries.forEach { $0() }
+                }
             case .failure:
-                self.forceLogout()
+                self.flushAndLogout()
             }
         }
     }
+    
+    private func flushAndLogout() {
+        DispatchQueue.main.async {
+            SessionExpiryState.pendingRetries = []
+            SessionExpiryState.isHandlingExpiry = false
+            self.forceLogout()
+        }
+    }
+    
+    // MARK: - URL Error Handling
     
     private func handleUrlError(
         _ target: T,
@@ -260,7 +241,7 @@ class BaseAPI<T: TargetType> {
         completion: @escaping networkCompletionError
     ) {
         var urlError: URLError?
-
+        
         if let afError = error?.asAFError {
             switch afError {
             case .sessionTaskFailed(let sessionError):
@@ -276,15 +257,15 @@ class BaseAPI<T: TargetType> {
                 break
             }
         }
-
+        
         if urlError == nil, let e = error as? URLError {
             urlError = e
         }
-
+        
         if urlError == nil, let ns = error as NSError?, ns.domain == NSURLErrorDomain {
             urlError = URLError(URLError.Code(rawValue: ns.code))
         }
-
+        
         guard let finalUrlError = urlError else {
             let err = NSError(
                 domain: target.baseURL,
@@ -294,7 +275,7 @@ class BaseAPI<T: TargetType> {
             completion(err)
             return
         }
-
+        
         switch finalUrlError.code {
         case .networkConnectionLost, .notConnectedToInternet:
             completion(NSError(domain: target.baseURL, code: 0,
@@ -308,73 +289,39 @@ class BaseAPI<T: TargetType> {
         case .badURL:
             completion(NSError(domain: target.baseURL, code: 0,
                                userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().badUrl]))
-        
-            
         default:
             completion(NSError(domain: target.baseURL, code: 0,
                                userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().genericError]))
         }
     }
-
-    private func handleURLError(_ target: T, urlError: URLError, completion: @escaping networkCompletionError) {
-        switch urlError.code {
-        case .networkConnectionLost, .notConnectedToInternet:
-            completion(NSError(domain: target.baseURL, code: 0,
-                               userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().noInternetConnection]))
-        case .timedOut:
-            completion(NSError(domain: target.baseURL, code: 0,
-                               userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().requestTimeOut]))
-        case .badServerResponse:
-            completion(NSError(domain: target.baseURL, code: 0,
-                               userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().badServerResponse]))
-        case .badURL:
-            completion(NSError(domain: target.baseURL, code: 0,
-                               userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().badUrl]))
-        default:
-            completion(NSError(domain: target.baseURL, code: 0,
-                               userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().genericError]))
+    
+    // MARK: - Decoding
+    
+    private func decode<M: Codable>(fromData data: Data,
+                                     toObject responseClass: M.Type, completion: @escaping decodingCompletion<M>) {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        do {
+            let model: M = try decoder.decode(responseClass, from: data)
+            completion(model, nil)
+        } catch let error {
+            print("decodingError:- \(error)")
+            let decodingError = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: NetworkErrorMessage().decodingError])
+            completion(nil, decodingError)
         }
     }
-
-        private func decode<M:Codable>(fromData data:Data,
-                                       toObject responseClass: M.Type, completion:@escaping decodingCompletion<M>){
-            
-            let decoder = JSONDecoder()
-            
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            do {
-                let model:M = try decoder.decode(responseClass, from: data)
-                completion(model,nil)
-            } catch let error {
-                print("decodingError:- \(error)")
-                let decodingError = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey : NetworkErrorMessage().decodingError])
-                completion(nil,decodingError)
-            }
-            
-        }
-        
-    
-    
-    
-        
-    }
-
+}
 
 struct NetworkErrorMessage {
     
     let genericError = "Something went wrong, Please try again later.".localized()
-    
     let noInternetConnection = "The Internet connection appears to be offline.".localized()
-    
     let requestTimeOut = "Request Timeout, Please try again later.".localized()
-    
     let badServerResponse = "Bad Server Response, Please try again later.".localized()
-    
     let badUrl = "There is something Wrong with Url".localized()
-    
     let decodingError = "Couldn't decode Json response".localized()
-    
 }
+
 struct BaseNetworkResponseErrorModel: Codable {
     var message: String?
     var status: Bool?

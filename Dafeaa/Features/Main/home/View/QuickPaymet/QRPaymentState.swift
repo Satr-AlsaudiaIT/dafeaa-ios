@@ -71,9 +71,9 @@ struct QRPaymentBottomSheet: View {
                             VStack(alignment: .leading, spacing: 4) {
                                 TransferReasonDropdown(
                                     selectedReason: $selectedReason,
-                                    isOpen: $isReasonDropDownOpen
+                                    isOpen: $isReasonDropDownOpen,
+                                    maxDropdownHeight: 250
                                 )
-                                .focused($focusedField, equals: .reason)
                                 .id("ReasonDropdown")
                                 .onChange(of: selectedReason) { _, _ in
                                     reasonError = ""
@@ -104,7 +104,7 @@ struct QRPaymentBottomSheet: View {
                         .padding(.horizontal, 24)
                         .padding(.bottom, 32)
                         
-                    if isReasonDropDownOpen == true || focusedField != nil {
+                    if focusedField == .amount {
                         Color.clear.frame(height: 350)
                     }
                 }
@@ -118,7 +118,6 @@ struct QRPaymentBottomSheet: View {
             )
             .onChange(of: isReasonDropDownOpen) { _, isOpen in
                 if isOpen == true {
-                    focusedField = .reason
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         withAnimation(.easeOut(duration: 0.3)) {
                             proxy.scrollTo("ReasonDropdown", anchor: .top)
@@ -132,13 +131,6 @@ struct QRPaymentBottomSheet: View {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         withAnimation(.easeOut(duration: 0.3)) {
                             proxy.scrollTo("AmountField", anchor: .center)
-                        }
-                    }
-                } else if newFocus == .reason {
-                    isReasonDropDownOpen = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                        withAnimation(.easeOut(duration: 0.3)) {
-                            proxy.scrollTo("ReasonDropdown", anchor: .top)
                         }
                     }
                 }

@@ -9,6 +9,8 @@ import SwiftUI
 
 // MARK: - PasscodeChallengeView
 struct PasscodeChallengeView: View {
+    var message: String = ""
+    var isSessionExpiry: Bool = false
     var onResult: (Bool) -> Void
     
     @State private var enteredCode: String = ""
@@ -16,7 +18,7 @@ struct PasscodeChallengeView: View {
     @State private var shake = false
     @State private var errorMessage: String? = nil
     
-    private let maxAttempts = 3
+    private let maxAttempts = 4
     private let codeLength = 6
     
     var body: some View {
@@ -25,6 +27,9 @@ struct PasscodeChallengeView: View {
             HStack {
                 Spacer()
                 Button {
+                    if isSessionExpiry {
+                        forceLogout()
+                    }
                     onResult(false)
                 } label: {
                     Text("cancel".localized())
@@ -58,13 +63,17 @@ struct PasscodeChallengeView: View {
             }
             
             // MARK: - Welcome
-            Text("welcome".localized())
+            Text(message + Constants.userName + message == "authenticate_to_continue".localized() ? " 👋":"")
                 .textModifier(.plain, 22, .black222222)
-                .padding(.vertical, 16)
-            
-            Text(Constants.userName)
-                .textModifier(.plain, 22, .black222222)
-                .padding(.bottom, 16)
+                .padding(.top, 16)
+            // MARK: - Error
+            if let error = errorMessage {
+                Text(error)
+                    .textModifier(.plain, 13, .redFA4248)
+                    .padding(.top, 12)
+            }
+        
+            Spacer().frame(height: 16)
             // MARK: - Dots
             HStack(spacing: 16) {
                 ForEach(0..<codeLength, id: \.self) { index in
@@ -76,16 +85,12 @@ struct PasscodeChallengeView: View {
             .modifier(ShakeEffect(shakes: shake ? 4 : 0))
             .animation(.default, value: shake)
             
-            // MARK: - Error
-            if let error = errorMessage {
-                Text(error)
-                    .textModifier(.plain, 13, .redFA4248)
-                    .padding(.top, 12)
-            }
             
             // MARK: - Forgot passcode
             Button {
                 // Forgot = force logout to login screen
+                QuickPasscodeManager.shared.delete()
+                forceLogout()
                 onResult(false)
             } label: {
                 Text("forgotQuickPasscode".localized())
@@ -129,10 +134,11 @@ struct PasscodeChallengeView: View {
         Button {
             appendDigit(digit)
         } label: {
-            Text("\(digit)")
+            Text(String(format: "%d", digit))
                 .font(.system(size: 28, weight: .regular))
                 .foregroundColor(.black222222)
                 .frame(width: 70, height: 70)
+                .environment(\.locale, Locale(identifier: "en_US"))
         }
     }
     
@@ -220,6 +226,8 @@ struct PasscodeChallengeView: View {
             attempts += 1
             if attempts >= maxAttempts {
                 onResult(false)
+                forceLogout()
+                MOLH.reset()
                 return
             }
             errorMessage = "incorrectPasscode".localized() + " (\(maxAttempts - attempts) " + "attemptsRemaining".localized() + ")"
@@ -237,6 +245,13 @@ struct PasscodeChallengeView: View {
             }
         }
     }
+    private func forceLogout() {
+        DispatchQueue.main.async {
+            GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
+            GenericUserDefault.shared.setValue("", Constants.shared.token)
+            MOLH.reset()
+        }
+    }
 }
 
 // MARK: - Shake Effect
@@ -252,17 +267,17 @@ struct ShakeEffect: GeometryEffect {
     }
 }
 
-// MARK: - Presenter Helper
 final class PasscodeChallengePresenter {
-    static func show(completion: @escaping (Bool) -> Void) {
+    static func show(message: String = "", isSessionExpiry: Bool = false, completion: @escaping (Bool) -> Void) {
+        // Reduced delay: Execute immediately on main thread
         DispatchQueue.main.async {
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                   let window = windowScene.windows.first else {
                 completion(false)
                 return
             }
-            
-            let challengeView = PasscodeChallengeView(onResult: { success in
+
+            let challengeView = PasscodeChallengeView(message: message, isSessionExpiry: isSessionExpiry, onResult: { success in
                 window.rootViewController?.dismiss(animated: true) {
                     completion(success)
                 }
@@ -275,6 +290,7 @@ final class PasscodeChallengePresenter {
             while let presented = topVC.presentedViewController {
                 topVC = presented
             }
+            // Use animated: true but ensured no logic delays before this call
             topVC.present(hostingController, animated: true)
         }
     }

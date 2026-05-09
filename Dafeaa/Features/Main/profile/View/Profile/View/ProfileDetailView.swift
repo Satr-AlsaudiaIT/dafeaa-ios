@@ -17,6 +17,8 @@ struct ProfileDetailView: View {
     @State private var navigateToPersonalProfile: Bool = false
     @State private var navigateToFinancials: Bool = false
     @State private var navigateToAddresses: Bool = false
+    @State private var showChangeQuickPasscode: Bool = false
+
     // Bottom Sheet States
     @State var profileId: String = ""
     @State var secretKey: String = ""
@@ -114,6 +116,26 @@ struct ProfileDetailView: View {
                             .frame(height: 32)
                         }
                         
+                        // MARK: - Change Quick Passcode Button
+                        Button {
+                            showChangeQuickPasscode = true
+                        } label: {
+                            HStack(spacing: 12) {
+                                Image(systemName: "lock.shield")
+                                    .resizable()
+                                    .foregroundColor(.yellow)
+                                    .frame(width: 22, height: 26)
+                                
+                                Text("changeQuickPasscode".localized())
+                                    .textModifier(.plain, 16, .black194558)
+                                Spacer()
+                                
+                                Image(.iconArrowNav)
+                                    .frame(width: 32, height: 32)
+                                    .foregroundColor(Color(.black194558))
+                            }
+                            .frame(height: 32)
+                        }
                         // MARK: - Developer Keys Button
                         Button {
                             showDeveloperKeyBottomSheet = true
@@ -173,6 +195,9 @@ struct ProfileDetailView: View {
         }
         .navigationDestination(isPresented: $showChangePassword) {
             ChangePasswordView()
+        }
+        .navigationDestination(isPresented: $showChangeQuickPasscode) {
+            SettingsQuickPasscodeSetupView(isQuickPasscodeOn: .constant(true))
         }
         .customBottomSheet(isPresented: $showDeveloperKeyBottomSheet, detents: [.medium, .large]) {
             DeveloperKeyBottomSheet(isSheetPresented: $showDeveloperKeyBottomSheet, profileID: $profileId, secretKey: $secretKey)

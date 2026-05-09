@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xcodebuild -scheme Dafeaa -destination 'generic/platform=iOS Simulator' -quiet build)",
+      "Bash(xcodebuild -workspace Dafeaa.xcworkspace -scheme Dafeaa -destination 'generic/platform=iOS Simulator' -quiet build)",
+      "Bash(xcodebuild -workspace Dafeaa.xcworkspace -scheme Dafeaa -destination 'generic/platform=iOS Simulator' build)"
+    ]
+  }
+}

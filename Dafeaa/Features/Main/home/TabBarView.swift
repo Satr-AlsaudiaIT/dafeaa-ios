@@ -116,6 +116,9 @@ struct TabBarView: View {
             .onAppear {
                 checkPaymentStatus()
             }
+            .onReceive(NotificationCenter.default.publisher(for: .qrDeeplinkReceived)) { _ in
+                selectedTab = .home
+            }
             
             // MARK: - Navigations
             .navigationDestination(isPresented: $navigateToCompleteProfile) {

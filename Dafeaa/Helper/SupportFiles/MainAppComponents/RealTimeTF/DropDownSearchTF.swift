@@ -28,6 +28,7 @@ struct DropdownSearchTF: View {
     @State var titleSize: CGFloat = 14
     @State var image: UIImage? = nil
     var isSearchable: Bool = true
+    var maxListHeight: CGFloat = 150
     
     var filteredItems: [String] {
         if searchTerm.isEmpty || !isSearchable {
@@ -140,7 +141,7 @@ struct DropdownSearchTF: View {
                         }
                         .padding(.horizontal, 4)
                     }
-                    .frame(height: filteredItems.count < 5 ? CGFloat((filteredItems.count * 40)) : 150)
+                    .frame(height: filteredItems.count < 5 ? CGFloat((filteredItems.count * 40)) : maxListHeight)
                 }
                 .background(Color.white)
                 .cornerRadius(radius)

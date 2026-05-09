@@ -361,6 +361,9 @@ struct HomeView: View {
                 unreadCount = ((unReadNotificationCount == "" || unReadNotificationCount == "0") ? 0 : Int(unReadNotificationCount)) ?? 0
                 handleQRCodeIfNeeded()
             }
+            .onReceive(NotificationCenter.default.publisher(for: .qrDeeplinkReceived)) { _ in
+                handleQRCodeIfNeeded()
+            }
             .onChange(of: isViewAppeared, { _, newValue in
                 if newValue {
                     viewModel.home()
@@ -412,14 +415,12 @@ struct HomeView: View {
                     showScanQR: $showQRScannerSheet
                 )
             }
-            .sheet(isPresented: $showQRScannerSheet) {
+            .sheet(isPresented: $showQRScannerSheet, onDismiss: {
+                handleQRCodeIfNeeded()
+            }) {
                 QRCodeScannerViewHome { code in
-                    showQRScannerSheet = false
-                    Constants.quickQrCode = code
                     Constants.quickQrCode = extractPaymentCode(from: code)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        handleQRCodeIfNeeded()
-                    }
+                    showQRScannerSheet = false
                 }
             }
             .customBottomSheet(isPresented: $isShowingQRPaymentSheet, detents: [.fraction(0.85)]) {
@@ -478,15 +479,13 @@ extension HomeView {
     private func handleQRCodeIfNeeded() {
         let qrCode = Constants.quickQrCode
         guard !qrCode.isEmpty else { return }
-        BiometricAuthManager.shared.authenticate(message: "confirm_payment_biometric".localized()) { success, _ in
+        Constants.quickQrCode = ""
+        BiometricAuthManager.shared.authenticateForTransaction(message: "confirm_payment_biometric".localized()) { success in
             if success {
                 self.pendingDeeplinkQRCode = qrCode
-                Constants.quickQrCode = ""
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     self.showQRDeeplinkSheet = true
                 }
-            } else {
-                Constants.quickQrCode = ""
             }
         }
     }

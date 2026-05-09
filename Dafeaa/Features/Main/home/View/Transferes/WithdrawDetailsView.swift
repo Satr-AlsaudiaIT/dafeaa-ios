@@ -350,13 +350,12 @@ struct WithdrawDetailsView: View {
     }
 
     private func authenticateWithBiometrics() {
-
-            BiometricAuthManager.shared.authenticate(message: "confirm_payment_biometric".localized()) { success, _ in
-                if success {
-                    self.callWithdrawAPI()
-                }
+        BiometricAuthManager.shared.authenticateForTransaction(message: "confirm_payment_biometric".localized()) { success in
+            if success {
+                self.callWithdrawAPI()
             }
         }
+    }
         
 //    private func authenticateWithBiometrics() {
 //        let context = LAContext()

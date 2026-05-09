@@ -156,11 +156,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
               let incomingURL = userActivity.webpageURL else {
             return false
         }
-        NotificationConfigration.shared.firebaseConfigration {
-            DispatchQueue.main.async {
-                self.deepLink(url: incomingURL)
-            }
-        }
+        DispatchQueue.main.async { self.deepLink(url: incomingURL) }
+        NotificationConfigration.shared.firebaseConfigration()
         return true
     }
     
@@ -212,22 +209,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
 }
 
 func navigateToWalletWithQR() {
-    guard Constants.accountStatus == 2 else { return }
-    guard let window = self.window else { return }
-        
-        DispatchQueue.main.async {
-            let navigationHelper = NavigationHelper(actionType: 5, actionId: 0, userType: "")
-            let rootView = AnyView(
-                TabBarView()
-                    .environmentObject(navigationHelper)
-                    .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar" : "en"))
-                    .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft : .leftToRight)
-            )
-            window.rootViewController = UIHostingController(rootView: rootView)
-            UserDefaults.standard.set(false, forKey: Constants.shared.resetLanguage)
-            window.makeKeyAndVisible()
-        }
+    let token = GenericUserDefault.shared.getValue(Constants.shared.token) as? String ?? ""
+    guard !token.isEmpty, let window = self.window else { return }
+
+    NotificationCenter.default.post(name: .qrDeeplinkReceived, object: nil)
+
+    guard !Constants.sessionFlag else { return }
+
+    DispatchQueue.main.async {
+        let navigationHelper = NavigationHelper(actionType: 0, actionId: 0, userType: "")
+        let rootView = AnyView(
+            TabBarView()
+                .environmentObject(navigationHelper)
+                .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar" : "en"))
+                .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft : .leftToRight)
+        )
+        window.rootViewController = UIHostingController(rootView: rootView)
+        UserDefaults.standard.set(false, forKey: Constants.shared.resetLanguage)
+        window.makeKeyAndVisible()
     }
+}
     
     func handleDeepLinkNav(code:String){
         let api: OrdersAPIProtocolV3 = OrdersAPIV3()
@@ -398,4 +399,8 @@ extension UIApplication {
         // Dismiss from root directly — kills entire stack at once
         root.dismiss(animated: true, completion: completion)
     }
+}
+
+extension NSNotification.Name {
+    static let qrDeeplinkReceived = NSNotification.Name("qrDeeplinkReceived")
 }

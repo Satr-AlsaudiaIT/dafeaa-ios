@@ -9,18 +9,50 @@ import SwiftUI
 import Security
 
 // MARK: - Keychain Helper
-// MARK: - Keychain Helper
 final class QuickPasscodeManager {
     static let shared = QuickPasscodeManager()
-    private let keychainKey = "com.dafeaa.quickPasscode"
+    private let keychainPrefix = "com.dafeaa.quickPasscode."
     private let installedKey = "com.dafeaa.appInstalled"
     
     private init() {
-        // On first launch after install/reinstall, clear stale keychain
         if !UserDefaults.standard.bool(forKey: installedKey) {
-            delete()
+            clearAllAppPasscodes()
             UserDefaults.standard.set(true, forKey: installedKey)
         }
+    }
+
+    /// Delete only passcodes with our app prefix (not all keychain items)
+    private func clearAllAppPasscodes() {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecReturnAttributes as String: true,
+            kSecMatchLimit as String: kSecMatchLimitAll
+        ]
+        var result: AnyObject?
+        guard SecItemCopyMatching(query as CFDictionary, &result) == errSecSuccess,
+              let items = result as? [[String: Any]] else { return }
+        
+        for item in items {
+            if let account = item[kSecAttrAccount as String] as? String,
+               account.hasPrefix(keychainPrefix) {
+                let deleteQuery: [String: Any] = [
+                    kSecClass as String: kSecClassGenericPassword,
+                    kSecAttrAccount as String: account
+                ]
+                SecItemDelete(deleteQuery as CFDictionary)
+            }
+        }
+    }
+    
+    /// Current user's phone from saved profile
+    private var currentPhone: String {
+        // Adjust this to however your app stores the logged-in user's phone
+        let phone = Constants.phone
+        return phone.replacingOccurrences(of: "+", with: "").replacingOccurrences(of: " ", with: "")
+    }
+    
+    private var keychainKey: String {
+        keychainPrefix + currentPhone
     }
     
     func save(passcode: String) -> Bool {
@@ -57,7 +89,27 @@ final class QuickPasscodeManager {
         return SecItemDelete(query as CFDictionary) == errSecSuccess
     }
     
+    /// Check for a specific phone (used before login completes)
+    func hasPasscode(forPhone phone: String) -> Bool {
+        let cleanPhone = phone.replacingOccurrences(of: "+", with: "").replacingOccurrences(of: " ", with: "")
+        let key = keychainPrefix + cleanPhone
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: key,
+            kSecMatchLimit as String: kSecMatchLimitOne
+        ]
+        return SecItemCopyMatching(query as CFDictionary, nil) == errSecSuccess
+    }
+    
     var hasPasscode: Bool { load() != nil }
+    
+    /// Delete all passcodes (used on reinstall)
+    private func deleteAll() {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword
+        ]
+        SecItemDelete(query as CFDictionary)
+    }
 }
 
 // MARK: - QuickPasscodeView (Login flow — has Skip)
@@ -275,7 +327,7 @@ struct SettingsQuickPasscodeSetupView: View {
         .navigationBarHidden(true)
         .toastView(toast: $toast)
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 focusedIndex = 0
             }
         }

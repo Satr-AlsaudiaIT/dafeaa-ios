@@ -10,17 +10,15 @@ import LocalAuthentication
 class BiometricAuthManager {
     static let shared = BiometricAuthManager()
 
-    private var isAuthenticating = false
-    private var pendingCompletions: [(Bool, Bool) -> Void] = []
+    private var isChainActive = false
+    private var chainQueue: [(Bool) -> Void] = []
 
-    /// Check if device has biometric capability (Face ID or Touch ID)
     var isBiometricAvailable: Bool {
         let context = LAContext()
         var error: NSError?
         return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
     }
-    
-    /// Returns "Face ID" or "Touch ID" based on device
+
     var biometricType: String {
         let context = LAContext()
         _ = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
@@ -32,42 +30,68 @@ class BiometricAuthManager {
         }
     }
 
+    var isBiometricEnabled: Bool {
+        UserDefaults.standard.bool(forKey: Constants.shared.biometricKey)
+    }
+
     func authenticate(message: String = "", completion: @escaping (Bool, Bool) -> Void) {
+        let context = LAContext()
+        context.localizedFallbackTitle = ""
+        let reason = message.isEmpty ? "authenticate_to_continue".localized() : message
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, error in
+            DispatchQueue.main.async {
+                completion(success, (error as? LAError)?.code == .userCancel)
+            }
+        }
+    }
+
+    func authenticateWithFullChain(message: String = "", isSessionExpiry: Bool = false, completion: @escaping (Bool) -> Void) {
         DispatchQueue.main.async {
-            if self.isAuthenticating {
-                self.pendingCompletions.append(completion)
+            if self.isChainActive {
+                self.chainQueue.append(completion)
                 return
             }
-            self.isAuthenticating = true
-            self.pendingCompletions.append(completion)
-            self.performAuthentication(message: message)
-        }
-    }
-
-    private func performAuthentication(message: String) {
-        let context = LAContext()
-        
-        // No fallback to device passcode — biometric only
-        context.localizedFallbackTitle = ""
-        
-        let reason = message.isEmpty ? "authenticate_to_continue".localized() : message
-        
-        // .deviceOwnerAuthenticationWithBiometrics = biometric ONLY (no device passcode)
-        context.evaluatePolicy(
-            .deviceOwnerAuthenticationWithBiometrics,
-            localizedReason: reason
-        ) { success, error in
-            DispatchQueue.main.async {
-                let wasCancelled = (error as? LAError)?.code == .userCancel
-                self.finishAuthentication(success: success, wasCancelled: wasCancelled)
+            self.isChainActive = true
+            self.runChain(message: message, isSessionExpiry: isSessionExpiry) { success in
+                completion(success)
+                self.isChainActive = false
+                let waiting = self.chainQueue
+                self.chainQueue = []
+                waiting.forEach { $0(success) }
             }
         }
     }
 
-    private func finishAuthentication(success: Bool, wasCancelled: Bool) {
-        isAuthenticating = false
-        let completions = pendingCompletions
-        pendingCompletions = []
-        completions.forEach { $0(success, wasCancelled) }
+    func authenticateForTransaction(message: String = "", completion: @escaping (Bool) -> Void) {
+        authenticateWithFullChain(message: message, isSessionExpiry: false, completion: completion)
+    }
+
+    private func runChain(message: String, isSessionExpiry: Bool, completion: @escaping (Bool) -> Void) {
+        let biometricOn = isBiometricEnabled && isBiometricAvailable
+        let hasPasscode = QuickPasscodeManager.shared.hasPasscode
+
+        if biometricOn {
+            authenticate(message: message) { success, _ in
+                if success {
+                    completion(true)
+                } else if hasPasscode {
+                    PasscodeChallengePresenter.show(message: message, isSessionExpiry: isSessionExpiry) { completion($0) }
+                } else {
+                    if isSessionExpiry { self.forceLogout() }
+                    completion(false)
+                }
+            }
+        } else if hasPasscode {
+            PasscodeChallengePresenter.show(message: message, isSessionExpiry: isSessionExpiry) { completion($0) }
+        } else {
+            if isSessionExpiry { forceLogout() }
+            completion(false)
+        }
+    }
+
+    private func forceLogout() {
+        GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
+        GenericUserDefault.shared.setValue("", Constants.shared.token)
+        MOLH.reset()
     }
 }
