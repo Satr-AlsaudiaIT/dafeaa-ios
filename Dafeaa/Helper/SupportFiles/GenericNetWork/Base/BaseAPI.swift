@@ -5,9 +5,62 @@
 import Foundation
 import Alamofire
 
-private final class SessionExpiryState {
+final class SessionExpiryState {
     static var isHandlingExpiry = false
     static var pendingRetries: [(() -> Void)] = []
+
+    static func handleExpiry(onRetry: (() -> Void)?) {
+        DispatchQueue.main.async {
+            if let onRetry = onRetry {
+                pendingRetries.append(onRetry)
+            }
+            guard !isHandlingExpiry else { return }
+            isHandlingExpiry = true
+            BiometricAuthManager.shared.authenticateWithFullChain(message: "authenticate_to_continue".localized()) { success in
+                if success {
+                    attemptRefreshAndFlush()
+                } else {
+                    flushAndLogout()
+                }
+            }
+        }
+    }
+
+    static func attemptRefreshAndFlush() {
+        let storedRefresh = Constants.refreshToken
+        guard !storedRefresh.isEmpty else { flushAndLogout(); return }
+        AuthAPI().refreshToken(refreshToken: storedRefresh) { result in
+            switch result {
+            case .success(let model):
+                if let token = model?.accessToken { GenericUserDefault.shared.setValue(token, Constants.shared.token) }
+                if let refresh = model?.refreshToken { Constants.refreshToken = refresh }
+                DispatchQueue.main.async {
+                    let retries = pendingRetries
+                    pendingRetries = []
+                    isHandlingExpiry = false
+                    retries.forEach { $0() }
+                }
+            case .failure:
+                flushAndLogout()
+            }
+        }
+    }
+
+    static func flushAndLogout() {
+        DispatchQueue.main.async {
+            pendingRetries = []
+            isHandlingExpiry = false
+            forceLogout()
+        }
+    }
+
+    static func forceLogout() {
+        DispatchQueue.main.async {
+            GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
+            GenericUserDefault.shared.setValue("", Constants.shared.token)
+            MOLH.reset()
+        }
+    }
 }
 
 class BaseAPI<T: TargetType> {
@@ -169,68 +222,21 @@ class BaseAPI<T: TargetType> {
     }
     
     // MARK: - Session Expiry (Single Challenge, Queue All Retries)
-    
-    private func forceLogout() {
-        DispatchQueue.main.async {
-            GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
-            GenericUserDefault.shared.setValue("", Constants.shared.token)
-            MOLH.reset()
-        }
-    }
-    
+
     private func handleSessionExpiry(onRetry: (() -> Void)?) {
-        DispatchQueue.main.async {
-            if let onRetry = onRetry {
-                SessionExpiryState.pendingRetries.append(onRetry)
-            }
-            
-            guard !SessionExpiryState.isHandlingExpiry else { return }
-            SessionExpiryState.isHandlingExpiry = true
-            
-            // Use the full chain from BiometricAuthManager
-            BiometricAuthManager.shared.authenticateWithFullChain(message: "authenticate_to_continue".localized()) { success in
-                if success {
-                    self.attemptRefreshAndFlush()
-                } else {
-                    self.flushAndLogout()
-                }
-            }
-        }
+        SessionExpiryState.handleExpiry(onRetry: onRetry)
     }
-    
+
     private func attemptRefreshAndFlush() {
-        let storedRefresh = Constants.refreshToken
-        guard !storedRefresh.isEmpty else {
-            flushAndLogout()
-            return
-        }
-        AuthAPI().refreshToken(refreshToken: storedRefresh) { refreshResult in
-            switch refreshResult {
-            case .success(let model):
-                if let newToken = model?.accessToken {
-                    GenericUserDefault.shared.setValue(newToken, Constants.shared.token)
-                }
-                if let newRefresh = model?.refreshToken {
-                    Constants.refreshToken = newRefresh
-                }
-                DispatchQueue.main.async {
-                    let retries = SessionExpiryState.pendingRetries
-                    SessionExpiryState.pendingRetries = []
-                    SessionExpiryState.isHandlingExpiry = false
-                    retries.forEach { $0() }
-                }
-            case .failure:
-                self.flushAndLogout()
-            }
-        }
+        SessionExpiryState.attemptRefreshAndFlush()
     }
-    
+
     private func flushAndLogout() {
-        DispatchQueue.main.async {
-            SessionExpiryState.pendingRetries = []
-            SessionExpiryState.isHandlingExpiry = false
-            self.forceLogout()
-        }
+        SessionExpiryState.flushAndLogout()
+    }
+
+    private func forceLogout() {
+        SessionExpiryState.forceLogout()
     }
     
     // MARK: - URL Error Handling

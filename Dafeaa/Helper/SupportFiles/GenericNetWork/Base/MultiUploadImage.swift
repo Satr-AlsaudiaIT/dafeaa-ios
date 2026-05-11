@@ -165,6 +165,15 @@ class MultipartUploadImages
             print(resp.response?.statusCode ?? 0)
             print("\(Constants.shared.baseURL)\(path) \(parameterS)")
             debugPrint(resp)
+
+            if resp.response?.statusCode == 401 {
+                let onRetry: () -> Void = {
+                    self.uploadImage(path: path, parameterS: parameterS, photos: photos, photosArray: photosArray, completion: completion)
+                }
+                SessionExpiryState.handleExpiry(onRetry: onRetry)
+                return
+            }
+
             switch resp.result {
             case .success(let value):
                 print("value is \(value)")

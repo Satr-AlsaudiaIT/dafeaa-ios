@@ -82,7 +82,7 @@ struct TabBarView: View {
                             userType: userType,
                             onTabTapped: { tab in
                                 // MARK: - Intercept Wallet Tab
-                                if tab == .wallet {
+                                if tab == .wallet || tab == .myOrders {
                                     if !Constants.isFinancialInfoCompleted {
                                         showProfileIncompletePopup = true
                                         return false

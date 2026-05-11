@@ -19,6 +19,15 @@ class BiometricAuthManager {
         return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
     }
 
+    // True only when Face ID/Touch ID is locked out after too many failed scans.
+    // Used to skip the biometric prompt entirely and fall straight to passcode.
+    private var isBiometricLockedOut: Bool {
+        let context = LAContext()
+        var error: NSError?
+        _ = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
+        return (error as? LAError)?.code == .biometryLockout
+    }
+
     var biometricType: String {
         let context = LAContext()
         _ = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
@@ -66,26 +75,47 @@ class BiometricAuthManager {
         authenticateWithFullChain(message: message, isSessionExpiry: false, completion: completion)
     }
 
+    private var isPasscodeEnabled: Bool {
+        QuickPasscodeManager.shared.isEnabled && QuickPasscodeManager.shared.hasPasscode
+    }
+
     private func runChain(message: String, isSessionExpiry: Bool, completion: @escaping (Bool) -> Void) {
-        let biometricOn = isBiometricEnabled && isBiometricAvailable
-        let hasPasscode = QuickPasscodeManager.shared.hasPasscode
+        let biometricOn = isBiometricEnabled && isBiometricAvailable && !isBiometricLockedOut
+        let passcodeOn = isPasscodeEnabled
 
         if biometricOn {
-            authenticate(message: message) { success, _ in
-                if success {
-                    completion(true)
-                } else if hasPasscode {
+            tryBiometric(message: message, attemptsLeft: 1) {
+                if passcodeOn {
                     PasscodeChallengePresenter.show(message: message, isSessionExpiry: isSessionExpiry) { completion($0) }
                 } else {
                     if isSessionExpiry { self.forceLogout() }
                     completion(false)
                 }
-            }
-        } else if hasPasscode {
+            } completion: { completion(true) }
+        } else if passcodeOn {
             PasscodeChallengePresenter.show(message: message, isSessionExpiry: isSessionExpiry) { completion($0) }
         } else {
             if isSessionExpiry { forceLogout() }
             completion(false)
+        }
+    }
+
+    // Each runChain call gets a fresh 3 cancellation attempts.
+    // A failed scan or lockout falls through immediately.
+    private func tryBiometric(message: String, attemptsLeft: Int,
+                               onExhausted: @escaping () -> Void,
+                               completion: @escaping () -> Void) {
+        guard attemptsLeft > 0 else { onExhausted(); return }
+
+        authenticate(message: message) { success, userCancelled in
+            if success {
+                completion()
+            } else if userCancelled && attemptsLeft > 1 {
+                self.tryBiometric(message: message, attemptsLeft: attemptsLeft - 1,
+                                  onExhausted: onExhausted, completion: completion)
+            } else {
+                onExhausted()
+            }
         }
     }
 

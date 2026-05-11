@@ -2257,7 +2257,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/Dafeaa.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
@@ -2304,7 +2304,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/DafeaaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;

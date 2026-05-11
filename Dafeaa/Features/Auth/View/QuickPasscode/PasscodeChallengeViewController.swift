@@ -63,9 +63,12 @@ struct PasscodeChallengeView: View {
             }
             
             // MARK: - Welcome
-            Text(message + Constants.userName + message == "authenticate_to_continue".localized() ? " 👋":"")
-                .textModifier(.plain, 22, .black222222)
+            let trailingText = message == "authenticate_to_continue".localized() ? " 👋":""
+            Text(message + Constants.userName +  trailingText)
+                .textModifier(.plain, 19, .black222222)
+                .lineLimit(2)
                 .padding(.top, 16)
+                .padding(.horizontal,24)
             // MARK: - Error
             if let error = errorMessage {
                 Text(error)
@@ -269,7 +272,6 @@ struct ShakeEffect: GeometryEffect {
 
 final class PasscodeChallengePresenter {
     static func show(message: String = "", isSessionExpiry: Bool = false, completion: @escaping (Bool) -> Void) {
-        // Reduced delay: Execute immediately on main thread
         DispatchQueue.main.async {
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                   let window = windowScene.windows.first else {
@@ -277,21 +279,28 @@ final class PasscodeChallengePresenter {
                 return
             }
 
+            // Declared before challengeView so the closure captures the variable reference,
+            // not its nil value — assigned below after hc is created.
+            var hostingController: UIHostingController<PasscodeChallengeView>?
+
             let challengeView = PasscodeChallengeView(message: message, isSessionExpiry: isSessionExpiry, onResult: { success in
-                window.rootViewController?.dismiss(animated: true) {
+                // Dismiss only this passcode VC, not the entire presentation stack from root.
+                // Using window.rootViewController?.dismiss would kill any other presented sheet
+                // (e.g. QRDeeplinkBottomSheet) that sits beneath this passcode challenge.
+                hostingController?.dismiss(animated: true) {
                     completion(success)
                 }
             })
-            
-            let hostingController = UIHostingController(rootView: challengeView)
-            hostingController.modalPresentationStyle = .fullScreen
-            
+
+            let hc = UIHostingController(rootView: challengeView)
+            hc.modalPresentationStyle = .fullScreen
+            hostingController = hc
+
             var topVC = window.rootViewController!
             while let presented = topVC.presentedViewController {
                 topVC = presented
             }
-            // Use animated: true but ensured no logic delays before this call
-            topVC.present(hostingController, animated: true)
+            topVC.present(hc, animated: true)
         }
     }
 }

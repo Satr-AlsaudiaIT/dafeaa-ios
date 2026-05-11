@@ -55,6 +55,9 @@
 "addSomeData"="أضف بياناتك لإنشاء حساب جديد";
 "PhoneIsTheMainActor" = "*رقم هاتفك هو الكود التعريفي للدفع عبر المواقع";
 "Name" = "الاسم";
+"firstName" = "الاسم الأول";
+"middleName" = "الاسم الأوسط";
+"lastName" = "اسم العائلة";
 "Email" = "البريد الإلكتروني";
 "AgreeToTermsAndConditionsCheckText" = "بمجرد متابعتك وإنشاء حسابك لدينا فإنك توافق على ";
 "Terms&Conditions" = " شروط الاستخدام";
@@ -184,6 +187,12 @@
 "EnterUserPhoto" = "برجاء إدخال صورة المستخدم";
 "enterUserName" = "برجاء إدخال اسم المستخدم";
 "enterValidUserName" = "برجاء إدخال اسم مستخدم صالح";
+"enterFirstName" = "برجاء إدخال الاسم الأول";
+"enterValidFirstName" = "برجاء إدخال اسم أول صالح";
+"enterMiddleName" = "برجاء إدخال الاسم الأوسط";
+"enterValidMiddleName" = "برجاء إدخال اسم أوسط صالح";
+"enterLastName" = "برجاء إدخال اسم العائلة";
+"enterValidLastName" = "برجاء إدخال اسم عائلة صالح";
 "enterEmail" = "برجاء إدخال البريد الإلكتروني";
 "enterValidEmail" = "برجاء إدخال عنوان بريد إلكتروني صالح";
 "enterPhone" = "برجاء إدخال رقم الهاتف";

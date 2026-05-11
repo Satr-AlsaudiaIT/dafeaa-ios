@@ -84,16 +84,19 @@ class AuthVM: ObservableObject {
         }
     }
     
-    func validateRegister(photo: UIImage?, name: String, email: String, phone: String, accountType: AccountTypeOption, password: String, confirmPassword: String, isAgreeChecked:Bool) {
-        if name.isBlank {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterUserName".localized())
-        }
-        else if !name.isValidName {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidUserName".localized())
-//        } else if email.isBlank {
-//            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterEmail".localized())
-//        } else if !email.isEmail {
-//            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidEmail".localized())
+    func validateRegister(photo: UIImage?, firstName: String, middleName: String, lastName: String, email: String, phone: String, accountType: AccountTypeOption, password: String, confirmPassword: String, isAgreeChecked: Bool) {
+        if firstName.isBlank {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterFirstName".localized())
+        } else if !firstName.isValidName {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidFirstName".localized())
+        } else if middleName.isBlank {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterMiddleName".localized())
+        } else if !middleName.isValidName {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidMiddleName".localized())
+        } else if lastName.isBlank {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterLastName".localized())
+        } else if !lastName.isValidName {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidLastName".localized())
         } else if phone.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPhone".localized())
         } else if !phone.isValidPhone() {
@@ -102,22 +105,24 @@ class AuthVM: ObservableObject {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "enterPassword".localized())
         } else if !password.isValidPassword {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "EnterValidPassword".localized())
-        } else if confirmPassword.isBlank{
+        } else if confirmPassword.isBlank {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "EnterConfirmPassword".localized())
         } else if !confirmPassword.isPasswordConfirm(password: password, confirmPassword: confirmPassword) {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "PasswordConfirmn'tMatch".localized())
         } else if !isAgreeChecked {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: "PleaseTermsconditions" .localized())
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "PleaseTermsconditions".localized())
         } else {
-            let registerDic: [String: Any] = ["name": name,
-//                                              "email": email,
-                                              "phone": phone.convertDigitsToEng,
-                                              "account_type": accountType.returnedInt(),
-                                              "password": password,
-                                              "password_confirmation": confirmPassword]
-            registerApi(dic: registerDic,photo: photo)
+            var registerDic: [String: Any] = [
+                "first_name": firstName,
+                "middle_name": middleName,
+                "last_name": lastName,
+                "phone": phone.convertDigitsToEng,
+                "account_type": accountType.returnedInt(),
+                "password": password,
+                "password_confirmation": confirmPassword
+            ]
+            registerApi(dic: registerDic, photo: photo)
         }
-        
     }
     
     func validateBusiness(phone:String, commLecs: UIImage?, name: String, country: String, city: String, area: String, taxNum: String, endDate: String) {
@@ -175,8 +180,11 @@ class AuthVM: ObservableObject {
         } else if code.count != 4 {
             toast = FancyToast(type: .error, title: "Error".localized(), message: "Enter4DigitCode".localized())
         } else {
+            let UUIDValue = UIDevice.current.identifierForVendor!.uuidString
+
             let verifyDic: [String: Any] = ["phone": phone.convertDigitsToEng,
-                                            "code": code.convertDigitsToEng]
+                                            "code": code.convertDigitsToEng,
+                                            "device_id":UUIDValue]
             if isForgetPassword {
                 verifyCodeForget(for: verifyDic)
             } else {
@@ -507,7 +515,13 @@ class AuthVM: ObservableObject {
                 GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
                 Constants.accountStatus = response?.data?.status ?? 2
                 Constants.phone = response?.data?.phone ?? ""
-                Constants.userName = response?.data?.name ?? ""
+//                Constants.userName = response?.data?.name ?? ""
+                Constants.firstName = response?.data?.firstName ?? ""
+                Constants.middleName = response?.data?.middleName ?? ""
+                Constants.lastName = response?.data?.lastName ?? ""
+                let fullName = [response?.data?.firstName, response?.data?.middleName, response?.data?.lastName]
+                    .compactMap { $0?.isEmpty == false ? $0 : nil }.joined(separator: " ")
+                Constants.userName = fullName.isEmpty ? (response?.data?.name ?? "") : fullName
                 GenericUserDefault.shared.setValue(response?.data?.id ?? 0, Constants.shared.userId)
                 Constants.isFinancialInfoCompleted = response?.data?.isFinancialInfoCompleted ?? false
                 GenericUserDefault.shared.setValue(response?.data?.businessInformationStatus, Constants.shared.businessInformationStatus)

@@ -44,33 +44,84 @@ final class QuickPasscodeManager {
         }
     }
     
-    /// Current user's phone from saved profile
-    private var currentPhone: String {
-        // Adjust this to however your app stores the logged-in user's phone
-        let phone = Constants.phone
-        return phone.replacingOccurrences(of: "+", with: "").replacingOccurrences(of: " ", with: "")
+    // MARK: - Phone resolution
+
+    /// Cleans a raw phone string to a consistent key-safe form.
+    private func clean(_ phone: String) -> String {
+        phone.replacingOccurrences(of: "+", with: "")
+             .replacingOccurrences(of: " ", with: "")
     }
-    
-    private var keychainKey: String {
-        keychainPrefix + currentPhone
+
+    /// The logged-in user's phone.  Empty string means "no user" — every
+    /// operation guards against this so nothing is stored under a blank key.
+    private var currentPhone: String { clean(Constants.phone) }
+
+    private func keychainKey(for phone: String) -> String { keychainPrefix + phone }
+    private func enabledKey(for phone: String)  -> String { "passcodeEnabled_" + phone }
+
+    // MARK: - Enabled flag (phone-scoped UserDefaults)
+
+    /// Whether the passcode is turned ON for the currently logged-in user.
+    /// Returns false when the phone is not yet known (unauthenticated context).
+    var isEnabled: Bool {
+        get {
+            let phone = currentPhone
+            guard !phone.isEmpty else { return false }
+            return UserDefaults.standard.bool(forKey: enabledKey(for: phone))
+        }
+        set {
+            let phone = currentPhone
+            guard !phone.isEmpty else { return }
+            UserDefaults.standard.set(newValue, forKey: enabledKey(for: phone))
+        }
     }
-    
+
+    /// Enabled check for a specific phone (login flow — before Constants.phone is set).
+    func isEnabled(forPhone phone: String) -> Bool {
+        let p = clean(phone)
+        guard !p.isEmpty else { return false }
+        return UserDefaults.standard.bool(forKey: enabledKey(for: p))
+    }
+
+    /// Set enabled flag for an explicit phone number.
+    func setEnabled(_ value: Bool, forPhone rawPhone: String) {
+        let p = clean(rawPhone)
+        guard !p.isEmpty else { return }
+        UserDefaults.standard.set(value, forKey: enabledKey(for: p))
+    }
+
+    // MARK: - Keychain operations
+
+    /// Save passcode for the currently logged-in user (Constants.phone).
+    /// Use save(passcode:forPhone:) in login/signup flows where the phone
+    /// is known explicitly and may not yet be written to Constants.phone.
     func save(passcode: String) -> Bool {
-        delete()
+        save(passcode: passcode, forPhone: currentPhone)
+    }
+
+    /// Save passcode for an explicit phone number.
+    /// Any existing passcode and enabled-flag for that phone are cleared first.
+    @discardableResult
+    func save(passcode: String, forPhone rawPhone: String) -> Bool {
+        let phone = clean(rawPhone)
+        guard !phone.isEmpty else { return false }
+        delete(forPhone: phone)                           // clears old entry + isEnabled
         guard let data = passcode.data(using: .utf8) else { return false }
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: keychainKey,
+            kSecAttrAccount as String: keychainKey(for: phone),
             kSecValueData as String: data,
             kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlockedThisDeviceOnly
         ]
         return SecItemAdd(query as CFDictionary, nil) == errSecSuccess
     }
-    
+
     func load() -> String? {
+        let phone = currentPhone
+        guard !phone.isEmpty else { return nil }
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: keychainKey,
+            kSecAttrAccount as String: keychainKey(for: phone),
             kSecReturnData as String: true,
             kSecMatchLimit as String: kSecMatchLimitOne
         ]
@@ -79,29 +130,41 @@ final class QuickPasscodeManager {
               let data = result as? Data else { return nil }
         return String(data: data, encoding: .utf8)
     }
-    
+
+    /// Delete passcode for the currently logged-in user.
     @discardableResult
     func delete() -> Bool {
+        delete(forPhone: currentPhone)
+    }
+
+    /// Delete passcode for an explicit phone number.
+    @discardableResult
+    func delete(forPhone rawPhone: String) -> Bool {
+        let phone = clean(rawPhone)
+        guard !phone.isEmpty else { return false }
+        UserDefaults.standard.set(false, forKey: enabledKey(for: phone))
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: keychainKey
+            kSecAttrAccount as String: keychainKey(for: phone)
         ]
         return SecItemDelete(query as CFDictionary) == errSecSuccess
     }
-    
-    /// Check for a specific phone (used before login completes)
+
+    /// Whether the currently logged-in user has a passcode stored.
+    /// Returns false when the phone is not yet known (unauthenticated context).
+    var hasPasscode: Bool { load() != nil }
+
+    /// Explicit-phone variant — use this before login sets Constants.phone.
     func hasPasscode(forPhone phone: String) -> Bool {
-        let cleanPhone = phone.replacingOccurrences(of: "+", with: "").replacingOccurrences(of: " ", with: "")
-        let key = keychainPrefix + cleanPhone
+        let p = clean(phone)
+        guard !p.isEmpty else { return false }
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key,
+            kSecAttrAccount as String: keychainKey(for: p),
             kSecMatchLimit as String: kSecMatchLimitOne
         ]
         return SecItemCopyMatching(query as CFDictionary, nil) == errSecSuccess
     }
-    
-    var hasPasscode: Bool { load() != nil }
     
     /// Delete all passcodes (used on reinstall)
     private func deleteAll() {
@@ -237,7 +300,10 @@ struct QuickPasscodeView: View {
                 }
                 return
             }
-            if QuickPasscodeManager.shared.save(passcode: code) {
+            // Use the explicit phone the view received — don't rely on Constants.phone
+            // which may not be written yet at this point in the login/signup flow.
+            if QuickPasscodeManager.shared.save(passcode: code, forPhone: phone) {
+                QuickPasscodeManager.shared.setEnabled(true, forPhone: phone)
                 toast = FancyToast(type: .success, title: "Success".localized(), message: "passcodeSetSuccess".localized())
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     activeVM.profile()
@@ -247,7 +313,7 @@ struct QuickPasscodeView: View {
             }
         }
     }
-    
+
     func hideKeyboard() {
         UIApplication.shared.sendAction(
             #selector(UIResponder.resignFirstResponder),
@@ -362,6 +428,7 @@ struct SettingsQuickPasscodeSetupView: View {
                 return
             }
             if QuickPasscodeManager.shared.save(passcode: code) {
+                QuickPasscodeManager.shared.isEnabled = true
                 isQuickPasscodeOn = true
                 toast = FancyToast(type: .success, title: "Success".localized(), message: "passcodeSetSuccess".localized())
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {

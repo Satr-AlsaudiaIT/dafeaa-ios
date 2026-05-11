@@ -12,8 +12,10 @@ struct ProfilePersonalView:  View {
     @StateObject var viewModel = MoreVM()
     
     // MARK: - State Variables
-    @State private var name : String =  ""
-    @State private var email:String = ""
+    @State private var firstName: String = ""
+    @State private var middleName: String = ""
+    @State private var lastName: String = ""
+    @State private var email: String = ""
     @State private var phoneNumber: String = ""
     @State private var selectedCountryCode: String = "" 
     
@@ -42,13 +44,26 @@ struct ProfilePersonalView:  View {
                                     Spacer()
                                 }.padding(.bottom, 16)
                                 
-                                // MARK: - Name Field
+                                // MARK: - Name Fields
                                 VStack(alignment: .leading, spacing: 8) {
-                                    Text("Name".localized())
+                                    Text("firstName".localized())
                                         .textModifier(.bold, 15, .black000000)
-                                    
-                                    CustomMainTextField(text: $name, placeHolder: "Name", image: .nameTFIcon)
-                                        .focused($focusedField, equals: .userName)
+                                    CustomMainTextField(text: $firstName, placeHolder: "firstName".localized(), image: .nameTFIcon)
+                                        .focused($focusedField, equals: .firstName)
+                                }
+
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text("middleName".localized())
+                                        .textModifier(.bold, 15, .black000000)
+                                    CustomMainTextField(text: $middleName, placeHolder: "middleName".localized(), image: .nameTFIcon)
+                                        .focused($focusedField, equals: .middleName)
+                                }
+
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text("lastName".localized())
+                                        .textModifier(.bold, 15, .black000000)
+                                    CustomMainTextField(text: $lastName, placeHolder: "lastName".localized(), image: .nameTFIcon)
+                                        .focused($focusedField, equals: .lastName)
                                 }
                                 
                                 if email != "" {
@@ -79,8 +94,14 @@ struct ProfilePersonalView:  View {
                         }
                     }
                     Spacer()
-                    ReusableButton(buttonText: "saveBtn",isEnabled: (name != viewModel.profileData?.name ?? "")||(email != viewModel.profileData?.email ?? "") || (selectedProfileImage != nil) ){
-                        viewModel.validateEditProfile(name: name, email: email, image: selectedProfileImage)
+                    ReusableButton(buttonText: "saveBtn", isEnabled:
+                        firstName  != (viewModel.profileData?.firstName  ?? "") ||
+                        middleName != (viewModel.profileData?.middleName ?? "") ||
+                        lastName   != (viewModel.profileData?.lastName   ?? "") ||
+                        email      != (viewModel.profileData?.email      ?? "") ||
+                        selectedProfileImage != nil
+                    ) {
+                        viewModel.validateEditProfile(firstName: firstName, middleName: middleName, lastName: lastName, email: email, image: selectedProfileImage)
                     }
                 }.padding(24)
             }
@@ -116,14 +137,17 @@ struct ProfilePersonalView:  View {
         .navigationBarHidden(true)
         .onAppear(){   viewModel.profile()
                        AppState.shared.swipeEnabled = true }
-        .onReceive(viewModel.$_getData){ value in
+        .onReceive(viewModel.$_getData) { value in
             if value {
-                name                    = viewModel.profileData?.name ?? ""
-                email                   = viewModel.profileData?.email ?? ""
-                phoneNumber             = viewModel.profileData?.phone ?? "" // Fetch phone data
+                firstName               = viewModel.profileData?.firstName  ?? ""
+                middleName              = viewModel.profileData?.middleName ?? ""
+                lastName                = viewModel.profileData?.lastName   ?? ""
+                email                   = viewModel.profileData?.email      ?? ""
+                phoneNumber             = viewModel.profileData?.phone      ?? ""
                 selectedProfileImageURL = viewModel.profileData?.profileImage ?? ""
                 self.isDataLoaded = true
-            } }
+            }
+        }
         .onReceive(viewModel.$_isSuccess){ value in  if value { self.presentationMode.wrappedValue.dismiss()} }
         .onChange(of: viewModel.profileData?.secretKey ?? "", { _, newValue in
             secretKey = newValue
@@ -136,27 +160,26 @@ struct ProfilePersonalView:  View {
         }
     }
     
-    func showNextTextField(){
+    func showNextTextField() {
         switch focusedField {
-        case .userName:
-            focusedField = .email
-            
-        default:
-            focusedField = nil
+        case .firstName:    focusedField = .middleName
+        case .middleName:   focusedField = .lastName
+        case .lastName:     focusedField = .email
+        default:            focusedField = nil
         }
     }
-    
-    func showPerviousTextField(){
+
+    func showPerviousTextField() {
         switch focusedField {
-        case .email:
-            focusedField = .userName
-        default:
-            focusedField = nil
+        case .email:        focusedField = .lastName
+        case .lastName:     focusedField = .middleName
+        case .middleName:   focusedField = .firstName
+        default:            focusedField = nil
         }
     }
-    
+
     enum FormField {
-        case userName, email, phone
+        case firstName, middleName, lastName, email, phone
     }
     
     

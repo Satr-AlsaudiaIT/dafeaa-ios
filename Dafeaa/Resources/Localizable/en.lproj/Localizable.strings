@@ -55,6 +55,9 @@
 "addSomeData"="Add your information to create a new account";
 "PhoneIsTheMainActor" = "*Your phone number is the payment identifier code on websites";
 "Name" = "Name";
+"firstName" = "First Name";
+"middleName" = "Middle Name";
+"lastName" = "Last Name";
 "Email" = "Email";
 "AgreeToTermsAndConditionsCheckText" = "By proceeding and creating your account, you agree to ";
 "Terms&Conditions" = " Terms and Conditions";
@@ -182,6 +185,12 @@
 "EnterUserPhoto" = "Please upload the user's photo";
 "enterUserName" = "Please enter the username";
 "enterValidUserName" = "Please enter a valid username";
+"enterFirstName" = "Please enter the first name";
+"enterValidFirstName" = "Please enter a valid first name";
+"enterMiddleName" = "Please enter the middle name";
+"enterValidMiddleName" = "Please enter a valid middle name";
+"enterLastName" = "Please enter the last name";
+"enterValidLastName" = "Please enter a valid last name";
 "enterEmail" = "Please enter the email";
 "enterValidEmail" = "Please enter a valid email address";
 "enterPhone" = "Please enter the phone number";

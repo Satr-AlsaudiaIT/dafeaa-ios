@@ -76,6 +76,10 @@ struct SplashView: View {
                 // Wait for submitToken to finish before navigating
                 NotificationConfigration.shared.firebaseConfigration {
                     DispatchQueue.main.async {
+                        // If the deeplink flow already created a TabBarView and HomeView appeared
+                        // (sessionFlag = true), skip replacing root — it would destroy any
+                        // presented QR deeplink sheet that is currently showing.
+                        guard !Constants.sessionFlag else { return }
                         status == 2 ? self.tabBarTransition() : self.pendingTransition()
                         self.window?.makeKeyAndVisible()
                     }

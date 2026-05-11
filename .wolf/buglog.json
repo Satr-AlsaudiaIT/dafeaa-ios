@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "bugs": [
+    {
+      "id": "bug-001",
+      "timestamp": "2026-05-10T11:41:06.610Z",
+      "error_message": "Null/undefined access in ",
+      "file": "Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "swift"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-10T11:41:06.610Z"
+    },
+    {
+      "id": "bug-002",
+      "timestamp": "2026-05-10T11:41:19.966Z",
+      "error_message": "Significant refactor of ",
+      "file": "Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+      "root_cause": "37 lines replaced/restructured",
+      "fix": "Rewrote 64→17 lines (37 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "swift"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-10T11:41:19.966Z"
+    }
+  ]
+}

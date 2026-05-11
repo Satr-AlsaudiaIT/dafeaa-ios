@@ -217,7 +217,7 @@ func navigateToWalletWithQR() {
     guard !Constants.sessionFlag else { return }
 
     DispatchQueue.main.async {
-        let navigationHelper = NavigationHelper(actionType: 0, actionId: 0, userType: "")
+        let navigationHelper = NavigationHelper(actionType: 5, actionId: 0, userType: "")
         let rootView = AnyView(
             TabBarView()
                 .environmentObject(navigationHelper)

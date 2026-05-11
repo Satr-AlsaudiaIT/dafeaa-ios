@@ -81,13 +81,15 @@ struct SettingsView: View {
                             Button {
                                 if isQuickPasscodeOn {
                                     isQuickPasscodeOn = false
+                                    QuickPasscodeManager.shared.isEnabled = false
                                 } else {
                                     if QuickPasscodeManager.shared.hasPasscode {
                                         isQuickPasscodeOn = true
+                                        QuickPasscodeManager.shared.isEnabled = true
                                     } else {
                                         showQuickPasscodeSetup = true
-                                        }
                                     }
+                                }
                             } label: {
                                 Image(isQuickPasscodeOn ? .toggleOn:.toggleOff)
                                     .padding(.trailing, isQuickPasscodeOn ? 16:12)
@@ -192,7 +194,7 @@ struct SettingsView: View {
         }
         .onAppear(){
             isBiometricOn = UserDefaults.standard.bool(forKey: Constants.shared.biometricKey)
-            isQuickPasscodeOn = QuickPasscodeManager.shared.hasPasscode
+            isQuickPasscodeOn = QuickPasscodeManager.shared.isEnabled && QuickPasscodeManager.shared.hasPasscode
             isSwitchOn =  UserDefaults.standard.value(forKey: Constants.shared.activeNotification) as? Int ?? 0 == 1 ? true : false
             AppState.shared.swipeEnabled = true
             viewModel.profile(false)

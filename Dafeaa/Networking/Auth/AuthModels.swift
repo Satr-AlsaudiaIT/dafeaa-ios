@@ -117,6 +117,7 @@ struct LoginModel: Codable {
 // MARK: - LoginData
 struct LoginData:Codable, Equatable {
     let name, phone, email, profileImage: String?
+    let firstName, middleName, lastName: String?
     let id: Int?
     let status, accountType, activeNotification, uncompletedData: Int?
     let businessInformationStatus: Int? // 0 no files uploaded, 1 pending, 2 accepted

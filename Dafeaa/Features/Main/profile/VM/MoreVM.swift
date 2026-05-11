@@ -103,18 +103,25 @@ final class MoreVM : ObservableObject {
         }
     }
     
-    func validateEditProfile(name: String, email: String, image: UIImage?) {
-        if name.isBlank {
-            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterUserName".localized())
-//        } else if email.isBlank {
-//            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterEmail".localized())
-//        } else if !email.isEmail {
-//            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidEmail".localized())
-        }else {
-            var dic = [
-                "_method" : "put"]
-            if name  != self.profileData?.name ?? ""  { dic.updateValue(name, forKey: "name") }
-            if email != self.profileData?.email ?? "" { dic.updateValue(email, forKey: "email")}
+    func validateEditProfile(firstName: String, middleName: String, lastName: String, email: String, image: UIImage?) {
+        if firstName.isBlank {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterFirstName".localized())
+        } else if !firstName.isValidName {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidFirstName".localized())
+        } else if middleName.isBlank {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterMiddleName".localized())
+        } else if !middleName.isValidName {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidMiddleName".localized())
+        } else if lastName.isBlank {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterLastName".localized())
+        } else if !lastName.isValidName {
+            toast = FancyToast(type: .error, title: "Error".localized(), message: "enterValidLastName".localized())
+        } else {
+            var dic: [String: Any] = ["_method": "put"]
+            dic["first_name"] = firstName
+            dic["middle_name"] = middleName
+            dic["last_name"] = lastName
+            if email     != (self.profileData?.email ?? "")     { dic["email"] = email }
             editProfile(dic: dic, photo: image)
         }
     }
@@ -191,7 +198,13 @@ final class MoreVM : ObservableObject {
                 self._getData = true
                 Constants.accountStatus = response?.data?.status ?? 2
                 Constants.phone = response?.data?.phone ?? ""
-                Constants.userName = response?.data?.name ?? ""
+//                Constants.userName = response?.data?.name ?? ""
+                Constants.firstName = response?.data?.firstName ?? ""
+                Constants.middleName = response?.data?.middleName ?? ""
+                Constants.lastName = response?.data?.lastName ?? ""
+                let fullName = [response?.data?.firstName, response?.data?.middleName, response?.data?.lastName]
+                    .compactMap { $0?.isEmpty == false ? $0 : nil }.joined(separator: " ")
+                Constants.userName = fullName.isEmpty ? (response?.data?.name ?? "") : fullName
                 GenericUserDefault.shared.setValue(response?.data?.id ?? 0, Constants.shared.userId)
                 GenericUserDefault.shared.setValue(response?.data?.businessInformationStatus, Constants.shared.businessInformationStatus)
                 Constants.isFinancialInfoCompleted = response?.data?.isFinancialInfoCompleted ?? false

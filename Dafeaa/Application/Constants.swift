@@ -83,14 +83,24 @@ class Constants {
     }
     
     static var userName: String {
-        get {
-            let ud = UserDefaults.standard
-            return ud.value(forKey: "userName") as? String ?? ""
-        }
-        set(token) {
-            let ud = UserDefaults.standard
-            ud.set(token, forKey: "userName")
-        }
+        get { UserDefaults.standard.string(forKey: "userName") ?? "" }
+        set { UserDefaults.standard.set(newValue, forKey: "userName") }
+    }
+    
+
+    static var firstName: String {
+        get { UserDefaults.standard.string(forKey: "firstName") ?? "" }
+        set { UserDefaults.standard.set(newValue, forKey: "firstName") }
+    }
+
+    static var middleName: String {
+        get { UserDefaults.standard.string(forKey: "middleName") ?? "" }
+        set { UserDefaults.standard.set(newValue, forKey: "middleName") }
+    }
+
+    static var lastName: String {
+        get { UserDefaults.standard.string(forKey: "lastName") ?? "" }
+        set { UserDefaults.standard.set(newValue, forKey: "lastName") }
     }
     
     static var availableAmount: Double {

@@ -12,8 +12,10 @@ struct SignUpStep2View: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var phoneNumber: String = ""
     @State private var selectedCountryCode: String = ""
-    @State private var name : String =  ""
-    @State private var email:String = ""
+    @State private var firstName: String = ""
+    @State private var middleName: String = ""
+    @State private var lastName: String = ""
+    @State private var email: String = ""
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
     @State private var isAgreeChecked: Bool = false
@@ -78,10 +80,18 @@ struct SignUpStep2View: View {
     //                                   Spacer()
     //                               }
     //                               .padding(.bottom,15)
-                                   CustomMainTextField(text: $name, placeHolder: "Name", image: .nameTFIcon)
-                                       .focused($focusedField, equals: .userName)
-                                       .id(FormField.userName)
-                                   
+                                       CustomMainTextField(text: $firstName, placeHolder: "firstName".localized(), image: .nameTFIcon)
+                                       .focused($focusedField, equals: .firstName)
+                                       .id(FormField.firstName)
+
+                                   CustomMainTextField(text: $middleName, placeHolder: "middleName".localized(), image: .nameTFIcon)
+                                       .focused($focusedField, equals: .middleName)
+                                       .id(FormField.middleName)
+
+                                   CustomMainTextField(text: $lastName, placeHolder: "lastName".localized(), image: .nameTFIcon)
+                                       .focused($focusedField, equals: .lastName)
+                                       .id(FormField.lastName)
+
                                    PhoneNumberField(
                                        phoneNumber: $phoneNumber,
                                        selectedCountryCode: $selectedCountryCode,
@@ -112,7 +122,7 @@ struct SignUpStep2View: View {
                                    TermsAndConditionsView(isAgreeChecked: $isAgreeChecked)
 
                                    ReusableButton(buttonText: "createAccount", isEnabled: true) {
-                                       viewModel.validateRegister(photo: selectedProfileImage, name: name, email: email, phone: phoneNumber.normalizePhoneNumber, accountType: selectedOption, password: password, confirmPassword: confirmPassword, isAgreeChecked: isAgreeChecked)
+                                       viewModel.validateRegister(photo: selectedProfileImage, firstName: firstName, middleName: middleName, lastName: lastName, email: email, phone: phoneNumber.normalizePhoneNumber, accountType: selectedOption, password: password, confirmPassword: confirmPassword, isAgreeChecked: isAgreeChecked)
                                    }
                                    .navigationDestination(isPresented: $viewModel._isSignUpSuccess) {
                                        OTPConfirmationView(phone: phoneNumber.normalizePhoneNumber, isLoginOTP: true)
@@ -179,38 +189,30 @@ struct SignUpStep2View: View {
            .navigationBarHidden(true)
            .toastView(toast: $viewModel.toast)
        }
-    func showNextTextField(){
+    func showNextTextField() {
         switch focusedField {
-        case .userName:
-            focusedField = .phone
-        case .phone:
-//            focusedField = .email
-//        case .email:
-            focusedField = .password
-        case .password:
-            focusedField = .confirmPassword
-        default:
-            focusedField = nil
+        case .firstName:    focusedField = .middleName
+        case .middleName:   focusedField = .lastName
+        case .lastName:     focusedField = .phone
+        case .phone:        focusedField = .password
+        case .password:     focusedField = .confirmPassword
+        default:            focusedField = nil
         }
     }
-    
-    func showPerviousTextField(){
+
+    func showPerviousTextField() {
         switch focusedField {
-        case .confirmPassword:
-            focusedField = .password
-        case .password:
-//            focusedField = .email
-//        case .email:
-            focusedField = .phone
-        case .phone:
-            focusedField = .userName
-        default:
-            focusedField = nil
+        case .confirmPassword:  focusedField = .password
+        case .password:         focusedField = .phone
+        case .phone:            focusedField = .lastName
+        case .lastName:         focusedField = .middleName
+        case .middleName:       focusedField = .firstName
+        default:                focusedField = nil
         }
     }
-    
+
     enum FormField {
-        case userName, email, phone, password, confirmPassword
+        case firstName, middleName, lastName, email, phone, password, confirmPassword
     }
    
     

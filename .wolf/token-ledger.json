@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "created_at": "2026-05-10T05:55:17.440Z",
+  "lifetime": {
+    "total_tokens_estimated": 12133,
+    "total_reads": 2,
+    "total_writes": 3,
+    "total_sessions": 2,
+    "anatomy_hits": 2,
+    "anatomy_misses": 0,
+    "repeated_reads_blocked": 0,
+    "estimated_savings_vs_bare_cli": 400
+  },
+  "sessions": [
+    {
+      "id": "session-2026-05-10-1439",
+      "started": "2026-05-10T11:39:45.573Z",
+      "ended": "2026-05-10T11:41:51.390Z",
+      "reads": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 3836,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 7160,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 575,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 134,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 428,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 10996,
+        "output_tokens_estimated": 1137,
+        "reads_count": 2,
+        "writes_count": 3,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 2
+      }
+    }
+  ],
+  "daemon_usage": [],
+  "waste_flags": [],
+  "optimization_report": {
+    "last_generated": null,
+    "patterns": []
+  }
+}
