@@ -212,21 +212,28 @@ struct QuickPasscodeView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.top, 5)
                         
-                        // MARK: - Step 1: Enter passcode
-                        if !isConfirmStep {
-                            pinFields(pins: $passcode, focused: $focusedIndex)
-                                .padding(.top, 20)
-                        } else {
-                            // Show step 1 as locked dots
-                            dotsRow(values: passcode)
-                                .padding(.top, 20)
-                            
-                            // MARK: - Step 2: Confirm passcode
+                        // MARK: - Step 1: Enter passcode (editable in both steps)
+                        pinFields(pins: $passcode, focused: $focusedIndex, onComplete: {
+                            if isConfirmStep {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                                    confirmFocusedIndex = 0
+                                }
+                            }
+                        })
+                        .padding(.top, 20)
+                        .onChange(of: passcode) { _, _ in
+                            if isConfirmStep {
+                                confirmPasscode = Array(repeating: "", count: 6)
+                            }
+                        }
+
+                        // MARK: - Step 2: Confirm passcode
+                        if isConfirmStep {
                             Text("confirmQuickPasscode".localized())
                                 .textModifier(.plain, 17, .black222222)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.top, 24)
-                            
+
                             pinFields(pins: $confirmPasscode, focused: $confirmFocusedIndex)
                                 .padding(.top, 12)
                         }
@@ -274,7 +281,7 @@ struct QuickPasscodeView: View {
     // MARK: - Logic
     private func handleConfirm() {
         let code = passcode.joined()
-        
+
         if !isConfirmStep {
             guard code.count == 6 else {
                 toast = FancyToast(type: .error, title: "error".localized(), message: "pleaseEnter6Digits".localized())
@@ -287,6 +294,11 @@ struct QuickPasscodeView: View {
                 confirmFocusedIndex = 0
             }
         } else {
+            guard code.count == 6 else {
+                toast = FancyToast(type: .error, title: "error".localized(), message: "pleaseEnter6Digits".localized())
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { focusedIndex = 0 }
+                return
+            }
             let confirmCode = confirmPasscode.joined()
             guard confirmCode.count == 6 else {
                 toast = FancyToast(type: .error, title: "error".localized(), message: "pleaseEnter6Digits".localized())
@@ -357,18 +369,28 @@ struct SettingsQuickPasscodeSetupView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.top, 5)
                         
-                        if !isConfirmStep {
-                            pinFields(pins: $passcode, focused: $focusedIndex)
-                                .padding(.top, 20)
-                        } else {
-                            dotsRow(values: passcode)
-                                .padding(.top, 20)
-                            
+                        // Step 1 — always editable
+                        pinFields(pins: $passcode, focused: $focusedIndex, onComplete: {
+                            if isConfirmStep {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                                    confirmFocusedIndex = 0
+                                }
+                            }
+                        })
+                        .padding(.top, 20)
+                        .onChange(of: passcode) { _, _ in
+                            if isConfirmStep {
+                                confirmPasscode = Array(repeating: "", count: 6)
+                            }
+                        }
+
+                        // Step 2 — shown after first passcode is complete
+                        if isConfirmStep {
                             Text("confirmQuickPasscode".localized())
                                 .textModifier(.plain, 17, .black222222)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.top, 24)
-                            
+
                             pinFields(pins: $confirmPasscode, focused: $confirmFocusedIndex)
                                 .padding(.top, 12)
                         }
@@ -401,7 +423,7 @@ struct SettingsQuickPasscodeSetupView: View {
     
     private func handleConfirm() {
         let code = passcode.joined()
-        
+
         if !isConfirmStep {
             guard code.count == 6 else {
                 toast = FancyToast(type: .error, title: "error".localized(), message: "pleaseEnter6Digits".localized())
@@ -414,6 +436,11 @@ struct SettingsQuickPasscodeSetupView: View {
                 confirmFocusedIndex = 0
             }
         } else {
+            guard code.count == 6 else {
+                toast = FancyToast(type: .error, title: "error".localized(), message: "pleaseEnter6Digits".localized())
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { focusedIndex = 0 }
+                return
+            }
             let confirmCode = confirmPasscode.joined()
             guard confirmCode.count == 6 else {
                 toast = FancyToast(type: .error, title: "error".localized(), message: "pleaseEnter6Digits".localized())
@@ -450,45 +477,54 @@ struct SettingsQuickPasscodeSetupView: View {
 
 // MARK: - Shared Reusable Pin Components
 extension View {
-    
-    /// Read-only dots row — shows filled circles for entered digits, dashes for empty
+
+    /// Read-only dots row — shows filled circles for entered digits inside bordered cells
     @ViewBuilder
     func dotsRow(values: [String]) -> some View {
         HStack(spacing: 8) {
             ForEach(0..<6, id: \.self) { index in
-                ZStack{
+                ZStack {
+                    RoundedRectangle(cornerRadius: 8)
+                        .strokeBorder(Color(.garyD9D9D9), lineWidth: 1)
+                        .frame(width: 44, height: 55)
+
                     if !values[index].isEmpty {
                         Circle()
                             .fill(Color.black222222)
                             .frame(width: 14, height: 14)
-                    } else {
-                        Rectangle()
-                            .fill(Color(.gray666666))
-                            .frame(width: 44, height: 2)
                     }
-                }.frame(width: 44, height: 55)
+                }
             }
         }
         .frame(height: 55)
         .environment(\.layoutDirection, .leftToRight)
     }
-    
-    /// Editable pin fields — invisible text field over dot/dash display
+
+    /// Editable pin fields — shows focus border + cursor on active cell; backspace moves to previous field.
+    /// `onComplete` is called when the 6th digit is entered (use to auto-advance focus or dismiss keyboard).
     @ViewBuilder
-    func pinFields(pins: Binding<[String]>, focused: FocusState<Int?>.Binding) -> some View {
+    func pinFields(pins: Binding<[String]>, focused: FocusState<Int?>.Binding, onComplete: (() -> Void)? = nil) -> some View {
         HStack(spacing: 8) {
             ForEach(0..<6, id: \.self) { index in
+                let isFocused = focused.wrappedValue == index
                 ZStack {
+                    RoundedRectangle(cornerRadius: 8)
+                        .strokeBorder(
+                            isFocused ? Color(.primary) : Color(.garyD9D9D9),
+                            lineWidth: isFocused ? 2 : 1
+                        )
+                        .frame(width: 44, height: 55)
+
                     if !pins[index].wrappedValue.isEmpty {
                         Circle()
                             .fill(Color.black222222)
                             .frame(width: 14, height: 14)
-                    } else {
+                    } else if isFocused {
                         Rectangle()
-                            .fill(Color(.gray666666))
-                            .frame(width: 38, height: 2)
+                            .fill(Color(.primary))
+                            .frame(width: 2, height: 24)
                     }
-                    
+
                     TextField("", text: pins[index])
                         .frame(width: 44, height: 55)
                         .multilineTextAlignment(.center)
@@ -503,15 +539,17 @@ extension View {
                             if newVal.count == 1 && index < 5 {
                                 focused.wrappedValue = index + 1
                             } else if newVal.count == 1 && index == 5 {
-                                UIApplication.shared.sendAction(
-                                    #selector(UIResponder.resignFirstResponder),
-                                    to: nil, from: nil, for: nil
-                                )
+                                focused.wrappedValue = nil
+                                onComplete?()
                             } else if newVal.isEmpty && index > 0 {
                                 focused.wrappedValue = index - 1
                             }
                         }
                 }
+                // explicit tap sets focus so either row is always editable
+                .simultaneousGesture(TapGesture().onEnded {
+                    focused.wrappedValue = index
+                })
             }
         }
         .frame(height: 55)

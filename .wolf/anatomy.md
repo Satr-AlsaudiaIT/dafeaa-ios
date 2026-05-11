@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-10T11:41:36.669Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-11T08:46:13.622Z
 > Files: 501 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -118,7 +118,7 @@
 ## Dafeaa/Features/Auth/View/QuickPasscode/
 
 - `PasscodeChallengeViewController.swift` — PasscodeChallengeViewController.swift (~2797 tok)
-- `QuickPasscodeView.swift` — QuickPasscodeView.swift (~5674 tok)
+- `QuickPasscodeView.swift` — QuickPasscodeView.swift (~6181 tok)
 
 ## Dafeaa/Features/Auth/View/SignUpStep1/
 
