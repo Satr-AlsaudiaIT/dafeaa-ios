@@ -115,7 +115,7 @@ struct SettingsView: View {
                            
                             Button {
                                 isBiometricOn.toggle()
-                                UserDefaults.standard.set(isBiometricOn, forKey: Constants.shared.biometricKey)
+                                QuickPasscodeManager.shared.isBiometricEnabled = isBiometricOn
                             } label: {
                                 Image(isBiometricOn ? .toggleOn:.toggleOff)
                                     .padding(.trailing, isBiometricOn ? 16:12)
@@ -193,7 +193,7 @@ struct SettingsView: View {
             SettingsQuickPasscodeSetupView(isQuickPasscodeOn: $isQuickPasscodeOn)
         }
         .onAppear(){
-            isBiometricOn = UserDefaults.standard.bool(forKey: Constants.shared.biometricKey)
+            isBiometricOn = QuickPasscodeManager.shared.isBiometricEnabled
             isQuickPasscodeOn = QuickPasscodeManager.shared.isEnabled && QuickPasscodeManager.shared.hasPasscode
             isSwitchOn =  UserDefaults.standard.value(forKey: Constants.shared.activeNotification) as? Int ?? 0 == 1 ? true : false
             AppState.shared.swipeEnabled = true

@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-11T08:46:13.622Z
-> Files: 501 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-12T13:02:14.502Z
+> Files: 503 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -22,7 +22,7 @@
 
 ## Dafeaa.xcodeproj/
 
-- `project.pbxproj` — !$*UTF8*$! (~41965 tok)
+- `project.pbxproj` — !$*UTF8*$! (~42156 tok)
 
 ## Dafeaa.xcodeproj/project.xcworkspace/
 
@@ -103,7 +103,7 @@
 
 ## Dafeaa/Features/Auth/VM/
 
-- `AuthVM.swift` — AuthVM.swift (~7630 tok)
+- `AuthVM.swift` — AuthVM.swift (~7784 tok)
 
 ## Dafeaa/Features/Auth/View/ForgetPassword/
 
@@ -117,8 +117,13 @@
 
 ## Dafeaa/Features/Auth/View/QuickPasscode/
 
-- `PasscodeChallengeViewController.swift` — PasscodeChallengeViewController.swift (~2797 tok)
-- `QuickPasscodeView.swift` — QuickPasscodeView.swift (~6181 tok)
+- `PasscodeChallengeViewController.swift` — PasscodeChallengeViewController.swift (~2811 tok)
+- `QuickPasscodeView.swift` — QuickPasscodeView.swift (~6523 tok)
+
+## Dafeaa/Features/Auth/View/SecuritySetup/
+
+- `SecuritySetupBottomSheet.swift` — SecuritySetupBottomSheet.swift (~910 tok)
+- `SecuritySetupBottomSheet.swift` — Custom bottom sheet after OTP verify (login & register). Multi-select biometric + passcode options; activates switches and navigates to passcode setup. (~100 tok)
 
 ## Dafeaa/Features/Auth/View/SignUpStep1/
 
@@ -134,7 +139,7 @@
 
 ## Dafeaa/Features/Auth/View/otp/
 
-- `OTPConfirmationView.swift` — OTPConfirmationView.swift (~2804 tok)
+- `OTPConfirmationView.swift` — OTPConfirmationView.swift (~3099 tok)
 
 ## Dafeaa/Features/Main/
 
@@ -324,7 +329,7 @@
 ## Dafeaa/Features/Main/profile/View/Settings/
 
 - `DeveloperKeyBottomSheet.swift` — DeveloperKeyBottomSheet.swift (~1643 tok)
-- `SettingsView.swift` — SettingsView.swift (~2705 tok)
+- `SettingsView.swift` — SettingsView.swift (~2695 tok)
 
 ## Dafeaa/Features/Main/profile/View/StaticPages/
 
@@ -416,7 +421,7 @@
 
 ## Dafeaa/Helper/SupportFiles/BiometricAuthManager/
 
-- `BiometricAuthManager.swift` — BiometricAuthManager.swift (~1304 tok)
+- `BiometricAuthManager.swift` — BiometricAuthManager.swift (~1299 tok)
 
 ## Dafeaa/Helper/SupportFiles/CustomSegment/
 
@@ -1352,11 +1357,11 @@
 
 ## Dafeaa/Resources/Localizable/ar.lproj/
 
-- `Localizable.strings` (~7680 tok)
+- `Localizable.strings` (~7703 tok)
 
 ## Dafeaa/Resources/Localizable/en.lproj/
 
-- `Localizable.strings` (~8335 tok)
+- `Localizable.strings` (~8360 tok)
 
 ## DafeaaAppClip/
 

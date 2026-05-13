@@ -1,69 +1,240 @@
 {
-  "session_id": "session-2026-05-11-1129",
-  "started": "2026-05-11T08:29:09.726Z",
+  "session_id": "session-2026-05-12-1454",
+  "started": "2026-05-12T11:54:36.352Z",
   "files_read": {
-    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/QuickPasscodeView.swift": {
+    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings": {
+      "count": 2,
+      "tokens": 7680,
+      "first_read": "2026-05-12T11:59:11.130Z"
+    },
+    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/en.lproj/Localizable.strings": {
+      "count": 2,
+      "tokens": 8335,
+      "first_read": "2026-05-12T11:59:11.569Z"
+    },
+    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift": {
+      "count": 3,
+      "tokens": 3099,
+      "first_read": "2026-05-12T12:01:56.283Z"
+    },
+    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa.xcodeproj/project.pbxproj": {
+      "count": 5,
+      "tokens": 41965,
+      "first_read": "2026-05-12T12:09:58.754Z"
+    },
+    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift": {
       "count": 1,
-      "tokens": 5674,
-      "first_read": "2026-05-11T08:29:38.842Z"
+      "tokens": 1304,
+      "first_read": "2026-05-12T12:40:43.834Z"
+    },
+    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/PasscodeChallengeViewController.swift": {
+      "count": 1,
+      "tokens": 2797,
+      "first_read": "2026-05-12T12:40:44.466Z"
+    },
+    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/SecuritySetup/SecuritySetupBottomSheet.swift": {
+      "count": 3,
+      "tokens": 910,
+      "first_read": "2026-05-12T12:58:39.150Z"
     }
   },
   "files_written": [
     {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/QuickPasscodeView.swift",
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/SecuritySetup/SecuritySetupBottomSheet.swift",
+      "action": "create",
+      "tokens": 957,
+      "at": "2026-05-12T11:58:14.690Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift",
       "action": "edit",
-      "tokens": 968,
-      "at": "2026-05-11T08:33:03.854Z"
+      "tokens": 46,
+      "at": "2026-05-12T11:58:35.963Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift",
+      "action": "edit",
+      "tokens": 57,
+      "at": "2026-05-12T11:58:42.625Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift",
+      "action": "edit",
+      "tokens": 396,
+      "at": "2026-05-12T11:58:54.922Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/SecuritySetup/SecuritySetupBottomSheet.swift",
+      "action": "edit",
+      "tokens": 305,
+      "at": "2026-05-12T11:59:41.163Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings",
+      "action": "edit",
+      "tokens": 52,
+      "at": "2026-05-12T12:00:29.911Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/en.lproj/Localizable.strings",
+      "action": "edit",
+      "tokens": 56,
+      "at": "2026-05-12T12:00:37.514Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa.xcodeproj/project.pbxproj",
+      "action": "edit",
+      "tokens": 96,
+      "at": "2026-05-12T12:10:41.341Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa.xcodeproj/project.pbxproj",
+      "action": "edit",
+      "tokens": 108,
+      "at": "2026-05-12T12:10:55.308Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa.xcodeproj/project.pbxproj",
+      "action": "edit",
+      "tokens": 143,
+      "at": "2026-05-12T12:11:08.163Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa.xcodeproj/project.pbxproj",
+      "action": "edit",
+      "tokens": 118,
+      "at": "2026-05-12T12:11:23.096Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa.xcodeproj/project.pbxproj",
+      "action": "edit",
+      "tokens": 43,
+      "at": "2026-05-12T12:11:34.277Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/VM/AuthVM.swift",
+      "action": "edit",
+      "tokens": 96,
+      "at": "2026-05-12T12:26:56.335Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/VM/AuthVM.swift",
+      "action": "edit",
+      "tokens": 176,
+      "at": "2026-05-12T12:27:09.143Z"
     },
     {
       "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/QuickPasscodeView.swift",
       "action": "edit",
-      "tokens": 290,
-      "at": "2026-05-11T08:39:00.238Z"
+      "tokens": 382,
+      "at": "2026-05-12T12:42:00.948Z"
     },
     {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/QuickPasscodeView.swift",
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/VM/AuthVM.swift",
       "action": "edit",
-      "tokens": 425,
-      "at": "2026-05-11T08:39:13.970Z"
+      "tokens": 124,
+      "at": "2026-05-12T12:42:26.871Z"
     },
     {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/QuickPasscodeView.swift",
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/VM/AuthVM.swift",
       "action": "edit",
-      "tokens": 286,
-      "at": "2026-05-11T08:39:27.653Z"
+      "tokens": 126,
+      "at": "2026-05-12T12:42:40.800Z"
     },
     {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/QuickPasscodeView.swift",
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift",
       "action": "edit",
-      "tokens": 438,
-      "at": "2026-05-11T08:39:41.276Z"
+      "tokens": 80,
+      "at": "2026-05-12T12:43:41.616Z"
     },
     {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/QuickPasscodeView.swift",
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/SecuritySetup/SecuritySetupBottomSheet.swift",
       "action": "edit",
-      "tokens": 764,
-      "at": "2026-05-11T08:45:44.983Z"
+      "tokens": 36,
+      "at": "2026-05-12T12:43:53.903Z"
     },
     {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/QuickPasscodeView.swift",
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/profile/View/Settings/SettingsView.swift",
       "action": "edit",
-      "tokens": 369,
-      "at": "2026-05-11T08:46:01.492Z"
+      "tokens": 27,
+      "at": "2026-05-12T12:44:05.729Z"
     },
     {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/QuickPasscodeView.swift",
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/profile/View/Settings/SettingsView.swift",
       "action": "edit",
-      "tokens": 365,
-      "at": "2026-05-11T08:46:13.632Z"
+      "tokens": 22,
+      "at": "2026-05-12T12:44:19.151Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+      "action": "edit",
+      "tokens": 28,
+      "at": "2026-05-12T12:44:31.095Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/PasscodeChallengeViewController.swift",
+      "action": "edit",
+      "tokens": 23,
+      "at": "2026-05-12T12:44:43.818Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/SecuritySetup/SecuritySetupBottomSheet.swift",
+      "action": "edit",
+      "tokens": 16,
+      "at": "2026-05-12T12:59:01.181Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/SecuritySetup/SecuritySetupBottomSheet.swift",
+      "action": "edit",
+      "tokens": 16,
+      "at": "2026-05-12T12:59:36.768Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/SecuritySetup/SecuritySetupBottomSheet.swift",
+      "action": "edit",
+      "tokens": 80,
+      "at": "2026-05-12T12:59:50.299Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/SecuritySetup/SecuritySetupBottomSheet.swift",
+      "action": "edit",
+      "tokens": 97,
+      "at": "2026-05-12T13:00:05.308Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/SecuritySetup/SecuritySetupBottomSheet.swift",
+      "action": "edit",
+      "tokens": 144,
+      "at": "2026-05-12T13:00:25.459Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/SecuritySetup/SecuritySetupBottomSheet.swift",
+      "action": "edit",
+      "tokens": 186,
+      "at": "2026-05-12T13:02:01.856Z"
+    },
+    {
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/SecuritySetup/SecuritySetupBottomSheet.swift",
+      "action": "edit",
+      "tokens": 2,
+      "at": "2026-05-12T13:02:14.512Z"
     }
   ],
   "edit_counts": {
-    "Dafeaa/Features/Auth/View/QuickPasscode/QuickPasscodeView.swift": 8
+    "Dafeaa/Features/Auth/View/SecuritySetup/SecuritySetupBottomSheet.swift": 10,
+    "Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift": 4,
+    "Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings": 1,
+    "Dafeaa/Resources/Localizable/en.lproj/Localizable.strings": 1,
+    "Dafeaa.xcodeproj/project.pbxproj": 5,
+    "Dafeaa/Features/Auth/VM/AuthVM.swift": 4,
+    "Dafeaa/Features/Auth/View/QuickPasscode/QuickPasscodeView.swift": 1,
+    "Dafeaa/Features/Main/profile/View/Settings/SettingsView.swift": 2,
+    "Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift": 1,
+    "Dafeaa/Features/Auth/View/QuickPasscode/PasscodeChallengeViewController.swift": 1
   },
-  "anatomy_hits": 1,
+  "anatomy_hits": 7,
   "anatomy_misses": 0,
-  "repeated_reads_warned": 0,
+  "repeated_reads_warned": 10,
   "cerebrum_warnings": 0,
-  "stop_count": 3
+  "stop_count": 6
 }

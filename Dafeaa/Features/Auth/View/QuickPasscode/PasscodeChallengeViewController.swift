@@ -147,7 +147,7 @@ struct PasscodeChallengeView: View {
     
     private var biometricButton: some View {
         Group {
-            let isBiometricOn = UserDefaults.standard.bool(forKey: Constants.shared.biometricKey)
+            let isBiometricOn = QuickPasscodeManager.shared.isBiometricEnabled
             let isAvailable = BiometricAuthManager.shared.isBiometricAvailable
             
             if isBiometricOn && isAvailable {

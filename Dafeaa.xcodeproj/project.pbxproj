@@ -194,6 +194,7 @@
 		18C8A9C82DBE75AB00A2AB42 /* ConfirmTransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C8A9C72DBE75AB00A2AB42 /* ConfirmTransferView.swift */; };
 		18D0E7B82FAB5E97002DAA46 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18D0E7B72FAB5E97002DAA46 /* GoogleService-Info.plist */; };
 		18D0E7BB2FAB927B002DAA46 /* QuickPasscodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0E7BA2FAB927B002DAA46 /* QuickPasscodeView.swift */; };
+		CCED00012FAB0000001CCED1 /* SecuritySetupBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCED00022FAB0000001CCED2 /* SecuritySetupBottomSheet.swift */; };
 		18D0E7C02FABAFC0002DAA46 /* PasscodeChallengeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0E7BF2FABAFC0002DAA46 /* PasscodeChallengeViewController.swift */; };
 		18D142A62F9F943000952467 /* ProfileCompletionGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D142A52F9F943000952467 /* ProfileCompletionGuard.swift */; };
 		18D142A82F9FD85100952467 /* ProfilePersonalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D142A72F9FD85100952467 /* ProfilePersonalView.swift */; };
@@ -460,6 +461,7 @@
 		18C8A9C72DBE75AB00A2AB42 /* ConfirmTransferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmTransferView.swift; sourceTree = "<group>"; };
 		18D0E7B72FAB5E97002DAA46 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18D0E7BA2FAB927B002DAA46 /* QuickPasscodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickPasscodeView.swift; sourceTree = "<group>"; };
+		CCED00022FAB0000001CCED2 /* SecuritySetupBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySetupBottomSheet.swift; sourceTree = "<group>"; };
 		18D0E7BF2FABAFC0002DAA46 /* PasscodeChallengeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeChallengeViewController.swift; sourceTree = "<group>"; };
 		18D142A52F9F943000952467 /* ProfileCompletionGuard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCompletionGuard.swift; sourceTree = "<group>"; };
 		18D142A72F9FD85100952467 /* ProfilePersonalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePersonalView.swift; sourceTree = "<group>"; };
@@ -1286,6 +1288,7 @@
 			isa = PBXGroup;
 			children = (
 				18D0E7BC2FAB9296002DAA46 /* QuickPasscode */,
+				CCED00032FAB0000001CCED3 /* SecuritySetup */,
 				18277EB52CB2B1B40020A647 /* SignUpStep2 */,
 				18277EC62CB3A3F80020A647 /* SignUpStep1 */,
 				18277EB42CB2B1A70020A647 /* Login */,
@@ -1465,6 +1468,14 @@
 				18D0E7BF2FABAFC0002DAA46 /* PasscodeChallengeViewController.swift */,
 			);
 			path = QuickPasscode;
+			sourceTree = "<group>";
+		};
+		CCED00032FAB0000001CCED3 /* SecuritySetup */ = {
+			isa = PBXGroup;
+			children = (
+				CCED00022FAB0000001CCED2 /* SecuritySetupBottomSheet.swift */,
+			);
+			path = SecuritySetup;
 			sourceTree = "<group>";
 		};
 		18D142AB2FA0005900952467 /* Model */ = {
@@ -2032,6 +2043,7 @@
 				18C8A9C52DBE4B0D00A2AB42 /* DeveloperKeyBottomSheet.swift in Sources */,
 				18086A6A2CCB847800F5C2F8 /* OrdersModels.swift in Sources */,
 				18D0E7BB2FAB927B002DAA46 /* QuickPasscodeView.swift in Sources */,
+				CCED00012FAB0000001CCED1 /* SecuritySetupBottomSheet.swift in Sources */,
 				181358F02F88098400400203 /* QRCodeModel.swift in Sources */,
 				18F54E882CCD1C0300462383 /* WalletModel.swift in Sources */,
 				18086A632CCB7F4800F5C2F8 /* OrdersVM.swift in Sources */,

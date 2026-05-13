@@ -29,6 +29,8 @@ struct OTPConfirmationView: View {
     @State private var secondsRemaining = 60 // in seconds
     @State private var showResendButton = false
     @State private var goToQuickPasscode = false
+    @State private var showSecuritySetupSheet = false
+    @State private var goToPasscodeSetupFromSheet = false
     @FocusState private var pinFocusState: FocusPin?
     
     var body: some View {
@@ -126,7 +128,7 @@ struct OTPConfirmationView: View {
                         .navigationDestination(isPresented: $viewModel._hasUnCompletedData) {
                             CompleteDataView(phone: phone.normalizePhoneNumber)
                         }
-                        .navigationDestination(isPresented: $goToQuickPasscode) {
+                        .navigationDestination(isPresented: $goToPasscodeSetupFromSheet) {
                             QuickPasscodeView(phone: phone, activeVM: viewModel)
                         }
                         
@@ -181,7 +183,31 @@ struct OTPConfirmationView: View {
         .onChange(of: viewModel._isLoginOTPVerified) { _, success in
             if success && isLoginOTP {
                 viewModel._isLoginOTPVerified = false
-                goToQuickPasscode = true
+                let biometricOn = QuickPasscodeManager.shared.isBiometricEnabled(forPhone: phone)
+                let passcodeOn = QuickPasscodeManager.shared.isEnabled(forPhone: phone) &&
+                                 QuickPasscodeManager.shared.hasPasscode(forPhone: phone)
+                if !biometricOn && !passcodeOn {
+                    showSecuritySetupSheet = true
+                } else {
+                    viewModel.profile()
+                }
+            }
+        }
+        .customBottomSheet(
+            isPresented: $showSecuritySetupSheet,
+            detents: [.height(340)],
+            isDismissOnBackgroundTap: false
+        ) {
+            SecuritySetupBottomSheet(
+                phone: phone,
+                activeVM: viewModel,
+                isPresented: $showSecuritySetupSheet
+            ) { passcodeSelected in
+                if passcodeSelected {
+                    goToPasscodeSetupFromSheet = true
+                } else {
+                    viewModel.profile()
+                }
             }
         }
         .onAppear { startTimer() }

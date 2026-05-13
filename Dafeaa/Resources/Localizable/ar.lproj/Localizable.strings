@@ -696,5 +696,8 @@
 "range_10000_20000" = "10,000 - 20,000";
 "range_more_20000" = " أكثر من 20,000";
 "Saved successfully" = "تم الحفظ بنجاح";
+// MARK: - Security Setup Bottom Sheet
+"securitySetupTitle" = "مطلوب تأمين الجهاز";
+
 //enable_biometric_authentication
 "enable_biometric_authentication"="تفعيل المصادقة البيومترية";

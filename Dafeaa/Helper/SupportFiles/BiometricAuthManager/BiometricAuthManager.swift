@@ -40,7 +40,7 @@ class BiometricAuthManager {
     }
 
     var isBiometricEnabled: Bool {
-        UserDefaults.standard.bool(forKey: Constants.shared.biometricKey)
+        QuickPasscodeManager.shared.isBiometricEnabled
     }
 
     func authenticate(message: String = "", completion: @escaping (Bool, Bool) -> Void) {

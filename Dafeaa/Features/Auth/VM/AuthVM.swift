@@ -297,7 +297,10 @@ class AuthVM: ObservableObject {
     
                 }
                 let phone = dic["phone"] as? String ?? ""
-                QuickPasscodeManager.shared.hasPasscode(forPhone: phone) ? self.profile() : (self._isLoginOTPVerified = true)
+                let eitherSwitchOn = (QuickPasscodeManager.shared.hasPasscode(forPhone: phone)
+                                      && QuickPasscodeManager.shared.isEnabled(forPhone: phone))
+                                  || QuickPasscodeManager.shared.isBiometricEnabled(forPhone: phone)
+                eitherSwitchOn ? self.profile() : (self._isLoginOTPVerified = true)
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
@@ -399,10 +402,11 @@ class AuthVM: ObservableObject {
                 if let phone = dic["phone"] as? String {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2){
                         self._isCheckCodeSuccess = true
-                            self.handleLoginSuccess(response)
-            
-                        // OTP verified → navigate to QuickPasscode screen
-                        QuickPasscodeManager.shared.hasPasscode(forPhone: phone) ? self.logIn(response: response, phone: phone) : (self._isLoginOTPVerified = true)
+                        self.handleLoginSuccess(response)
+                        let eitherSwitchOn = (QuickPasscodeManager.shared.hasPasscode(forPhone: phone)
+                                              && QuickPasscodeManager.shared.isEnabled(forPhone: phone))
+                                          || QuickPasscodeManager.shared.isBiometricEnabled(forPhone: phone)
+                        eitherSwitchOn ? self.logIn(response: response, phone: phone) : (self._isLoginOTPVerified = true)
                     }
                 }
             case .failure(let error):

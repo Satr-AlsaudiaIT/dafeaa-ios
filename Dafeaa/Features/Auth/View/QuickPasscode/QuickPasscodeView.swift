@@ -59,6 +59,38 @@ final class QuickPasscodeManager {
     private func keychainKey(for phone: String) -> String { keychainPrefix + phone }
     private func enabledKey(for phone: String)  -> String { "passcodeEnabled_" + phone }
 
+    // MARK: - Biometric flag (phone-scoped UserDefaults)
+
+    private func biometricEnabledKey(for phone: String) -> String { "biometricEnabled_" + phone }
+
+    /// Whether biometric is enabled for the currently logged-in user.
+    var isBiometricEnabled: Bool {
+        get {
+            let phone = currentPhone
+            guard !phone.isEmpty else { return false }
+            return UserDefaults.standard.bool(forKey: biometricEnabledKey(for: phone))
+        }
+        set {
+            let phone = currentPhone
+            guard !phone.isEmpty else { return }
+            UserDefaults.standard.set(newValue, forKey: biometricEnabledKey(for: phone))
+        }
+    }
+
+    /// Biometric check for a specific phone (login flow — before Constants.phone is set).
+    func isBiometricEnabled(forPhone rawPhone: String) -> Bool {
+        let p = clean(rawPhone)
+        guard !p.isEmpty else { return false }
+        return UserDefaults.standard.bool(forKey: biometricEnabledKey(for: p))
+    }
+
+    /// Set biometric flag for an explicit phone number.
+    func setBiometricEnabled(_ value: Bool, forPhone rawPhone: String) {
+        let p = clean(rawPhone)
+        guard !p.isEmpty else { return }
+        UserDefaults.standard.set(value, forKey: biometricEnabledKey(for: p))
+    }
+
     // MARK: - Enabled flag (phone-scoped UserDefaults)
 
     /// Whether the passcode is turned ON for the currently logged-in user.

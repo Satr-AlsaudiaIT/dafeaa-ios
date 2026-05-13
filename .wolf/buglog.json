@@ -32,6 +32,38 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-10T11:41:19.966Z"
+    },
+    {
+      "id": "bug-003",
+      "timestamp": "2026-05-12T11:58:42.626Z",
+      "error_message": "Wrong reference: $goToQuickPasscode should be $goToPasscodeSetupFromSheet",
+      "file": "Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift",
+      "root_cause": "Used \"$goToQuickPasscode\" instead of \"$goToPasscodeSetupFromSheet\"",
+      "fix": "Changed $goToQuickPasscode → $goToPasscodeSetupFromSheet",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "swift"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-12T11:58:42.626Z"
+    },
+    {
+      "id": "bug-004",
+      "timestamp": "2026-05-12T12:42:40.801Z",
+      "error_message": "Significant refactor of ",
+      "file": "Dafeaa/Features/Auth/VM/AuthVM.swift",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 3→4 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "swift"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-12T12:42:40.801Z"
     }
   ]
 }
