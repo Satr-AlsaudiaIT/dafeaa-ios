@@ -99,3 +99,37 @@
 | 16:02 | Edited Dafeaa/Features/Auth/View/SecuritySetup/SecuritySetupBottomSheet.swift | modified Button() | ~174 |
 | 16:02 | Edited Dafeaa/Features/Auth/View/SecuritySetup/SecuritySetupBottomSheet.swift | removed 2 lines | ~2 |
 | 16:02 | Session end: 30 writes across 9 files (SecuritySetupBottomSheet.swift, OTPConfirmationView.swift, Localizable.strings, project.pbxproj, AuthVM.swift) | 7 reads | ~70128 tok |
+
+## Session: 2026-05-13 08:47
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 08:49 | Edited Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift | modified onChange() | ~515 |
+| 08:50 | Edited Dafeaa/Resources/Localizable/en.lproj/Localizable.strings | expanded (+6 lines) | ~82 |
+| 08:50 | Edited Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings | expanded (+6 lines) | ~83 |
+| 08:50 | Edited Dafeaa/Features/Main/home/View/AddWithdrawButtomSheet.swift | modified viewDidLoad() | ~1172 |
+| 08:51 | Fixed OTP multi-digit bug: added count>1 guard to keep last digit and advance focus | OTPConfirmationView.swift | done | ~200 |
+| 08:51 | Fixed QR scanner white screen + camera permission: added authorization check, permission denied alert, background session start, viewDidLayoutSubviews frame | AddWithdrawButtomSheet.swift | done | ~400 |
+| 08:51 | Added camera permission localization keys (EN+AR) | Localizable.strings | done | ~50 |
+| 08:51 | Session end: 4 writes across 3 files (OTPConfirmationView.swift, Localizable.strings, AddWithdrawButtomSheet.swift) | 8 reads | ~37655 tok |
+| 08:52 | Session end: 4 writes across 3 files (OTPConfirmationView.swift, Localizable.strings, AddWithdrawButtomSheet.swift) | 8 reads | ~37655 tok |
+| 09:08 | Edited Dafeaa/Features/Auth/View/Login/LoginView.swift | modified ScrollView() | ~115 |
+| 09:08 | Edited Dafeaa/Features/Auth/View/Login/LoginView.swift | Spacer() → scrollDismissesKeyboard() | ~72 |
+| 09:08 | Edited Dafeaa/Features/Auth/View/Login/LoginView.swift | 3→1 lines | ~20 |
+| 09:09 | Edited Dafeaa/Features/Auth/View/Login/LoginView.swift | 2→1 lines | ~14 |
+| 09:09 | Edited Dafeaa/Features/Auth/View/Login/LoginView.swift | removed 23 lines | ~8 |
+| 09:09 | Edited Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift | modified ScrollView() | ~27 |
+| 09:09 | Edited Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift | modified ScrollView() | ~28 |
+| 09:09 | Edited Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift | Spacer() → scrollDismissesKeyboard() | ~35 |
+| 09:10 | Edited Dafeaa/Features/Auth/View/SignUpStep2/ProfileImageView.swift | added 1 import(s) | ~167 |
+| 09:10 | Edited Dafeaa/Features/Auth/View/SignUpStep2/ProfileImageView.swift | modified actionSheet() | ~295 |
+| 09:10 | Edited Dafeaa/Features/Auth/View/SignUpStep2/ProfileImageView.swift | modified openCameraWithPermissionCheck() | ~231 |
+| 09:10 | Fixed LoginView scroll: moved logo inside ScrollView, removed Spacer + dead keyboard observers | LoginView.swift | done | ~150 |
+| 09:10 | Fixed OTP scroll: removed Spacer from ScrollView content, added scrollDismissesKeyboard | OTPConfirmationView.swift | done | ~80 |
+| 09:10 | Fixed ProfileImageView camera permission: pre-check before sheet open, alert to Settings | ProfileImageView.swift | done | ~120 |
+| 09:11 | Session end: 15 writes across 5 files (OTPConfirmationView.swift, Localizable.strings, AddWithdrawButtomSheet.swift, LoginView.swift, ProfileImageView.swift) | 11 reads | ~45219 tok |
+
+## Session: 2026-05-14 09:25
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|

@@ -17,7 +17,6 @@ struct LoginView: View {
     @State private var showForgetPassword : Bool = false
     @StateObject var viewModel = AuthVM()
     @FocusState private var focusedField: FormField?
-    @State private var keyboardHeight: CGFloat = 0
 
     var body: some View {
         NavigationStack {
@@ -25,16 +24,14 @@ struct LoginView: View {
             ZStack{
                 VStack {
                     
-                    Image(.splashLogoWithoutName)
-                        .resizable()
-                        .frame(width:  57  ,height:  65 )
-                        .safeAreaPadding(.top,24 )
-                        .padding(.leading,  0  )
-                        .padding(.vertical ,40)
-                    
-                    
                     ScrollView(.vertical,showsIndicators: false){
                         VStack(spacing: 12) {
+                            Image(.splashLogoWithoutName)
+                                .resizable()
+                                .frame(width: 57, height: 65)
+                                .padding(.top, 24)
+                                .padding(.bottom, 20)
+
                             VStack(spacing: 5) {
                                 Text("loginWelcome".localized())
                                     .textModifier(.plain, 19, .black222222)
@@ -72,9 +69,9 @@ struct LoginView: View {
                         .navigationDestination(isPresented: $showForgetPassword) {
                             ForgotPasswordView()
                         }
-                        Spacer()
-                     
+
                     }
+                    .scrollDismissesKeyboard(.interactively)
                     HStack {
                         Text("haventAccount".localized())
                             .textModifier(.plain, 16, .black222222)
@@ -107,8 +104,6 @@ struct LoginView: View {
                         })
                     }
                 }
-                .onAppear(perform: subscribeToKeyboardEvents) // Listen for keyboard events
-                .onDisappear(perform: unsubscribeFromKeyboardEvents)
                 // NEW: login OTP → navigate to OTP with isLoginOTP flag
                 .navigationDestination(isPresented: $viewModel._isLoginOTPRequired) {
                     OTPConfirmationView(phone: phoneNumber.normalizePhoneNumber, isLoginOTP: true)
@@ -139,28 +134,6 @@ struct LoginView: View {
                 .toastView(toast: $viewModel.toast)
         }
     }
-    // Subscribe to keyboard events
-    private func subscribeToKeyboardEvents() {
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
-//               if let keyboardSize = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-////                   withAnimation {
-////                       self.keyboardHeight = keyboardSize.height - 20
-////                   }
-//               }
-        }
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
-            withAnimation {
-                self.keyboardHeight = 0
-            }
-        }
-    }
-    
-    // Unsubscribe from keyboard events
-    private func unsubscribeFromKeyboardEvents() {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
     func showNextTextField(){
         switch focusedField {
         case .phone:

@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-12T13:02:14.502Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-13T06:10:42.840Z
 > Files: 503 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -113,7 +113,7 @@
 ## Dafeaa/Features/Auth/View/Login/
 
 - `LoginSheetView.swift` — LoginSheetView.swift (~1533 tok)
-- `LoginView.swift` — LoginView.swift (~2255 tok)
+- `LoginView.swift` — LoginView.swift (~1895 tok)
 
 ## Dafeaa/Features/Auth/View/QuickPasscode/
 
@@ -134,12 +134,12 @@
 
 - `CompleteDataView.swift` — CompleteDataView 2.swift (~2416 tok)
 - `PendingView.swift` — SuccessView.swift (~867 tok)
-- `ProfileImageView.swift` — GuardProfileImageView.swift (~930 tok)
+- `ProfileImageView.swift` — GuardProfileImageView.swift (~1267 tok)
 - `SignUpStep2View.swift` — SignUpStep2View.swift (~3603 tok)
 
 ## Dafeaa/Features/Auth/View/otp/
 
-- `OTPConfirmationView.swift` — OTPConfirmationView.swift (~3099 tok)
+- `OTPConfirmationView.swift` — OTPConfirmationView.swift (~3295 tok)
 
 ## Dafeaa/Features/Main/
 
@@ -201,7 +201,7 @@
 
 ## Dafeaa/Features/Main/home/View/
 
-- `AddWithdrawButtomSheet.swift` — AddWithdrawButtomSheet.swift (~2515 tok)
+- `AddWithdrawButtomSheet.swift` — AddWithdrawButtomSheet.swift (~3000 tok)
 - `BuyProductBottomSheet.swift` — BuyProductBottomSheet.swift (~1652 tok)
 - `ContactPickerBottomSheet.swift` — ContactPickerBottomSheet.swift (~1708 tok)
 - `EnterPhoneTransferDetailsView.swift` — EnterPhoneTransferDetailsView.swift (~3283 tok)
@@ -1357,11 +1357,11 @@
 
 ## Dafeaa/Resources/Localizable/ar.lproj/
 
-- `Localizable.strings` (~7703 tok)
+- `Localizable.strings` (~7771 tok)
 
 ## Dafeaa/Resources/Localizable/en.lproj/
 
-- `Localizable.strings` (~8360 tok)
+- `Localizable.strings` (~8425 tok)
 
 ## DafeaaAppClip/
 

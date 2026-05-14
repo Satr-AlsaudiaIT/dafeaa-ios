@@ -68,6 +68,14 @@ struct OTPConfirmationView: View {
                                             if newVal == " " {
                                                 pins[index].pin = ""
                                                 pinFocusState = pins[index].focus
+                                            } else if newVal.count > 1 {
+                                                // Keep only the last typed digit, overwrite any existing value
+                                                pins[index].pin = String(newVal.last!)
+                                                if index != 3 {
+                                                    pinFocusState = pins[min(index + 1, pins.count - 1)].focus
+                                                } else {
+                                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                                }
                                             } else if newVal.count == 1 && index != 3 {
                                                 let nextIndex = min(index + 1, pins.count - 1)
                                                 pinFocusState = pins[nextIndex].focus
@@ -155,10 +163,10 @@ struct OTPConfirmationView: View {
                                 .padding(.top, 24)
                         }
                         
-                        Spacer()
                     }
                     .padding(24)
                 }
+                .scrollDismissesKeyboard(.interactively)
             }
             .toolbar{
                 ToolbarItemGroup(placement: .keyboard){

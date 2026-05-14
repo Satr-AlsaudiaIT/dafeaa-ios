@@ -64,6 +64,38 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-12T12:42:40.801Z"
+    },
+    {
+      "id": "bug-005",
+      "timestamp": "2026-05-13T05:50:58.302Z",
+      "error_message": "Function not marked async",
+      "file": "Dafeaa/Features/Main/home/View/AddWithdrawButtomSheet.swift",
+      "root_cause": "Function uses await but wasn't declared async",
+      "fix": "Added async modifier",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "swift"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-13T05:50:58.302Z"
+    },
+    {
+      "id": "bug-006",
+      "timestamp": "2026-05-13T06:10:42.852Z",
+      "error_message": "Function not marked async",
+      "file": "Dafeaa/Features/Auth/View/SignUpStep2/ProfileImageView.swift",
+      "root_cause": "Function uses await but wasn't declared async",
+      "fix": "Added async modifier",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "swift"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-13T06:10:42.852Z"
     }
   ]
 }

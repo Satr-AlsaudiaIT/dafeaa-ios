@@ -701,3 +701,9 @@
 
 //enable_biometric_authentication
 "enable_biometric_authentication"="تفعيل المصادقة البيومترية";
+
+// MARK: - Camera Permission
+"camera_permission_title" = "مطلوب الوصول إلى الكاميرا";
+"camera_permission_message" = "يرجى السماح بالوصول إلى الكاميرا من الإعدادات لاستخدام ماسح QR.";
+"go_to_settings" = "الذهاب إلى الإعدادات";
+"cancel" = "إلغاء";

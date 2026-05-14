@@ -714,3 +714,9 @@
 
 //enable_biometric_authentication
 "enable_biometric_authentication"="Enable Biometric Authentication";
+
+// MARK: - Camera Permission
+"camera_permission_title" = "Camera Access Required";
+"camera_permission_message" = "Please allow camera access in Settings to use the QR scanner.";
+"go_to_settings" = "Go to Settings";
+"cancel" = "Cancel";

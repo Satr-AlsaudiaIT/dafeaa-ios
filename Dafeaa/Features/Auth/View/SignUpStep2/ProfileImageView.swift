@@ -8,6 +8,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import AVFoundation
 
 struct ProfileImageView: View {
     @Binding var selectedImage: UIImage?
@@ -16,11 +17,12 @@ struct ProfileImageView: View {
     @State var isShowFromEdit: Bool
     @State var height: CGFloat = 85
     @State var editHeight: CGFloat = 20
-    
+
     @State private var showFilePicker: Bool = false
     @State private var showFileTypeSelection: Bool = false
     @State private var pickerSourceType: UIImagePickerController.SourceType = .photoLibrary
-    
+    @State private var showCameraPermissionAlert: Bool = false
+
     @State private var isEdited: Bool = false
 
     var body: some View {
@@ -82,14 +84,46 @@ struct ProfileImageView: View {
                     showFilePicker = true
                 },
                 .default(Text("cameraUpload".localized())) {
-                    pickerSourceType = .camera
-                    showFilePicker = true
+                    openCameraWithPermissionCheck()
                 },
                 .cancel()
             ])
         }
         .sheet(isPresented: $showFilePicker) {
             ImagePickerView(selectedImage: $selectedImage, sourceType: pickerSourceType)
+        }
+        .alert("camera_permission_title".localized(), isPresented: $showCameraPermissionAlert) {
+            Button("go_to_settings".localized()) {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url)
+                }
+            }
+            Button("cancel".localized(), role: .cancel) {}
+        } message: {
+            Text("camera_permission_message".localized())
+        }
+    }
+
+    private func openCameraWithPermissionCheck() {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            pickerSourceType = .camera
+            showFilePicker = true
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                DispatchQueue.main.async {
+                    if granted {
+                        pickerSourceType = .camera
+                        showFilePicker = true
+                    } else {
+                        showCameraPermissionAlert = true
+                    }
+                }
+            }
+        case .denied, .restricted:
+            showCameraPermissionAlert = true
+        @unknown default:
+            break
         }
     }
 }
