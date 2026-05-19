@@ -664,6 +664,8 @@
 
 //MARK: - incomplete profile
 "account_not_verified_title" = "الحساب غير موثق";
+"session_expired_title" = "انتهت الجلسة";
+"session_expired_body" = "انتهت صلاحية جلستك، يرجى تسجيل الدخول مرةً أخرى للمتابعة.";
 "account_not_verified_body" = "لن تتمكن من استخدام هذه الخدمة حتى إكمال البيانات المطلوبة";
 "complete_data_button" = "إكمال البيانات";
 "later_button" = "لاحقا";

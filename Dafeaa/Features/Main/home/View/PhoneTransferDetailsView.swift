@@ -157,7 +157,7 @@ struct PhoneTransferDetailsView: View {
                         .background(isFormValid ? Color(.black222222) : Color(.grayDADADA))
                         .cornerRadius(32)
                 }
-                .disabled(!isFormValid)
+                .disabled(!isFormValid )
                 .shadow(color: isFormValid ? Color(.dropShadow2B2D3333).opacity(0.2) : .clear, radius: 5)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 24)

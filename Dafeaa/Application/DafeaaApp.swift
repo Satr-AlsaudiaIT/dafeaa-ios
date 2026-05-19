@@ -13,11 +13,27 @@ import FirebaseCore
 import GoogleMaps
 import GooglePlaces
 import FirebaseMessaging
+import Combine
+
+// MARK: - SwiftUI root for the overlay window
+private struct SessionExpiredOverlayRootView: View {
+    @ObservedObject var presenter = SessionExpiredPresenter.shared
+    var body: some View {
+        SessionExpiredPopup(
+            isPresented: $presenter.isPresented,
+            onLogin: { SessionExpiryState.forceLogout() }
+        )
+        .environment(\.locale, Locale(identifier: Constants.shared.isAR ? "ar" : "en"))
+        .environment(\.layoutDirection, Constants.shared.isAR ? .rightToLeft : .leftToRight)
+    }
+}
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
-    
+
     var window: UIWindow?
+    private var sessionExpiredOverlayWindow: UIWindow?
+    private var sessionExpiredCancellable: AnyCancellable?
     //    var keyboardDismissManager = KeyboardDismissManager()
     //    private var tapGesture: AnyGestureRecognizer?
     
@@ -54,12 +70,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate , MOLHResetable{
     }
     
     func setUpDidFinishLaunch() {
-        // Keyboard setup
         Constants.sessionFlag = false
         IQKeyboardManager.shared.enable = true
         languageConfiguration()
         self.reset()
-        
+        setupSessionExpiredOverlay()
+    }
+
+    private func setupSessionExpiredOverlay() {
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+        let overlayWindow = UIWindow(windowScene: scene)
+        let hostVC = UIHostingController(rootView: SessionExpiredOverlayRootView())
+        hostVC.view.backgroundColor = .clear
+        overlayWindow.rootViewController = hostVC
+        overlayWindow.windowLevel = .alert + 1
+        overlayWindow.backgroundColor = .clear
+        overlayWindow.isUserInteractionEnabled = false
+        overlayWindow.isHidden = false
+        sessionExpiredOverlayWindow = overlayWindow
+
+        sessionExpiredCancellable = SessionExpiredPresenter.shared.$isPresented
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isPresented in
+                self?.sessionExpiredOverlayWindow?.isUserInteractionEnabled = isPresented
+            }
     }
     
     func languageConfiguration() {
@@ -403,4 +437,5 @@ extension UIApplication {
 
 extension NSNotification.Name {
     static let qrDeeplinkReceived = NSNotification.Name("qrDeeplinkReceived")
+    static let sessionExpiredNeedsLogin = NSNotification.Name("sessionExpiredNeedsLogin")
 }

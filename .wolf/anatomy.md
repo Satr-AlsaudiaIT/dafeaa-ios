@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-13T06:10:42.840Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-19T08:41:36.955Z
 > Files: 503 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -99,7 +99,7 @@
 ## Dafeaa/Application/
 
 - `Constants.swift` — Constants.swift (~2561 tok)
-- `DafeaaApp.swift` — DafeaaApp.swift (~4529 tok)
+- `DafeaaApp.swift` — DafeaaApp.swift (~4971 tok)
 
 ## Dafeaa/Features/Auth/VM/
 
@@ -117,7 +117,7 @@
 
 ## Dafeaa/Features/Auth/View/QuickPasscode/
 
-- `PasscodeChallengeViewController.swift` — PasscodeChallengeViewController.swift (~2811 tok)
+- `PasscodeChallengeViewController.swift` — PasscodeChallengeViewController.swift (~2876 tok)
 - `QuickPasscodeView.swift` — QuickPasscodeView.swift (~6523 tok)
 
 ## Dafeaa/Features/Auth/View/SecuritySetup/
@@ -188,7 +188,7 @@
 
 ## Dafeaa/Features/Main/home/
 
-- `TabBarView.swift` — TabBarView.swift (~2276 tok)
+- `TabBarView.swift` — TabBarView.swift (~2282 tok)
 
 ## Dafeaa/Features/Main/home/Model/
 
@@ -409,7 +409,7 @@
 - `ConfirmationAlert.swift` — ConfirmationAlert.swift (~564 tok)
 - `LottieAnimationView.swift` — LottieAnimationView.swift (~307 tok)
 - `PhoneNumberRepresenter.swift` — PhoneNumberRepresenter.swift (~1567 tok)
-- `ProfileCompletionGuard.swift` — ProfileCompletionGuard.swift (~919 tok)
+- `ProfileCompletionGuard.swift` — ProfileCompletionGuard.swift (~1356 tok)
 - `QRTimerManager.swift` — QRTimerManager.swift (~316 tok)
 - `ReusableTextFields.swift` — ReusableTextFields.swift (~3700 tok)
 - `TransferReason.swift` — TransferReason.swift (~236 tok)
@@ -421,7 +421,7 @@
 
 ## Dafeaa/Helper/SupportFiles/BiometricAuthManager/
 
-- `BiometricAuthManager.swift` — BiometricAuthManager.swift (~1299 tok)
+- `BiometricAuthManager.swift` — BiometricAuthManager.swift (~1311 tok)
 
 ## Dafeaa/Helper/SupportFiles/CustomSegment/
 
@@ -439,9 +439,9 @@
 ## Dafeaa/Helper/SupportFiles/GenericNetWork/Base/
 
 - `.DS_Store` (~1640 tok)
-- `BaseAPI.swift` — BaseAPI.swift (~3831 tok)
+- `BaseAPI.swift` — BaseAPI.swift (~3887 tok)
 - `GenericError.swift` — GenericError.swift (~132 tok)
-- `MultiUploadImage.swift` — //  UploadImage.swift (~7255 tok)
+- `MultiUploadImage.swift` — //  UploadImage.swift (~6972 tok)
 - `TargetType.swift` — TargetType.swift (~130 tok)
 - `UploadImage.swift` (~1 tok)
 
@@ -1357,11 +1357,11 @@
 
 ## Dafeaa/Resources/Localizable/ar.lproj/
 
-- `Localizable.strings` (~7771 tok)
+- `Localizable.strings` (~7806 tok)
 
 ## Dafeaa/Resources/Localizable/en.lproj/
 
-- `Localizable.strings` (~8425 tok)
+- `Localizable.strings` (~8461 tok)
 
 ## DafeaaAppClip/
 

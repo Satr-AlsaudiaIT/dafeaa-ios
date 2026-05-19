@@ -111,6 +111,7 @@ struct TabBarView: View {
                         navigateToCompleteProfile = true
                     }
                 )
+
             }
             .edgesIgnoringSafeArea(.bottom)
             .onAppear {

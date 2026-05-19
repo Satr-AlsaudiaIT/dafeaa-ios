@@ -29,7 +29,7 @@ struct LoginView: View {
                             Image(.splashLogoWithoutName)
                                 .resizable()
                                 .frame(width: 57, height: 65)
-                                .padding(.top, 24)
+                                .padding(.top, 40)
                                 .padding(.bottom, 20)
 
                             VStack(spacing: 5) {

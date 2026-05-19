@@ -45,7 +45,7 @@ struct ProfileDetailView: View {
                         )
                         
                         // MARK: - Financials Button
-                        
+
                         Button {
                             navigateToFinancials = true
                         } label: {
@@ -74,6 +74,32 @@ struct ProfileDetailView: View {
                             .frame(height: 32)
                         }
                         
+                        NavigationLinkComponent(
+                            destination: SavedIBANsView(),
+                            label: "Saved IBANs",
+                            image: Image(.iconAddress)
+                        )
+                        
+                        
+                        Button {
+                            viewModel.showAddTaxRecordBottomSheet = true
+                        } label: {
+                            HStack(spacing:12) {
+                                Image(.developersKey)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 28, height: 28)
+                                
+                                Text("tax_record".localized())
+                                    .textModifier(.plain, 16, .black194558)
+                                Spacer()
+                                
+                                Image(.iconArrowNav)
+                                    .frame(width: 32, height: 32)
+                                    .foregroundColor(Color(.black194558))
+                            }
+                            .frame(height: 32)
+                        }
                         // MARK: - Saved Addresses Button (Moved Here)
                         Button {
                             navigateToAddresses = true
@@ -174,9 +200,14 @@ struct ProfileDetailView: View {
         .toastView(toast: $viewModel.toast)
         .navigationBarHidden(true)
         .onAppear {
-            viewModel.profile()
+            viewModel.profile()    
             AppState.shared.swipeEnabled = true
+            viewModel.getTaxRecord()
         }
+        .onChange(of: viewModel.profileData?.profileId, { _, newValue in
+            profileId = newValue ?? ""
+        })
+
         .onChange(of: viewModel.profileData?.secretKey ?? "") { _, newValue in
             secretKey = newValue
         }
@@ -202,6 +233,12 @@ struct ProfileDetailView: View {
         .customBottomSheet(isPresented: $showDeveloperKeyBottomSheet, detents: [.medium, .large]) {
             DeveloperKeyBottomSheet(isSheetPresented: $showDeveloperKeyBottomSheet, profileID: $profileId, secretKey: $secretKey)
         }
+        .customBottomSheet(isPresented: $viewModel.showAddTaxRecordBottomSheet, detents: [.fraction(0.45)]){
+            TaxRecordBottomSheet(viewModel: viewModel, taxInput: viewModel.taxRecordNumber, dismiss: $viewModel.showAddTaxRecordBottomSheet)
+                .presentationDetents([.height(320)])
+                .presentationDragIndicator(.visible)
+        }
+
     }
 }
 

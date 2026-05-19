@@ -7,29 +7,31 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "9CD99E81-9231-49DA-AE41-A509604439E6"
+            uuid = "FB4408FB-FB1C-4251-9D42-4224FD510868"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift"
+            filePath = "Dafeaa/Features/Main/home/View/PhoneTransferDetailsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129">
+            startingLineNumber = "176"
+            endingLineNumber = "176"
+            landmarkName = "body"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1DDC8881-814B-42F3-9F7A-192F9D36A582"
+            uuid = "018FDDB1-29DD-4296-B0EA-A23AFD8EE8D0"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift"
+            filePath = "Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
+            startingLineNumber = "428"
+            endingLineNumber = "428"
             landmarkName = "handleUrlStatusCode(targetPath:responseData:code:onRetry:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -37,16 +39,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "26C133B8-DFE4-4FAD-9695-B6773D1A60CB"
+            uuid = "A111B33C-8B82-47E4-BEBF-B3AD2BC0B81B"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift"
+            filePath = "Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
+            startingLineNumber = "426"
+            endingLineNumber = "426"
             landmarkName = "handleUrlStatusCode(targetPath:responseData:code:onRetry:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B4C925DC-DD06-47C3-A814-352CD3158D02"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
+            landmarkName = "uploadImage(path:parameterS:photos:photosArray:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5AB0B772-9B08-4C61-982F-CF915D36CF16"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
+            landmarkName = "uploadImage(path:parameterS:photos:photosArray:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

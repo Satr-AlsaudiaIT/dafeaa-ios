@@ -480,14 +480,14 @@ extension HomeView {
         let qrCode = Constants.quickQrCode
         guard !qrCode.isEmpty else { return }
         Constants.quickQrCode = ""
-        BiometricAuthManager.shared.authenticateForTransaction(message: "confirm_payment_biometric".localized()) { success in
-            if success {
+//        BiometricAuthManager.shared.authenticateForTransaction(message: "confirm_payment_biometric".localized()) { success in
+//            if success {
                 self.pendingDeeplinkQRCode = qrCode
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     self.showQRDeeplinkSheet = true
                 }
-            }
-        }
+//            }
+//        }
     }
 
     private func extractPaymentCode(from scannedString: String) -> String {

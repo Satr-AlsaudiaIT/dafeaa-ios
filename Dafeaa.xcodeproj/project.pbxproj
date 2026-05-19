@@ -194,7 +194,6 @@
 		18C8A9C82DBE75AB00A2AB42 /* ConfirmTransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C8A9C72DBE75AB00A2AB42 /* ConfirmTransferView.swift */; };
 		18D0E7B82FAB5E97002DAA46 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18D0E7B72FAB5E97002DAA46 /* GoogleService-Info.plist */; };
 		18D0E7BB2FAB927B002DAA46 /* QuickPasscodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0E7BA2FAB927B002DAA46 /* QuickPasscodeView.swift */; };
-		CCED00012FAB0000001CCED1 /* SecuritySetupBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCED00022FAB0000001CCED2 /* SecuritySetupBottomSheet.swift */; };
 		18D0E7C02FABAFC0002DAA46 /* PasscodeChallengeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0E7BF2FABAFC0002DAA46 /* PasscodeChallengeViewController.swift */; };
 		18D142A62F9F943000952467 /* ProfileCompletionGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D142A52F9F943000952467 /* ProfileCompletionGuard.swift */; };
 		18D142A82F9FD85100952467 /* ProfilePersonalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D142A72F9FD85100952467 /* ProfilePersonalView.swift */; };
@@ -235,6 +234,7 @@
 		18FAE19C2F06692800DE9128 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FAE19B2F06692100DE9128 /* StringExt.swift */; };
 		77A5DD200D504A0C538AF47E /* Pods_Dafeaa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BDD0028FB293E22686DB26E /* Pods_Dafeaa.framework */; };
 		9480EEBE8618DD074F2F05EA /* Pods_DafeaaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECBB82EEEBE50162348AA97C /* Pods_DafeaaTests.framework */; };
+		CCED00012FAB0000001CCED1 /* SecuritySetupBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCED00022FAB0000001CCED2 /* SecuritySetupBottomSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -461,7 +461,6 @@
 		18C8A9C72DBE75AB00A2AB42 /* ConfirmTransferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmTransferView.swift; sourceTree = "<group>"; };
 		18D0E7B72FAB5E97002DAA46 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18D0E7BA2FAB927B002DAA46 /* QuickPasscodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickPasscodeView.swift; sourceTree = "<group>"; };
-		CCED00022FAB0000001CCED2 /* SecuritySetupBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySetupBottomSheet.swift; sourceTree = "<group>"; };
 		18D0E7BF2FABAFC0002DAA46 /* PasscodeChallengeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeChallengeViewController.swift; sourceTree = "<group>"; };
 		18D142A52F9F943000952467 /* ProfileCompletionGuard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCompletionGuard.swift; sourceTree = "<group>"; };
 		18D142A72F9FD85100952467 /* ProfilePersonalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePersonalView.swift; sourceTree = "<group>"; };
@@ -505,6 +504,7 @@
 		40CD5E17D66EBD2C506C1CF3 /* Pods-DafeaaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DafeaaTests.debug.xcconfig"; path = "Target Support Files/Pods-DafeaaTests/Pods-DafeaaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		839B43FE660051B7D70A51BF /* Pods-Dafeaa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dafeaa.debug.xcconfig"; path = "Target Support Files/Pods-Dafeaa/Pods-Dafeaa.debug.xcconfig"; sourceTree = "<group>"; };
 		9D5F90469049C2A897AC177B /* Pods-Dafeaa-DafeaaUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dafeaa-DafeaaUITests.release.xcconfig"; path = "Target Support Files/Pods-Dafeaa-DafeaaUITests/Pods-Dafeaa-DafeaaUITests.release.xcconfig"; sourceTree = "<group>"; };
+		CCED00022FAB0000001CCED2 /* SecuritySetupBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySetupBottomSheet.swift; sourceTree = "<group>"; };
 		ECBB82EEEBE50162348AA97C /* Pods_DafeaaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DafeaaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -1470,14 +1470,6 @@
 			path = QuickPasscode;
 			sourceTree = "<group>";
 		};
-		CCED00032FAB0000001CCED3 /* SecuritySetup */ = {
-			isa = PBXGroup;
-			children = (
-				CCED00022FAB0000001CCED2 /* SecuritySetupBottomSheet.swift */,
-			);
-			path = SecuritySetup;
-			sourceTree = "<group>";
-		};
 		18D142AB2FA0005900952467 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1615,6 +1607,14 @@
 				12A71B42AE0FB38CD9AEFC62 /* Pods-DafeaaTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		CCED00032FAB0000001CCED3 /* SecuritySetup */ = {
+			isa = PBXGroup;
+			children = (
+				CCED00022FAB0000001CCED2 /* SecuritySetupBottomSheet.swift */,
+			);
+			path = SecuritySetup;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2269,7 +2269,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/Dafeaa.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 1.2;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;
@@ -2316,7 +2316,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dafeaa/DafeaaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 1.2;
 				DEVELOPMENT_ASSET_PATHS = "\"Dafeaa/Preview Content\"";
 				DEVELOPMENT_TEAM = 96M95YAJRR;
 				ENABLE_PREVIEWS = YES;

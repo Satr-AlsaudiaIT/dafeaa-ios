@@ -282,35 +282,31 @@ class MultipartUploadImageWithModel {
                 })
                 return
             }
-            
-            self.handleUrlStatusCode(targetPath : path,responseData: response.data,code: response.response?.statusCode){ isSuccess,error  in
-                
+
+            let onRetry: () -> Void = {
+                self.uploadImage(path: path, pdfUrl: pdfUrl, parameterS: parameterS, photos: photos, responseClass: responseClass, completion: completion)
+            }
+
+            self.handleUrlStatusCode(targetPath: path, responseData: response.data, code: response.response?.statusCode, onRetry: onRetry) { isSuccess, error in
+
                 guard isSuccess else {
-                    if error == "Unauthenticated." {
-                        completion(.failure(NSError(domain: Constants.shared.baseURL, code: 401, userInfo: [NSLocalizedDescriptionKey:error ?? ""])))
-                        
-                    }
-                    completion(.failure(NSError(domain: Constants.shared.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey:error ?? ""])))
+                    completion(.failure(NSError(domain: Constants.shared.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey: error ?? ""])))
                     return
                 }
-                
+
                 guard let data = response.data else { return }
-                
-                self.decode(fromData: data, toObject: responseClass, completion: { object, error in
-                    guard let object = object , error == nil else {
-                        completion(.failure(error!))
+
+                self.decode(fromData: data, toObject: responseClass) { object, decodeError in
+                    guard let object = object, decodeError == nil else {
+                        completion(.failure(decodeError!))
                         return
                     }
-                    
-                    print("result is:- \(object)")
-                    
                     completion(.success(object))
-                })
-                
+                }
             }
         }
     }
-    
+
     func uploadOrderWithProduct<M: Codable>(path: String, parameterS: [String: Any], products: [[String: Any]], responseClass: M.Type, completion: @escaping (Result<M?, NSError>) -> Void) {
 
         let token = GenericUserDefault.shared.getValue(Constants.shared.token)
@@ -378,31 +374,27 @@ class MultipartUploadImageWithModel {
                 })
                 return
             }
-            
-            self.handleUrlStatusCode(targetPath : path,responseData: response.data,code: response.response?.statusCode){ isSuccess,error  in
-                
+
+            let onRetry: () -> Void = {
+                self.uploadOrderWithProduct(path: path, parameterS: parameterS, products: products, responseClass: responseClass, completion: completion)
+            }
+
+            self.handleUrlStatusCode(targetPath: path, responseData: response.data, code: response.response?.statusCode, onRetry: onRetry) { isSuccess, error in
+
                 guard isSuccess else {
-                    if error == "Unauthenticated." {
-                        completion(.failure(NSError(domain: Constants.shared.baseURL, code: 401, userInfo: [NSLocalizedDescriptionKey:error ?? ""])))
-                        
-                    }
-                    completion(.failure(NSError(domain: Constants.shared.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey:error ?? ""])))
+                    completion(.failure(NSError(domain: Constants.shared.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey: error ?? ""])))
                     return
                 }
-                
+
                 guard let data = response.data else { return }
-                
-                self.decode(fromData: data, toObject: responseClass, completion: { object, error in
-                    guard let object = object , error == nil else {
-                        completion(.failure(error!))
+
+                self.decode(fromData: data, toObject: responseClass) { object, decodeError in
+                    guard let object = object, decodeError == nil else {
+                        completion(.failure(decodeError!))
                         return
                     }
-                    
-                    print("result is:- \(object)")
-                    
                     completion(.success(object))
-                })
-                
+                }
             }
         }
 
@@ -417,45 +409,31 @@ class MultipartUploadImageWithModel {
         }
     }
     
-private func handleUrlStatusCode(targetPath: String ,responseData:Data?,code:Int?, completion:@escaping(Bool,String?)->Void){
-        
+    private func handleUrlStatusCode(targetPath: String, responseData: Data?, code: Int?, onRetry: (() -> Void)? = nil, completion: @escaping (Bool, String?) -> Void) {
+
         guard let statusCode = code else {
             print("there is no status code")
             return
         }
-        
+
         switch statusCode {
-        case 200,201:
-            completion(true,nil)
+        case 200, 201:
+            completion(true, nil)
         case 401:
-            //not Authorized
             guard let data = responseData else { return }
             decode(fromData: data, toObject: BaseNetworkResponseErrorModel.self) { result, error in
-                if targetPath == "login"{
-                    completion(false,result?.message)
+                if targetPath == "auth/login" {
+                    completion(false, result?.message)
+                } else {
+                    SessionExpiryState.handleExpiry(onRetry: onRetry)
                 }
-                else {
-                    GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
-                    GenericUserDefault.shared.setValue("", Constants.shared.token)
-                    MOLH.reset()
-//                        UnauthorizedVC.shared.unAuthorized()
-                }
-
             }
-            
-            
         case 403:
-            completion(true,nil)
-            
+            completion(true, nil)
         default:
             guard let data = responseData else { return }
             decode(fromData: data, toObject: BaseNetworkResponseErrorModel.self) { result, error in
-//                    if result?.message == "invalid request token,please login again" {
-//                        GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
-//                        GenericUserDefault.shared.setValue("", Constants.shared.token)
-//                        MOLH.reset()
-//                    }
-                completion(false,result?.message)
+                completion(false, result?.message)
             }
         }
     }
@@ -591,21 +569,18 @@ extension MultipartUploadImageWithModel {
                 return
             }
 
+            let onRetry: () -> Void = {
+                self.uploadOfferLinkV3(path: path, parameterS: parameterS, images: images, shippingCompanies: shippingCompanies, responseClass: responseClass, completion: completion)
+            }
+
             self.handleUrlStatusCode(
                 targetPath: path,
                 responseData: response.data,
-                code: response.response?.statusCode
+                code: response.response?.statusCode,
+                onRetry: onRetry
             ) { isSuccess, error in
 
                 guard isSuccess else {
-                    if error == "Unauthenticated." {
-                        completion(.failure(NSError(
-                            domain: Constants.shared.baseURL,
-                            code: 401,
-                            userInfo: [NSLocalizedDescriptionKey: error ?? ""]
-                        )))
-                        return
-                    }
                     completion(.failure(NSError(
                         domain: Constants.shared.baseURL,
                         code: 0,

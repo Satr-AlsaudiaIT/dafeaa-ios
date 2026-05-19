@@ -109,6 +109,7 @@ struct PasscodeChallengeView: View {
                 .padding(.bottom, 40)
         }
         .background(Color.white.ignoresSafeArea())
+        .ignoresSafeArea(.keyboard)
     }
     
     // MARK: - Number Pad
@@ -273,6 +274,9 @@ struct ShakeEffect: GeometryEffect {
 final class PasscodeChallengePresenter {
     static func show(message: String = "", isSessionExpiry: Bool = false, completion: @escaping (Bool) -> Void) {
         DispatchQueue.main.async {
+            // Dismiss any active keyboard before presenting so it doesn't bleed through
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                   let window = windowScene.windows.first else {
                 completion(false)

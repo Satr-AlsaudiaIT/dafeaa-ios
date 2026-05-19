@@ -2,14 +2,14 @@
   "version": 1,
   "created_at": "2026-05-10T05:55:17.440Z",
   "lifetime": {
-    "total_tokens_estimated": 443936,
-    "total_reads": 56,
-    "total_writes": 126,
-    "total_sessions": 9,
-    "anatomy_hits": 56,
+    "total_tokens_estimated": 684781,
+    "total_reads": 100,
+    "total_writes": 240,
+    "total_sessions": 17,
+    "anatomy_hits": 100,
     "anatomy_misses": 0,
-    "repeated_reads_blocked": 45,
-    "estimated_savings_vs_bare_cli": 809943
+    "repeated_reads_blocked": 54,
+    "estimated_savings_vs_bare_cli": 879484
   },
   "sessions": [
     {
@@ -1180,6 +1180,1044 @@
         "writes_count": 15,
         "repeated_reads_blocked": 8,
         "anatomy_lookups": 11
+      }
+    },
+    {
+      "id": "session-2026-05-14-0933",
+      "started": "2026-05-14T06:33:30.216Z",
+      "ended": "2026-05-14T06:35:19.501Z",
+      "reads": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings",
+          "tokens_estimated": 7771,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/en.lproj/Localizable.strings",
+          "tokens_estimated": 8425,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/ProfileCompletionGuard.swift",
+          "tokens_estimated": 483,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 53,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 162,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 87,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings",
+          "tokens_estimated": 59,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/en.lproj/Localizable.strings",
+          "tokens_estimated": 62,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 16196,
+        "output_tokens_estimated": 906,
+        "reads_count": 2,
+        "writes_count": 6,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-05-14-0933",
+      "started": "2026-05-14T06:33:30.216Z",
+      "ended": "2026-05-14T06:38:37.914Z",
+      "reads": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings",
+          "tokens_estimated": 7771,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/en.lproj/Localizable.strings",
+          "tokens_estimated": 8425,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/ProfileCompletionGuard.swift",
+          "tokens_estimated": 483,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 53,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 162,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 87,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings",
+          "tokens_estimated": 59,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/en.lproj/Localizable.strings",
+          "tokens_estimated": 62,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 28,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 312,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 16196,
+        "output_tokens_estimated": 1246,
+        "reads_count": 2,
+        "writes_count": 8,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-05-14-0933",
+      "started": "2026-05-14T06:33:30.216Z",
+      "ended": "2026-05-14T08:00:28.041Z",
+      "reads": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings",
+          "tokens_estimated": 7771,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/en.lproj/Localizable.strings",
+          "tokens_estimated": 8425,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/ProfileCompletionGuard.swift",
+          "tokens_estimated": 483,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 53,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 162,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 87,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings",
+          "tokens_estimated": 59,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/en.lproj/Localizable.strings",
+          "tokens_estimated": 62,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 28,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 312,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 169,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 70,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 50,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 16196,
+        "output_tokens_estimated": 1535,
+        "reads_count": 2,
+        "writes_count": 11,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-05-14-0933",
+      "started": "2026-05-14T06:33:30.216Z",
+      "ended": "2026-05-14T11:53:44.442Z",
+      "reads": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings",
+          "tokens_estimated": 7771,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/en.lproj/Localizable.strings",
+          "tokens_estimated": 8425,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 1289,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/Extenstions/StringExt.swift",
+          "tokens_estimated": 2241,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/ProfileCompletionGuard.swift",
+          "tokens_estimated": 483,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 53,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 162,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 87,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings",
+          "tokens_estimated": 59,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/en.lproj/Localizable.strings",
+          "tokens_estimated": 62,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 28,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 312,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 169,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 70,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 50,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 294,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 54,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 19726,
+        "output_tokens_estimated": 1883,
+        "reads_count": 4,
+        "writes_count": 13,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 4
+      }
+    },
+    {
+      "id": "session-2026-05-14-0933",
+      "started": "2026-05-14T06:33:30.216Z",
+      "ended": "2026-05-14T11:54:40.146Z",
+      "reads": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings",
+          "tokens_estimated": 7771,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/en.lproj/Localizable.strings",
+          "tokens_estimated": 8425,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 1289,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/Extenstions/StringExt.swift",
+          "tokens_estimated": 2241,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/ProfileCompletionGuard.swift",
+          "tokens_estimated": 483,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 53,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 162,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 87,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings",
+          "tokens_estimated": 59,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/en.lproj/Localizable.strings",
+          "tokens_estimated": 62,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 28,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 312,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 169,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 70,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 50,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 294,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 54,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 19726,
+        "output_tokens_estimated": 1883,
+        "reads_count": 4,
+        "writes_count": 13,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 4
+      }
+    },
+    {
+      "id": "session-2026-05-14-0933",
+      "started": "2026-05-14T06:33:30.216Z",
+      "ended": "2026-05-14T11:59:41.371Z",
+      "reads": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings",
+          "tokens_estimated": 7771,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/en.lproj/Localizable.strings",
+          "tokens_estimated": 8425,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 1289,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/Extenstions/StringExt.swift",
+          "tokens_estimated": 2241,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 3848,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/ProfileCompletionGuard.swift",
+          "tokens_estimated": 483,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 53,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 162,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 87,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings",
+          "tokens_estimated": 59,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/en.lproj/Localizable.strings",
+          "tokens_estimated": 62,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 28,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 312,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 169,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 70,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 50,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 294,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 54,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 68,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 62,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 46,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 61,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 82,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 0,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 23574,
+        "output_tokens_estimated": 2202,
+        "reads_count": 5,
+        "writes_count": 19,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 5
+      }
+    },
+    {
+      "id": "session-2026-05-14-0933",
+      "started": "2026-05-14T06:33:30.216Z",
+      "ended": "2026-05-14T12:02:28.528Z",
+      "reads": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings",
+          "tokens_estimated": 7771,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/en.lproj/Localizable.strings",
+          "tokens_estimated": 8425,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 1289,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/Extenstions/StringExt.swift",
+          "tokens_estimated": 2241,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 3848,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Application/DafeaaApp.swift",
+          "tokens_estimated": 4553,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/ProfileCompletionGuard.swift",
+          "tokens_estimated": 483,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 53,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 162,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 87,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/ar.lproj/Localizable.strings",
+          "tokens_estimated": 59,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Resources/Localizable/en.lproj/Localizable.strings",
+          "tokens_estimated": 62,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 28,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 312,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 169,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 70,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 50,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 294,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 54,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 68,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 62,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 46,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 61,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 82,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 0,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Application/DafeaaApp.swift",
+          "tokens_estimated": 304,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Application/DafeaaApp.swift",
+          "tokens_estimated": 230,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 36,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/home/TabBarView.swift",
+          "tokens_estimated": 0,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 28127,
+        "output_tokens_estimated": 2772,
+        "reads_count": 6,
+        "writes_count": 23,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 6
+      }
+    },
+    {
+      "id": "session-2026-05-14-1516",
+      "started": "2026-05-14T12:16:21.920Z",
+      "ended": "2026-05-14T12:18:04.678Z",
+      "reads": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Application/DafeaaApp.swift",
+          "tokens_estimated": 4965,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Application/DafeaaApp.swift",
+          "tokens_estimated": 45,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Application/DafeaaApp.swift",
+          "tokens_estimated": 40,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Application/DafeaaApp.swift",
+          "tokens_estimated": 260,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 4965,
+        "output_tokens_estimated": 345,
+        "reads_count": 1,
+        "writes_count": 3,
+        "repeated_reads_blocked": 1,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-05-19-0959",
+      "started": "2026-05-19T06:59:43.327Z",
+      "ended": "2026-05-19T07:02:05.687Z",
+      "reads": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 7255,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 3887,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 1311,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Application/DafeaaApp.swift",
+          "tokens_estimated": 4971,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 118,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 17424,
+        "output_tokens_estimated": 118,
+        "reads_count": 4,
+        "writes_count": 1,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 4
+      }
+    },
+    {
+      "id": "session-2026-05-19-0959",
+      "started": "2026-05-19T06:59:43.327Z",
+      "ended": "2026-05-19T07:34:49.111Z",
+      "reads": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 6972,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 3887,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 1311,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Application/DafeaaApp.swift",
+          "tokens_estimated": 4971,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 118,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 311,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 389,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 380,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 422,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 17141,
+        "output_tokens_estimated": 1620,
+        "reads_count": 4,
+        "writes_count": 5,
+        "repeated_reads_blocked": 2,
+        "anatomy_lookups": 4
+      }
+    },
+    {
+      "id": "session-2026-05-19-0959",
+      "started": "2026-05-19T06:59:43.327Z",
+      "ended": "2026-05-19T07:53:23.733Z",
+      "reads": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 6972,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 3887,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 1311,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Application/DafeaaApp.swift",
+          "tokens_estimated": 4971,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 118,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 311,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 389,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 380,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 422,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 17141,
+        "output_tokens_estimated": 1620,
+        "reads_count": 4,
+        "writes_count": 5,
+        "repeated_reads_blocked": 3,
+        "anatomy_lookups": 4
+      }
+    },
+    {
+      "id": "session-2026-05-19-0959",
+      "started": "2026-05-19T06:59:43.327Z",
+      "ended": "2026-05-19T08:42:08.557Z",
+      "reads": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 6972,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift",
+          "tokens_estimated": 3887,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift",
+          "tokens_estimated": 1311,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Application/DafeaaApp.swift",
+          "tokens_estimated": 4971,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/PasscodeChallengeViewController.swift",
+          "tokens_estimated": 2811,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/QuickPasscodeView.swift",
+          "tokens_estimated": 6523,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 118,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 311,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 389,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 380,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+          "tokens_estimated": 422,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/PasscodeChallengeViewController.swift",
+          "tokens_estimated": 181,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/PasscodeChallengeViewController.swift",
+          "tokens_estimated": 27,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 26475,
+        "output_tokens_estimated": 1828,
+        "reads_count": 6,
+        "writes_count": 7,
+        "repeated_reads_blocked": 3,
+        "anatomy_lookups": 6
       }
     }
   ],

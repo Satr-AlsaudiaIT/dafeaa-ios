@@ -85,17 +85,19 @@ class BiometricAuthManager {
 
         if biometricOn {
             tryBiometric(message: message, attemptsLeft: 1) {
+                // biometric attempts exhausted
                 if passcodeOn {
                     PasscodeChallengePresenter.show(message: message, isSessionExpiry: isSessionExpiry) { completion($0) }
                 } else {
-                    if isSessionExpiry { self.forceLogout() }
+                    self.forceLogout(isExpire: isSessionExpiry)
                     completion(false)
                 }
             } completion: { completion(true) }
         } else if passcodeOn {
             PasscodeChallengePresenter.show(message: message, isSessionExpiry: isSessionExpiry) { completion($0) }
         } else {
-            if isSessionExpiry { forceLogout() }
+            // no auth method set up at all
+            forceLogout(isExpire: isSessionExpiry)
             completion(false)
         }
     }
@@ -119,9 +121,9 @@ class BiometricAuthManager {
         }
     }
 
-    private func forceLogout() {
-        GenericUserDefault.shared.setValue(true, Constants.shared.resetLanguage)
-        GenericUserDefault.shared.setValue("", Constants.shared.token)
-        MOLH.reset()
+    private func forceLogout(isExpire: Bool) {
+        DispatchQueue.main.async {
+            SessionExpiredPresenter.shared.isPresented = true
+        }
     }
 }

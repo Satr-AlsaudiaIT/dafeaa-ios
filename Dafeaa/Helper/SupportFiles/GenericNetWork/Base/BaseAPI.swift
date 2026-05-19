@@ -4,6 +4,12 @@
 
 import Foundation
 import Alamofire
+import SwiftUI
+
+final class SessionExpiredPresenter: ObservableObject {
+    static let shared = SessionExpiredPresenter()
+    @Published var isPresented: Bool = false
+}
 
 final class SessionExpiryState {
     static var isHandlingExpiry = false
@@ -50,7 +56,7 @@ final class SessionExpiryState {
         DispatchQueue.main.async {
             pendingRetries = []
             isHandlingExpiry = false
-            forceLogout()
+            SessionExpiredPresenter.shared.isPresented = true
         }
     }
 

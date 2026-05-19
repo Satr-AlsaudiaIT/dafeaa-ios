@@ -75,6 +75,51 @@ struct ProfileIncompletePopup: View {
     }
 }
 
+// MARK: - Session Expired Popup View
+struct SessionExpiredPopup: View {
+    @Binding var isPresented: Bool
+    var onLogin: () -> Void
+
+    var body: some View {
+        if isPresented {
+            ZStack {
+                Color.black.opacity(0.4)
+                    .edgesIgnoringSafeArea(.all)
+
+                VStack(spacing: 0) {
+                    Text("session_expired_title".localized())
+                        .textModifier(.bold, 21, .black222222)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 32)
+                        .padding(.horizontal, 24)
+
+                    Text("session_expired_body".localized())
+                        .textModifier(.plain, 14, .black222222)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 8)
+                        .padding(.horizontal, 24)
+
+                    ReusableButton(buttonText: "login".localized()) {
+                        isPresented = false
+                        onLogin()
+                    }
+                    .frame(width: UIScreen.main.bounds.width / 2.5, height: 46)
+                    .padding(.top, 32)
+                    .padding(.bottom, 24)
+                }
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color.white)
+                )
+                .padding(.horizontal, 20)
+                .shadow(color: .black.opacity(0.15), radius: 20, x: 0, y: 10)
+            }
+            .transition(.opacity)
+            .animation(.easeInOut(duration: 0.25), value: isPresented)
+        }
+    }
+}
+
 // MARK: - View Modifier for easy usage anywhere
 struct ProfileIncompletePopupModifier: ViewModifier {
     @Binding var isPresented: Bool

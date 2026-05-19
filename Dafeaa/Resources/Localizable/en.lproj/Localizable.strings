@@ -677,6 +677,8 @@
 
 //MARK: - incomplete profile
 "account_not_verified_title" = "Account Not Verified";
+"session_expired_title" = "Session Expired";
+"session_expired_body" = "Your session has expired. Please log in again to continue.";
 "account_not_verified_body" = "You cannot use this service until you complete the required data";
 "complete_data_button" = "Complete Data";
 "later_button" = "Later";

@@ -180,15 +180,15 @@ struct ConfirmTransferView: View {
 
     // MARK: - Biometrics
     private func authenticateWithBiometrics() {
-        BiometricAuthManager.shared.authenticateForTransaction(message: "confirm_payment_biometric".localized()) { success in
-            if success {
+//        BiometricAuthManager.shared.authenticateForTransaction(message: "confirm_payment_biometric".localized()) { success in
+//            if success {
                 self.viewModel.confirmTransfer(
                     phone: self.phoneNumber.normalizePhoneNumber,
                     amount: self.total,
                     reason: self.reason
                 )
-            }
-        }
+//            }
+//        }
     }
         
         // You can safely delete the old `authenticateWithPasscode()` method in this file.
