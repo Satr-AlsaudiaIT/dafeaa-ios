@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-19T08:41:36.955Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-20T10:25:40.797Z
 > Files: 503 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -103,7 +103,7 @@
 
 ## Dafeaa/Features/Auth/VM/
 
-- `AuthVM.swift` — AuthVM.swift (~7784 tok)
+- `AuthVM.swift` — AuthVM.swift (~7629 tok)
 
 ## Dafeaa/Features/Auth/View/ForgetPassword/
 
@@ -139,7 +139,7 @@
 
 ## Dafeaa/Features/Auth/View/otp/
 
-- `OTPConfirmationView.swift` — OTPConfirmationView.swift (~3295 tok)
+- `OTPConfirmationView.swift` — OTPConfirmationView.swift (~3219 tok)
 
 ## Dafeaa/Features/Main/
 

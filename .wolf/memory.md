@@ -2,6 +2,7 @@
 
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
+| 13:09 | Use response.isFirstLogin to control showSecuritySetupSheet in OTPConfirmationView; applies to login & register only | AuthVM.swift, OTPConfirmationView.swift | done | ~500 |
 
 ## Session: 2026-05-10 14:39
 
@@ -221,3 +222,15 @@
 | 11:41 | Edited Dafeaa/Features/Auth/View/QuickPasscode/PasscodeChallengeViewController.swift | modified show() | ~169 |
 | 11:41 | Edited Dafeaa/Features/Auth/View/QuickPasscode/PasscodeChallengeViewController.swift | 2→3 lines | ~25 |
 | 11:42 | Session end: 7 writes across 2 files (MultiUploadImage.swift, PasscodeChallengeViewController.swift) | 6 reads | ~28303 tok |
+
+## Session: 2026-05-20 13:04
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 13:07 | Edited Dafeaa/Features/Auth/VM/AuthVM.swift | 3→4 lines | ~48 |
+| 13:08 | Edited Dafeaa/Features/Auth/VM/AuthVM.swift | 9→5 lines | ~63 |
+| 13:08 | Edited Dafeaa/Features/Auth/VM/AuthVM.swift | added nullish coalescing | ~111 |
+| 13:09 | Edited Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift | modified onChange() | ~124 |
+| 13:10 | Session end: 4 writes across 2 files (AuthVM.swift, OTPConfirmationView.swift) | 3 reads | ~13248 tok |
+| 13:25 | Edited Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift | modified onChange() | ~97 |
+| 13:25 | Session end: 5 writes across 2 files (AuthVM.swift, OTPConfirmationView.swift) | 3 reads | ~13352 tok |

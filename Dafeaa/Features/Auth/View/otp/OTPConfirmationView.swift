@@ -191,10 +191,7 @@ struct OTPConfirmationView: View {
         .onChange(of: viewModel._isLoginOTPVerified) { _, success in
             if success && isLoginOTP {
                 viewModel._isLoginOTPVerified = false
-                let biometricOn = QuickPasscodeManager.shared.isBiometricEnabled(forPhone: phone)
-                let passcodeOn = QuickPasscodeManager.shared.isEnabled(forPhone: phone) &&
-                                 QuickPasscodeManager.shared.hasPasscode(forPhone: phone)
-                if !biometricOn && !passcodeOn {
+                if viewModel.isFirstLogin {
                     showSecuritySetupSheet = true
                 } else {
                     viewModel.profile()

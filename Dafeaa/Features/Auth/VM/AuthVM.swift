@@ -36,6 +36,7 @@ class AuthVM: ObservableObject {
     // NEW: login OTP navigation flag
     @Published var _isLoginOTPRequired = false
     @Published var _isLoginOTPVerified = false
+    @Published var isFirstLogin: Bool = false
     
     private var isFromGuestModeLogin: Bool = false
     private var _message: String = ""
@@ -294,13 +295,9 @@ class AuthVM: ObservableObject {
                 
                 if let response = response {
                     self.handleLoginSuccess(response)
-    
+                    self.isFirstLogin = response.isFirstLogin ?? false
                 }
-                let phone = dic["phone"] as? String ?? ""
-                let eitherSwitchOn = (QuickPasscodeManager.shared.hasPasscode(forPhone: phone)
-                                      && QuickPasscodeManager.shared.isEnabled(forPhone: phone))
-                                  || QuickPasscodeManager.shared.isBiometricEnabled(forPhone: phone)
-                eitherSwitchOn ? self.profile() : (self._isLoginOTPVerified = true)
+                self._isLoginOTPVerified = true
             case .failure(let error):
                 self._message = "\(error.userInfo[NSLocalizedDescriptionKey] ?? "")"
                 self._isLoading = false
@@ -403,10 +400,8 @@ class AuthVM: ObservableObject {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2){
                         self._isCheckCodeSuccess = true
                         self.handleLoginSuccess(response)
-                        let eitherSwitchOn = (QuickPasscodeManager.shared.hasPasscode(forPhone: phone)
-                                              && QuickPasscodeManager.shared.isEnabled(forPhone: phone))
-                                          || QuickPasscodeManager.shared.isBiometricEnabled(forPhone: phone)
-                        eitherSwitchOn ? self.logIn(response: response, phone: phone) : (self._isLoginOTPVerified = true)
+                        self.isFirstLogin = response.isFirstLogin ?? false
+                        self._isLoginOTPVerified = true
                     }
                 }
             case .failure(let error):

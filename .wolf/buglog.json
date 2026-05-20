@@ -232,8 +232,17 @@
       "file": "Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
       "root_cause": "MultipartUploadImageWithModel.handleUrlStatusCode was calling MOLH.reset() directly on 401 (clears token + navigates to LoginView) instead of routing through SessionExpiryState.flushAndLogout() which shows the popup",
       "fix": "Replaced direct GenericUserDefault.setValue + MOLH.reset() with SessionExpiryState.flushAndLogout() in the 401 case",
-      "tags": ["401", "session-expiry", "popup", "multipart-upload", "login-redirect"],
-      "related_bugs": ["bug-001", "bug-008"],
+      "tags": [
+        "401",
+        "session-expiry",
+        "popup",
+        "multipart-upload",
+        "login-redirect"
+      ],
+      "related_bugs": [
+        "bug-001",
+        "bug-008"
+      ],
       "occurrences": 1,
       "last_seen": "2026-05-19T07:01:24.451Z"
     },
@@ -244,10 +253,48 @@
       "file": "Dafeaa/Features/Auth/View/QuickPasscode/PasscodeChallengeViewController.swift",
       "root_cause": "When session expires while a TextField is focused (e.g. profile edit screen), the system keyboard stays active as the passcode VC is presented on top. Keyboard avoidance shifts the view up, displacing button hit areas (no action). The system keyboard also bleeds through visually behind the custom keypad.",
       "fix": "1) resignFirstResponder before presenting in PasscodeChallengePresenter.show to dismiss any active keyboard. 2) Added .ignoresSafeArea(.keyboard) to PasscodeChallengeView so layout never shifts.",
-      "tags": ["passcode", "keyboard", "session-expiry", "hit-testing", "ui"],
+      "tags": [
+        "passcode",
+        "keyboard",
+        "session-expiry",
+        "hit-testing",
+        "ui"
+      ],
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-19T00:00:00.000Z"
+    },
+    {
+      "id": "bug-017",
+      "timestamp": "2026-05-20T10:08:11.710Z",
+      "error_message": "Significant refactor of ",
+      "file": "Dafeaa/Features/Auth/VM/AuthVM.swift",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 9→5 lines (5 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "swift"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-20T10:08:11.710Z"
+    },
+    {
+      "id": "bug-018",
+      "timestamp": "2026-05-20T10:08:32.956Z",
+      "error_message": "Null/undefined access in ",
+      "file": "Dafeaa/Features/Auth/VM/AuthVM.swift",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "swift"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-20T10:08:32.956Z"
     }
   ]
 }

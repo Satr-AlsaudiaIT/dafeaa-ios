@@ -112,6 +112,7 @@ struct LoginModel: Codable {
     let data: LoginData?
     let accessToken: String?
     let refreshToken: String?
+    let isFirstLogin: Bool?
 }
 
 // MARK: - LoginData

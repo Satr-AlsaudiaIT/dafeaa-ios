@@ -1,89 +1,62 @@
 {
-  "session_id": "session-2026-05-19-0959",
-  "started": "2026-05-19T06:59:43.327Z",
+  "session_id": "session-2026-05-20-1304",
+  "started": "2026-05-20T10:04:56.166Z",
   "files_read": {
-    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift": {
-      "count": 4,
-      "tokens": 6972,
-      "first_read": "2026-05-19T06:59:53.612Z"
-    },
-    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/BaseAPI.swift": {
+    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift": {
       "count": 1,
-      "tokens": 3887,
-      "first_read": "2026-05-19T06:59:53.920Z"
+      "tokens": 3295,
+      "first_read": "2026-05-20T10:05:37.270Z"
     },
-    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/BiometricAuthManager/BiometricAuthManager.swift": {
+    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Networking/Auth/AuthModels.swift": {
       "count": 1,
-      "tokens": 1311,
-      "first_read": "2026-05-19T07:00:02.006Z"
+      "tokens": 1798,
+      "first_read": "2026-05-20T10:05:37.898Z"
     },
-    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Application/DafeaaApp.swift": {
+    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/VM/AuthVM.swift": {
       "count": 1,
-      "tokens": 4971,
-      "first_read": "2026-05-19T07:00:02.624Z"
-    },
-    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/PasscodeChallengeViewController.swift": {
-      "count": 1,
-      "tokens": 2811,
-      "first_read": "2026-05-19T08:40:44.026Z"
-    },
-    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/QuickPasscodeView.swift": {
-      "count": 1,
-      "tokens": 6523,
-      "first_read": "2026-05-19T08:40:44.278Z"
+      "tokens": 7784,
+      "first_read": "2026-05-20T10:05:57.006Z"
     }
   },
   "files_written": [
     {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/VM/AuthVM.swift",
       "action": "edit",
-      "tokens": 118,
-      "at": "2026-05-19T07:01:24.450Z"
+      "tokens": 51,
+      "at": "2026-05-20T10:07:49.778Z"
     },
     {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/VM/AuthVM.swift",
       "action": "edit",
-      "tokens": 311,
-      "at": "2026-05-19T07:34:01.337Z"
+      "tokens": 68,
+      "at": "2026-05-20T10:08:11.709Z"
     },
     {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/VM/AuthVM.swift",
       "action": "edit",
-      "tokens": 389,
-      "at": "2026-05-19T07:34:12.084Z"
+      "tokens": 119,
+      "at": "2026-05-20T10:08:32.954Z"
     },
     {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift",
       "action": "edit",
-      "tokens": 380,
-      "at": "2026-05-19T07:34:20.574Z"
+      "tokens": 133,
+      "at": "2026-05-20T10:09:02.904Z"
     },
     {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift",
+      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift",
       "action": "edit",
-      "tokens": 422,
-      "at": "2026-05-19T07:34:30.240Z"
-    },
-    {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/PasscodeChallengeViewController.swift",
-      "action": "edit",
-      "tokens": 181,
-      "at": "2026-05-19T08:41:28.667Z"
-    },
-    {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/QuickPasscode/PasscodeChallengeViewController.swift",
-      "action": "edit",
-      "tokens": 27,
-      "at": "2026-05-19T08:41:36.968Z"
+      "tokens": 104,
+      "at": "2026-05-20T10:25:40.817Z"
     }
   ],
   "edit_counts": {
-    "Dafeaa/Helper/SupportFiles/GenericNetWork/Base/MultiUploadImage.swift": 5,
-    "Dafeaa/Features/Auth/View/QuickPasscode/PasscodeChallengeViewController.swift": 2
+    "Dafeaa/Features/Auth/VM/AuthVM.swift": 3,
+    "Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift": 2
   },
-  "anatomy_hits": 6,
+  "anatomy_hits": 3,
   "anatomy_misses": 0,
-  "repeated_reads_warned": 3,
+  "repeated_reads_warned": 0,
   "cerebrum_warnings": 0,
-  "stop_count": 4
+  "stop_count": 2
 }
