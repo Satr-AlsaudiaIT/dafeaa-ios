@@ -1,62 +1,12 @@
 {
-  "session_id": "session-2026-05-20-1304",
-  "started": "2026-05-20T10:04:56.166Z",
-  "files_read": {
-    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift": {
-      "count": 1,
-      "tokens": 3295,
-      "first_read": "2026-05-20T10:05:37.270Z"
-    },
-    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Networking/Auth/AuthModels.swift": {
-      "count": 1,
-      "tokens": 1798,
-      "first_read": "2026-05-20T10:05:37.898Z"
-    },
-    "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/VM/AuthVM.swift": {
-      "count": 1,
-      "tokens": 7784,
-      "first_read": "2026-05-20T10:05:57.006Z"
-    }
-  },
-  "files_written": [
-    {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/VM/AuthVM.swift",
-      "action": "edit",
-      "tokens": 51,
-      "at": "2026-05-20T10:07:49.778Z"
-    },
-    {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/VM/AuthVM.swift",
-      "action": "edit",
-      "tokens": 68,
-      "at": "2026-05-20T10:08:11.709Z"
-    },
-    {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/VM/AuthVM.swift",
-      "action": "edit",
-      "tokens": 119,
-      "at": "2026-05-20T10:08:32.954Z"
-    },
-    {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift",
-      "action": "edit",
-      "tokens": 133,
-      "at": "2026-05-20T10:09:02.904Z"
-    },
-    {
-      "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift",
-      "action": "edit",
-      "tokens": 104,
-      "at": "2026-05-20T10:25:40.817Z"
-    }
-  ],
-  "edit_counts": {
-    "Dafeaa/Features/Auth/VM/AuthVM.swift": 3,
-    "Dafeaa/Features/Auth/View/otp/OTPConfirmationView.swift": 2
-  },
-  "anatomy_hits": 3,
+  "session_id": "session-2026-05-21-0850",
+  "started": "2026-05-21T05:50:10.691Z",
+  "files_read": {},
+  "files_written": [],
+  "edit_counts": {},
+  "anatomy_hits": 0,
   "anatomy_misses": 0,
   "repeated_reads_warned": 0,
   "cerebrum_warnings": 0,
-  "stop_count": 2
+  "stop_count": 0
 }
