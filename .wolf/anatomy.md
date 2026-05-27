@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-20T10:25:40.797Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-27T17:47:57.114Z
 > Files: 503 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -122,7 +122,7 @@
 
 ## Dafeaa/Features/Auth/View/SecuritySetup/
 
-- `SecuritySetupBottomSheet.swift` — SecuritySetupBottomSheet.swift (~910 tok)
+- `SecuritySetupBottomSheet.swift` — SecuritySetupBottomSheet.swift (~1222 tok)
 - `SecuritySetupBottomSheet.swift` — Custom bottom sheet after OTP verify (login & register). Multi-select biometric + passcode options; activates switches and navigates to passcode setup. (~100 tok)
 
 ## Dafeaa/Features/Auth/View/SignUpStep1/
@@ -329,7 +329,7 @@
 ## Dafeaa/Features/Main/profile/View/Settings/
 
 - `DeveloperKeyBottomSheet.swift` — DeveloperKeyBottomSheet.swift (~1643 tok)
-- `SettingsView.swift` — SettingsView.swift (~2695 tok)
+- `SettingsView.swift` — SettingsView.swift (~3105 tok)
 
 ## Dafeaa/Features/Main/profile/View/StaticPages/
 
@@ -1357,11 +1357,11 @@
 
 ## Dafeaa/Resources/Localizable/ar.lproj/
 
-- `Localizable.strings` (~7806 tok)
+- `Localizable.strings` (~7850 tok)
 
 ## Dafeaa/Resources/Localizable/en.lproj/
 
-- `Localizable.strings` (~8461 tok)
+- `Localizable.strings` (~8510 tok)
 
 ## DafeaaAppClip/
 

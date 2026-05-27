@@ -403,12 +403,12 @@
 "amount_validation" = "برجاء إدخال المبلغ المراد تحويله";
 "number_days" = "عدد أيام التوصيل";
 "free_shipping" = "شحن مجاني";
-"tax_record" = "السجل الضريبي";
-"edit_tax_record_number" = "تعديل رقم السجل الضريبي";
+"tax_record" = "الرقم الضريبي";
+"edit_tax_record_number" = "تعديل رقم الرقم الضريبي";
 "add_tax_record_number" = "اضافة رقم سجل ضريبي ";
 "addTaxRecordNumber" = "أضف رقم سجل ضريبي";
 "hasTax" = "الطلب خاضع للضريبة";
-"validation_nit_have_tax_record" = "برجاء اضافة السجل الضريبي";
+"validation_nit_have_tax_record" = "برجاء اضافة الرقم الضريبي";
 "tax_record_required" = " الرقم الضريبي مطلوب.";
 "tax_record_numbers_only" = "يجب أن يحتوي الرقم الضريبي على أرقام فقط.";
 "tax_record_invalid" = "الرقم الضريبي غير صالح.";
@@ -709,3 +709,5 @@
 "camera_permission_message" = "يرجى السماح بالوصول إلى الكاميرا من الإعدادات لاستخدام ماسح QR.";
 "go_to_settings" = "الذهاب إلى الإعدادات";
 "cancel" = "إلغاء";
+"biometric_not_available_title" = "المصادقة البيومترية غير متاحة";
+"biometric_not_available_message" = "يرجى تفعيل Face ID أو بصمة الإصبع من إعدادات الجهاز أولاً.";

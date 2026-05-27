@@ -16,6 +16,7 @@ struct SettingsView: View {
     @State private var isBiometricOn: Bool = false
     @State private var isQuickPasscodeOn: Bool = false
     @State private var showQuickPasscodeSetup: Bool = false
+    @State private var showBiometricNotAvailableAlert: Bool = false
 
     @State private var isActiveActionSheet = false
     @State private var activeActionSheet: ActiveSheet?
@@ -114,8 +115,24 @@ struct SettingsView: View {
                             Spacer()
                            
                             Button {
-                                isBiometricOn.toggle()
-                                QuickPasscodeManager.shared.isBiometricEnabled = isBiometricOn
+                                if isBiometricOn {
+                                    // Turning OFF — no auth needed
+                                    isBiometricOn = false
+                                    QuickPasscodeManager.shared.isBiometricEnabled = false
+                                } else {
+                                    // Turning ON — check device support first
+                                    guard BiometricAuthManager.shared.isBiometricAvailable else {
+                                        showBiometricNotAvailableAlert = true
+                                        return
+                                    }
+                                    // Authenticate to verify it works
+                                    BiometricAuthManager.shared.authenticate { success, _ in
+                                        if success {
+                                            isBiometricOn = true
+                                            QuickPasscodeManager.shared.isBiometricEnabled = true
+                                        }
+                                    }
+                                }
                             } label: {
                                 Image(isBiometricOn ? .toggleOn:.toggleOff)
                                     .padding(.trailing, isBiometricOn ? 16:12)
@@ -188,6 +205,16 @@ struct SettingsView: View {
 //                .presentationDragIndicator(.visible)
 //        })
         .toastView(toast: $viewModel.toast)
+        .alert("biometric_not_available_title".localized(), isPresented: $showBiometricNotAvailableAlert) {
+            Button("go_to_settings".localized()) {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url)
+                }
+            }
+            Button("cancel".localized(), role: .cancel) {}
+        } message: {
+            Text("biometric_not_available_message".localized())
+        }
         .navigationBarHidden(true)
         .navigationDestination(isPresented: $showQuickPasscodeSetup) {
             SettingsQuickPasscodeSetupView(isQuickPasscodeOn: $isQuickPasscodeOn)

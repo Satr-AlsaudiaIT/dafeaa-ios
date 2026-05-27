@@ -404,12 +404,12 @@
 "amount_validation" = "Please enter amount to transfer";
 "number_days" = "Number of days to Pickup";
 "free_shipping" = "Free Shipping";
-"tax_record" = "Tax Record";
+"tax_record" = "Tax Record Number";
 "add_tax_record_number" = "Add tax record number";
-"edit_tax_record_number" = "Edit tax record number";
-"addTaxRecordNumber" = "Add Tax Record Number";
+"edit_tax_record_number" = "Edit tax  record number";
+"addTaxRecordNumber" = "Add tax record number";
 "hasTax" = "Order Has Tax";
-"validation_nit_have_tax_record" = "Please Add Tax Record";
+"validation_nit_have_tax_record" = "Please add tax record number";
 "tax_record_required" = "Tax number is required.";
 "tax_record_numbers_only" = "Tax number must contain digits only.";
 "tax_record_invalid" = "Tax number is invalid.";
@@ -722,3 +722,5 @@
 "camera_permission_message" = "Please allow camera access in Settings to use the QR scanner.";
 "go_to_settings" = "Go to Settings";
 "cancel" = "Cancel";
+"biometric_not_available_title" = "Biometric Authentication Unavailable";
+"biometric_not_available_message" = "Please enable Face ID or Touch ID from your device Settings first.";

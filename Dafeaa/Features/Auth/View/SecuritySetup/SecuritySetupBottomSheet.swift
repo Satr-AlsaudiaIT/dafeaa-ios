@@ -15,6 +15,7 @@ struct SecuritySetupBottomSheet: View {
 
     @State private var biometricSelected: Bool = false
     @State private var passcodeSelected: Bool = false
+    @State private var showBiometricNotAvailableAlert: Bool = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -39,7 +40,18 @@ struct SecuritySetupBottomSheet: View {
                 ),
                 isSelected: biometricSelected
             ) {
-                biometricSelected.toggle()
+                if biometricSelected {
+                    // Deselecting — no auth needed
+                    biometricSelected = false
+                } else {
+                    guard BiometricAuthManager.shared.isBiometricAvailable else {
+                        showBiometricNotAvailableAlert = true
+                        return
+                    }
+                    BiometricAuthManager.shared.authenticate { success, _ in
+                        if success { biometricSelected = true }
+                    }
+                }
             }
             .padding(.horizontal, 24)
             .padding(.bottom, 8)
@@ -67,6 +79,16 @@ struct SecuritySetupBottomSheet: View {
             }
             .padding(.horizontal, 24)
             .padding(.bottom, 24)
+        }
+        .alert("biometric_not_available_title".localized(), isPresented: $showBiometricNotAvailableAlert) {
+            Button("go_to_settings".localized()) {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url)
+                }
+            }
+            Button("cancel".localized(), role: .cancel) {}
+        } message: {
+            Text("biometric_not_available_message".localized())
         }
     }
 
