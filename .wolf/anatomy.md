@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-27T17:47:57.114Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-06-07T09:20:12.204Z
 > Files: 503 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -160,7 +160,7 @@
 - `OrderBusinessDetailsView.swift` — OrderBusinessDetailsView 2.swift (~3065 tok)
 - `OrderClientDetailsView.swift` — OrderClientDetailsView.swift (~3082 tok)
 - `OrderComponentsView.swift` — OrderComponentsView.swift (~3304 tok)
-- `PathView.swift` — SwiftUIView.swift (~3186 tok)
+- `PathView.swift` — SwiftUIView.swift (~1896 tok)
 - `PaymentInfoClient.swift` — PaymentInfoClient.swift (~939 tok)
 - `PaymentInfoOwner.swift` — PaymentInfoOwner.swift (~1196 tok)
 - `PopUpComponent.swift` — PopUpComponent.swift (~502 tok)

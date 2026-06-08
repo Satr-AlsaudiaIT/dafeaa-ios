@@ -9,221 +9,109 @@ import SwiftUI
 
 
 struct PathViewChoice: View {
-    @Binding var orderStatus: orderStatusEnum 
-    var body: some View {
-        ZStack{
-            if orderStatus == .pending {
-                    ZStack {
-                        HStack (spacing: 0) {
-                            CircleView(statusPreviewType: .loading)
-                            ConnectorView(statusPreviewType: .unchecked)
-                            CircleView(statusPreviewType: .unchecked)
-                            ConnectorView(statusPreviewType: .unchecked)
-                            CircleView(statusPreviewType: .unchecked)
-                            ConnectorView(statusPreviewType: .unchecked)
-                            CircleView(statusPreviewType: .unchecked)
-                        }
-                        .padding(.horizontal,10)
-                        VStack(alignment: .leading) {
-                            Spacer()
-                            HStack {
-                                Text(orderStatus.title)
-                                    .textModifier(.plain, 11, .green026C34)
-                                    .padding(.leading,4)
-                                Spacer()
+    @Binding var orderStatus: orderStatusEnum
 
-                            }
-                        }
-                        .padding(.top , 10)
-                    }
-                    
-                    .frame(height: 85)
-            }
-            else if orderStatus == .accepted {
-                ZStack {
-                    HStack (spacing: 0) {
-                        CircleView(statusPreviewType: .checked)
-                        ConnectorView(statusPreviewType: .checked)
-                        CircleView(statusPreviewType: .loading)
-                        ConnectorView(statusPreviewType: .unchecked)
-                        CircleView(statusPreviewType: .unchecked)
-                        ConnectorView(statusPreviewType: .unchecked)
-                        CircleView(statusPreviewType: .unchecked)
-                    }
-                    .padding(.horizontal,10)
-
-                    VStack(alignment: .leading) {
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            Text(orderStatus.title)
-                                .textModifier(.plain, 11, .green026C34)
-                                
-                            Spacer()
-                            Spacer()
-
-                        }
-                    }
-                    .padding(.top , 10)
-
-                }
-                
-                .frame(height: 85)
-            }
-            else if orderStatus == .away  || orderStatus == .pickup {
-                ZStack {
-                    HStack (spacing: 0) {
-                        CircleView(statusPreviewType: .checked)
-                        ConnectorView(statusPreviewType: .checked)
-                        CircleView(statusPreviewType: .checked)
-                        ConnectorView(statusPreviewType: .checked)
-                        CircleView(statusPreviewType: .loading)
-                        ConnectorView(statusPreviewType: .unchecked)
-                        CircleView(statusPreviewType: .unchecked)
-                    }
-                    .padding(.horizontal,10)
-                    VStack(alignment: .leading) {
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            Spacer()
-                            Text(orderStatus.title)
-                                .textModifier(.plain, 11, .green026C34)
-                            Spacer()
-
-                        }
-                    }
-                    .padding(.top , 10)
-
-                }
-                
-                .frame(height: 85)
-            }
-            else if orderStatus == .rejected {
-                ZStack {
-                    HStack (spacing: 0) {
-                        CircleView(statusPreviewType: .checked)
-                        ConnectorView(statusPreviewType: .rejected)
-                        CircleView(statusPreviewType: .rejected)
-                        ConnectorView(statusPreviewType: .unchecked)
-                        CircleView(statusPreviewType: .unchecked)
-                        ConnectorView(statusPreviewType: .unchecked)
-                        CircleView(statusPreviewType: .unchecked)
-                    }
-                    .padding(.horizontal,10)
-                    VStack(alignment: .leading) {
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            
-                            Text(orderStatus.title)
-                                .textModifier(.plain, 11, .redEE002B)
-                                .padding(.trailing,5)
-                            Spacer()
-                            Spacer()
-
-                        }
-                    }
-                    .padding(.top , 10)
-
-                }
-                
-                .frame(height: 85)
-            }
-            else if orderStatus == .cancelled {
-                ZStack {
-                    HStack (spacing: 0) {
-                        CircleView(statusPreviewType: .checked)
-                        ConnectorView(statusPreviewType: .rejected)
-                        CircleView(statusPreviewType: .rejected)
-                        ConnectorView(statusPreviewType: .unchecked)
-                        CircleView(statusPreviewType: .unchecked)
-                        ConnectorView(statusPreviewType: .unchecked)
-                        CircleView(statusPreviewType: .unchecked)
-                    }
-                    .padding(.horizontal,10)
-                    VStack(alignment: .leading) {
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            Text(orderStatus.title)
-                                .textModifier(.plain, 11, .redEE002B)
-                                .padding(.trailing,5)
-                            Spacer()
-                            Spacer()
-
-                        }
-                    }
-                    .padding(.top , 10)
-
-                }
-                
-                .frame(height: 85)
-            }
-            else if orderStatus == .done {
-                ZStack {
-                    HStack (spacing: 0) {
-                        CircleView(statusPreviewType: .checked)
-                        ConnectorView(statusPreviewType: .checked)
-                        CircleView(statusPreviewType: .checked)
-                        ConnectorView(statusPreviewType: .checked)
-                        CircleView(statusPreviewType: .checked)
-                        ConnectorView(statusPreviewType: .checked)
-                        CircleView(statusPreviewType: .checked)
-                    }
-                    .padding(.horizontal,10)
-                    VStack(alignment: .leading) {
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            Text(orderStatus.title)
-                                .textModifier(.plain, 11, .green026C34)
-                                .padding(.trailing,3)
-                            
-
-                        }
-                    }
-                    .padding(.top , 10)
-
-                }
-                
-                .frame(height: 85)
-            }
-            else if orderStatus == .shipmentField{
-                ZStack {
-                    HStack (spacing: 0) {
-                        CircleView(statusPreviewType: .checked)
-                        ConnectorView(statusPreviewType: .checked)
-                        CircleView(statusPreviewType: .checked)
-                        ConnectorView(statusPreviewType: .checked)
-                        CircleView(statusPreviewType: .checked)
-                        ConnectorView(statusPreviewType: .checked)
-                        CircleView(statusPreviewType: .rejected)
-                    }
-                    .padding(.horizontal,10)
-                    VStack(alignment: .leading) {
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            Spacer()
-                            Spacer()
-                            Text(orderStatus.title)
-                                .textModifier(.plain, 11, .red)
-                            
-
-                        }
-                    }
-                    .padding(.top , 10)
-
-                }
-                
-                .frame(height: 85)
-            }
-
-            
+    // MARK: - Circle types derived from status
+    private var c1:   statusPreviewTypes { orderStatus == .pending ? .loading : .checked }
+    private var con1: statusPreviewTypes {
+        switch orderStatus {
+        case .pending:             return .unchecked
+        case .rejected, .cancelled: return .rejected
+        default:                   return .checked
         }
-        
-        .padding()
+    }
+    private var c2: statusPreviewTypes {
+        switch orderStatus {
+        case .pending:              return .unchecked
+        case .accepted:             return .loading
+        case .rejected, .cancelled: return .rejected
+        default:                    return .checked
+        }
+    }
+    private var con2: statusPreviewTypes {
+        switch orderStatus {
+        case .away, .pickup, .done, .shipmentField: return .checked
+        default:                                    return .unchecked
+        }
+    }
+    private var c3: statusPreviewTypes {
+        switch orderStatus {
+        case .away, .pickup:                        return .loading
+        case .done, .shipmentField:                 return .checked
+        default:                                    return .unchecked
+        }
+    }
+    private var con3: statusPreviewTypes {
+        switch orderStatus {
+        case .done, .shipmentField: return .checked
+        default:                    return .unchecked
+        }
+    }
+    private var c4: statusPreviewTypes {
+        switch orderStatus {
+        case .done:          return .checked
+        case .shipmentField: return .rejected
+        default:             return .unchecked
+        }
+    }
+
+    // MARK: - Step labels
+    private var step2Label: String {
+        switch orderStatus {
+        case .rejected:  return "rejectedState".localized()
+        case .cancelled: return "cancelledState".localized()
+        default:         return "acceptedState".localized()
+        }
+    }
+    private var step4Label: String {
+        orderStatus == .shipmentField ? "shipmentFailedState".localized() : "doneState".localized()
+    }
+
+    // MARK: - Label colour
+    private func labelColor(_ type: statusPreviewTypes) -> Color {
+        switch type {
+        case .checked:  return Color(.black292D32)
+        case .loading:  return Color(.green026C34)
+        case .rejected: return Color(.redEE002B)
+        case .unchecked: return Color(.gray666666)
+        }
+    }
+
+    // MARK: - Body
+    var body: some View {
+        HStack(alignment: .top, spacing: 0) {
+            stepView(type: c1,   label: "pendingState".localized())
+            connector(type: con1)
+            stepView(type: c2,   label: step2Label)
+            connector(type: con2)
+            stepView(type: c3,   label: "awayState".localized())
+            connector(type: con3)
+            stepView(type: c4,   label: step4Label)
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 8)
+    }
+
+    // MARK: - Helpers
+    @ViewBuilder
+    private func stepView(type: statusPreviewTypes, label: String) -> some View {
+        VStack(spacing: 4) {
+            CircleView(statusPreviewType: type)
+            Text(label)
+                .textModifier(.plain, 11, labelColor(type))
+                .multilineTextAlignment(.center)
+                .lineLimit(1)
+                .minimumScaleFactor(0.65)
+        }
+        .frame(width: 52) // fixed to ~circle width so connectors fill the gap between circles
+    }
+
+    @ViewBuilder
+    private func connector(type: statusPreviewTypes) -> some View {
+        Rectangle()
+            .fill(type == .unchecked ? Color(.grayD1D5DB) : type.color)
+            .frame(maxWidth: .infinity, maxHeight: 1)
+            .padding(.top, 20) // vertically centres line with circle (circle h ≈ 40)
     }
 }
 

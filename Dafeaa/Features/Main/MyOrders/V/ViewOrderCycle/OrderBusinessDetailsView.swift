@@ -40,7 +40,7 @@ struct OrderBusinessDetailsView: View {
                                 if let orderStatusInt = orderData.orderStatus {
                                     PathViewChoice(orderStatus: .constant(orderStatusEnum(rawValue: orderStatusInt) ?? .pending))
                                         .padding(.horizontal,-10)
-                                        .padding(.vertical,-10)
+                                        
                                 }
                                 //                                if orderData.qrCode != nil {
                                 //                                    QRCodeView(text: orderData.qrCode ?? "")

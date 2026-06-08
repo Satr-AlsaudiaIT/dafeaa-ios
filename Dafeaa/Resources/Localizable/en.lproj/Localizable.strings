@@ -119,7 +119,7 @@
 "home"="Home";
 
 //MARK: -Profile
-"Hello,"="Hello,";
+"Hello,"="Hello";
 "profile"="Profile";
 "Subscription Management"="Subscription Management";
 "Saved Addresses"="Saved Addresses";
@@ -277,15 +277,15 @@
 "total"="Total:";
 "reject" = "Reject";
 "accept" = "Accept";
-"onWay" = "On the way";
+"onWay" = "Picked";
 "statusChanges" = "Order status successfully changed";
 "orderCanceled" = "Order canceled successfully";
-"pendingState" ="Order Pending";
-"acceptedState" = "Order Accepted";
-"awayState" = "On the way";
-"rejectedState" = "Order Rejected";
-"cancelledState" = "Order Cancelled";
-"doneState" = "Order Completed";
+"pendingState" ="Pending";
+"acceptedState" = "Accepted";
+"awayState" = "Picked";
+"rejectedState" = "Rejected";
+"cancelledState" = "Cancelled";
+"doneState" = "Completed";
 "shipmentFailedState" = "Shipment Failed";
 "completeSuccessful" = "Order successfully completed";
 "Confirm" = "Confirm";
@@ -634,7 +634,7 @@
 "invite_friend_message" = "Join me on Dafea from here: https://dafea.com.sa";
 
 //QuickPayment
-"quick_payment" = "Quick Payment";
+"quick_payment" = "Quick Dafea";
 "scan_qr_desc" = "Scan QR & transfer instantly";
 "enter_amount_to_generate_qr" = "Enter amount to generate QR";
 "enter_amount" = "Enter amount";

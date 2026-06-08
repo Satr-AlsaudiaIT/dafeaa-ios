@@ -311,6 +311,22 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-25T12:13:51.944Z"
+    },
+    {
+      "id": "bug-020",
+      "timestamp": "2026-06-07T08:44:35.129Z",
+      "error_message": "Significant refactor of ",
+      "file": "Dafeaa/Features/Main/MyOrders/V/ViewOrderCycle/PathView.swift",
+      "root_cause": "149 lines replaced/restructured",
+      "fix": "Rewrote 218→106 lines (149 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "swift"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-07T08:44:35.129Z"
     }
   ]
 }

@@ -120,7 +120,7 @@
 "home"="الرئيسية";
 
 //MARK: -Profile
-"Hello,"="أهلًا بك,";
+"Hello,"="أهلًا بك";
 "profile"="الملف الشخصي";
 "Subscription Management"="إدارة الاشتراكات";
 "Saved Addresses"="العناوين المحفوظة";
@@ -277,15 +277,15 @@
 "total"="الإجمالي:";
 "reject" = "رفض";
 "accept" = "موافقة";
-"onWay" = "في الطريق";
+"onWay" = "تم الالتقاط";
 "statusChanges" = "تم تغيير حالة الطلبية بنجاح";
 "orderCanceled" = "تم الغاء الطلبية بنجاح";
-"pendingState" ="الطلبية معلقة";
-"acceptedState" = "الطلبية مقبولة";
-"awayState" = "في الطريق";
-"rejectedState" = "الطلبية مرفوضة";
-"cancelledState" = "الطلبية ملغاة";
-"doneState" = "الطلبية مكتملة";
+"pendingState" ="معلقة";
+"acceptedState" = "مقبولة";
+"awayState" = "تم الالتقاط";
+"rejectedState" = "مرفوضة";
+"cancelledState" = "ملغاة";
+"doneState" = "مكتملة";
 "shipmentFailedState" = "فشل التوصيل";
 "completeSuccessful" = "تم إكمال الطلب بنجاح";
 "Confirm" = "تأكيد";
@@ -624,7 +624,7 @@
 "invite_friend_message" = "انضم إليّ على دافع من هنا: https://dafea.com.sa";
 
 //QuickPayment
-"quick_payment" = "دفع سريع";
+"quick_payment" = "دافع سريع";
 "scan_qr_desc" = "امسح QR وحول فوراً";
 "enter_amount_to_generate_qr" = "ادخل المبلغ لتوليد الـ QR";
 "scan_with_in" = "قم بعمل مسح خلال ";

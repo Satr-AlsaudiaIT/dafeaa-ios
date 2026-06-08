@@ -2,14 +2,14 @@
   "version": 1,
   "created_at": "2026-05-10T05:55:17.440Z",
   "lifetime": {
-    "total_tokens_estimated": 735059,
-    "total_reads": 112,
-    "total_writes": 257,
-    "total_sessions": 22,
-    "anatomy_hits": 112,
+    "total_tokens_estimated": 748514,
+    "total_reads": 115,
+    "total_writes": 263,
+    "total_sessions": 31,
+    "anatomy_hits": 115,
     "anatomy_misses": 0,
     "repeated_reads_blocked": 54,
-    "estimated_savings_vs_bare_cli": 881884
+    "estimated_savings_vs_bare_cli": 882484
   },
   "sessions": [
     {
@@ -2439,6 +2439,105 @@
       "totals": {
         "input_tokens_estimated": 910,
         "output_tokens_estimated": 498,
+        "reads_count": 1,
+        "writes_count": 3,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-06-07-1136",
+      "started": "2026-06-07T08:36:46.301Z",
+      "ended": "2026-06-07T08:45:30.235Z",
+      "reads": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/MyOrders/V/ViewOrderCycle/PathView.swift",
+          "tokens_estimated": 3186,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/MyOrders/V/ViewOrderCycle/PathView.swift",
+          "tokens_estimated": 1080,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 3186,
+        "output_tokens_estimated": 1080,
+        "reads_count": 1,
+        "writes_count": 1,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-06-07-1136",
+      "started": "2026-06-07T08:36:46.301Z",
+      "ended": "2026-06-07T08:58:14.283Z",
+      "reads": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/MyOrders/V/ViewOrderCycle/PathView.swift",
+          "tokens_estimated": 3186,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/MyOrders/V/ViewOrderCycle/PathView.swift",
+          "tokens_estimated": 1080,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/MyOrders/V/ViewOrderCycle/PathView.swift",
+          "tokens_estimated": 212,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 3186,
+        "output_tokens_estimated": 1292,
+        "reads_count": 1,
+        "writes_count": 2,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-06-07-1136",
+      "started": "2026-06-07T08:36:46.301Z",
+      "ended": "2026-06-07T09:20:34.389Z",
+      "reads": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/MyOrders/V/ViewOrderCycle/PathView.swift",
+          "tokens_estimated": 3186,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/MyOrders/V/ViewOrderCycle/PathView.swift",
+          "tokens_estimated": 1080,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/MyOrders/V/ViewOrderCycle/PathView.swift",
+          "tokens_estimated": 212,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/apple/nura/myProjects/dafeaaWithout App clip/Dafeaa/Features/Main/MyOrders/V/ViewOrderCycle/PathView.swift",
+          "tokens_estimated": 233,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 3186,
+        "output_tokens_estimated": 1525,
         "reads_count": 1,
         "writes_count": 3,
         "repeated_reads_blocked": 0,
